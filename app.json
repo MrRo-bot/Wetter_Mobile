@@ -1,42 +1,171 @@
 {
   "expo": {
-    "name": "Wetter_Mobile",
+    "name": "Wetter",
     "slug": "Wetter_Mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./src/assets/icons/adaptive-icon.png",
     "scheme": "wettermobile",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "icon": {
+        "dark": "./src/assets/icons/ios-dark.png",
+        "light": "./src/assets/icons/ios-light.png",
+        "tinted": "./src/assets/icons/ios-tinted.png"
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./src/assets/icons/adaptive-icon.png",
+        "monochromeImage": "./src/assets/icons/adaptive-icon.png",
+        "backgroundColor": "#fefbfb"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.chhavimani.Wetter_Mobile"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./src/assets/icons/adaptive-icon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./src/assets/icons/splash-icon-dark.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#fefbfb",
+          "dark": {
+            "image": "./src/assets/icons/splash-icon-light.png",
+            "backgroundColor": "#0e0b0b"
+          }
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "android": {
+            "fonts": [
+              {
+                "fontFamily": "Goldman",
+                "fontDefinitions": [
+                  {
+                    "path": "./src/assets/fonts/Goldman-Regular.otf",
+                    "weight": 400,
+                    "style": "normal"
+                  },
+                  {
+                    "path": "./src/assets/fonts/Goldman-Bold.otf",
+                    "weight": 700,
+                    "style": "normal"
+                  }
+                ]
+              },
+              {
+                "fontFamily": "Orbitron",
+                "fontDefinitions": [
+                  {
+                    "path": "./src/assets/fonts/Orbitron-Regular.otf",
+                    "weight": 400,
+                    "style": "normal"
+                  },
+                  {
+                    "path": "./src/assets/fonts/Orbitron-Medium.otf",
+                    "weight": 500,
+                    "style": "normal"
+                  },
+                  {
+                    "path": "./src/assets/fonts/Orbitron-SemiBold.otf",
+                    "weight": 600,
+                    "style": "normal"
+                  },
+                  {
+                    "path": "./src/assets/fonts/Orbitron-Bold.otf",
+                    "weight": 700,
+                    "style": "normal"
+                  },
+                  {
+                    "path": "./src/assets/fonts/Orbitron-ExtraBold.otf",
+                    "weight": 800,
+                    "style": "normal"
+                  },
+                  {
+                    "path": "./src/assets/fonts/Orbitron-Black.otf",
+                    "weight": 900,
+                    "style": "normal"
+                  }
+                ]
+              }
+            ]
+          },
+          "ios": {
+            "fonts": [
+              "./src/assets/fonts/Goldman-Regular.otf",
+              "./src/assets/fonts/Goldman-Bold.otf",
+              "./src/assets/fonts/Orbitron-Regular.otf",
+              "./src/assets/fonts/Orbitron-Medium.otf",
+              "./src/assets/fonts/Orbitron-SemiBold.otf",
+              "./src/assets/fonts/Orbitron-Bold.otf",
+              "./src/assets/fonts/Orbitron-ExtraBold.otf",
+              "./src/assets/fonts/Orbitron-Black.otf"
+            ]
+          }
+        }
+      ],
+      [
+        "expo-asset",
+        {
+          "assets": [
+            "./src/assets/images/alert.gif",
+            "./src/assets/images/hot_alert.gif",
+            "./src/assets/images/search.gif",
+            "./src/assets/images/wind.gif",
+            "./src/assets/images/brief/clock.gif",
+            "./src/assets/images/brief/humidity.gif",
+            "./src/assets/images/brief/light_drizzle.gif",
+            "./src/assets/images/brief/pressure.gif",
+            "./src/assets/images/brief/sunrise.gif",
+            "./src/assets/images/brief/sunset.gif",
+            "./src/assets/images/brief/thermometer.gif",
+            "./src/assets/images/brief/uv.gif",
+            "./src/assets/images/brief/visibility.gif",
+            "./src/assets/images/weatherType/clear_day.gif",
+            "./src/assets/images/weatherType/clear_night.gif",
+            "./src/assets/images/weatherType/dense_drizzle.gif",
+            "./src/assets/images/weatherType/fog.gif",
+            "./src/assets/images/weatherType/freezing_drizzle.gif",
+            "./src/assets/images/weatherType/hail.gif",
+            "./src/assets/images/weatherType/heavy_rain.gif",
+            "./src/assets/images/weatherType/heavy_snow.gif",
+            "./src/assets/images/weatherType/heavy_thunder_with_hail.gif",
+            "./src/assets/images/weatherType/moderate_drizzle.gif",
+            "./src/assets/images/weatherType/moderate_rain.gif",
+            "./src/assets/images/weatherType/moderate_snow.gif",
+            "./src/assets/images/weatherType/overcast.gif",
+            "./src/assets/images/weatherType/partly_cloudy_day.gif",
+            "./src/assets/images/weatherType/partly_cloudy_night.gif",
+            "./src/assets/images/weatherType/slight_rain.gif",
+            "./src/assets/images/weatherType/slight_snow.gif",
+            "./src/assets/images/weatherType/slight_thunder_with_hail.gif",
+            "./src/assets/images/weatherType/thunderstorm.gif",
+            "./src/assets/images/weatherType/tornado.gif"
+          ]
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "db8c938f-13ae-424b-a7d2-83bb012f2f49"
+      }
+    },
+    "owner": "chhavimani"
   }
 }
