@@ -5,25 +5,25 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        light: "oklch(0.9744 0.0098 305.41)",
-        outlineLight: "oklch(0.2156 0 0)",
+        light: "hsl(266, 54%, 97%)",
+        outlineLight: "hsl(0, 0%, 10%)",
 
-        dark: "oklch(0.1736 0.0098 305.41)",
-        outlineDark: "oklch(0.8501 0 0)",
+        dark: "hsl(264, 14%, 7%)",
+        outlineDark: "hsl(0, 0%, 81%)",
 
-        tealDark: "oklch(0.8559 0.0822 227.57)",
-        greenDark: "oklch(0.8951 0.1777 129.57)",
-        purpleDark: "oklch(0.7774 0.1378 302.7)",
-        yellowDark: "oklch(0.904 0.1415 94.8)",
-        redDark: "oklch(0.7915 0.1226 12.29)",
-        mustardDark: "oklch(0.7815 0.1406 49.72)",
+        tealDark: "hsl(198, 91%, 78%)",
+        greenDark: "hsl(87, 85%, 69%)",
+        purpleDark: "hsl(265, 100%, 81%)",
+        yellowDark: "hsl(48, 97%, 70%)",
+        redDark: "hsl(352, 100%, 80%)",
+        mustardDark: "hsl(22, 100%, 69%)",
 
-        tealLight: "oklch(0.83 0.111 226.72)",
-        greenLight: "oklch(0.9564 0.1684 117.01)",
-        purpleLight: "oklch(0.7324 0.1814 358.91)",
-        yellowLight: "oklch(0.8912 0.129 87.74)",
-        redLight: "oklch(0.7082 0.1862 15.82)",
-        mustardLight: "oklch(0.7771 0.1361 41.12)",
+        tealLight: "hsl(197, 100%, 72%)",
+        greenLight: "hsl(69, 100%, 72%)",
+        purpleLight: "hsl(337, 100%, 72%)",
+        yellowLight: "hsl(43, 100%, 72%)",
+        redLight: "hsl(353, 100%, 70%)",
+        mustardLight: "hsl(16, 100%, 72%)",
       },
       backgroundImage: {
         aqiGradient:
