@@ -3,8 +3,8 @@ import { Text, View } from "react-native";
 
 export default function Location() {
   return (
-    <View>
-      <Text>Location</Text>
+    <View className="flex items-center justify-center h-full">
+      <Text>initial location find</Text>
     </View>
   );
 }

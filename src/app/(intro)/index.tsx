@@ -11,7 +11,7 @@ export default function Intro() {
   // const removeAllBears = useBearStore((state) => state.removeAllPopulation);
 
   return (
-    <View className="flex flex-col items-center justify-between h-[calc(100%-12%)]">
+    <View className="flex items-center justify-between h-[calc(100%-12%)]">
       <View className="w-full">
         <Image
           contentFit="cover"

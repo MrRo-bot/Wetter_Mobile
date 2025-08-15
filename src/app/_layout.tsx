@@ -1,8 +1,17 @@
 import * as NavigationBar from "expo-navigation-bar";
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  Platform,
+  StatusBar,
+  ToastAndroid,
+  useColorScheme,
+} from "react-native";
+
 import React, { useEffect } from "react";
-import { Platform, StatusBar, useColorScheme } from "react-native";
+
 import "../global.css";
 
 SplashScreen.setOptions({
@@ -12,38 +21,55 @@ SplashScreen.setOptions({
 
 SplashScreen.preventAutoHideAsync();
 
-export default function HomeLayout() {
+export default function Layout() {
   let colorScheme = useColorScheme();
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      SplashScreen.hide();
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, []);
 
   if (Platform.OS === "android") {
     NavigationBar.setStyle(colorScheme === "dark" ? "light" : "dark");
   }
 
+  const checkFirstLaunch = async () => {
+    try {
+      const hasLaunched = await AsyncStorage.getItem("hasLaunched");
+      if (!hasLaunched) {
+        await AsyncStorage.setItem("hasLaunched", "true");
+        return true;
+      }
+      return false;
+    } catch (error) {
+      ToastAndroid.show(`${error}`, ToastAndroid.BOTTOM);
+      return false;
+    } finally {
+      await SplashScreen.hideAsync();
+    }
+  };
+
+  useEffect(() => {
+    const initializeNavigation = async () => {
+      // const isFirstLaunch = await checkFirstLaunch();
+      const isFirstLaunch = true;
+      if (isFirstLaunch) {
+        router.replace("/(intro)");
+      } else {
+        router.replace("/(home)");
+      }
+    };
+
+    initializeNavigation();
+  }, []);
+
   return (
     <>
       <StatusBar
-        backgroundColor={colorScheme === "dark" ? "#0e0b0b" : "#fefbfb"}
         barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
+        backgroundColor={colorScheme === "dark" ? "#110f14" : "#f7f3fb"}
       />
-      <Stack
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: colorScheme === "dark" ? "#0e0b0b" : "#fefbfb",
-          },
-          headerTintColor: colorScheme === "dark" ? "#fefbfb" : "#0e0b0b",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
-        }}
-      />
+      <Stack screenOptions={{ headerShown: false }}>
+        {/* Define groups explicitly if needed, but Expo Router handles this via file structure */}
+        <Stack.Screen name="(intro)" />
+        <Stack.Screen name="(home)" />
+        {/* <Stack.Screen name="drawer" options={{ headerShown: false }} /> */}
+      </Stack>
     </>
   );
 }
