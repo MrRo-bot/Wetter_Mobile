@@ -1,9 +1,9 @@
 import { Link, useNavigation } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
-
 import { SafeAreaView } from "react-native-safe-area-context";
-import Intro from "../components/intro";
+
+import Intro from "./intro";
 
 export default function Home() {
   let colorScheme = useColorScheme();
