@@ -4,6 +4,16 @@ module.exports = {
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
+      fontFamily: {
+        goldman: ["Goldman-Regular", "roboto"],
+        "goldman-bold": ["Goldman-Bold", "roboto"],
+        "orbitron-black": ["Orbitron-Black", "roboto"],
+        orbitron: ["Orbitron-Regular", "roboto"],
+        "orbitron-medium": ["Orbitron-Medium", "roboto"],
+        "orbitron-semiBold": ["Orbitron-SemiBold", "roboto"],
+        "orbitron-bold": ["Orbitron-Bold", "roboto"],
+        "orbitron-extraBold": ["Orbitron-ExtraBold", "roboto"],
+      },
       colors: {
         textLight: "hsl(0,0%,20%)",
         textDark: "hsl(260,0%,80%)",

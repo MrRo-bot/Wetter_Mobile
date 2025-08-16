@@ -1,4 +1,5 @@
 import { Image } from "expo-image";
+import { router } from "expo-router";
 import React from "react";
 import { Pressable, Text, useColorScheme, View } from "react-native";
 // import { useBearStore } from "../store/bearStore";
@@ -11,7 +12,7 @@ export default function Intro() {
   // const removeAllBears = useBearStore((state) => state.removeAllPopulation);
 
   return (
-    <View className="flex items-center justify-between h-[calc(100%-12%)]">
+    <View className="flex items-center h-full justify-evenly">
       <View className="w-full">
         <Image
           contentFit="cover"
@@ -25,20 +26,19 @@ export default function Intro() {
       </View>
       <View className="w-full">
         <Text
-          style={{ fontFamily: "Orbitron" }}
-          className={`text-6xl mx-auto ${colorScheme === "dark" ? "text-mustardLight" : "text-mustardDark"}`}
+          className={`text-6xl font-orbitron mx-auto ${colorScheme === "dark" ? "text-mustardLight" : "text-mustardDark"}`}
         >
           Wetter
         </Text>
         <Text
-          style={{ fontFamily: "Goldman" }}
-          className={`text-lg mt-4 mx-auto ${colorScheme === "dark" ? "text-textDark" : "text-textLight"}`}
+          className={`text-lg font-goldman mt-4 mx-auto ${colorScheme === "dark" ? "text-textDark" : "text-textLight"}`}
         >
           A minimal weather app
         </Text>
       </View>
       <View className="overflow-hidden rounded-full">
         <Pressable
+          onPress={() => router.navigate("/(intro)/location")}
           className={`px-10 py-2.5 ${colorScheme === "dark" ? "bg-redDark" : "bg-redLight"}`}
           android_ripple={{
             color:
@@ -48,8 +48,7 @@ export default function Intro() {
           }}
         >
           <Text
-            style={{ fontFamily: "Orbitron" }}
-            className={`font-bold ${colorScheme === "dark" ? "text-textLight" : "text-zinc-50"}`}
+            className={`font-orbitron-bold ${colorScheme === "dark" ? "text-textLight" : "text-zinc-50"}`}
           >
             Next
           </Text>
@@ -68,8 +67,8 @@ export default function Intro() {
             }}
           >
             <Text
-              style={{ fontFamily: "Orbitron" }}
-              className={`font-bold ${colorScheme === "dark" ? "text-textLight" : "text-zinc-50"}`}
+ 
+              className={`font-orbitron-bold ${colorScheme === "dark" ? "text-textLight" : "text-zinc-50"}`}
             >
               Add a bear
             </Text>
@@ -87,8 +86,8 @@ export default function Intro() {
             }}
           >
             <Text
-              style={{ fontFamily: "Orbitron" }}
-              className={`font-bold ${colorScheme === "dark" ? "text-textLight" : "text-zinc-50"}`}
+ 
+              className={`font-orbitron-bold ${colorScheme === "dark" ? "text-textLight" : "text-zinc-50"}`}
             >
               Remove a bear
             </Text>
@@ -106,8 +105,7 @@ export default function Intro() {
             }}
           >
             <Text
-              style={{ fontFamily: "Orbitron" }}
-              className={`font-bold ${colorScheme === "dark" ? "text-textLight" : "text-zinc-50"}`}
+              className={`font-orbitron-bold ${colorScheme === "dark" ? "text-textLight" : "text-zinc-50"}`}
             >
               Clear all
             </Text>

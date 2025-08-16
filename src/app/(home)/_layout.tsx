@@ -6,13 +6,18 @@ import { useColorScheme } from "react-native";
 export default function HomeLayout() {
   let colorScheme = useColorScheme();
 
+  const themeBackground =
+    colorScheme === "dark" ? "hsl(264, 14%, 7%)" : "hsl(266, 54%, 97%)";
+  const themeTint =
+    colorScheme === "dark" ? "hsl(266, 54%, 97%)" : "hsl(264, 14%, 7%)";
+
   return (
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: colorScheme === "dark" ? "#110f14" : "#f7f3fb",
+          backgroundColor: themeBackground,
         },
-        headerTintColor: colorScheme === "dark" ? "#f7f3fb" : "#110f14",
+        headerTintColor: themeTint,
         headerTitleStyle: {
           fontWeight: "bold",
         },

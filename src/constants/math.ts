@@ -1,5 +1,5 @@
 //DEGREES TO CARDINAL CONVERTER
-export const degConv = (deg: number) => {
+export const degConv = (deg: number): string => {
   while (deg < 0) deg += 360;
   while (deg >= 360) deg -= 360;
   let val = Math.round((deg - 11.25) / 22.5);
@@ -25,16 +25,16 @@ export const degConv = (deg: number) => {
 };
 
 //Rounding figures
-export const valRound = (value: number) => Math.round(value);
+export const valRound = (value: number): number => Math.round(value);
 
 //KELVIN CONVERSION
-export const tempConv = {
+export const tempConv: object = {
   c: (value: number) => Math.round(value - 273.15),
   f: (value: number) => Math.round((value * 9) / 5 - 459.67),
 };
 
 //METER DISTANCE AND SPEED CONVERSION
-export const lenAndSpdConv = {
+export const lenAndSpdConv: object = {
   mi: (value: number) => Math.round(value / 1609.344),
   km: (value: number) => Math.round(value / 1000),
   mph: (value: number) => Math.round(value * 2.237),
@@ -42,7 +42,7 @@ export const lenAndSpdConv = {
 };
 
 //PRECIPITATION SCALE TO PERCENTAGE
-export const precConv = (value: number) => Math.round(value * 100);
+export const precConv = (value: number): number => Math.round(value * 100);
 
 //EPOCH TIME TO READABLE FORMAT
 export const unixConv = {
@@ -70,7 +70,7 @@ export const unixConv = {
     "December",
   ],
 
-  timeStamp: (value: number) => {
+  timeStamp: (value: number): object => {
     const epoch = new Date(value * 1000);
     let year = epoch.getFullYear();
     let month = unixConv.months[epoch.getMonth()];
@@ -91,7 +91,7 @@ export const unixConv = {
 };
 
 //AQI DESCRIPTION
-export const aqiDesc = (value: number) => {
+export const aqiDesc = (value: number): object | string => {
   switch (true) {
     case value >= 0 && value <= 50:
       return {
@@ -135,7 +135,7 @@ export const aqiDesc = (value: number) => {
 };
 
 //WEATHER INTERPRETATION CODES (OPEN METEO)
-export const weatherCodeConv = (code: number) => {
+export const weatherCodeConv = (code: number): string => {
   switch (code) {
     case 0:
       return "Clear sky";
@@ -199,7 +199,7 @@ export const weatherCodeConv = (code: number) => {
 };
 
 //WEATHER ICON FINDER
-export const weatherIconFind = (code: number) => {
+export const weatherIconFind = (code: number): number[] | number | string => {
   switch (code) {
     case 0:
       return [1, 2];
@@ -254,7 +254,7 @@ export const weatherIconFind = (code: number) => {
 };
 
 //FINDING CLOSEST ARRAY INDEX TO CURRENT TIME
-export const closest = (needle: number, haystack: any[]) => {
+export const closest = (needle: number, haystack: any[]): number => {
   return haystack.reduce((a: number, b: number) => {
     let aDiff = Math.abs(a - needle);
     let bDiff = Math.abs(b - needle);
@@ -268,7 +268,7 @@ export const closest = (needle: number, haystack: any[]) => {
 };
 
 //WINDMILL ROTATION SPEED
-export const wingSpeed = (value: number) => {
+export const wingSpeed = (value: number): string | number => {
   switch (true) {
     case value >= 0 && value < 10:
       return 50;
@@ -291,17 +291,16 @@ export const wingSpeed = (value: number) => {
   }
 };
 
-// export const alertIcon = (value) => {
+// export const alertIcon = (code:number):string => {
 //   switch (true) {
-//     case 55:
-//     case 57:
 //     case 65:
 //     case 67:
 //     case 75:
 //     case 82:
 //     case 86:
 //     case 95:
+//     case 96:
 //     case 99:
-//       return "⚠️";
+//       return "alert";
 //   }
 // };

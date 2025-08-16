@@ -7,7 +7,7 @@ export default function RouteError() {
     <>
       <Stack.Screen options={{ title: "Oops! This screen doesn't exist." }} />
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Link href="/home/index">Go to home screen</Link>
+        <Link href="/(home)">Go to home screen</Link>
       </View>
     </>
   );
