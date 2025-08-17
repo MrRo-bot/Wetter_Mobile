@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <SafeAreaView
-      className={`flex flex-col h-full justify-center items-center ${colorScheme === "dark" ? "bg-dark" : "bg-light"}`}
+      className={`flex h-full justify-center items-center ${colorScheme === "dark" ? "bg-dark" : "bg-light"}`}
     >
       <Image source={images.alert} style={{ width: 100, height: 100 }} />
       <Link

@@ -15,28 +15,25 @@ module.exports = {
         "orbitron-extraBold": ["Orbitron-ExtraBold", "roboto"],
       },
       colors: {
-        textLight: "hsl(0,0%,20%)",
-        textDark: "hsl(260,0%,80%)",
-
         light: "hsl(266, 54%, 97%)",
         outlineLight: "hsl(0, 0%, 10%)",
 
         dark: "hsl(264, 14%, 7%)",
         outlineDark: "hsl(0, 0%, 81%)",
 
-        tealDark: "hsl(198, 91%, 78%)",
-        greenDark: "hsl(87, 85%, 69%)",
-        purpleDark: "hsl(265, 100%, 81%)",
-        yellowDark: "hsl(48, 97%, 70%)",
-        redDark: "hsl(352, 100%, 80%)",
-        mustardDark: "hsl(22, 100%, 69%)",
+        tealDark: "hsl(197, 80%, 72%)",
+        greenDark: "hsl(69, 80%, 72%)",
+        purpleDark: "hsl(265, 80%, 72%)",
+        mustardDark: "hsl(16, 80%, 72%)",
+        yellowDark: "hsl(43, 80%, 72%)",
+        redDark: "hsl(353, 80%, 72%)",
 
         tealLight: "hsl(197, 100%, 72%)",
         greenLight: "hsl(69, 100%, 72%)",
-        purpleLight: "hsl(337, 100%, 72%)",
-        yellowLight: "hsl(43, 100%, 72%)",
-        redLight: "hsl(353, 100%, 70%)",
+        purpleLight: "hsl(265, 100%, 72%)",
         mustardLight: "hsl(16, 100%, 72%)",
+        yellowLight: "hsl(43, 100%, 72%)",
+        redLight: "hsl(353, 100%, 72%)",
       },
       backgroundImage: {
         aqiGradient:

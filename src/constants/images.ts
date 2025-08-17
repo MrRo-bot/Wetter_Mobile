@@ -2,6 +2,7 @@ import alert from "@/src/assets/images/alert.gif";
 import hot_alert from "@/src/assets/images/hot_alert.gif";
 import intro from "@/src/assets/images/intro.svg";
 import introduction from "@/src/assets/images/introduction.png";
+import location from "@/src/assets/images/location.gif";
 import search from "@/src/assets/images/search.gif";
 import wind from "@/src/assets/images/wind.gif";
 
@@ -43,6 +44,7 @@ export default {
   introduction,
   search,
   wind,
+  location,
   clock,
   humidity,
   light_drizzle,

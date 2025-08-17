@@ -125,6 +125,7 @@
             "./src/assets/images/search.gif",
             "./src/assets/images/wind.gif",
             "./src/assets/images/introduction.png",
+            "./src/assets/images/location.gif",
             "./src/assets/images/brief/clock.gif",
             "./src/assets/images/brief/humidity.gif",
             "./src/assets/images/brief/light_drizzle.gif",
@@ -155,6 +156,13 @@
             "./src/assets/images/weatherType/thunderstorm.gif",
             "./src/assets/images/weatherType/tornado.gif"
           ]
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Wetter to use your location",
+          "isAndroidBackgroundLocationEnable": true
         }
       ]
     ],

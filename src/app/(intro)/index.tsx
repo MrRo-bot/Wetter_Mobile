@@ -1,18 +1,17 @@
+import MainButton from "@/src/components/MainButton";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import React from "react";
-import { Pressable, Text, useColorScheme, View } from "react-native";
-// import { useBearStore } from "../store/bearStore";
+import { Text, useColorScheme, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Intro() {
   let colorScheme = useColorScheme();
-  // const bears = useBearStore((state) => state.bears);
-  // const increaseBears = useBearStore((state) => state.increasePopulation);
-  // const decreaseBears = useBearStore((state) => state.decreasePopulation);
-  // const removeAllBears = useBearStore((state) => state.removeAllPopulation);
 
   return (
-    <View className="flex items-center h-full justify-evenly">
+    <SafeAreaView
+      className={`flex h-full justify-evenly items-center ${colorScheme === "dark" ? "bg-dark" : "bg-light"}`}
+    >
       <View className="w-full">
         <Image
           contentFit="cover"
@@ -26,93 +25,26 @@ export default function Intro() {
       </View>
       <View className="w-full">
         <Text
-          className={`text-6xl font-orbitron mx-auto ${colorScheme === "dark" ? "text-mustardLight" : "text-mustardDark"}`}
+          className={`text-5xl font-goldman mx-auto ${colorScheme === "dark" ? "text-redDark" : "text-redLight"}`}
         >
           Wetter
         </Text>
         <Text
-          className={`text-lg font-goldman mt-4 mx-auto ${colorScheme === "dark" ? "text-textDark" : "text-textLight"}`}
+          className={`text-lg font-orbitron mt-4 mx-auto ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
         >
           A minimal weather app
         </Text>
       </View>
-      <View className="overflow-hidden rounded-full">
-        <Pressable
-          onPress={() => router.navigate("/(intro)/location")}
-          className={`px-10 py-2.5 ${colorScheme === "dark" ? "bg-redDark" : "bg-redLight"}`}
-          android_ripple={{
-            color:
-              colorScheme === "dark"
-                ? "hsla(200,100%,50%,0.7)"
-                : "hsla(198,60%,70%,0.8)",
-          }}
-        >
-          <Text
-            className={`font-orbitron-bold ${colorScheme === "dark" ? "text-textLight" : "text-zinc-50"}`}
-          >
-            Next
-          </Text>
-        </Pressable>
-      </View>
-      {/* <View>
-        <View className="overflow-hidden rounded-full">
-          <Pressable
-            onPress={increaseBears}
-            className={`px-10 py-2.5 ${colorScheme === "dark" ? "bg-redDark" : "bg-redLight"}`}
-            android_ripple={{
-              color:
-                colorScheme === "dark"
-                  ? "hsla(200,100%,50%,0.7)"
-                  : "hsla(198,60%,70%,0.8)",
-            }}
-          >
-            <Text
- 
-              className={`font-orbitron-bold ${colorScheme === "dark" ? "text-textLight" : "text-zinc-50"}`}
-            >
-              Add a bear
-            </Text>
-          </Pressable>
-        </View>
-        <View className="overflow-hidden rounded-full">
-          <Pressable
-            onPress={decreaseBears}
-            className={`px-10 py-2.5 ${colorScheme === "dark" ? "bg-redDark" : "bg-redLight"}`}
-            android_ripple={{
-              color:
-                colorScheme === "dark"
-                  ? "hsla(200,100%,50%,0.7)"
-                  : "hsla(198,60%,70%,0.8)",
-            }}
-          >
-            <Text
- 
-              className={`font-orbitron-bold ${colorScheme === "dark" ? "text-textLight" : "text-zinc-50"}`}
-            >
-              Remove a bear
-            </Text>
-          </Pressable>
-        </View>
-        <View className="overflow-hidden rounded-full">
-          <Pressable
-            onPress={removeAllBears}
-            className={`px-10 py-2.5 ${colorScheme === "dark" ? "bg-redDark" : "bg-redLight"}`}
-            android_ripple={{
-              color:
-                colorScheme === "dark"
-                  ? "hsla(200,100%,50%,0.7)"
-                  : "hsla(198,60%,70%,0.8)",
-            }}
-          >
-            <Text
-              className={`font-orbitron-bold ${colorScheme === "dark" ? "text-textLight" : "text-zinc-50"}`}
-            >
-              Clear all
-            </Text>
-          </Pressable>
-        </View>
-      </View>
-      <Text>{bears}</Text> */}
-    </View>
+
+      <MainButton
+        colorScheme={colorScheme}
+        onPressFunc={() => router.navigate("/(intro)/location")}
+        buttonText="Next"
+        darkBgColor="bg-redDark"
+        lightBgColor="bg-redLight"
+        darkColor="text-dark"
+        lightColor="text-light"
+      />
+    </SafeAreaView>
   );
 }
