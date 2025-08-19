@@ -38,18 +38,18 @@ const Detail = ({ theme }) => {
 
   return (
     <View
-      className={`px-4 py-5 shadow-md mx-3 rounded-2xl ${theme === "dark" ? "bg-dark" : "bg-light"}`}
+      className={`p-4 shadow-lg mx-3 rounded-2xl ${theme === "dark" ? "bg-dark" : "bg-light"}`}
     >
       <Text
-        className={`text-xl ${theme === "dark" ? "text-light" : "text-dark"}`}
+        className={`font-orbitron-regular leading-none text-lg ${theme === "dark" ? "text-light bg-dark" : "text-dark bg-light"}`}
       >
         DETAIL
       </Text>
-      <View className="flex flex-row flex-wrap items-center justify-between mt-6 gap-y-2">
+      <View className="flex-row flex-wrap items-center justify-between mt-4 gap-y-2">
         {detailObj.map((x) => (
           <View
             key={x.icon}
-            className={`flex w-[33%] items-center justify-center p-2 rounded shadow-sm ${theme === "dark" ? "shadow-stone-800 bg-dark/50" : "bg-light/50"}`}
+            className={`w-[33%] items-center justify-center p-2 rounded shadow-sm ${theme === "dark" ? "shadow-stone-800 bg-dark/50" : "bg-light/50"}`}
           >
             <Image
               style={{ width: 44, height: 44 }}
@@ -57,12 +57,12 @@ const Detail = ({ theme }) => {
               alt={x.heading}
             />
             <Text
-              className={`text-xs mt-1  ${theme === "dark" ? "text-light" : "text-dark"}`}
+              className={`text-xs mt-1 font-orbitron-medium ${theme === "dark" ? "text-light" : "text-dark"}`}
             >
               {x.heading}
             </Text>
             <Text
-              className={`text-2xl mt-2  ${theme === "dark" ? "text-light" : "text-dark"}`}
+              className={`text-4xl mt-2 font-genos-regular ${theme === "dark" ? "text-light" : "text-dark"}`}
             >
               {x.data}
             </Text>

@@ -24,7 +24,8 @@ export default function Location() {
 
   return (
     <SafeAreaView
-      className={`flex h-full justify-evenly items-center ${colorScheme === "dark" ? "bg-dark" : "bg-light"}`}
+      edges={["right", "left", "bottom"]}
+      className={`h-full justify-evenly items-center ${colorScheme === "dark" ? "bg-dark" : "bg-light"}`}
     >
       <View className="w-full">
         <Image
@@ -32,25 +33,29 @@ export default function Location() {
           style={{ width: 300, height: 300, marginInline: "auto" }}
         />
         <Text
-          className={`text-3xl  mt-4 text-center mx-auto  ${colorScheme === "dark" ? "text-mustardLight" : "text-mustardDark"}`}
+          className={`font-orbitron-medium tracking-wide uppercase text-2xl mt-4 text-center mx-auto ${colorScheme === "dark" ? "text-mustardLight" : "text-mustardDark"}`}
         >
           Allow Permissions
         </Text>
 
         <Text
-          className={` mt-4 leading-5 w-3/4 mx-auto text-center ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
+          className={`font-genos-light text-xl leading-none mt-4 w-3/4 mx-auto text-center ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
         >
           Wetter needs to access your device location to provide your
-          <Text
-            className={`text-center ${colorScheme === "dark" ? "text-redLight" : "text-dark"}`}
-          >
-            {" "}
-            local forecast
-          </Text>
+        </Text>
+        <Text
+          className={`text-center ${colorScheme === "dark" ? "text-redLight" : "text-redDark"}`}
+        >
+          local forecast
         </Text>
       </View>
 
       <View className="relative w-full">
+        {isLoading && (
+          <View className="absolute -translate-x-1/2 left-1/2 max-w-max -top-16">
+            <Loader />
+          </View>
+        )}
         <View className="mx-auto">
           <MainButton
             colorScheme={colorScheme}
@@ -68,17 +73,12 @@ export default function Location() {
           // onPress={()=>'add location to search route'}
           >
             <Text
-              className={`underline underline-offset-2 text-lg ${colorScheme === "dark" ? "text-mustardLight" : "text-mustardDark"}`}
+              className={`font-genos-light underline underline-offset-2 text-xl ${colorScheme === "dark" ? "text-mustardLight" : "text-mustardDark font-genos-regular"}`}
             >
               Ignore
             </Text>
           </Pressable>
         </View>
-        {isLoading && (
-          <View className="absolute -translate-x-1/2 left-1/2 max-w-max -top-16">
-            <Loader />
-          </View>
-        )}
       </View>
     </SafeAreaView>
   );

@@ -7,7 +7,7 @@ import Brief from "../components/home/Brief";
 import Detail from "../components/home/Detail";
 // import Footer from "../components/home/Footer";
 // import Header from "../components/home/Header";
-// import Hourly from "../components/home/Hourly";
+import Hourly from "../components/home/Hourly";
 // import Hours from "../components/home/Hours";
 // import Wind from "../components/home/Wind";
 
@@ -24,7 +24,7 @@ export default {
   Detail,
   // Footer,
   // Header,
-  // Hourly,
+  Hourly,
   // Hours,
   Loader,
   MainButton,

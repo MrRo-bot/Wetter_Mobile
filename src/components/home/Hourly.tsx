@@ -1,79 +1,79 @@
-/* eslint-disable react/prop-types */
-import { useState } from "react";
-import { expand, windAlternate } from "../assets/images";
-import { Hours } from "../components/index";
-import FramerAnimations from "../utils/FramerAnimations";
+import images from "@/src/constants/images";
+import Entypo from "@expo/vector-icons/Entypo";
+import { Image } from "expo-image";
+import { Text, View } from "react-native";
 
-const Hourly = ({ hourly }) => {
-  const [hoursPopup, setHoursPopup] = useState(false);
-
-  const handleRender = () => {
-    setHoursPopup((prev) => !prev);
-  };
-
-  if (hoursPopup) document.body.style.overflow = "hidden";
-  else document.body.style.overflow = "auto";
-
-  return hoursPopup ? (
-    <Hours hours={hourly} handleRender={() => handleRender()} />
-  ) : (
-    <FramerAnimations>
-      <section
-        onClick={handleRender}
-        className="cursor-pointer shadow-md dark:shadow-stone-800 dark:bg-sectionD bg-section px-2 xs:px-4 py-5 m-3 xs:mx-5 sm:p-8 md:p-12 sm:my-8 sm:mx-12 md:mx-24 rounded-2xl lg:max-w-[70vw] lg:mx-auto xl:max-w-[50vw]"
-      >
-        <div className="relative">
-          <h2 className="text-sm font-medium sm:text-lg font-pathway text-sectionHeading dark:text-sectionHeadingD">
-            HOURLY
-          </h2>
-          <div className="absolute w-5 h-5 right-0 top-[50%] translate-y-[-50%]">
-            <img
-              src={expand}
-              className="cursor-pointer absolute w-2 h-2 right-0 top-[50%] translate-y-[-50%] dark:invert"
-              alt="click to expand"
-            />
-          </div>
-        </div>
-        <div className="flex gap-4 mt-6 overflow-x-scroll sm:gap-6">
-          {hourly.slice(0, 24).map((x) => (
-            <div
-              key={x.id}
-              className="flex flex-col items-center sm:gap-4 rounded py-2 min-w-[3.2rem] sm:min-w-[3.5rem] first:bg-greyBackHourly first:dark:bg-greyBackHourlyD"
-            >
-              <span className="text-sm font-normal sm:text-base font-inter text-mainHeading dark:text-mainHeadingD">
-                {x.currentTemp}
-              </span>
-              <span className="my-1 text-xs font-light sm:my-0 sm:text-sm font-inter text-chanceOfPrecipitation">
-                {x.precipitation}
-              </span>
-              <img
-                className="w-4 my-1 sm:my-0 sm:w-6"
-                src={`/${
-                  typeof x.weatherIcon != "object"
-                    ? x.weatherIcon
-                    : x.isDay
-                      ? x.weatherIcon[0]
-                      : x.weatherIcon[1]
-                }.svg`}
-                alt="⚠️"
-              />
-              <span className="my-1 sm:my-0 text-[0.6rem] sm:text-[0.7rem] font-light sm:font-medium font-pathway text-greyText dark:text-greyTextD">
-                {x.windSpeed}
-              </span>
-              <img
-                style={{ transform: `rotate(${x.windDirection}deg)` }}
-                className="w-4 my-1 sm:my-0 dark:invert"
-                src={windAlternate}
-                alt="wind direction"
-              />
-              <span className="text-[0.6rem] sm:text-[0.7rem] font-light sm:font-medium font-pathway text-greyText dark:text-greyTextD">
-                {x.hourStamp.toLowerCase()}
-              </span>
-            </div>
-          ))}
-        </div>
-      </section>
-    </FramerAnimations>
+const Hourly = ({ theme }) => {
+  return (
+    <View
+      className={`p-4 mx-3 shadow-lg rounded-2xl ${theme === "dark" ? "bg-dark" : "bg-light"}`}
+    >
+      <View className="relative">
+        <Text
+          className={`font-orbitron-regular leading-none text-lg ${theme === "dark" ? "text-light bg-dark" : "text-dark bg-light"}`}
+        >
+          HOURLY
+        </Text>
+        <View className="absolute right-0 -translate-y-1/2 top-1/2">
+          <Entypo
+            className="rotate-45"
+            name="direction"
+            size={12}
+            color={theme === "dark" ? "white" : "black"}
+          />
+        </View>
+      </View>
+      <View className="flex-row gap-4 mt-6">
+        {/* {hourly.slice(0, 24).map((x) => ( */}
+        <View
+          // key={x.id}
+          key={1}
+          className={`items-center rounded justify-between py-1 px-4 ${theme === "dark" ? "bg-white/5" : "bg-dark/5"}`} //color first data column to show current hour temperature
+        >
+          <Text className={`font-genos-medium text-2xl`}>
+            {/* {x.currentTemp} */}
+            {"23৹c"}
+          </Text>
+          <Text className={`font-orbitron-semiBold  text-sky-400/50`}>
+            {"88%"}
+          </Text>
+          <Image
+            style={{ width: 52, height: 52, marginBlock: 7 }}
+            // source={`/${
+            //   typeof x.weatherIcon != "object"
+            //     ? x.weatherIcon
+            //     : x.isDay
+            //       ? x.weatherIcon[0]
+            //       : x.weatherIcon[1]
+            // }.svg`}
+            source={images.partly_cloudy_day}
+            alt="⚠️"
+          />
+          <Text className={`font-orbitron-regular text-sm`}>
+            {/* {x.windSpeed} */}
+            {"12 mph"}
+          </Text>
+          <Image
+            // style={{ transform: `rotate(${x.windDirection}deg)` }}
+            style={{
+              transform: `rotate(${230}deg)`,
+              width: 52,
+              height: 52,
+              marginBlock: 7,
+            }}
+            // source={windAlternate}
+            source={images.wind}
+            alt="wind direction"
+          />
+          <Text className={`font-orbitron-semiBold text-lg`}>
+            {/* {x.hourStamp.toLowerCase()} */}
+            {"4pm"}
+          </Text>
+        </View>
+        {/* 
+          ))} */}
+      </View>
+    </View>
   );
 };
 

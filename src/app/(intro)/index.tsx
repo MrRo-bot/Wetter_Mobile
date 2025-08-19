@@ -11,7 +11,8 @@ export default function Intro() {
 
   return (
     <SafeAreaView
-      className={`flex h-full justify-evenly items-center ${colorScheme === "dark" ? "bg-dark" : "bg-light"}`}
+      edges={["right", "left", "bottom"]}
+      className={`h-full justify-evenly items-center ${colorScheme === "dark" ? "bg-dark" : "bg-light"}`}
     >
       <View className="w-full">
         <Image
@@ -36,13 +37,13 @@ export default function Intro() {
           }}
         >
           <Text
-            className={`text-5xl uppercase text-center ${colorScheme === "dark" ? "text-redDark" : "text-redLight"}`}
+            className={`font-orbitron-black tracking-widest text-5xl text-center ${colorScheme === "dark" ? "text-redDark" : "text-redLight"}`}
           >
             Wetter
           </Text>
         </Animated.View>
         <Text
-          className={`mt-4 text-center ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
+          className={`font-genos-light tracking-widest text-2xl mt-4 text-center ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
         >
           A minimal weather app
         </Text>

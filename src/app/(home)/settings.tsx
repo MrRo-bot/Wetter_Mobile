@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 
 export default function Settings() {
   return (
-    <View className="flex items-center justify-center h-full">
+    <View className="items-center justify-center h-full">
       <Text>settings</Text>
     </View>
   );

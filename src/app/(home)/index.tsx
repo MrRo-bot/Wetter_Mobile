@@ -6,11 +6,17 @@ export default function Home() {
 
   return (
     <SafeAreaView
-      className={`flex h-full justify-center items-center ${colorScheme === "dark" ? "bg-dark" : "bg-light"}`}
+      edges={["right", "left", "bottom"]}
+      className={`h-full ${colorScheme === "dark" ? "bg-black" : "bg-light"}`}
     >
-      <ScrollView>
+      <ScrollView contentContainerClassName="gap-y-4">
         <components.Brief theme={colorScheme} />
         <components.Detail theme={colorScheme} />
+        <components.Hourly theme={colorScheme} />
+        {/* <components.Days theme={colorScheme} />
+        <components.Charts theme={colorScheme} />
+        <components.AirQuality theme={colorScheme} />
+        <components.Wind theme={colorScheme} /> */}
       </ScrollView>
     </SafeAreaView>
   );
