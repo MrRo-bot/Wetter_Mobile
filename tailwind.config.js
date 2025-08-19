@@ -5,14 +5,22 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        goldman: ["Goldman-Regular", "roboto"],
-        "goldman-bold": ["Goldman-Bold", "roboto"],
-        "orbitron-black": ["Orbitron-Black", "roboto"],
-        orbitron: ["Orbitron-Regular", "roboto"],
+        "genos-thin": ["Orbitron-Thin", "roboto"],
+        "genos-extraLight": ["Orbitron-ExtraLight", "roboto"],
+        "genos-light": ["Orbitron-Light", "roboto"],
+        "genos-regular": ["Orbitron-Regular", "roboto"],
+        "genos-medium": ["Orbitron-Medium", "roboto"],
+        "genos-semiBold": ["Orbitron-SemiBold", "roboto"],
+        "genos-bold": ["Orbitron-Bold", "roboto"],
+        "genos-extraBold": ["Orbitron-ExtraBold", "roboto"],
+        "genos-black": ["Orbitron-Black", "roboto"],
+
+        "orbitron-regular": ["Orbitron-Regular", "roboto"],
         "orbitron-medium": ["Orbitron-Medium", "roboto"],
         "orbitron-semiBold": ["Orbitron-SemiBold", "roboto"],
         "orbitron-bold": ["Orbitron-Bold", "roboto"],
         "orbitron-extraBold": ["Orbitron-ExtraBold", "roboto"],
+        "orbitron-black": ["Orbitron-Black", "roboto"],
       },
       colors: {
         light: "hsl(266, 54%, 97%)",

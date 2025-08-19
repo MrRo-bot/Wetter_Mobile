@@ -23,9 +23,7 @@ const MainButton = ({
               : "hsla(198,60%,70%,0.8)",
         }}
       >
-        <Text
-          className={`font-orbitron-bold ${colorScheme === "dark" ? darkColor : lightColor}`}
-        >
+        <Text className={`${colorScheme === "dark" ? darkColor : lightColor}`}>
           {buttonText}
         </Text>
       </Pressable>

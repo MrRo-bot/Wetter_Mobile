@@ -12,6 +12,8 @@ import {
   useColorScheme,
 } from "react-native";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import "../global.css";
 
 SplashScreen.setOptions({
@@ -23,14 +25,22 @@ SplashScreen.preventAutoHideAsync();
 export default function Layout() {
   //all fonts imported
   const [fontsLoaded] = useFonts({
-    "Goldman-Regular": require("@/src/assets/fonts/Goldman-Regular.otf"),
-    "Goldman-Bold": require("@/src/assets/fonts/Goldman-Bold.otf"),
-    "Orbitron-Black": require("@/src/assets/fonts/Orbitron-Black.otf"),
-    "Orbitron-Regular": require("@/src/assets/fonts/Orbitron-Regular.otf"),
-    "Orbitron-Medium": require("@/src/assets/fonts/Orbitron-Medium.otf"),
-    "Orbitron-SemiBold": require("@/src/assets/fonts/Orbitron-SemiBold.otf"),
-    "Orbitron-Bold": require("@/src/assets/fonts/Orbitron-Bold.otf"),
-    "Orbitron-ExtraBold": require("@/src/assets/fonts/Orbitron-ExtraBold.otf"),
+    "genos-thin": require("@/src/assets/fonts/Genos-Thin.otf"),
+    "genos-extraLight": require("@/src/assets/fonts/Genos-ExtraLight.otf"),
+    "genos-light": require("@/src/assets/fonts/Genos-Light.otf"),
+    "genos-regular": require("@/src/assets/fonts/Genos-Regular.otf"),
+    "genos-medium": require("@/src/assets/fonts/Genos-Medium.otf"),
+    "genos-semiBold": require("@/src/assets/fonts/Genos-SemiBold.otf"),
+    "genos-bold": require("@/src/assets/fonts/Genos-Bold.otf"),
+    "genos-extraBold": require("@/src/assets/fonts/Genos-ExtraBold.otf"),
+    "genos-black": require("@/src/assets/fonts/Genos-Black.otf"),
+
+    "orbitron-regular": require("@/src/assets/fonts/Orbitron-Regular.otf"),
+    "orbitron-medium": require("@/src/assets/fonts/Orbitron-Medium.otf"),
+    "orbitron-semiBold": require("@/src/assets/fonts/Orbitron-SemiBold.otf"),
+    "orbitron-bold": require("@/src/assets/fonts/Orbitron-Bold.otf"),
+    "orbitron-extraBold": require("@/src/assets/fonts/Orbitron-ExtraBold.otf"),
+    "orbitron-black": require("@/src/assets/fonts/Orbitron-Black.otf"),
   });
 
   //sysmte theme checker
@@ -64,8 +74,8 @@ export default function Layout() {
       }
     };
     const initializeNavigation = async () => {
-      // const isFirstLaunch = await checkFirstLaunch();
-      const isFirstLaunch = true;
+      const isFirstLaunch = await checkFirstLaunch();
+      // const isFirstLaunch = true;
       if (isFirstLaunch) {
         router.replace("/(intro)");
       } else {
@@ -84,10 +94,13 @@ export default function Layout() {
   //keep splashscreen on
   if (!fontsLoaded) return null;
 
+  //wrapping query client all over the project
+  const queryClient = new QueryClient();
+
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <StatusBar barStyle={themeStyle} backgroundColor={themeBackground} />
       <Stack screenOptions={{ headerShown: false }} />
-    </>
+    </QueryClientProvider>
   );
 }

@@ -51,16 +51,51 @@
           "android": {
             "fonts": [
               {
-                "fontFamily": "Goldman",
+                "fontFamily": "Genos",
                 "fontDefinitions": [
                   {
-                    "path": "./src/assets/fonts/Goldman-Regular.otf",
+                    "path": "./src/assets/fonts/Genos-Thin.otf",
+                    "weight": 100,
+                    "style": "normal"
+                  },
+                  {
+                    "path": "./src/assets/fonts/Genos-ExtraLight.otf",
+                    "weight": 200,
+                    "style": "normal"
+                  },
+                  {
+                    "path": "./src/assets/fonts/Genos-Light.otf",
+                    "weight": 300,
+                    "style": "normal"
+                  },
+                  {
+                    "path": "./src/assets/fonts/Genos-Regular.otf",
                     "weight": 400,
                     "style": "normal"
                   },
                   {
-                    "path": "./src/assets/fonts/Goldman-Bold.otf",
+                    "path": "./src/assets/fonts/Genos-Medium.otf",
+                    "weight": 500,
+                    "style": "normal"
+                  },
+                  {
+                    "path": "./src/assets/fonts/Genos-SemiBold.otf",
+                    "weight": 600,
+                    "style": "normal"
+                  },
+                  {
+                    "path": "./src/assets/fonts/Genos-Bold.otf",
                     "weight": 700,
+                    "style": "normal"
+                  },
+                  {
+                    "path": "./src/assets/fonts/Genos-ExtraBold.otf",
+                    "weight": 800,
+                    "style": "normal"
+                  },
+                  {
+                    "path": "./src/assets/fonts/Genos-Black.otf",
+                    "weight": 900,
                     "style": "normal"
                   }
                 ]
@@ -104,8 +139,15 @@
           },
           "ios": {
             "fonts": [
-              "./src/assets/fonts/Goldman-Regular.otf",
-              "./src/assets/fonts/Goldman-Bold.otf",
+              "./src/assets/fonts/Genos-Thin.otf",
+              "./src/assets/fonts/Genos-ExtraLight.otf",
+              "./src/assets/fonts/Genos-Light.otf",
+              "./src/assets/fonts/Genos-Regular.otf",
+              "./src/assets/fonts/Genos-Medium.otf",
+              "./src/assets/fonts/Genos-SemiBold.otf",
+              "./src/assets/fonts/Genos-Bold.otf",
+              "./src/assets/fonts/Genos-ExtraBold.otf",
+              "./src/assets/fonts/Genos-Black.otf",
               "./src/assets/fonts/Orbitron-Regular.otf",
               "./src/assets/fonts/Orbitron-Medium.otf",
               "./src/assets/fonts/Orbitron-SemiBold.otf",
@@ -122,13 +164,13 @@
           "assets": [
             "./src/assets/images/alert.gif",
             "./src/assets/images/hot_alert.gif",
-            "./src/assets/images/search.gif",
-            "./src/assets/images/wind.gif",
             "./src/assets/images/introduction.png",
             "./src/assets/images/location.gif",
+            "./src/assets/images/search.gif",
+            "./src/assets/images/wind.gif",
             "./src/assets/images/brief/clock.gif",
+            "./src/assets/images/brief/dew_point.gif",
             "./src/assets/images/brief/humidity.gif",
-            "./src/assets/images/brief/light_drizzle.gif",
             "./src/assets/images/brief/pressure.gif",
             "./src/assets/images/brief/sunrise.gif",
             "./src/assets/images/brief/sunset.gif",

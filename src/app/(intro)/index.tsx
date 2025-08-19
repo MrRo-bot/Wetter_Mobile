@@ -3,6 +3,7 @@ import { Image } from "expo-image";
 import { router } from "expo-router";
 import React from "react";
 import { Text, useColorScheme, View } from "react-native";
+import Animated from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Intro() {
@@ -24,13 +25,24 @@ export default function Intro() {
         />
       </View>
       <View className="w-full">
-        <Text
-          className={`text-5xl font-goldman mx-auto ${colorScheme === "dark" ? "text-redDark" : "text-redLight"}`}
+        <Animated.View
+          style={{
+            animationName: {
+              "100%": {
+                transform: [{ translateX: 100 }],
+              },
+            },
+            animationDuration: "300ms",
+          }}
         >
-          Wetter
-        </Text>
+          <Text
+            className={`text-5xl uppercase text-center ${colorScheme === "dark" ? "text-redDark" : "text-redLight"}`}
+          >
+            Wetter
+          </Text>
+        </Animated.View>
         <Text
-          className={`text-lg font-orbitron mt-4 mx-auto ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
+          className={`mt-4 text-center ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
         >
           A minimal weather app
         </Text>
@@ -48,3 +60,4 @@ export default function Intro() {
     </SafeAreaView>
   );
 }
+// duration delay repeat

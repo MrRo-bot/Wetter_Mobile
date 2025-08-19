@@ -6,12 +6,12 @@ export default function SearchLocation() {
   return (
     <View className="flex items-center justify-center h-full">
       <Text
-        className={`font-goldman-bold ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
+        className={`${colorScheme === "dark" ? "text-light" : "text-dark"}`}
       >
         search
       </Text>
       <Text
-        className={`font-orbitron ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
+        className={`${colorScheme === "dark" ? "text-light" : "text-dark"}`}
       >
         something
       </Text>

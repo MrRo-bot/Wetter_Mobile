@@ -1,14 +1,13 @@
 import alert from "@/src/assets/images/alert.gif";
 import hot_alert from "@/src/assets/images/hot_alert.gif";
-import intro from "@/src/assets/images/intro.svg";
 import introduction from "@/src/assets/images/introduction.png";
 import location from "@/src/assets/images/location.gif";
 import search from "@/src/assets/images/search.gif";
 import wind from "@/src/assets/images/wind.gif";
 
 import clock from "@/src/assets/images/brief/clock.gif";
+import dew_point from "@/src/assets/images/brief/dew_point.gif";
 import humidity from "@/src/assets/images/brief/humidity.gif";
-import light_drizzle from "@/src/assets/images/brief/light_drizzle.gif";
 import pressure from "@/src/assets/images/brief/pressure.gif";
 import sunrise from "@/src/assets/images/brief/sunrise.gif";
 import sunset from "@/src/assets/images/brief/sunset.gif";
@@ -40,14 +39,13 @@ import tornado from "@/src/assets/images/weatherType/tornado.gif";
 export default {
   alert,
   hot_alert,
-  intro,
   introduction,
   search,
   wind,
   location,
   clock,
   humidity,
-  light_drizzle,
+  dew_point,
   pressure,
   sunrise,
   sunset,

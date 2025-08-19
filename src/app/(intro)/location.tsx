@@ -32,17 +32,17 @@ export default function Location() {
           style={{ width: 300, height: 300, marginInline: "auto" }}
         />
         <Text
-          className={`text-3xl  mt-4 text-center mx-auto font-goldman-bold  ${colorScheme === "dark" ? "text-mustardLight" : "text-mustardDark"}`}
+          className={`text-3xl  mt-4 text-center mx-auto  ${colorScheme === "dark" ? "text-mustardLight" : "text-mustardDark"}`}
         >
           Allow Permissions
         </Text>
 
         <Text
-          className={`font-orbitron-semiBold mt-4 leading-5 w-3/4 mx-auto text-center ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
+          className={` mt-4 leading-5 w-3/4 mx-auto text-center ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
         >
           Wetter needs to access your device location to provide your
           <Text
-            className={`font-goldman text-center ${colorScheme === "dark" ? "text-redLight" : "text-dark"}`}
+            className={`text-center ${colorScheme === "dark" ? "text-redLight" : "text-dark"}`}
           >
             {" "}
             local forecast
@@ -68,7 +68,7 @@ export default function Location() {
           // onPress={()=>'add location to search route'}
           >
             <Text
-              className={`underline underline-offset-2 text-lg font-orbitron-semibold ${colorScheme === "dark" ? "text-mustardLight" : "text-mustardDark"}`}
+              className={`underline underline-offset-2 text-lg ${colorScheme === "dark" ? "text-mustardLight" : "text-mustardDark"}`}
             >
               Ignore
             </Text>
