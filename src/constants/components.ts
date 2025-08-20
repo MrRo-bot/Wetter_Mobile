@@ -2,7 +2,7 @@
 import Brief from "../components/home/Brief";
 // import Chart from "../components/home/Chart";
 // import Charts from "../components/home/Charts";
-// import Daily from "../components/home/Daily";
+import Daily from "../components/home/Daily";
 // import Days from "../components/home/Days";
 import Detail from "../components/home/Detail";
 // import Footer from "../components/home/Footer";
@@ -19,7 +19,7 @@ export default {
   Brief,
   // Chart,
   // Charts,
-  // Daily,
+  Daily,
   // Days,
   Detail,
   // Footer,

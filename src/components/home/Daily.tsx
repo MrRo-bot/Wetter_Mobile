@@ -1,83 +1,86 @@
-/* eslint-disable react/prop-types */
-import { useState } from "react";
-import { expand, windAlternate } from "../assets/images";
-import { Days } from "../components/index";
-import FramerAnimations from "../utils/FramerAnimations";
+import images from "@/src/constants/images";
+import Entypo from "@expo/vector-icons/Entypo";
+import { Image } from "expo-image";
+import { Text, View } from "react-native";
 
-const Daily = ({ daily }) => {
-  const [daysPopup, setDaysPopup] = useState(false);
-
-  const handleRender = () => {
-    setDaysPopup((prev) => !prev);
-  };
-
-  if (daysPopup) document.body.style.overflow = "hidden";
-  else document.body.style.overflow = "auto";
-
-  return daysPopup ? (
-    <Days days={daily} handleRender={() => handleRender()} />
-  ) : (
-    <FramerAnimations>
-      <section
-        onClick={handleRender}
-        className="cursor-pointer shadow-md dark:shadow-stone-800 dark:bg-sectionD bg-section px-2 xs:px-4 py-5 m-3 xs:mx-5 sm:p-8 md:p-12 sm:my-8 sm:mx-12 md:mx-24 rounded-2xl lg:max-w-[70vw] lg:mx-auto xl:max-w-[50vw]"
+const Daily = ({ theme }) => {
+  return (
+    <View
+      className={`relative overflow-hidden p-4 pt-10 mx-3 rounded-2xl ${theme === "dark" ? "bg-redDark" : "bg-redLight"}`}
+    >
+      <View
+        className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-dark/50" : "bg-white/50"}`}
       >
-        <div className="relative">
-          <h2 className="text-sm font-medium sm:text-lg font-pathway text-sectionHeading dark:text-sectionHeadingD">
-            DAILY
-          </h2>
-          <div className="absolute w-5 h-5 right-0 top-[50%] translate-y-[-50%]">
-            <img
-              src={expand}
-              className="cursor-pointer absolute w-2 h-2 right-0 top-[50%] translate-y-[-50%] dark:invert"
-              alt="click to expand"
-            />
-          </div>
-        </div>
-        <div className="flex justify-between mt-6 sm:justify-evenly">
-          {daily.slice(0, 6).map((x) => (
-            <div
-              key={x.id}
-              className="flex flex-col items-center w-20 gap-1 justify-evenly sm:gap-2 sm:w-24"
-            >
-              <span className="text-sm font-light sm:text-base font-inter text-greyText dark:text-mainHeadingD">
-                {x.maxTemp}
-              </span>
-              <span className="text-sm font-light sm:text-base font-inter text-greyText dark:text-mainHeadingD">
-                {x.minTemp}
-              </span>
+        <Text
+          className={`font-orbitron-regular -translate-y-1/2 top-1/2 leading-none text-lg ${theme === "dark" ? "text-light " : "text-dark "}`}
+        >
+          DAILY
+        </Text>
+        <View className="absolute -translate-y-1/2 right-5 top-1/2">
+          <Entypo
+            className="rotate-45"
+            name="direction"
+            size={16}
+            color={theme === "dark" ? "white" : "black"}
+          />
+        </View>
+      </View>
+      <View className="flex-row gap-4 mt-6">
+        {/* {daily.slice(0, 6).map((x) => ( */}
+        <View
+          // key={x.id}
+          key={1}
+          className={`items-center rounded-2xl py-1 px-4  ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
+        >
+          <Text className={`font-genos-medium text-2xl`}>
+            {/* {x.maxTemp} */}
+            {"36৹"}
+          </Text>
+          <Text className={`font-genos-medium text-2xl`}>
+            {/* {x.minTemp} */}
+            {"26৹"}
+          </Text>
 
-              <span className="text-xs font-light font-inter text-chanceOfPrecipitation">
-                {x.precipitation}
-              </span>
-              <img
-                className="w-6"
-                src={`/${
-                  typeof x.weatherIcon != "object"
-                    ? x.weatherIcon
-                    : x.isDay
-                      ? x.weatherIcon[0]
-                      : x.weatherIcon[1]
-                }.svg`}
-                alt="⚠️"
-              />
-              <span className="text-xs font-light font-pathway text-greyText dark:text-greyTextD">
-                {x.windSpeed}
-              </span>
-              <img
-                style={{ transform: `rotate(${x.windDirection}deg)` }}
-                className="w-6 dark:invert"
-                src={windAlternate}
-                alt="wind direction"
-              />
-              <span className="text-xs font-light font-pathway text-greyText dark:text-greyTextD">
-                {x.dateStamp.slice(0, 3)}
-              </span>
-            </div>
-          ))}
-        </div>
-      </section>
-    </FramerAnimations>
+          <Text className={`font-orbitron-semiBold  text-sky-400/50`}>
+            {/* {x.precipitation} */}
+            {"21%"}
+          </Text>
+          <Image
+            style={{ width: 52, height: 52, marginBlock: 7 }}
+            // source={`/${
+            //   typeof x.weatherIcon != "object"
+            //     ? x.weatherIcon
+            //     : x.isDay
+            //       ? x.weatherIcon[0]
+            //       : x.weatherIcon[1]
+            // }.svg`}
+            source={images.overcast}
+            alt="⚠️"
+          />
+          <Text className={`font-orbitron-regular text-sm`}>
+            {/* {x.windSpeed} */}
+            {"12 kmph"}
+          </Text>
+          <Image
+            // style={{ transform: `rotate(${x.windDirection}deg)` }}
+            style={{
+              transform: `rotate(${230}deg)`,
+              width: 52,
+              height: 52,
+              marginBlock: 7,
+            }}
+            // source={windAlternate}
+            source={images.wind}
+            alt="wind direction"
+          />
+          <Text className={`font-orbitron-semiBold text-lg`}>
+            {/* {x.dateStamp.slice(0, 3)} */}
+            {"MON"}
+          </Text>
+        </View>
+        {/* ))} */}
+      </View>
+    </View>
   );
 };
 

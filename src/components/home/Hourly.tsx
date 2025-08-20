@@ -6,19 +6,21 @@ import { Text, View } from "react-native";
 const Hourly = ({ theme }) => {
   return (
     <View
-      className={`p-4 mx-3 shadow-lg rounded-2xl ${theme === "dark" ? "bg-dark" : "bg-light"}`}
+      className={`relative overflow-hidden p-4 pt-10 mx-3  rounded-2xl ${theme === "dark" ? "bg-purpleDark" : "bg-purpleLight"}`}
     >
-      <View className="relative">
+      <View
+        className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-dark/50" : "bg-white/50"}`}
+      >
         <Text
-          className={`font-orbitron-regular leading-none text-lg ${theme === "dark" ? "text-light bg-dark" : "text-dark bg-light"}`}
+          className={`font-orbitron-regular -translate-y-1/2 top-1/2 leading-none text-lg ${theme === "dark" ? "text-light " : "text-dark "}`}
         >
           HOURLY
         </Text>
-        <View className="absolute right-0 -translate-y-1/2 top-1/2">
+        <View className="absolute -translate-y-1/2 right-5 top-1/2">
           <Entypo
             className="rotate-45"
             name="direction"
-            size={12}
+            size={16}
             color={theme === "dark" ? "white" : "black"}
           />
         </View>
@@ -28,11 +30,11 @@ const Hourly = ({ theme }) => {
         <View
           // key={x.id}
           key={1}
-          className={`items-center rounded justify-between py-1 px-4 ${theme === "dark" ? "bg-white/5" : "bg-dark/5"}`} //color first data column to show current hour temperature
+          className={`items-center rounded-2xl justify-between py-1 px-4 ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`} //color first data column to show current hour temperature
         >
           <Text className={`font-genos-medium text-2xl`}>
             {/* {x.currentTemp} */}
-            {"23৹c"}
+            {"23৹"}
           </Text>
           <Text className={`font-orbitron-semiBold  text-sky-400/50`}>
             {"88%"}

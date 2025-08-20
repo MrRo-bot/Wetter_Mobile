@@ -38,10 +38,10 @@ const Detail = ({ theme }) => {
 
   return (
     <View
-      className={`p-4 shadow-lg mx-3 rounded-2xl ${theme === "dark" ? "bg-dark" : "bg-light"}`}
+      className={`relative overflow-hidden p-4 pt-10 mx-3 rounded-2xl ${theme === "dark" ? "bg-tealDark" : "bg-tealLight"}`}
     >
       <Text
-        className={`font-orbitron-regular leading-none text-lg ${theme === "dark" ? "text-light bg-dark" : "text-dark bg-light"}`}
+        className={`absolute h-10 inset-x-0 pl-4 align-middle font-orbitron-regular leading-none text-lg  ${theme === "dark" ? "text-light bg-dark/50" : "text-dark bg-white/50"}`}
       >
         DETAIL
       </Text>
@@ -49,21 +49,17 @@ const Detail = ({ theme }) => {
         {detailObj.map((x) => (
           <View
             key={x.icon}
-            className={`w-[33%] items-center justify-center p-2 rounded shadow-sm ${theme === "dark" ? "shadow-stone-800 bg-dark/50" : "bg-light/50"}`}
+            className={`w-[32%] items-center justify-center p-2 rounded-2xl ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
           >
             <Image
               style={{ width: 44, height: 44 }}
               source={x.icon}
               alt={x.heading}
             />
-            <Text
-              className={`text-xs mt-1 font-orbitron-medium ${theme === "dark" ? "text-light" : "text-dark"}`}
-            >
+            <Text className={`text-xs mt-1 font-orbitron-medium text-dark`}>
               {x.heading}
             </Text>
-            <Text
-              className={`text-4xl mt-2 font-genos-regular ${theme === "dark" ? "text-light" : "text-dark"}`}
-            >
+            <Text className={`text-4xl mt-2 font-genos-regular text-dark`}>
               {x.data}
             </Text>
           </View>

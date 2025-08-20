@@ -5,16 +5,12 @@ import * as SplashScreen from "expo-splash-screen";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect } from "react";
-import {
-  Platform,
-  StatusBar,
-  ToastAndroid,
-  useColorScheme,
-} from "react-native";
+import { Platform, StatusBar, useColorScheme } from "react-native";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import "../global.css";
+import { locationStore } from "../store/locationStore";
 
 SplashScreen.setOptions({
   duration: 500,
@@ -23,6 +19,8 @@ SplashScreen.setOptions({
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
+  const { locations } = locationStore();
+
   //all fonts imported
   const [fontsLoaded] = useFonts({
     "genos-thin": require("@/src/assets/fonts/Genos-Thin.otf"),
@@ -67,32 +65,26 @@ export default function Layout() {
         }
         return false;
       } catch (error) {
-        ToastAndroid.show(`${error}`, ToastAndroid.BOTTOM);
+        console.error("First launch fetch Error " + error);
         return false;
-      } finally {
-        await SplashScreen.hideAsync();
       }
     };
     const initializeNavigation = async () => {
-      const isFirstLaunch = await checkFirstLaunch();
-      // const isFirstLaunch = true;
-      if (isFirstLaunch) {
+      // const isFirstLaunch = await checkFirstLaunch();
+      const isFirstLaunch = true;
+      if (isFirstLaunch && locations) {
+        SplashScreen.hideAsync();
         router.replace("/(intro)");
       } else {
+        SplashScreen.hideAsync();
         router.replace("/(home)");
       }
     };
 
-    initializeNavigation();
-  }, []);
-
-  //hide splashscreen when fonts are loaded
-  useEffect(() => {
-    fontsLoaded && SplashScreen.hideAsync();
-  }, [fontsLoaded]);
-
-  //keep splashscreen on
-  if (!fontsLoaded) return null;
+    if (fontsLoaded && locations) {
+      initializeNavigation();
+    }
+  }, [fontsLoaded, locations]);
 
   //wrapping query client all over the project
   const queryClient = new QueryClient();

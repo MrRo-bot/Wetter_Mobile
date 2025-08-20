@@ -1,5 +1,4 @@
 import * as PhoneLocation from "expo-location";
-import { ToastAndroid } from "react-native";
 
 import { useCallback, useEffect, useState } from "react";
 import { LocationDataType } from "../types/types";
@@ -40,7 +39,7 @@ export default function useLocation(autoFetch: boolean = false) {
           geoAddress: geoAddress,
         });
     } catch (error) {
-      ToastAndroid.show(`${error}`, ToastAndroid.BOTTOM);
+      console.log("location fetch error " + error);
     } finally {
       setIsLoading(false);
     }

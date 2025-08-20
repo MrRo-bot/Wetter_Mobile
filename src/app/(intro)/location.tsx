@@ -8,17 +8,16 @@ import images from "@/src/constants/images";
 
 import Loader from "@/src/components/Loader";
 import useLocation from "@/src/hooks/useLocation";
-import { useLocationStore } from "@/src/store/locationStore";
+import { locationStore } from "@/src/store/locationStore";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Location() {
   let colorScheme = useColorScheme();
   const { isLoading, getLocation, location: fetchedLocation } = useLocation();
-  const locationStore = useLocationStore();
+  const location = locationStore();
 
   useEffect(() => {
-    if (!isLoading && fetchedLocation)
-      locationStore.addLocation(fetchedLocation);
+    if (!isLoading && fetchedLocation) location.addLocation(fetchedLocation);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, fetchedLocation]);
 

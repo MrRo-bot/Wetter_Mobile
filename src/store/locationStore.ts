@@ -1,54 +1,42 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 import { LocationStoreType } from "../types/types";
 
-export const useLocationStore = create<LocationStoreType>((set, get) => ({
-  locations: [],
-  addLocation: (location) =>
-    set((state) => {
-      if (state.locations.some((loc) => loc.id === location.id)) {
-        return state;
-      }
-      return {
-        locations: [...state.locations, { ...location }],
-      };
+export const locationStore = create<
+  LocationStoreType,
+  [["zustand/persist", unknown]]
+>(
+  persist(
+    (set, _get) => ({
+      locations: [],
+      addLocation: (location) =>
+        set((state) => {
+          if (state.locations.some((loc) => loc.id === location.id)) {
+            return state;
+          }
+          return {
+            locations: [...state.locations, { ...location }],
+          };
+        }),
     }),
+    {
+      name: "weather-storage",
+      storage: createJSONStorage(() => AsyncStorage),
+    }
+  )
+);
 
-  //   removeLocation: (id) =>
-  //     set((state) => ({
-  //       locations: state.locations.filter((loc) => loc.id !== id),
-  //     })),
+//   removeLocation: (id) =>
+//     set((state) => ({
+//       locations: state.locations.filter((loc) => loc.id !== id),
+//     })),
 
-  //   updateLocationName: (id, name) =>
-  //     set((state) => ({
-  //       locations: state.locations.map((loc) =>
-  //         loc.id === id ? { ...loc, ...updates } : loc
-  //       ),
-  //     })),
+//   updateLocationName: (id, name) =>
+//     set((state) => ({
+//       locations: state.locations.map((loc) =>
+//         loc.id === id ? { ...loc, ...updates } : loc
+//       ),
+//     })),
 
-  //   getLocationById: (id) => get().locations.find((loc) => loc.id === id),
-}));
-
-// useWeatherStore.js
-// import { create } from 'zustand';
-// import { persist, createJSONStorage } from 'zustand/middleware';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-
-// const useWeatherStore = create(
-//   persist(
-//     (set) => ({
-//       weatherData: {},
-//       preferences: { unit: 'Celsius', favoriteCities: [] },
-//       setWeather: (city, data) =>
-//         set((state) => ({
-//           weatherData: { ...state.weatherData, [city]: data },
-//         })),
-//       setPreferences: (prefs) => set({ preferences: prefs }),
-//     }),
-//     {
-//       name: 'weather-storage',
-//       storage: createJSONStorage(() => AsyncStorage),
-//     }
-//   )
-// );
-
-// export default useWeatherStore;
+//   getLocationById: (id) => get().locations.find((loc) => loc.id === id),
