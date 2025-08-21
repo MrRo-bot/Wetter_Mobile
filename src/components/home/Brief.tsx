@@ -12,6 +12,7 @@ const Brief = ({ theme }) => {
     <View className="gap-2 mx-5 ">
       <View className="mx-auto overflow-hidden w-96 h-96 rounded-2xl">
         <Image
+          contentFit="cover"
           style={{ width: "100%", height: "100%" }}
           source={images.introduction}
         />

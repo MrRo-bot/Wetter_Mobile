@@ -37,13 +37,13 @@ export default function Intro() {
           }}
         >
           <Text
-            className={`font-orbitron-black tracking-widest text-5xl text-center ${colorScheme === "dark" ? "text-redDark" : "text-redLight"}`}
+            className={`font-orbitron-black tracking-widest text-5xl text-center ${colorScheme === "dark" ? "text-redLight" : "text-redDark"}`}
           >
             Wetter
           </Text>
         </Animated.View>
         <Text
-          className={`font-genos-light tracking-widest text-2xl mt-4 text-center ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
+          className={`font-genos-regular tracking-widest text-2xl mt-4 text-center ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
         >
           A minimal weather app
         </Text>
@@ -53,8 +53,8 @@ export default function Intro() {
         colorScheme={colorScheme}
         onPressFunc={() => router.navigate("/(intro)/location")}
         buttonText="Next"
-        darkBgColor="bg-redDark"
-        lightBgColor="bg-redLight"
+        darkBgColor="bg-redLight"
+        lightBgColor="bg-redDark"
         darkColor="text-dark"
         lightColor="text-light"
       />

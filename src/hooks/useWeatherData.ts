@@ -3,7 +3,7 @@ import { focusManager, onlineManager, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import type { AppStateStatus } from "react-native";
 import { AppState, Platform } from "react-native";
-import { weatherDataType } from "../types/types";
+import { WeatherDataType } from "../types/types";
 
 //check its usage how it works
 onlineManager.setEventListener((setOnline) => {
@@ -81,8 +81,8 @@ const useWeatherData = (coordinates: {
     }
   };
 
-  return useQuery<weatherDataType>({
-    queryKey: ["openMeteo", coordinates],
+  return useQuery<WeatherDataType>({
+    queryKey: ["openMeteo_weather", coordinates],
     queryFn: () => fetchWeather(),
     enabled: !!coordinates,
     staleTime: 15 * 60 * 1000,

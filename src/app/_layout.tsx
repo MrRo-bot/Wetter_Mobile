@@ -71,7 +71,7 @@ export default function Layout() {
     };
     const initializeNavigation = async () => {
       // const isFirstLaunch = await checkFirstLaunch();
-      const isFirstLaunch = true;
+      const isFirstLaunch = false;
       if (isFirstLaunch && locations) {
         SplashScreen.hideAsync();
         router.replace("/(intro)");

@@ -52,6 +52,7 @@ const Detail = ({ theme }) => {
             className={`w-[32%] items-center justify-center p-2 rounded-2xl ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
           >
             <Image
+              contentFit="cover"
               style={{ width: 44, height: 44 }}
               source={x.icon}
               alt={x.heading}

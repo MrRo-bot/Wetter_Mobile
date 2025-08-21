@@ -30,20 +30,21 @@ export default function Location() {
         <Image
           source={images.location}
           style={{ width: 300, height: 300, marginInline: "auto" }}
+          contentFit="contain"
         />
         <Text
-          className={`font-orbitron-medium tracking-wide uppercase text-2xl mt-4 text-center mx-auto ${colorScheme === "dark" ? "text-mustardLight" : "text-mustardDark"}`}
+          className={`font-orbitron-black tracking-wide uppercase text-2xl mt-4 text-center mx-auto ${colorScheme === "dark" ? "text-mustardLight" : "text-mustardDark"}`}
         >
           Allow Permissions
         </Text>
 
         <Text
-          className={`font-genos-light text-xl leading-none mt-4 w-3/4 mx-auto text-center ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
+          className={`font-genos-regular tracking-wide text-xl leading-none mt-4 w-3/4 mx-auto text-center ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
         >
           Wetter needs to access your device location to provide your
         </Text>
         <Text
-          className={`text-center ${colorScheme === "dark" ? "text-redLight" : "text-redDark"}`}
+          className={`font-genos-bold tracking-wider text-xl text-center ${colorScheme === "dark" ? "text-redLight" : "text-redDark"}`}
         >
           local forecast
         </Text>

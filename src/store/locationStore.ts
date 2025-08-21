@@ -21,7 +21,7 @@ export const locationStore = create<
         }),
     }),
     {
-      name: "weather-storage",
+      name: "location-storage",
       storage: createJSONStorage(() => AsyncStorage),
     }
   )

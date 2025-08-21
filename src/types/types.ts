@@ -12,6 +12,16 @@ export interface LocationStoreType {
   addLocation: (location: LocationDataType) => void;
 }
 
+export interface WeatherStoreType {
+  weather: WeatherDataType;
+  addWeather: (weatherData: WeatherDataType) => void;
+}
+
+export interface AqiStoreType {
+  aqi: AQIType;
+  addAQI: (aqiData: AQIType) => void;
+}
+
 export interface MainButtonType {
   onPressFunc: null | ((event: GestureResponderEvent) => void) | undefined;
   buttonText: string;
@@ -44,7 +54,7 @@ export interface AndroidImageColorsType {
   platform: "android";
 }
 
-export interface weatherDataType {
+export interface WeatherDataType {
   latitude: number;
   longitude: number;
   generationtime_ms: number;
@@ -99,5 +109,55 @@ export interface weatherDataType {
     precipitation: number[];
     visibility: number[];
     uv_index: number[];
+  };
+}
+
+export interface AQIType {
+  latitude: number;
+  longitude: number;
+  generationtime_ms: number;
+  utc_offset_seconds: number;
+  timezone: string;
+  timezone_abbreviation: string;
+  elevation: number;
+  current_units: {
+    time: "iso8601";
+    interval: "seconds";
+    pm10: "μg/m³";
+    pm2_5: "μg/m³";
+    carbon_monoxide: "μg/m³";
+    nitrogen_dioxide: "μg/m³";
+    sulphur_dioxide: "μg/m³";
+    ozone: "μg/m³";
+    us_aqi: "USAQI";
+  };
+  current: {
+    time: string;
+    interval: number;
+    pm10: number;
+    pm2_5: number;
+    carbon_monoxide: number;
+    nitrogen_dioxide: number;
+    sulphur_dioxide: number;
+    ozone: number;
+    us_aqi: number;
+  };
+  hourly_units: {
+    time: "iso8601";
+    pm10: "μg/m³";
+    pm2_5: "μg/m³";
+    ozone: "μg/m³";
+    sulphur_dioxide: "μg/m³";
+    nitrogen_dioxide: "μg/m³";
+    carbon_monoxide: "μg/m³";
+  };
+  hourly: {
+    time: string[];
+    pm10: number[];
+    pm2_5: number[];
+    ozone: number[];
+    sulphur_dioxide: number[];
+    nitrogen_dioxide: number[];
+    carbon_monoxide: number[];
   };
 }

@@ -40,6 +40,7 @@ const Hourly = ({ theme }) => {
             {"88%"}
           </Text>
           <Image
+            contentFit="cover"
             style={{ width: 52, height: 52, marginBlock: 7 }}
             // source={`/${
             //   typeof x.weatherIcon != "object"
@@ -56,6 +57,7 @@ const Hourly = ({ theme }) => {
             {"12 mph"}
           </Text>
           <Image
+            contentFit="cover"
             // style={{ transform: `rotate(${x.windDirection}deg)` }}
             style={{
               transform: `rotate(${230}deg)`,
