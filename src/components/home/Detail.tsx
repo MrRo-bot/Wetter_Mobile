@@ -1,8 +1,10 @@
 import images from "@/src/constants/images";
 import { Image } from "expo-image";
-import { Text, View } from "react-native";
+import { Text, useColorScheme, View } from "react-native";
 
-const Detail = ({ theme }) => {
+const Detail = () => {
+  let theme = useColorScheme();
+
   const detailObj = [
     {
       icon: images.thermometer,

@@ -1,9 +1,10 @@
 import images from "@/src/constants/images";
 import Entypo from "@expo/vector-icons/Entypo";
 import { Image } from "expo-image";
-import { Text, View } from "react-native";
+import { Text, useColorScheme, View } from "react-native";
 
-const Daily = ({ theme }) => {
+const Daily = () => {
+  let theme = useColorScheme();
   return (
     <View
       className={`relative overflow-hidden p-4 pt-10 mx-3 rounded-2xl ${theme === "dark" ? "bg-redDark" : "bg-redLight"}`}

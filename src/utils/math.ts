@@ -69,8 +69,7 @@ export const unixConv = {
     "November",
     "December",
   ],
-
-  timeStamp: (value: number): object => {
+  timeStamp: (value: number) => {
     const epoch = new Date(value * 1000);
     let year = epoch.getFullYear();
     let month = unixConv.months[epoch.getMonth()];
@@ -253,14 +252,27 @@ export const weatherIconFind = (code: number): number[] | number | string => {
   }
 };
 
-//FINDING CLOSEST ARRAY INDEX TO CURRENT TIME
-export const closest = (needle: number, haystack: any[]): number => {
-  return haystack.reduce((a: number, b: number) => {
-    let aDiff = Math.abs(a - needle);
-    let bDiff = Math.abs(b - needle);
+//FINDING CLOSEST TIMESTAMP ARRAY INDEX TO CURRENT TIME
+export const closestTimestamp = (
+  currTimestamp: string,
+  hourlyTimestampArray: string[]
+) => {
+  const currentTimestamp = new Date(currTimestamp).getTime();
+  if (isNaN(currentTimestamp))
+    throw new Error("Invalid currTimestamp timestamp");
+
+  return hourlyTimestampArray.reduce((a, b) => {
+    const aTime = new Date(a).getTime();
+    const bTime = new Date(b).getTime();
+
+    if (isNaN(aTime)) throw new Error(`Invalid timestamp: ${a}`);
+    if (isNaN(bTime)) throw new Error(`Invalid timestamp: ${b}`);
+
+    const aDiff = Math.abs(aTime - currentTimestamp);
+    const bDiff = Math.abs(bTime - currentTimestamp);
 
     if (aDiff === bDiff) {
-      return a > b ? a : b;
+      return aTime > bTime ? a : b;
     } else {
       return bDiff < aDiff ? b : a;
     }

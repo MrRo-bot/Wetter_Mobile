@@ -27,14 +27,14 @@ export default function useLocation(autoFetch: boolean = false) {
 
       //getting postal address of location from coords
       const geoAddress = await PhoneLocation.reverseGeocodeAsync({
-        latitude: locationCoords.coords.latitude,
-        longitude: locationCoords.coords.longitude,
+        latitude: locationCoords?.coords?.latitude,
+        longitude: locationCoords?.coords?.longitude,
       });
 
       //if geoAddress is available then send data to user
       if (geoAddress.length)
         setLocation({
-          id: `${geoAddress[0].city}-${locationCoords.coords.latitude}-${locationCoords.coords.longitude}`,
+          id: `${geoAddress[0].city}-${locationCoords?.coords?.latitude}-${locationCoords?.coords?.longitude}`,
           locationCoords: locationCoords,
           geoAddress: geoAddress,
         });
