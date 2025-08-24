@@ -25,7 +25,7 @@ const Brief = () => {
     imageColorsData?.imageColors?.platform === "android" ||
     imageColorsData?.imageColors?.platform === "web"
       ? theme === "dark"
-        ? imageColorsData?.imageColors?.lightVibrant
+        ? imageColorsData?.imageColors?.vibrant
         : imageColorsData?.imageColors?.muted
       : theme === "dark"
         ? imageColorsData?.imageColors?.quality
@@ -54,30 +54,35 @@ const Brief = () => {
   } - ${weatherCode}. Wind ${windDirection.cardinal} at ${windSpeed}. Gusts ${gustDirection.cardinal} at ${gustSpeed}${precipitationText}${precipitationAmount}.`;
 
   return (
-    <View className="gap-2 mx-3">
-      <View className="w-[calc(100vw-24px)] mt-1 overflow-hidden h-96 rounded-2xl">
-        {imageColorsLoading ? (
-          <View
-            style={
-              unsplashLoading && {
-                backgroundColor: imgColor,
-              }
-            }
-            className="w-full h-full"
-          />
-        ) : (
-          <Image
-            contentFit="cover"
-            style={{ width: "100%", height: "100%" }}
-            source={{ uri: imageColorsData?.url }}
-          />
-        )}
+    <View className="gap-2 mx-3 mt-28">
+      <View
+        style={{
+          shadowColor: imgColor,
+          shadowOffset: { width: 14, height: 0 },
+          shadowRadius: 8,
+          elevation: 6,
+        }}
+        className="w-[calc(100vw-24px)] mt-1 overflow-hidden h-96 rounded-2xl"
+      >
+        <Image
+          contentFit="cover"
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+          source={{ uri: imageColorsData?.url }}
+        />
       </View>
 
       <View className="py-2 mt-2">
         <View className="flex-row flex-wrap items-center">
           <Text
-            style={!imageColorsLoading && { color: imgColor }}
+            style={{
+              color: imageColorsLoading ? "#11111150" : imgColor,
+              textShadowColor: imgColor,
+              textShadowOffset: { width: 0, height: 2 },
+              textShadowRadius: 8,
+            }}
             className={`font-orbitron-regular mr-4 text-5xl`}
           >
             {valRound(weather.current.temperature_2m)}{" "}
@@ -85,20 +90,35 @@ const Brief = () => {
           </Text>
 
           <Text
-            style={!imageColorsLoading && { color: imgColor }}
+            style={{
+              color: imageColorsLoading ? "#11111150" : imgColor,
+              textShadowColor: imgColor,
+              textShadowOffset: { width: 0, height: 2 },
+              textShadowRadius: 8,
+            }}
             className={`font-orbitron-semiBold self-start text-lg`}
           >
             {valRound(weather.daily.temperature_2m_max[0])}{" "}
             {weather.daily_units.temperature_2m_max}
           </Text>
           <Text
-            style={!imageColorsLoading && { color: imgColor }}
+            style={{
+              color: imageColorsLoading ? "#11111150" : imgColor,
+              textShadowColor: imgColor,
+              textShadowOffset: { width: 0, height: 2 },
+              textShadowRadius: 8,
+            }}
             className={`font-orbitron-semiBold text-lg`}
           >
             /{" "}
           </Text>
           <Text
-            style={!imageColorsLoading && { color: imgColor }}
+            style={{
+              color: imageColorsLoading ? "#11111150" : imgColor,
+              textShadowColor: imgColor,
+              textShadowOffset: { width: 0, height: 2 },
+              textShadowRadius: 8,
+            }}
             className={`font-orbitron-semiBold self-end text-lg`}
           >
             {valRound(weather.daily.temperature_2m_min[0])}{" "}

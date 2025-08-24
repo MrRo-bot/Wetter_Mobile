@@ -124,14 +124,16 @@ const Daily = () => {
                 key={item.id}
                 className={`items-center rounded-2xl py-1 px-3  ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
               >
-                <Text className={`font-genos-medium text-2xl`}>
+                <Text className={`font-genos-medium text-3xl`}>
                   {item.maxTemp}
                 </Text>
-                <Text className={`font-genos-medium text-2xl`}>
+                <Text className={`font-genos-medium text-3xl`}>
                   {item.minTemp}
                 </Text>
 
-                <Text className={`font-orbitron-semiBold  text-sky-400/50`}>
+                <Text
+                  className={`font-orbitron-semiBold  text-sky-600/70 mt-1`}
+                >
                   {item.precipitation}
                 </Text>
                 <Image
@@ -140,21 +142,21 @@ const Daily = () => {
                   source={icon}
                   alt={altText}
                 />
-                <Text className={`font-orbitron-regular text-sm`}>
+                <Text className={`font-orbitron-regular text-xs mt-1`}>
                   {item.windSpeed}
                 </Text>
                 <Image
                   contentFit="cover"
                   style={{
                     transform: `rotate(${item.windDirection}deg)`,
-                    width: 20,
-                    height: 20,
+                    width: 16,
+                    height: 16,
                     marginBlock: 7,
                   }}
                   source={images.direction}
                   alt="wind direction"
                 />
-                <Text className={`font-orbitron-semiBold text-lg`}>
+                <Text className={`font-orbitron-semiBold mt-1`}>
                   {item.dateStamp.slice(0, 3)}
                 </Text>
               </View>

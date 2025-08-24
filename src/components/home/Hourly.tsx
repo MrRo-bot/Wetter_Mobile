@@ -112,11 +112,11 @@ const Hourly = () => {
                 key={item.id}
                 className={` items-center rounded-2xl justify-between py-1 px-3 ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`} //color first data column to show current hour temperature
               >
-                <Text className={`font-genos-medium text-2xl`}>
+                <Text className={`font-genos-medium text-3xl`}>
                   {item.currentTemp}
                 </Text>
                 <Text
-                  className={`font-orbitron-semiBold  text-sky-400/50 mt-1`}
+                  className={`font-orbitron-semiBold  text-sky-600/70 mt-1`}
                 >
                   {item.precipitation}
                 </Text>
@@ -126,21 +126,21 @@ const Hourly = () => {
                   source={icon}
                   alt={altText}
                 />
-                <Text className={`font-orbitron-regular text-sm mt-2`}>
+                <Text className={`font-orbitron-regular text-xs mt-1`}>
                   {item.windSpeed}
                 </Text>
                 <Image
                   contentFit="cover"
                   style={{
                     transform: `rotate(${item.windDirection}deg)`,
-                    width: 20,
-                    height: 20,
+                    width: 16,
+                    height: 16,
                     marginBlock: 7,
                   }}
                   source={images.direction}
                   alt="wind direction"
                 />
-                <Text className={`font-orbitron-semiBold`}>
+                <Text className={`font-orbitron-semiBold text-sm mt-1`}>
                   {item.hourStamp.toLowerCase()}
                 </Text>
               </View>
