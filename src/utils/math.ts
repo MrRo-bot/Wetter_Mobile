@@ -1,9 +1,12 @@
-//DEGREES TO CARDINAL CONVERTER
-export const degConv = (deg: number): string => {
+//WIND DIRECTION IN CARDINAL AND IN DEGREES
+export const degConv = (deg: number) => {
+  // Normalize degrees to [0, 360)
   while (deg < 0) deg += 360;
   while (deg >= 360) deg -= 360;
-  let val = Math.round((deg - 11.25) / 22.5);
-  let cardinal = [
+
+  // Cardinal direction calculation
+  const val = Math.round((deg - 11.25) / 22.5);
+  const cardinal = [
     "North",
     "North-northeast",
     "North-east",
@@ -21,7 +24,14 @@ export const degConv = (deg: number): string => {
     "North-west",
     "North-northwest",
   ];
-  return cardinal[Math.abs(val)];
+
+  // Rotation for icon (wind blowing direction: add 180°)
+  const rotationDeg = (deg + 180) % 360;
+
+  return {
+    cardinal: cardinal[val % 16], // Ensure index is in range
+    rotationDeg,
+  };
 };
 
 //Rounding figures
@@ -34,7 +44,7 @@ export const tempConv: object = {
 };
 
 //METER DISTANCE AND SPEED CONVERSION
-export const lenAndSpdConv: object = {
+export const lenAndSpdConv = {
   mi: (value: number) => Math.round(value / 1609.344),
   km: (value: number) => Math.round(value / 1000),
   mph: (value: number) => Math.round(value * 2.237),
@@ -193,62 +203,65 @@ export const weatherCodeConv = (code: number): string => {
     case 99:
       return "Heavy thunderstorm with hail";
     default:
-      return "Data not found";
+      return "Unknown weather";
   }
 };
 
 //WEATHER ICON FINDER
-export const weatherIconFind = (code: number): number[] | number | string => {
+export const weatherIconFind = (code: number): string[] | string => {
   switch (code) {
     case 0:
-      return [1, 2];
+      return ["clear_day", "clear_night"];
     case 1:
-      return 3;
+      return ["clear_day", "clear_night"];
     case 2:
-      return [4, 5];
+      return ["partly_cloudy_day", "partly_cloudy_night"];
     case 3:
-      return 9;
+      return "overcast";
     case 45:
     case 48:
-      return 7;
+      return "fog";
     case 51:
     case 53:
+      return "moderate_drizzle";
     case 55:
-      return 8;
+      return "dense_drizzle";
     case 56:
     case 57:
-      return 15;
-    case 61:
-      return 6;
-    case 63:
-      return 10;
-    case 65:
-      return 11;
     case 66:
     case 67:
-      return 15;
+      return "freezing_drizzle";
+    case 61:
+      return "slight_rain";
+    case 63:
+      return "moderate_rain";
+    case 65:
+      return "heavy_rain";
     case 71:
+      return "slight_snow";
     case 73:
+      return "moderate_snow";
     case 75:
+      return "heavy_snow";
     case 77:
-      return 16;
+      return "heavy_snow";
     case 80:
-      return 10;
+      return "slight_rain";
     case 81:
-      return 11;
+      return "moderate_rain";
     case 82:
-      return 12;
+      return "heavy_rain";
     case 85:
     case 86:
-      return 15;
+      return "moderate_snow";
     case 95:
-      return 12;
+      return "thunderstorm";
     case 96:
-      return 13;
+      return "slight_thunderstorm_with_hail";
     case 99:
-      return 14;
+      return "heavy_thunderstorm_with_hail";
     default:
-      return "Data not found";
+      return "default";
   }
 };
 

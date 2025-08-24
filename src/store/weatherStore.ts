@@ -50,6 +50,7 @@ export const weatherStore = create<
         },
         hourly_units: {
           time: "iso8601",
+          is_day: "",
           dew_point_2m: "",
           precipitation_probability: "%",
           precipitation: "",
@@ -60,6 +61,7 @@ export const weatherStore = create<
           apparent_temperature: "",
           weather_code: "wmo code",
           surface_pressure: "hPa",
+          cloud_cover: "%",
           wind_speed_10m: "",
           wind_direction_10m: "°",
           wind_gusts_10m: "",
@@ -69,6 +71,7 @@ export const weatherStore = create<
         },
         hourly: {
           time: [],
+          is_day: [],
           dew_point_2m: [],
           precipitation_probability: [],
           precipitation: [],
@@ -79,6 +82,7 @@ export const weatherStore = create<
           apparent_temperature: [],
           weather_code: [],
           surface_pressure: [],
+          cloud_cover: [],
           wind_speed_10m: [],
           wind_direction_10m: [],
           wind_gusts_10m: [],

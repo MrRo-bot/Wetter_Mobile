@@ -5,29 +5,34 @@ import { useColorScheme } from "react-native";
 
 export default function HomeLayout() {
   let colorScheme = useColorScheme();
-  const [clock, setClock] = useState("");
-
-  const themeBackground =
-    colorScheme === "dark" ? "hsl(264, 14%, 7%)" : "hsl(266, 54%, 97%)";
-  const themeTint =
-    colorScheme === "dark" ? "hsl(266, 54%, 97%)" : "hsl(264, 14%, 7%)";
+  const [clock, setClock] = useState(
+    new Date().toLocaleString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    })
+  );
 
   useEffect(() => {
-    const clockTimeout = setTimeout(
+    const clockInterval = setInterval(
       () =>
         setClock(
           new Date().toLocaleString("en-US", {
             hour: "numeric",
             minute: "numeric",
-            second: "numeric",
             hour12: true,
           })
         ),
-      1000
+      1000 * 60 //minute long interval
     );
 
-    return () => clearTimeout(clockTimeout);
+    return () => clearInterval(clockInterval);
   }, [clock]);
+
+  const themeBackground =
+    colorScheme === "dark" ? "hsl(264, 14%, 7%)" : "hsl(266, 54%, 97%)";
+  const themeTint =
+    colorScheme === "dark" ? "hsl(266, 54%, 97%)" : "hsl(264, 14%, 7%)";
 
   return (
     <Stack
@@ -38,8 +43,8 @@ export default function HomeLayout() {
         headerTintColor: themeTint,
         headerTitle: clock,
         headerTitleStyle: {
-          fontFamily: "orbitron-medium",
-          fontSize: 18,
+          fontFamily: "genos-light",
+          fontSize: 24,
         },
       }}
     >

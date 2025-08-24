@@ -35,7 +35,7 @@ const useWeatherData = (coordinates: {
     longitude: "0",
     timezone: "auto",
     forecast_days: "16",
-    forecast_hours: "24",
+    forecast_hours: "48",
     current: [
       "temperature_2m",
       "relative_humidity_2m",
@@ -49,6 +49,7 @@ const useWeatherData = (coordinates: {
       "wind_gusts_10m",
     ].join(","),
     hourly: [
+      "is_day",
       "dew_point_2m",
       "precipitation_probability",
       "precipitation",
@@ -59,6 +60,7 @@ const useWeatherData = (coordinates: {
       "apparent_temperature",
       "weather_code",
       "surface_pressure",
+      "cloud_cover",
       "wind_speed_10m",
       "wind_direction_10m",
       "wind_gusts_10m",
@@ -78,6 +80,7 @@ const useWeatherData = (coordinates: {
       "daylight_duration",
       "sunshine_duration",
       "uv_index_max",
+      "winddirection_10m_dominant",
       "wind_speed_10m_max",
       "wind_gusts_10m_max",
       "shortwave_radiation_sum",

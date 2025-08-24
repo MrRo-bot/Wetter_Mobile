@@ -1,11 +1,10 @@
-import { Text, useColorScheme, View } from "react-native";
-
 import useUnsplashImage from "@/src/hooks/useUnsplashImage";
 import { locationStore } from "@/src/store/locationStore";
 import { weatherStore } from "@/src/store/weatherStore";
 import { degConv, unixConv, valRound, weatherCodeConv } from "@/src/utils/math";
 import Entypo from "@expo/vector-icons/Entypo";
 import { Image } from "expo-image";
+import { Text, useColorScheme, View } from "react-native";
 
 const Brief = () => {
   let theme = useColorScheme();
@@ -19,14 +18,18 @@ const Brief = () => {
   );
 
   //getting image based on weather type
-  const { unsplashLoading, unsplashData, imageColorsLoading, imageColorsData } =
+  const { unsplashLoading, imageColorsLoading, imageColorsData } =
     useUnsplashImage(weatherCode);
 
   const imgColor =
     imageColorsData?.imageColors?.platform === "android" ||
     imageColorsData?.imageColors?.platform === "web"
-      ? imageColorsData?.imageColors?.vibrant
-      : imageColorsData?.imageColors?.background;
+      ? theme === "dark"
+        ? imageColorsData?.imageColors?.lightVibrant
+        : imageColorsData?.imageColors?.muted
+      : theme === "dark"
+        ? imageColorsData?.imageColors?.quality
+        : imageColorsData?.imageColors?.primary;
 
   const windDirection = degConv(weather.current.wind_direction_10m);
   const windSpeed = `${valRound(weather.daily.wind_speed_10m_max[0])}${weather.daily_units.wind_speed_10m_max}`;
@@ -37,7 +40,6 @@ const Brief = () => {
   const precipitationUnit = weather.daily_units.precipitation_probability_max;
   const precipitationSum = weather.daily.precipitation_sum[0];
   const precipitationSumUnit = weather.daily_units.precipitation_sum;
-
   const precipitationText =
     precipitationProbability && precipitationProbability > 0
       ? `. Chance of precipitation ${precipitationProbability}${precipitationUnit}`
@@ -49,16 +51,25 @@ const Brief = () => {
 
   const weatherSummary = `${
     isDay ? "Today" : "Tonight"
-  } - ${weatherCode}. Wind ${windDirection} at ${windSpeed}. Gusts ${gustDirection} at ${gustSpeed}${precipitationText}${precipitationAmount}.`;
+  } - ${weatherCode}. Wind ${windDirection.cardinal} at ${windSpeed}. Gusts ${gustDirection.cardinal} at ${gustSpeed}${precipitationText}${precipitationAmount}.`;
 
   return (
     <View className="gap-2 mx-3">
       <View className="w-[calc(100vw-24px)] mt-1 overflow-hidden h-96 rounded-2xl">
-        {typeof imageColorsData?.url === "string" && (
+        {imageColorsLoading ? (
+          <View
+            style={
+              unsplashLoading && {
+                backgroundColor: imgColor,
+              }
+            }
+            className="w-full h-full"
+          />
+        ) : (
           <Image
             contentFit="cover"
             style={{ width: "100%", height: "100%" }}
-            source={{ uri: imageColorsData.url }}
+            source={{ uri: imageColorsData?.url }}
           />
         )}
       </View>
@@ -66,7 +77,7 @@ const Brief = () => {
       <View className="py-2 mt-2">
         <View className="flex-row flex-wrap items-center">
           <Text
-            style={{ color: imgColor }}
+            style={!imageColorsLoading && { color: imgColor }}
             className={`font-orbitron-regular mr-4 text-5xl`}
           >
             {valRound(weather.current.temperature_2m)}{" "}
@@ -74,20 +85,20 @@ const Brief = () => {
           </Text>
 
           <Text
-            style={{ color: imgColor }}
+            style={!imageColorsLoading && { color: imgColor }}
             className={`font-orbitron-semiBold self-start text-lg`}
           >
             {valRound(weather.daily.temperature_2m_max[0])}{" "}
             {weather.daily_units.temperature_2m_max}
           </Text>
           <Text
-            style={{ color: imgColor }}
+            style={!imageColorsLoading && { color: imgColor }}
             className={`font-orbitron-semiBold text-lg`}
           >
             /{" "}
           </Text>
           <Text
-            style={{ color: imgColor }}
+            style={!imageColorsLoading && { color: imgColor }}
             className={`font-orbitron-semiBold self-end text-lg`}
           >
             {valRound(weather.daily.temperature_2m_min[0])}{" "}
@@ -97,12 +108,12 @@ const Brief = () => {
 
         <View>
           <Text
-            className={`mt-3 text-2xl leading-none font-genos-light uppercase ${theme === "dark" ? "text-light" : "text-dark"}`}
+            className={`mt-3 text-lg leading-none font-genos-regular uppercase ${theme === "dark" ? "text-light" : "text-dark"}`}
           >
             {`${timestring?.day?.substring(0, 3)}, ${timestring.month} ${timestring.date}`}
           </Text>
           <Text
-            className={`text-4xl mt-0.5 leading-none font-genos-medium ${theme === "dark" ? "text-outlineDark" : "text-outlineLight"}`}
+            className={`text-4xl mt-0.5 leading-none tracking-wider font-genos-medium ${theme === "dark" ? "text-outlineDark" : "text-outlineLight"}`}
           >
             {locations[0].geoAddress[0].district ||
               locations[0].geoAddress[0].city}

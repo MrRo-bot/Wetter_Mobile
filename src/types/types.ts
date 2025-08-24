@@ -72,6 +72,7 @@ export interface WeatherDataType {
     wind_direction_10m: number;
   };
   hourly_units: {
+    is_day: "0" | "" | "1";
     time: "iso8601";
     dew_point_2m: "°C" | "" | "°F";
     precipitation_probability: "%";
@@ -83,6 +84,7 @@ export interface WeatherDataType {
     apparent_temperature: "°C" | "" | "°F";
     weather_code: "wmo code";
     surface_pressure: "hPa";
+    cloud_cover: "%";
     wind_speed_10m: "km/h" | "" | "knots" | "" | "mph" | "" | "m/s";
     wind_direction_10m: "°";
     wind_gusts_10m: "km/h" | "" | "knots" | "" | "mph" | "" | "m/s";
@@ -92,6 +94,7 @@ export interface WeatherDataType {
   };
   hourly: {
     time: string[];
+    is_day: [];
     dew_point_2m: number[];
     precipitation_probability: number[];
     precipitation: number[];
@@ -102,6 +105,7 @@ export interface WeatherDataType {
     apparent_temperature: number[];
     weather_code: number[];
     surface_pressure: number[];
+    cloud_cover: number[];
     wind_speed_10m: number[];
     wind_direction_10m: number[];
     wind_gusts_10m: number[];
@@ -122,6 +126,7 @@ export interface WeatherDataType {
     sunshine_duration: "s";
     daylight_duration: "s";
     uv_index_max: "";
+    winddirection_10m_dominant: "°";
     wind_speed_10m_max: "km/h" | "" | "mph" | "" | "knots" | "" | "ms";
     wind_gusts_10m_max: "km/h" | "" | "mph" | "" | "knots" | "" | "ms";
     shortwave_radiation_sum: "MJ/m²";
@@ -129,6 +134,7 @@ export interface WeatherDataType {
     surface_pressure_mean: "hPa";
   };
   daily: {
+    winddirection_10m_dominant: number[];
     time: string[];
     weather_code: number[];
     temperature_2m_max: number[];
@@ -247,4 +253,77 @@ export interface UnsplashType {
     };
     [key: string]: any;
   }[];
+}
+
+export interface HourlyWeatherObjectType {
+  id: number;
+  currentTemp: string;
+  precipitation: string;
+  weatherIcon: string[] | string;
+  weatherCode: number;
+  weatherMain: string;
+  windSpeed: string;
+  wind: string;
+  windDirection: number;
+  hourStamp: string;
+  feels_like: string;
+  gust: string;
+  clouds: string;
+  humidity: string;
+  dewPoint: string;
+  is_day: number;
+}
+
+export interface DailyWeatherObjectType {
+  id: number;
+  sunrise: string;
+  sunset: string;
+  summary: string;
+  maxTemp: string;
+  minTemp: string;
+  precipitation: string;
+  weatherCode: number;
+  weatherIcon: string[] | string;
+  weatherMain: string;
+  windSpeed: string;
+  windDirection: number;
+  hourStamp: string;
+  dateStamp: string;
+}
+
+export interface WeatherIconsType {
+  alert: string;
+  direction: string;
+  hot_alert: string;
+  introduction: string;
+  location: string;
+  search: string;
+  clock: string;
+  dew_point: string;
+  humidity: string;
+  pressure: string;
+  sunrise: string;
+  sunset: string;
+  thermometer: string;
+  uv: string;
+  visibility: string;
+  clear_day: string;
+  clear_night: string;
+  partly_cloudy_day: string;
+  partly_cloudy_night: string;
+  overcast: string;
+  fog: string;
+  moderate_drizzle: string;
+  dense_drizzle: string;
+  freezing_drizzle: string;
+  slight_rain: string;
+  moderate_rain: string;
+  heavy_rain: string;
+  slight_snow: string;
+  moderate_snow: string;
+  heavy_snow: string;
+  thunderstorm: string;
+  slight_thunder_with_hail: string;
+  heavy_thunder_with_hail: string;
+  default: string;
 }

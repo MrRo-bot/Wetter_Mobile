@@ -68,7 +68,7 @@ const useUnsplashImage = (weatherType: string) => {
     }
     const result = await ImageColors.getColors(imageData?.url, {
       fallback: "#444444",
-      quality: "low", // Use 'low' for better performance; adjust as needed
+      quality: "high",
       pixelSpacing: 5,
     });
     return {

@@ -1,40 +1,53 @@
 import images from "@/src/constants/images";
+import { weatherStore } from "@/src/store/weatherStore";
+import { closestTimestamp, lenAndSpdConv, valRound } from "@/src/utils/math";
 import { Image } from "expo-image";
 import { Text, useColorScheme, View } from "react-native";
 
 const Detail = () => {
   let theme = useColorScheme();
+  const { weather } = weatherStore();
+  const currentTimeIndex = weather.hourly.time.indexOf(
+    closestTimestamp(weather.current.time, weather.hourly.time)
+  );
 
   const detailObj = [
     {
       icon: images.thermometer,
       heading: "Feels Like",
-      data: "37c",
+      data:
+        valRound(weather.current.apparent_temperature) +
+        weather.current_units.apparent_temperature,
     },
     {
       icon: images.humidity,
       heading: "Humidity",
-      data: "79%",
+      data: weather.current.relative_humidity_2m + "%",
     },
     {
       icon: images.uv,
       heading: "UV Index",
-      data: "8",
+      data: weather.daily.uv_index_max[0],
     },
     {
       icon: images.visibility,
       heading: "Visibility",
-      data: "3km",
+      data:
+        lenAndSpdConv.km(weather.hourly.visibility[currentTimeIndex]) + "km",
     },
     {
       icon: images.pressure,
       heading: "Pressure",
-      data: "958",
+      data:
+        valRound(weather.current.surface_pressure) +
+        weather.current_units.precipitation,
     },
     {
       icon: images.dew_point,
       heading: "Dew Point",
-      data: "26c",
+      data:
+        valRound(weather.daily.dew_point_2m_mean[0]) +
+        weather.daily_units.dew_point_2m_mean,
     },
   ];
 
@@ -43,7 +56,7 @@ const Detail = () => {
       className={`relative overflow-hidden p-4 pt-10 mx-3 rounded-2xl ${theme === "dark" ? "bg-tealDark" : "bg-tealLight"}`}
     >
       <Text
-        className={`absolute h-10 inset-x-0 pl-4 align-middle font-orbitron-regular leading-none text-lg  ${theme === "dark" ? "text-light bg-dark/50" : "text-dark bg-white/50"}`}
+        className={`absolute h-10 inset-x-0 pl-4 align-middle font-orbitron-semiBold leading-none text-lg  ${theme === "dark" ? "text-light bg-dark/50" : "text-dark bg-white/50"}`}
       >
         DETAIL
       </Text>
@@ -55,14 +68,14 @@ const Detail = () => {
           >
             <Image
               contentFit="cover"
-              style={{ width: 44, height: 44 }}
+              style={{ width: 48, height: 48 }}
               source={x.icon}
               alt={x.heading}
             />
-            <Text className={`text-xs mt-1 font-orbitron-medium text-dark`}>
+            <Text className={`text-xs mt-1 font-orbitron-bold text-dark`}>
               {x.heading}
             </Text>
-            <Text className={`text-4xl mt-2 font-genos-regular text-dark`}>
+            <Text className={`text-2xl mt-2 font-genos-regular text-dark`}>
               {x.data}
             </Text>
           </View>
