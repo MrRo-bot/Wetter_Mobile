@@ -47,16 +47,6 @@ module.exports = {
         aqiGradient:
           "linear-gradient(90deg,hsl(165, 78%, 45%) 10%,hsl(50, 92%, 66%) 0 20%,hsl(24, 98%, 69%) 0 30%,hsl(355, 92%, 62%) 0 40%,hsl(270, 81%, 67%) 0 60%,hsl(353, 57%, 44%) 0)",
       },
-      keyframes: {
-        windmill: {
-          from: {
-            transform: `rotate(${0}turn)`,
-          },
-          to: {
-            transform: `rotate(${-1}turn)`,
-          },
-        },
-      },
     },
   },
   darkMode: "class",

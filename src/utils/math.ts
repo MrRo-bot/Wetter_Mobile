@@ -270,13 +270,13 @@ export const closestTimestamp = (
   currTimestamp: string,
   hourlyTimestampArray: string[]
 ) => {
-  const currentTimestamp = new Date(currTimestamp).getTime();
+  const currentTimestamp = new Date(currTimestamp).getTime() / 1000;
   if (isNaN(currentTimestamp))
     throw new Error("Invalid currTimestamp timestamp");
 
   return hourlyTimestampArray.reduce((a, b) => {
-    const aTime = new Date(a).getTime();
-    const bTime = new Date(b).getTime();
+    const aTime = new Date(a).getTime() / 1000;
+    const bTime = new Date(b).getTime() / 1000;
 
     if (isNaN(aTime)) throw new Error(`Invalid timestamp: ${a}`);
     if (isNaN(bTime)) throw new Error(`Invalid timestamp: ${b}`);
@@ -293,9 +293,9 @@ export const closestTimestamp = (
 };
 
 //WINDMILL ROTATION SPEED
-export const wingSpeed = (value: number): string | number => {
+export const wingSpeed = (value: number): number => {
   switch (true) {
-    case value >= 0 && value < 10:
+    case value >= 1 && value < 10:
       return 50;
     case value >= 10 && value < 20:
       return 30;
@@ -312,7 +312,7 @@ export const wingSpeed = (value: number): string | number => {
     case value >= 400:
       return 0.1;
     default:
-      return "not valid";
+      return 0;
   }
 };
 

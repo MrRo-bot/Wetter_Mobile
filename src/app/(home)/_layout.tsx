@@ -1,4 +1,3 @@
-import { BlurView } from "expo-blur";
 import { Stack } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
@@ -30,7 +29,7 @@ export default function HomeLayout() {
   }, [clock]);
 
   const themeBackground =
-    colorScheme === "dark" ? "rgba(17, 15, 20,0.7)" : "rgba(247, 243, 251,0.7)";
+    colorScheme === "dark" ? "rgb(17, 15, 20)" : "rgb(247, 243, 251)";
   const themeTint =
     colorScheme === "dark" ? "hsl(266, 54%, 97%)" : "hsl(264, 14%, 7%)";
 
@@ -38,14 +37,10 @@ export default function HomeLayout() {
     <>
       <Stack
         screenOptions={{
-          headerBackground: () => (
-            <BlurView
-              style={{ flex: 1, backgroundColor: themeBackground }}
-              intensity={colorScheme === "dark" ? 10 : 70}
-            />
-          ),
+          headerStyle: {
+            backgroundColor: themeBackground,
+          },
           headerTintColor: themeTint,
-          headerTransparent: true,
           headerTitle: clock,
           headerTitleStyle: {
             fontFamily: "genos-light",

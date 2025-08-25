@@ -1,37 +1,90 @@
-/* eslint-disable react/prop-types */
-import FramerAnimations from "../utils/FramerAnimations";
-import { wingSpeed } from "../utils/math";
-import WindMill from "./WindMill";
+import blades from "@/src/assets/images/blades.png";
+import WindMill from "@/src/assets/images/WindMill.png";
+import { weatherStore } from "@/src/store/weatherStore";
+import { degConv, wingSpeed } from "@/src/utils/math";
+import { Image } from "expo-image";
+import { useEffect } from "react";
+import { Text, useColorScheme, View } from "react-native";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from "react-native-reanimated";
 
-const Wind = ({ wind }) => {
+const Wind = () => {
+  const theme = useColorScheme();
+  const { weather } = weatherStore();
+
+  const rotate = useSharedValue(0);
+
+  useEffect(() => {
+    rotate.value = withRepeat(
+      withTiming(-360, {
+        duration: wingSpeed(weather?.current.wind_speed_10m) * 1000,
+        easing: Easing.linear,
+      }),
+      -1,
+      false
+    );
+  }, [rotate, weather]);
+
+  const fanProps = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${rotate.value}deg` }],
+  }));
+
   return (
-    <FramerAnimations>
-      <section className="shadow-md dark:shadow-stone-800 dark:bg-sectionD bg-section px-2 xs:px-4 py-5 m-3 xs:mx-5 sm:p-8 md:p-12 sm:my-8 sm:mx-12 md:mx-24 rounded-2xl lg:max-w-[70vw] lg:mx-auto xl:max-w-[50vw]">
-        <h2 className="text-sm font-medium sm:text-lg font-pathway text-sectionHeading dark:text-sectionHeadingD">
-          WIND
-        </h2>
+    <View
+      className={`px-4  mx-3 rounded-2xl ${theme === "dark" ? "bg-yellowDark" : "bg-yellowLight"}`}
+    >
+      <Text
+        className={`absolute h-10 inset-x-0 pl-4 align-middle font-orbitron-semiBold leading-none text-lg  ${theme === "dark" ? "text-light bg-dark/50" : "text-dark bg-white/50"}`}
+      >
+        WIND
+      </Text>
 
-        <div className="flex justify-between align-bottom sm:justify-around items-end mt-6 px-2 xs:px-4 min-h-[8rem] border-b-2 border-b-greyBackground dark:border-b-greyBackgroundD">
-          <div className="relative ml-6">
-            <div className="w-28 lg:w-36">
-              <WindMill speed={wingSpeed(wind.windSpeed)} />
-            </div>
-          </div>
-          <div>
-            <FramerAnimations>
-              <div className="text-3xl font-thin sm:text-4xl text-greyText dark:text-greyTextD font-inter">
-                {wind.windSpeed + " " + wind.unit}
-              </div>
-            </FramerAnimations>
-            <FramerAnimations>
-              <div className="mt-1 text-xs font-medium sm:text-base text-greyText dark:text-greyTextD font-pathway">
-                {wind.windDirection}
-              </div>
-            </FramerAnimations>
-          </div>
-        </div>
-      </section>
-    </FramerAnimations>
+      <View className="flex flex-row justify-between align-bottom items-end mt-16 min-h-[8rem]">
+        <View className="relative overflow-visible w-44 h-44">
+          <Animated.Image
+            style={[
+              {
+                position: "absolute",
+                width: "70%",
+                left: "7%",
+                height: "70%",
+                zIndex: 1,
+              },
+              fanProps,
+            ]}
+            resizeMode="contain"
+            source={blades}
+          />
+
+          <Image
+            style={{
+              position: "absolute",
+              zIndex: 0,
+              bottom: 0,
+              width: "100%",
+              height: "80%",
+            }}
+            source={WindMill}
+          />
+        </View>
+
+        <View className="mb-2">
+          <Text className="text-2xl font-orbitron-regular text-dark/90">
+            {weather?.current.wind_speed_10m +
+              " " +
+              weather?.current_units.wind_speed_10m}
+          </Text>
+          <Text className={`mt-1 leading-0 font-genos-bold text-dark/60`}>
+            {degConv(weather?.current.wind_direction_10m).cardinal}
+          </Text>
+        </View>
+      </View>
+    </View>
   );
 };
 

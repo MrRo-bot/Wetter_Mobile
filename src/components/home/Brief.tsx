@@ -18,7 +18,7 @@ const Brief = () => {
   );
 
   //getting image based on weather type
-  const { unsplashLoading, imageColorsLoading, imageColorsData } =
+  const { imageColorsLoading, imageColorsData, unsplashLoading } =
     useUnsplashImage(weatherCode);
 
   const imgColor =
@@ -31,15 +31,15 @@ const Brief = () => {
         ? imageColorsData?.imageColors?.quality
         : imageColorsData?.imageColors?.primary;
 
-  const windDirection = degConv(weather.current.wind_direction_10m);
-  const windSpeed = `${valRound(weather.daily.wind_speed_10m_max[0])}${weather.daily_units.wind_speed_10m_max}`;
-  const gustDirection = degConv(weather.current.wind_gusts_10m);
-  const gustSpeed = `${valRound(weather.daily.wind_gusts_10m_max[0])}${weather.daily_units.wind_gusts_10m_max}`;
+  const windDirection = degConv(weather?.current.wind_direction_10m);
+  const windSpeed = `${valRound(weather?.daily.wind_speed_10m_max[0])}${weather?.daily_units.wind_speed_10m_max}`;
+  const gustDirection = degConv(weather?.current.wind_gusts_10m);
+  const gustSpeed = `${valRound(weather?.daily.wind_gusts_10m_max[0])}${weather?.daily_units.wind_gusts_10m_max}`;
   const precipitationProbability =
-    weather.daily.precipitation_probability_max[0];
-  const precipitationUnit = weather.daily_units.precipitation_probability_max;
-  const precipitationSum = weather.daily.precipitation_sum[0];
-  const precipitationSumUnit = weather.daily_units.precipitation_sum;
+    weather?.daily.precipitation_probability_max[0];
+  const precipitationUnit = weather?.daily_units.precipitation_probability_max;
+  const precipitationSum = weather?.daily.precipitation_sum[0];
+  const precipitationSumUnit = weather?.daily_units.precipitation_sum;
   const precipitationText =
     precipitationProbability && precipitationProbability > 0
       ? `. Chance of precipitation ${precipitationProbability}${precipitationUnit}`
@@ -54,28 +54,24 @@ const Brief = () => {
   } - ${weatherCode}. Wind ${windDirection.cardinal} at ${windSpeed}. Gusts ${gustDirection.cardinal} at ${gustSpeed}${precipitationText}${precipitationAmount}.`;
 
   return (
-    <View className="gap-2 mx-3 mt-28">
-      <View
-        style={{
-          shadowColor: imgColor,
-          shadowOffset: { width: 14, height: 0 },
-          shadowRadius: 8,
-          elevation: 6,
-        }}
-        className="w-[calc(100vw-24px)] mt-1 overflow-hidden h-96 rounded-2xl"
-      >
-        <Image
-          contentFit="cover"
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
-          source={{ uri: imageColorsData?.url }}
-        />
+    <View className="gap-2 mx-3 mt-2">
+      <View className="w-[calc(100vw-24px)] overflow-hidden h-96 rounded-2xl">
+        {imageColorsLoading || unsplashLoading ? (
+          <View className={`w-full h-full bg-black/50`} />
+        ) : (
+          <Image
+            contentFit="cover"
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+            source={{ uri: imageColorsData?.url }}
+          />
+        )}
       </View>
 
-      <View className="py-2 mt-2">
-        <View className="flex-row flex-wrap items-center">
+      <View className="">
+        <View className="flex-row flex-wrap items-center my-2">
           <Text
             style={{
               color: imageColorsLoading ? "#11111150" : imgColor,
@@ -85,8 +81,8 @@ const Brief = () => {
             }}
             className={`font-orbitron-regular mr-4 text-5xl`}
           >
-            {valRound(weather.current.temperature_2m)}{" "}
-            {weather.current_units.temperature_2m}
+            {valRound(weather?.current.temperature_2m)}{" "}
+            {weather?.current_units.temperature_2m}
           </Text>
 
           <Text
@@ -98,8 +94,8 @@ const Brief = () => {
             }}
             className={`font-orbitron-semiBold self-start text-lg`}
           >
-            {valRound(weather.daily.temperature_2m_max[0])}{" "}
-            {weather.daily_units.temperature_2m_max}
+            {valRound(weather?.daily.temperature_2m_max[0])}{" "}
+            {weather?.daily_units.temperature_2m_max}
           </Text>
           <Text
             style={{
@@ -121,19 +117,19 @@ const Brief = () => {
             }}
             className={`font-orbitron-semiBold self-end text-lg`}
           >
-            {valRound(weather.daily.temperature_2m_min[0])}{" "}
-            {weather.daily_units.temperature_2m_min}
+            {valRound(weather?.daily.temperature_2m_min[0])}{" "}
+            {weather?.daily_units.temperature_2m_min}
           </Text>
         </View>
 
-        <View>
+        <View className="my-2">
           <Text
-            className={`mt-3 text-lg leading-none font-genos-regular uppercase ${theme === "dark" ? "text-light" : "text-dark"}`}
+            className={`text-lg leading-none font-genos-regular uppercase ${theme === "dark" ? "text-light" : "text-dark"}`}
           >
             {`${timestring?.day?.substring(0, 3)}, ${timestring.month} ${timestring.date}`}
           </Text>
           <Text
-            className={`text-4xl mt-0.5 leading-none tracking-wider font-genos-medium ${theme === "dark" ? "text-outlineDark" : "text-outlineLight"}`}
+            className={`text-4xl leading-none tracking-wider font-genos-medium ${theme === "dark" ? "text-outlineDark" : "text-outlineLight"}`}
           >
             {locations[0].geoAddress[0].district ||
               locations[0].geoAddress[0].city}
@@ -141,13 +137,13 @@ const Brief = () => {
           <Text
             className={`text-2xl leading-none font-genos-regular ${theme === "dark" ? "text-light" : "text-dark"}`}
           >
-            {weatherCodeConv(weather.current.weather_code)}
+            {weatherCodeConv(weather?.current.weather_code)}
           </Text>
         </View>
 
-        <View className="relative mt-4">
+        <View className="relative my-2">
           <Text
-            className={`pr-8 text-lg leading-none font-genos-medium ${theme === "dark" ? "text-outlineDark/90" : "text-outlineLight/90"}`}
+            className={`pr-8 text-lg leading-none font-genos-medium ${theme === "dark" ? "text-outlineDark/70" : "text-outlineLight/70"}`}
           >
             {weatherSummary}
           </Text>

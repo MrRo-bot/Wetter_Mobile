@@ -51,7 +51,8 @@ export default function Home() {
           <components.Daily />
           {/* <components.Charts theme={colorScheme} />
   <components.AirQuality theme={colorScheme} />
-  <components.Wind theme={colorScheme} /> */}
+  */}
+          <components.Wind />
         </ScrollView>
       )}
     </SafeAreaView>

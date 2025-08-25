@@ -7,8 +7,8 @@ import { Text, useColorScheme, View } from "react-native";
 const Detail = () => {
   let theme = useColorScheme();
   const { weather } = weatherStore();
-  const currentTimeIndex = weather.hourly.time.indexOf(
-    closestTimestamp(weather.current.time, weather.hourly.time)
+  const currentTimeIndex = weather?.hourly.time.indexOf(
+    closestTimestamp(weather?.current.time, weather?.hourly.time)
   );
 
   const detailObj = [
@@ -16,38 +16,38 @@ const Detail = () => {
       icon: images.thermometer,
       heading: "Feels Like",
       data:
-        valRound(weather.current.apparent_temperature) +
-        weather.current_units.apparent_temperature,
+        valRound(weather?.current.apparent_temperature) +
+        weather?.current_units.apparent_temperature,
     },
     {
       icon: images.humidity,
       heading: "Humidity",
-      data: weather.current.relative_humidity_2m + "%",
+      data: weather?.current.relative_humidity_2m + "%",
     },
     {
       icon: images.uv,
       heading: "UV Index",
-      data: weather.daily.uv_index_max[0],
+      data: valRound(weather?.daily.uv_index_max[0]),
     },
     {
       icon: images.visibility,
       heading: "Visibility",
       data:
-        lenAndSpdConv.km(weather.hourly.visibility[currentTimeIndex]) + "km",
+        lenAndSpdConv.km(weather?.hourly.visibility[currentTimeIndex!]) + "km",
     },
     {
       icon: images.pressure,
       heading: "Pressure",
       data:
-        valRound(weather.current.surface_pressure) +
-        weather.current_units.precipitation,
+        valRound(weather?.current.surface_pressure) +
+        weather?.current_units.precipitation,
     },
     {
       icon: images.dew_point,
       heading: "Dew Point",
       data:
-        valRound(weather.daily.dew_point_2m_mean[0]) +
-        weather.daily_units.dew_point_2m_mean,
+        valRound(weather?.daily.dew_point_2m_mean[0]) +
+        weather?.daily_units.dew_point_2m_mean,
     },
   ];
 
