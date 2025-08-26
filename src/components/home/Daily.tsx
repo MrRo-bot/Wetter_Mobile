@@ -1,6 +1,12 @@
-import images from "@/src/constants/images";
+import { Image } from "expo-image";
+import { FlatList, Text, useColorScheme, View } from "react-native";
+
+import Entypo from "@expo/vector-icons/Entypo";
+
 import { weatherStore } from "@/src/store/weatherStore";
-import { DailyWeatherObjectType, WeatherIconsType } from "@/src/types/types";
+
+import images from "@/src/constants/images";
+
 import {
   degConv,
   unixConv,
@@ -8,77 +14,93 @@ import {
   weatherCodeConv,
   weatherIconFind,
 } from "@/src/utils/math";
-import Entypo from "@expo/vector-icons/Entypo";
-import { Image } from "expo-image";
-import { FlatList, Text, useColorScheme, View } from "react-native";
+
+import { DailyWeatherObjectType, WeatherIconsType } from "@/src/types/types";
 
 const Daily = () => {
   let theme = useColorScheme();
   let { weather } = weatherStore();
 
-  let listOfDailyData = [];
+  const { daily, daily_units: units } = weather;
 
   // next 16 days
-  for (let i = 0; i <= 15; i++) {
-    listOfDailyData.push({
+  const dailyData = Array.from({ length: 16 }, (_, i) => {
+    const weatherCode = daily?.weather_code[i];
+
+    return {
       id: i,
-      sunrise: unixConv.timeStamp(
-        new Date(weather?.daily.sunrise[i]).getTime() / 1000
-      ).clockTime,
-      sunset: unixConv.timeStamp(
-        new Date(weather?.daily.sunset[i]).getTime() / 1000
-      ).clockTime,
-      summary: `${weatherCodeConv(
-        weather?.daily.weather_code[i]
-      )}. Wind ${degConv(
-        weather?.daily.winddirection_10m_dominant[i]
-      ).cardinal.toLowerCase()} at ${
-        valRound(weather?.daily.wind_speed_10m_max[i]) +
+      maxTemp: valRound(daily?.temperature_2m_max[i]) + "°",
+      minTemp: valRound(daily?.temperature_2m_min[i]) + "°",
+      weatherCode,
+      weatherIcon: weatherIconFind(weatherCode),
+      precipitation:
+        daily?.precipitation_probability_max[i] === null
+          ? "0%"
+          : daily?.precipitation_probability_max[i] +
+            units?.precipitation_probability_max,
+      windSpeed:
+        valRound(daily?.wind_speed_10m_max[i]) +
         " " +
-        weather?.daily_units.wind_speed_10m_max
+        units?.wind_speed_10m_max,
+      windDirection: degConv(daily?.winddirection_10m_dominant[i]).rotationDeg,
+      dateStamp: `${
+        unixConv.timeStamp(new Date(daily?.time[i]).getTime() / 1000).day
+      }, ${unixConv.timeStamp(new Date(daily?.time[i]).getTime() / 1000).month} ${
+        unixConv.timeStamp(new Date(daily?.time[i]).getTime() / 1000).date
+      }`.toUpperCase(),
+
+      //extra info in daily page route
+      sunrise: unixConv.timeStamp(new Date(daily?.sunrise[i]).getTime() / 1000)
+        .clockTime,
+      sunset: unixConv.timeStamp(new Date(daily?.sunset[i]).getTime() / 1000)
+        .clockTime,
+      summary: `${weatherCodeConv(weatherCode)}. Wind ${degConv(
+        daily?.winddirection_10m_dominant[i]
+      ).cardinal.toLowerCase()} at ${
+        valRound(daily?.wind_speed_10m_max[i]) + " " + units?.wind_speed_10m_max
       }${
-        weather?.daily.precipitation_probability_max[i] === null ||
-        weather?.daily.precipitation_probability_max[i] === 0
+        daily?.precipitation_probability_max[i] === null ||
+        daily?.precipitation_probability_max[i] === 0
           ? ""
-          : `. Chance of precipitation ${weather?.daily.precipitation_probability_max[i]}${weather?.daily_units.precipitation_probability_max}`
+          : `. Chance of precipitation ${daily?.precipitation_probability_max[i]}${units?.precipitation_probability_max}`
       } around ${
-        weather?.daily.precipitation_sum[i] > 0
-          ? weather?.daily.precipitation_sum[i] +
-            weather?.daily_units.precipitation_sum
+        daily?.precipitation_sum[i] > 0
+          ? daily?.precipitation_sum[i] + units?.precipitation_sum
           : ""
       }`,
-      maxTemp: valRound(weather?.daily.temperature_2m_max[i]) + "°",
-      minTemp: valRound(weather?.daily.temperature_2m_min[i]) + "°",
-      precipitation:
-        weather?.daily.precipitation_probability_max[i] === null
-          ? "0%"
-          : weather?.daily.precipitation_probability_max[i] +
-            weather?.daily_units.precipitation_probability_max,
-      weatherCode: weather?.daily.weather_code[i],
-      weatherIcon: weatherIconFind(weather?.daily.weather_code[i]),
-      weatherMain: weatherCodeConv(weather?.daily.weather_code[i]),
-      windSpeed:
-        valRound(weather?.daily.wind_speed_10m_max[i]) +
-        " " +
-        weather?.daily_units.wind_speed_10m_max,
-      windDirection: degConv(weather?.daily.winddirection_10m_dominant[i])
-        .rotationDeg,
-      hourStamp: unixConv.timeStamp(
-        new Date(weather?.daily.time[i]).getTime() / 1000
-      ).hour2,
-
-      dateStamp: `${
-        unixConv.timeStamp(new Date(weather?.daily.time[i]).getTime() / 1000)
-          .day
-      }, ${unixConv.timeStamp(new Date(weather?.daily.time[i]).getTime() / 1000).month} ${
-        unixConv.timeStamp(new Date(weather?.daily.time[i]).getTime() / 1000)
-          .date
-      }`.toUpperCase(),
-    });
-  }
+      weatherMain: weatherCodeConv(weatherCode),
+      hourStamp: unixConv.timeStamp(new Date(daily?.time[i]).getTime() / 1000)
+        .hour2,
+    };
+  });
 
   return (
     <View
+      style={
+        theme === "dark"
+          ? {
+              shadowColor: "#fff",
+              shadowOffset: {
+                width: 0,
+                height: 5,
+              },
+              shadowOpacity: 0.34,
+              shadowRadius: 6.27,
+
+              elevation: 10,
+            }
+          : {
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+
+              elevation: 5,
+            }
+      }
       className={`relative overflow-hidden py-4 pt-10 mx-3 rounded-2xl ${theme === "dark" ? "bg-redDark" : "bg-redLight"}`}
     >
       <View
@@ -101,7 +123,7 @@ const Daily = () => {
       <View className="px-1 mt-6">
         <FlatList
           ItemSeparatorComponent={() => <View className="p-1" />}
-          data={listOfDailyData.slice(0, 8)}
+          data={dailyData.slice(0, 8)}
           horizontal={true}
           renderItem={({ item }: { item: DailyWeatherObjectType }) => {
             let iconKey;

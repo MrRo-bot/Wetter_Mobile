@@ -1,6 +1,14 @@
-import images from "@/src/constants/images";
+import { Image } from "expo-image";
+import { FlatList, Text, useColorScheme, View } from "react-native";
+
+import Entypo from "@expo/vector-icons/Entypo";
+
 import { weatherStore } from "@/src/store/weatherStore";
+
+import images from "@/src/constants/images";
+
 import { HourlyWeatherObjectType, WeatherIconsType } from "@/src/types/types";
+
 import {
   closestTimestamp,
   degConv,
@@ -9,71 +17,87 @@ import {
   weatherCodeConv,
   weatherIconFind,
 } from "@/src/utils/math";
-import Entypo from "@expo/vector-icons/Entypo";
-import { Image } from "expo-image";
-import { FlatList, Text, useColorScheme, View } from "react-native";
 
 const Hourly = () => {
   let theme = useColorScheme();
   const { weather } = weatherStore();
 
-  const currentTimeIndex = weather?.hourly.time.indexOf(
-    closestTimestamp(weather?.current.time, weather?.hourly.time)
+  const { hourly, hourly_units: units, current } = weather;
+
+  const currentTimeIndex = hourly?.time.indexOf(
+    closestTimestamp(current?.time, hourly?.time)
   );
 
-  let listOfHourlyData = [];
-
   //next 48 hours
-  if (weather?.hourly) {
-    for (let i = currentTimeIndex; i <= currentTimeIndex + 47; i++) {
-      listOfHourlyData.push({
-        id: i,
-        currentTemp: valRound(weather?.hourly.temperature_2m[i]) + "°",
-        precipitation:
-          weather?.hourly.precipitation_probability[i] +
-          weather?.hourly_units.precipitation_probability,
-        weatherIcon: weatherIconFind(weather?.hourly.weather_code[i]),
-        weatherCode: weather?.hourly.weather_code[i],
-        weatherMain: weatherCodeConv(weather?.hourly.weather_code[i]),
-        windSpeed:
-          valRound(weather?.hourly.wind_speed_10m[i]) +
-          " " +
-          weather?.hourly_units.wind_speed_10m,
-        wind: degConv(weather?.hourly.wind_direction_10m[i]).cardinal,
-        windDirection: degConv(weather?.hourly.wind_direction_10m[i])
-          .rotationDeg,
-        hourStamp: unixConv?.timeStamp(
-          new Date(weather?.hourly.time[i]).getTime() / 1000
-        ).hour2,
+  const hourlyData = Array.from({ length: 48 }, (_, i) => {
+    const index = currentTimeIndex + i;
+    const weatherCode = hourly?.weather_code[index];
 
-        //extra info in hours page route
-        feels_like: `${valRound(
-          weather?.hourly.temperature_2m[i]
-        )}° - Feels Like: ${valRound(weather?.hourly.apparent_temperature[i])}°`,
-        gust:
-          valRound(weather?.hourly.wind_gusts_10m[i]) +
-          " " +
-          weather?.hourly_units.wind_gusts_10m,
-        clouds:
-          weather?.hourly.cloud_cover[i] + weather?.hourly_units.cloud_cover,
-        humidity:
-          weather?.hourly.relative_humidity_2m[i] +
-          weather?.hourly_units.relative_humidity_2m,
-        dewPoint: valRound(weather?.hourly.dew_point_2m[i]) + "°",
-        is_day: weather?.hourly.is_day[i],
-      });
-    }
-  }
+    return {
+      id: i,
+      currentTemp: valRound(hourly?.temperature_2m[index]) + "°",
+      precipitation:
+        hourly?.precipitation_probability[index] +
+        units?.precipitation_probability,
+      weatherIcon: weatherIconFind(weatherCode),
+      weatherCode,
+      weatherMain: weatherCodeConv(weatherCode),
+      windSpeed:
+        valRound(hourly?.wind_speed_10m[index]) + " " + units?.wind_speed_10m,
+      wind: degConv(hourly?.wind_direction_10m[index]).cardinal,
+      windDirection: degConv(hourly?.wind_direction_10m[index]).rotationDeg,
+      hourStamp: unixConv?.timeStamp(
+        new Date(hourly?.time[index]).getTime() / 1000
+      ).hour2,
+
+      //extra info in hours page route
+      feels_like: `${valRound(
+        hourly?.temperature_2m[index]
+      )}° - Feels Like: ${valRound(hourly?.apparent_temperature[index])}°`,
+      gust:
+        valRound(hourly?.wind_gusts_10m[index]) + " " + units?.wind_gusts_10m,
+      clouds: hourly?.cloud_cover[index] + units?.cloud_cover,
+      humidity:
+        hourly?.relative_humidity_2m[index] + units?.relative_humidity_2m,
+      dewPoint: valRound(hourly?.dew_point_2m[index]) + "°",
+      is_day: hourly?.is_day[index],
+    };
+  });
 
   return (
     <View
+      style={
+        theme === "dark"
+          ? {
+              shadowColor: "#fff",
+              shadowOffset: {
+                width: 0,
+                height: 5,
+              },
+              shadowOpacity: 0.34,
+              shadowRadius: 6.27,
+
+              elevation: 10,
+            }
+          : {
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+
+              elevation: 5,
+            }
+      }
       className={`relative overflow-hidden py-4 pt-10 mx-3 rounded-2xl ${theme === "dark" ? "bg-purpleDark" : "bg-purpleLight"}`}
     >
       <View
         className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-dark/50" : "bg-white/50"}`}
       >
         <Text
-          className={`font-orbitron-bold -translate-y-1/2 top-1/2 leading-none text-lg ${theme === "dark" ? "text-light " : "text-dark "}`}
+          className={`font-orbitron-bold -translate-y-1/2 top-1/2 leading-none text-lg ${theme === "dark" ? "text-light" : "text-dark"}`}
         >
           HOURLY
         </Text>
@@ -89,7 +113,7 @@ const Hourly = () => {
       <View className="px-1 mt-6">
         <FlatList
           ItemSeparatorComponent={() => <View className="p-1" />}
-          data={listOfHourlyData.slice(0, 24)}
+          data={hourlyData.slice(0, 24)}
           horizontal={true}
           renderItem={({ item }: { item: HourlyWeatherObjectType }) => {
             let iconKey;

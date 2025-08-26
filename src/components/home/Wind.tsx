@@ -1,5 +1,4 @@
-import blades from "@/src/assets/images/blades.png";
-import WindMill from "@/src/assets/images/WindMill.png";
+import images from "@/src/constants/images";
 import { weatherStore } from "@/src/store/weatherStore";
 import { degConv, wingSpeed } from "@/src/utils/math";
 import { Image } from "expo-image";
@@ -36,7 +35,32 @@ const Wind = () => {
 
   return (
     <View
-      className={`px-4  mx-3 rounded-2xl ${theme === "dark" ? "bg-yellowDark" : "bg-yellowLight"}`}
+      style={
+        theme === "dark"
+          ? {
+              shadowColor: "#fff",
+              shadowOffset: {
+                width: 0,
+                height: 5,
+              },
+              shadowOpacity: 0.34,
+              shadowRadius: 6.27,
+
+              elevation: 10,
+            }
+          : {
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+
+              elevation: 5,
+            }
+      }
+      className={`px-4 mx-3 rounded-2xl ${theme === "dark" ? "bg-yellowDark" : "bg-yellowLight"}`}
     >
       <Text
         className={`absolute h-10 inset-x-0 pl-4 align-middle font-orbitron-semiBold leading-none text-lg  ${theme === "dark" ? "text-light bg-dark/50" : "text-dark bg-white/50"}`}
@@ -58,7 +82,7 @@ const Wind = () => {
               fanProps,
             ]}
             resizeMode="contain"
-            source={blades}
+            source={images.blades}
           />
 
           <Image
@@ -69,7 +93,7 @@ const Wind = () => {
               width: "100%",
               height: "80%",
             }}
-            source={WindMill}
+            source={images.wind_mill}
           />
         </View>
 

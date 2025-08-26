@@ -1,83 +1,62 @@
-/* eslint-disable react/prop-types */
-import { Area, AreaChart, XAxis, YAxis, ResponsiveContainer } from "recharts";
-import { expand } from "../assets/images";
-import { useState } from "react";
-import { Charts } from "../components/index";
-import FramerAnimations from "../utils/FramerAnimations";
+import Entypo from "@expo/vector-icons/Entypo";
+import { Text, useColorScheme, View } from "react-native";
 
-const Chart = ({ hourlyChart }) => {
-  const [chartsPopup, setChartsPopup] = useState(false);
+const Chart = () => {
+  let theme = useColorScheme();
 
-  let data = hourlyChart.slice(0, 24).map((x) => {
-    return {
-      hours: x.hourStamp,
-      precipitation: parseInt(x.precipitation),
-    };
-  });
+  return (
+    <View
+      style={
+        theme === "dark"
+          ? {
+              shadowColor: "#fff",
+              shadowOffset: {
+                width: 0,
+                height: 5,
+              },
+              shadowOpacity: 0.34,
+              shadowRadius: 6.27,
 
-  const handleRender = () => {
-    setChartsPopup((prev) => !prev);
-  };
+              elevation: 10,
+            }
+          : {
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
 
-  if (chartsPopup) document.body.style.overflow = "hidden";
-  else document.body.style.overflow = "auto";
-
-  return chartsPopup ? (
-    <Charts charts={hourlyChart} handleRender={() => handleRender()} />
-  ) : (
-    <FramerAnimations>
-      <section
-        onClick={handleRender}
-        className="cursor-pointer relative shadow-md dark:shadow-stone-800 dark:bg-sectionD bg-section px-2 xs:px-4 py-5 sm:p-8 md:p-12 m-3 xs:mx-5 sm:my-8 sm:mx-12 md:mx-24 rounded-2xl lg:max-w-[70vw] lg:mx-auto xl:max-w-[50vw]"
+              elevation: 5,
+            }
+      }
+      className={`relative overflow-hidden py-4 pt-10 mx-3 rounded-2xl border-1 border-dotted border-light/50`}
+    >
+      <View
+        className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-light/10" : "bg-dark/10"}`}
       >
-        <div className="relative">
-          <h2 className="text-sm font-medium sm:text-lg font-pathway text-sectionHeading dark:text-sectionHeadingD">
-            CHART
-          </h2>
-          <div className="absolute w-5 h-5 right-0 top-[50%] translate-y-[-50%]">
-            <img
-              src={expand}
-              className="cursor-pointer absolute w-2 h-2 right-0 top-[50%] translate-y-[-50%] dark:invert"
-              alt="click to expand"
-            />
-          </div>
-        </div>
-        <div className="px-1 py-2 ">
-          <ResponsiveContainer width="100%" height={150}>
-            <AreaChart data={data}>
-              <XAxis
-                fontSize={10}
-                tickLine={false}
-                fontFamily={"inter"}
-                dataKey="hours"
-                height={20}
-                interval={"preserveStart"}
-                minTickGap={20}
-                tickMargin={10}
-              ></XAxis>
-              <YAxis
-                width={27}
-                tickMargin={10}
-                axisLine={false}
-                fontSize={10}
-                tickCount={3}
-                tickLine={false}
-                fontFamily={"inter"}
-              />
-              <Area
-                type="monotone"
-                dataKey="precipitation"
-                stroke="hsl(212, 100%, 50%)"
-                fill="hsl(212, 100%, 40%)"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="absolute tracking-tight text-[0.7rem] font-extralight font-pathway right-4 bottom-2 sm:right-10 md:right-14 lg:right-18 xl:right-22 text-greyText">
-          Chance of precipitation
-        </div>
-      </section>
-    </FramerAnimations>
+        <Text
+          className={`font-orbitron-bold -translate-y-1/2 top-1/2 leading-none text-lg ${theme === "dark" ? "text-light" : "text-dark"}`}
+        >
+          CHART
+        </Text>
+        <View className="absolute -translate-y-1/2 right-5 top-1/2">
+          <Entypo
+            className="rotate-45"
+            name="direction"
+            size={16}
+            color={theme === "dark" ? "white" : "black"}
+          />
+        </View>
+      </View>
+      <View className="px-1 py-2"></View>
+      <Text
+        className={`absolute uppercase w-max right-2 bottom-2 leading-none font-genos-light ${theme === "dark" ? "text-light/80" : "text-dark/80"}`}
+      >
+        Chance of precipitation
+      </Text>
+    </View>
   );
 };
 

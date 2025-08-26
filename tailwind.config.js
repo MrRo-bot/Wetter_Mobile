@@ -26,29 +26,31 @@ module.exports = {
         light: "hsl(266, 54%, 97%)",
         outlineLight: "hsl(0, 0%, 10%)",
 
+        green: "hsl(165, 78%, 45%)",
+        yellow: "hsl(50, 92%, 66%)",
+        orange: "hsl(24, 98%, 69%)",
+        red: "hsl(355, 92%, 62%)",
+        purple: "hsl(270, 81%, 67%)",
+        maroon: "hsl(353, 57%, 44%)",
+
         dark: "hsl(264, 14%, 7%)",
         outlineDark: "hsl(0, 0%, 81%)",
 
         tealDark: "hsl(197, 80%, 72%)",
-        greenDark: "hsl(69, 80%, 72%)",
+        greenDark: "hsl(80, 80%, 72%)",
         purpleDark: "hsl(265, 80%, 72%)",
         mustardDark: "hsl(16, 80%, 72%)",
         yellowDark: "hsl(43, 80%, 72%)",
         redDark: "hsl(353, 80%, 72%)",
 
         tealLight: "hsl(197, 100%, 72%)",
-        greenLight: "hsl(69, 100%, 72%)",
+        greenLight: "hsl(80, 100%, 72%)",
         purpleLight: "hsl(265, 100%, 72%)",
         mustardLight: "hsl(16, 100%, 72%)",
         yellowLight: "hsl(43, 100%, 72%)",
         redLight: "hsl(353, 100%, 72%)",
       },
-      backgroundImage: {
-        aqiGradient:
-          "linear-gradient(90deg,hsl(165, 78%, 45%) 10%,hsl(50, 92%, 66%) 0 20%,hsl(24, 98%, 69%) 0 30%,hsl(355, 92%, 62%) 0 40%,hsl(270, 81%, 67%) 0 60%,hsl(353, 57%, 44%) 0)",
-      },
     },
   },
-  darkMode: "class",
   plugins: [],
 };

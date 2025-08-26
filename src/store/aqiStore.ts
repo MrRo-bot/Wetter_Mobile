@@ -37,6 +37,7 @@ export const aqiStore = create<AqiStoreType, [["zustand/persist", unknown]]>(
           us_aqi: 0,
         },
         hourly_units: {
+          us_aqi: "USAQI",
           time: "iso8601",
           pm10: "μg/m³",
           pm2_5: "μg/m³",
@@ -46,6 +47,7 @@ export const aqiStore = create<AqiStoreType, [["zustand/persist", unknown]]>(
           carbon_monoxide: "μg/m³",
         },
         hourly: {
+          us_aqi: [],
           time: [],
           pm10: [],
           pm2_5: [],

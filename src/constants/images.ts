@@ -1,9 +1,12 @@
 import alert from "@/src/assets/images/alert.gif";
+import aqiMeter from "@/src/assets/images/aqi_meter.png";
+import blades from "@/src/assets/images/blades.png";
 import direction from "@/src/assets/images/direction.png";
 import hotAlert from "@/src/assets/images/hot_alert.gif";
 import introduction from "@/src/assets/images/introduction.png";
 import location from "@/src/assets/images/location.gif";
 import search from "@/src/assets/images/search.gif";
+import windMill from "@/src/assets/images/wind_mill.png";
 
 import clock from "@/src/assets/images/brief/clock.gif";
 import dewPoint from "@/src/assets/images/brief/dew_point.gif";
@@ -38,11 +41,14 @@ import { WeatherIconsType } from "../types/types";
 
 const images: WeatherIconsType = {
   alert: alert,
+  aqi_meter: aqiMeter,
+  blades: blades,
   direction: direction,
   hot_alert: hotAlert,
   introduction: introduction,
   location: location,
   search: search,
+  wind_mill: windMill,
   clock: clock,
   dew_point: dewPoint,
   humidity: humidity,

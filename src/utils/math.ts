@@ -100,9 +100,11 @@ export const unixConv = {
 };
 
 //AQI DESCRIPTION
-export const aqiDesc = (value: number): object | string => {
+export const aqiDesc = (
+  value: number
+): { level: string; desc: string; color: string } => {
   switch (true) {
-    case value >= 0 && value <= 50:
+    case value >= 1 && value <= 50:
       return {
         level: "Good",
         desc: "Air quality is satisfactory.",
@@ -139,7 +141,11 @@ export const aqiDesc = (value: number): object | string => {
         color: "red",
       };
     default:
-      return "Data not found";
+      return {
+        level: "Nil",
+        desc: "Not Found",
+        color: "grey",
+      };
   }
 };
 

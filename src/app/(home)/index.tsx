@@ -49,10 +49,10 @@ export default function Home() {
           <components.Detail />
           <components.Hourly />
           <components.Daily />
-          {/* <components.Charts theme={colorScheme} />
-  <components.AirQuality theme={colorScheme} />
-  */}
+          <components.Chart />
+          <components.AirQuality />
           <components.Wind />
+          <components.Footer />
         </ScrollView>
       )}
     </SafeAreaView>

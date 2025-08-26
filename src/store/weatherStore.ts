@@ -108,6 +108,7 @@ export const weatherStore = create<
           shortwave_radiation_sum: "MJ/m²",
           dew_point_2m_mean: "",
           surface_pressure_mean: "hPa",
+          winddirection_10m_dominant: "°",
         },
         daily: {
           time: [],
@@ -127,6 +128,7 @@ export const weatherStore = create<
           shortwave_radiation_sum: [],
           dew_point_2m_mean: [],
           surface_pressure_mean: [],
+          winddirection_10m_dominant: [],
         },
       },
       addWeather: (weatherData) =>

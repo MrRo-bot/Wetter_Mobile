@@ -155,6 +155,17 @@ export interface WeatherDataType {
   };
 }
 
+export interface AQIHourlyType {
+  us_aqi: number[];
+  time: string[];
+  pm10: number[];
+  pm2_5: number[];
+  ozone: number[];
+  sulphur_dioxide: number[];
+  nitrogen_dioxide: number[];
+  carbon_monoxide: number[];
+}
+
 export interface AQIType {
   latitude: number;
   longitude: number;
@@ -186,6 +197,7 @@ export interface AQIType {
     us_aqi: number;
   };
   hourly_units: {
+    us_aqi: "USAQI";
     time: "iso8601";
     pm10: "μg/m³";
     pm2_5: "μg/m³";
@@ -194,15 +206,7 @@ export interface AQIType {
     nitrogen_dioxide: "μg/m³";
     carbon_monoxide: "μg/m³";
   };
-  hourly: {
-    time: string[];
-    pm10: number[];
-    pm2_5: number[];
-    ozone: number[];
-    sulphur_dioxide: number[];
-    nitrogen_dioxide: number[];
-    carbon_monoxide: number[];
-  };
+  hourly: AQIHourlyType;
 }
 export interface UnsplashType {
   total: number;
@@ -293,11 +297,14 @@ export interface DailyWeatherObjectType {
 
 export interface WeatherIconsType {
   alert: string;
+  aqi_meter: string;
+  blades: string;
   direction: string;
   hot_alert: string;
   introduction: string;
   location: string;
   search: string;
+  wind_mill: string;
   clock: string;
   dew_point: string;
   humidity: string;
