@@ -65,15 +65,12 @@ const Chart = () => {
           />
         </View>
       </View>
-      <View className="flex items-center justify-center p-1 my-4">
-        <PrecipitationChart
-          precipitationData={chanceOfPrecipitationData}
-          theme={theme}
-        />
-      </View>
-
+      <PrecipitationChart
+        precipitationData={chanceOfPrecipitationData}
+        theme={theme}
+      />
       <Text
-        className={`absolute uppercase w-max right-2 bottom-2 leading-none font-genos-light ${theme === "dark" ? "text-dark" : "text-slate-800"}`}
+        className={`text-right uppercase w-max leading-none font-genos-light ${theme === "dark" ? "text-dark" : "text-slate-800"}`}
       >
         Chance of precipitation
       </Text>
