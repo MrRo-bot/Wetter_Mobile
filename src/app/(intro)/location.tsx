@@ -13,7 +13,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Location() {
   let colorScheme = useColorScheme();
-  const { isLoading, getLocation, location: fetchedLocation } = useLocation();
+  const {
+    isLoading,
+    getLocation,
+    location: fetchedLocation,
+    errorMsg,
+  } = useLocation();
   const location = locationStore();
 
   useEffect(() => {

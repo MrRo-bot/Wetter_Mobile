@@ -149,6 +149,113 @@ export const aqiDesc = (
   }
 };
 
+//other aqi parameters
+export const aqiDetailColors = ({
+  title,
+  value,
+}: {
+  title: string;
+  value: number;
+}): { textColor: string; bgColor: string } => {
+  switch (true) {
+    case title === "PM2.5"
+      ? value >= 0 && value <= 12
+      : title === "PM10"
+        ? value >= 0 && value <= 55
+        : title === "O3"
+          ? value >= 0 && value <= 55
+          : title === "CO"
+            ? value >= 0 && value <= 4.5
+            : title === "SO2"
+              ? value >= 0 && value <= 35
+              : value >= 0 && value <= 54:
+      return {
+        textColor: "black",
+        bgColor: "green",
+      };
+    case title === "PM2.5"
+      ? value > 12 && value <= 35.5
+      : title === "PM10"
+        ? value > 55 && value <= 155
+        : title === "O3"
+          ? value > 55 && value <= 70
+          : title === "CO"
+            ? value > 4.5 && value <= 9.5
+            : title === "SO2"
+              ? value > 35 && value <= 75
+              : value > 54 && value <= 100:
+      return {
+        textColor: "black",
+        bgColor: "yellow",
+      };
+    case title === "PM2.5"
+      ? value > 35.5 && value <= 55.5
+      : title === "PM10"
+        ? value > 155 && value <= 255
+        : title === "O3"
+          ? value > 70 && value <= 85
+          : title === "CO"
+            ? value > 9.5 && value <= 12.5
+            : title === "SO2"
+              ? value > 75 && value <= 185
+              : value > 100 && value <= 360:
+      return {
+        textColor: "black",
+        bgColor: "orange",
+      };
+    case title === "PM2.5"
+      ? value > 55.5 && value <= 150.5
+      : title === "PM10"
+        ? value > 255 && value <= 355
+        : title === "O3"
+          ? value > 85 && value <= 105
+          : title === "CO"
+            ? value > 12.5 && value <= 15.5
+            : title === "SO2"
+              ? value > 185 && value <= 305
+              : value > 360 && value <= 650:
+      return {
+        textColor: "white",
+        bgColor: "red",
+      };
+    case title === "PM2.5"
+      ? value > 150.5 && value <= 250.5
+      : title === "PM10"
+        ? value > 355 && value <= 425
+        : title === "O3"
+          ? value > 105 && value <= 200
+          : title === "CO"
+            ? value > 15.5 && value <= 30.5
+            : title === "SO2"
+              ? value > 305 && value <= 605
+              : value > 650 && value <= 1250:
+      return {
+        textColor: "white",
+        bgColor: "darkred",
+      };
+    case title === "PM2.5"
+      ? value > 250.5
+      : title === "PM10"
+        ? value > 425
+        : title === "O3"
+          ? value > 200
+          : title === "CO"
+            ? value > 30.5
+            : title === "SO2"
+              ? value > 605
+              : value > 1250:
+      return {
+        textColor: "white",
+        bgColor: "purple",
+      };
+    default:
+      return {
+        textColor: "black",
+        bgColor: "grey",
+      };
+  }
+};
+
 //WEATHER INTERPRETATION CODES (OPEN METEO)
 export const weatherCodeConv = (code: number): string => {
   switch (code) {
@@ -263,9 +370,9 @@ export const weatherIconFind = (code: number): string[] | string => {
     case 95:
       return "thunderstorm";
     case 96:
-      return "slight_thunderstorm_with_hail";
+      return "slight_thunder_with_hail";
     case 99:
-      return "heavy_thunderstorm_with_hail";
+      return "heavy_thunder_with_hail";
     default:
       return "default";
   }
@@ -277,8 +384,7 @@ export const closestTimestamp = (
   hourlyTimestampArray: string[]
 ) => {
   const currentTimestamp = new Date(currTimestamp).getTime() / 1000;
-  if (isNaN(currentTimestamp))
-    throw new Error("Invalid currTimestamp timestamp");
+  if (isNaN(currentTimestamp)) throw new Error("Invalid currTimestamp");
 
   return hourlyTimestampArray.reduce((a, b) => {
     const aTime = new Date(a).getTime() / 1000;

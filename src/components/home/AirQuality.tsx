@@ -1,7 +1,6 @@
 import images from "@/src/constants/images";
 import { aqiStore } from "@/src/store/aqiStore";
-import { AQIHourlyType } from "@/src/types/types";
-import { aqiDesc } from "@/src/utils/math";
+import { aqiDesc, aqiDetailColors } from "@/src/utils/math";
 import Entypo from "@expo/vector-icons/Entypo";
 import { Image } from "expo-image";
 import { Text, useColorScheme, View } from "react-native";
@@ -12,38 +11,44 @@ const AirQuality = () => {
   const aqiIndex = aqi?.current.us_aqi;
   const aqiObject = aqiDesc(aqiIndex);
 
-  const aqiForecast: {
-    day1: AQIHourlyType[];
-    day2: AQIHourlyType[];
-    day3: AQIHourlyType[];
-    day4: AQIHourlyType[];
-    day5: AQIHourlyType[];
-    day6: AQIHourlyType[];
-    day7: AQIHourlyType[];
-  } = {
-    day1: [],
-    day2: [],
-    day3: [],
-    day4: [],
-    day5: [],
-    day6: [],
-    day7: [],
-  };
+  const aqiDetail = [
+    { title: "PM2.5", value: aqi?.current.pm2_5 },
+    { title: "PM10", value: aqi?.current.pm10 },
+    { title: "O3", value: aqi?.current.ozone },
+    { title: "CO", value: aqi?.current.carbon_monoxide },
+    { title: "SO2", value: aqi?.current.sulphur_dioxide },
+    { title: "NO2", value: aqi?.current.nitrogen_dioxide },
+  ];
 
-  for (let i = 1; i <= 7; i++) {
-    const start = (i - 1) * 24;
-    const end = i * 24;
-    aqiForecast[`day${i}`] = {
-      us_aqi: aqi?.hourly.us_aqi.slice(start, end),
-      carbon_monoxide: aqi?.hourly.carbon_monoxide.slice(start, end),
-      nitrogen_dioxide: aqi?.hourly.nitrogen_dioxide.slice(start, end),
-      ozone: aqi?.hourly.ozone.slice(start, end),
-      pm10: aqi?.hourly.pm10.slice(start, end),
-      pm2_5: aqi?.hourly.pm2_5.slice(start, end),
-      sulphur_dioxide: aqi?.hourly.sulphur_dioxide.slice(start, end),
-      time: aqi?.hourly.time.slice(start, end),
-    };
-  }
+  //   const aqiForecast: AQIHourlyType[] = [];
+
+  //   for (let i = 1; i <= 7; i++) {
+  //     const start = (i - 1) * 24;
+  //     const end = i * 24;
+  //     aqiForecast.push({
+  //       us_aqi: aqi?.hourly.us_aqi.slice(start, end),
+  //       carbon_monoxide: aqi?.hourly.carbon_monoxide.slice(start, end),
+  //       nitrogen_dioxide: aqi?.hourly.nitrogen_dioxide.slice(start, end),
+  //       ozone: aqi?.hourly.ozone.slice(start, end),
+  //       pm10: aqi?.hourly.pm10.slice(start, end),
+  //       pm2_5: aqi?.hourly.pm2_5.slice(start, end),
+  //       sulphur_dioxide: aqi?.hourly.sulphur_dioxide.slice(start, end),
+  //       time: aqi?.hourly.time.slice(start, end),
+  //     });
+  //   }
+
+  // const aqiChartData = Array.from({ length: 7 }, (_, i) => {
+  //     const aqiDayObj = aqiForecast[i];
+  //     return {
+  //       left: Math.max(...aqiDayObj.us_aqi),
+  //       right: Math.min(...aqiDayObj.us_aqi),
+  //       leftBarLabel: `${Math.max(...aqiDayObj.us_aqi)}`,
+  //       rightBarLabel: `${Math.min(...aqiDayObj.us_aqi)}`,
+  //       yAxisLabel: unixConv
+  //         ?.timeStamp(new Date(aqiDayObj.time[i]).getTime() / 1000)
+  //         .day.slice(0, 3),
+  //     };
+  //   });
 
   const aqiData = {
     level: aqiObject?.level,
@@ -109,10 +114,10 @@ const AirQuality = () => {
               elevation: 5,
             }
       }
-      className={`relative overflow-hidden py-4 pt-10 px-2 mx-3 rounded-2xl ${theme === "dark" ? "bg-dark" : "bg-light"}`}
+      className={`relative overflow-hidden py-4 pt-10 px-2 mx-3 rounded-2xl ${theme === "dark" ? "bg-yellowDark" : "bg-yellowLight"}`}
     >
       <View
-        className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-light/10" : "bg-dark/10"}`}
+        className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-dark/50" : "bg-white/50"}`}
       >
         <Text
           className={`font-orbitron-bold -translate-y-1/2 top-1/2 leading-none text-lg ${theme === "dark" ? "text-light" : "text-dark"}`}
@@ -128,20 +133,50 @@ const AirQuality = () => {
           />
         </View>
       </View>
-      <View className="gap-4 mt-4">
-        <Text
-          className={`text-4xl leading-none font-orbitron-medium ${aqiLevelColor}`}
-        >
-          {aqiIndex}
-        </Text>
-        <View>
+      <View className="flex-row flex-wrap items-center justify-between mt-4 gap-y-2">
+        {aqiDetail.map((detail) => {
+          const colorObj = aqiDetailColors(detail);
+          return (
+            <View
+              key={detail.title}
+              style={{
+                backgroundColor: colorObj.bgColor,
+                opacity: theme === "dark" ? 0.9 : 0.7,
+              }}
+              className={`w-[32%] items-center justify-center p-2 rounded-md`}
+            >
+              <Text
+                style={{ color: colorObj.textColor }}
+                className={`mt-1 leading-none font-orbitron-bold `}
+              >
+                {detail.title}
+              </Text>
+              <Text
+                style={{ color: colorObj.textColor }}
+                className={`mt-2 text-2xl leading-none font-genos-regular `}
+              >
+                {detail.value}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
+      <View className="flex-row items-center justify-start gap-4 mt-4">
+        <View className="p-1 rounded-lg bg-slate-900">
           <Text
-            className={`text-lg font-orbitron-bold ${theme === "dark" ? "text-light/80" : "text-dark/80"}`}
+            className={`text-5xl leading-none font-orbitron-medium ${aqiLevelColor}`}
+          >
+            {aqiIndex}
+          </Text>
+        </View>
+        <View className="text-wrap overflow-ellipsis">
+          <Text
+            className={`text-lg font-orbitron-bold ${theme === "dark" ? "text-slate-800" : "text-dark"}`}
           >
             {aqiData?.level}
           </Text>
           <Text
-            className={`text-xl leading-none mt-2 font-genos-medium ${theme === "dark" ? "text-light/50" : "text-dark/50"}`}
+            className={`text-xl leading-none mt-2 font-genos-medium ${theme === "dark" ? "text-slate-800/70" : "text-dark/70"}`}
           >
             {aqiData?.desc}
           </Text>
@@ -150,37 +185,37 @@ const AirQuality = () => {
       <View className="gap-1 mt-2">
         <View className="flex-row mx-auto">
           <Text
-            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-light/70" : "text-dark/70"}`}
+            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-800/70" : "text-dark/70"}`}
           >
             0
           </Text>
           <Text
-            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-light/70" : "text-dark/70"}`}
+            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-800/70" : "text-dark/70"}`}
           >
             50
           </Text>
           <Text
-            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-light/70" : "text-dark/70"}`}
+            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-800/70" : "text-dark/70"}`}
           >
             100
           </Text>
           <Text
-            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-light/70" : "text-dark/70"}`}
+            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-800/70" : "text-dark/70"}`}
           >
             150
           </Text>
           <Text
-            className={`text-xs w-[20%] font-genos-semiBold ${theme === "dark" ? "text-light/70" : "text-dark/70"}`}
+            className={`text-xs w-[20%] font-genos-semiBold ${theme === "dark" ? "text-slate-800/70" : "text-dark/70"}`}
           >
             200
           </Text>
           <Text
-            className={`text-xs w-[30%] font-genos-semiBold ${theme === "dark" ? "text-light/70" : "text-dark/70"}`}
+            className={`text-xs w-[30%] font-genos-semiBold ${theme === "dark" ? "text-slate-800/70" : "text-dark/70"}`}
           >
             300
           </Text>
           <Text
-            className={`text-xs font-genos-semiBold ${theme === "dark" ? "text-light/70" : "text-dark/70"}`}
+            className={`text-xs font-genos-semiBold ${theme === "dark" ? "text-slate-800/70" : "text-dark/70"}`}
           >
             500
           </Text>
@@ -195,17 +230,17 @@ const AirQuality = () => {
           />
           <View
             style={{ left: `${aqiData?.seekBar}%` }}
-            className={`absolute w-2.5 h-2.5 rounded-full ${theme === "dark" ? "bg-light" : "bg-black"}`}
+            className={`absolute w-2.5 h-2.5 rounded-full ${theme === "dark" ? "bg-white" : "bg-black"}`}
           ></View>
         </View>
         <View className="flex-row justify-between">
           <Text
-            className={`font-genos-medium ${theme === "dark" ? "text-light/70" : "text-dark/70"}`}
+            className={`font-genos-medium ${theme === "dark" ? "text-slate-800/70" : "text-dark/70"}`}
           >
             Good
           </Text>
           <Text
-            className={`font-genos-medium ${theme === "dark" ? "text-light/70" : "text-dark/70"}`}
+            className={`font-genos-medium ${theme === "dark" ? "text-slate-800/70" : "text-dark/70"}`}
           >
             Hazardous
           </Text>

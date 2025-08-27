@@ -63,7 +63,7 @@ const Brief = () => {
     <View className="gap-2 mx-3 mt-2">
       <View className="w-[calc(100vw-24px)] overflow-hidden h-96 rounded-2xl">
         {imageColorsLoading || unsplashLoading ? (
-          <View className={`w-full h-full bg-black/50`} />
+          <View className={`w-full h-full bg-[#11111150]`} />
         ) : (
           <Image
             contentFit="cover"

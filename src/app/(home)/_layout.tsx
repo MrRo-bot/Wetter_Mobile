@@ -22,11 +22,11 @@ export default function HomeLayout() {
             hour12: true,
           })
         ),
-      1000 * 60 //minute long interval
+      1000
     );
 
     return () => clearInterval(clockInterval);
-  }, [clock]);
+  }, []);
 
   const themeBackground =
     colorScheme === "dark" ? "rgb(17, 15, 20)" : "rgb(247, 243, 251)";

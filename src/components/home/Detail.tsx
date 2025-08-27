@@ -38,7 +38,7 @@ const Detail = () => {
     {
       icon: images.visibility,
       heading: "Visibility",
-      data: lenAndSpdConv.km(hourly?.visibility[currentTimeIndex!]) + "km",
+      data: lenAndSpdConv.km(hourly?.visibility[currentTimeIndex]) + "km",
     },
     {
       icon: images.pressure,

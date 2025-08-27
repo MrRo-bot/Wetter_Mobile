@@ -33,7 +33,7 @@ const useUnsplashImage = (weatherType: string) => {
     client_id: "",
     query: "",
     page: "1",
-    per_page: "10",
+    per_page: "40",
     orientation: "squarish",
   };
   if (weatherType && unsplashKey) {

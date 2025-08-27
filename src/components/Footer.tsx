@@ -10,7 +10,6 @@ const Footer = () => {
 
   const openLink = useCallback(async (appUrl: string, webUrl: string) => {
     const canOpen = await Linking.canOpenURL(appUrl);
-    console.log(canOpen);
     try {
       if (canOpen) {
         await Linking.openURL(appUrl);
@@ -24,9 +23,9 @@ const Footer = () => {
   }, []);
 
   return (
-    <View className="py-3">
+    <View className="pt-8 pb-3">
       <Text
-        className={`text-xl leading-none mb-2 tracking-wider text-center font-genos-regular ${theme === "dark" ? "text-light" : "text-dark"}`}
+        className={`text-lg leading-none mb-2 tracking-wider text-center font-genos-regular ${theme === "dark" ? "text-light" : "text-dark"}`}
       >
         My socials 😘
       </Text>

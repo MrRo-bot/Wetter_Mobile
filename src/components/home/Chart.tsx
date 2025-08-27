@@ -1,8 +1,23 @@
+import { weatherStore } from "@/src/store/weatherStore";
+import { unixConv } from "@/src/utils/math";
 import Entypo from "@expo/vector-icons/Entypo";
 import { Text, useColorScheme, View } from "react-native";
+import { PrecipitationChart } from "../PrecipitationChart";
 
 const Chart = () => {
   let theme = useColorScheme();
+  const { weather } = weatherStore();
+
+  const chanceOfPrecipitationData = Array.from({ length: 7 }, (_, i) => {
+    const indexToShow = (i + 1) * 4;
+
+    return {
+      value: weather.hourly.precipitation_probability[indexToShow],
+      label: unixConv?.timeStamp(
+        new Date(weather.hourly.time[indexToShow]).getTime() / 1000
+      ).hour2,
+    };
+  });
 
   return (
     <View
@@ -31,10 +46,10 @@ const Chart = () => {
               elevation: 5,
             }
       }
-      className={`relative overflow-hidden py-4 pt-10 mx-3 rounded-2xl border-1 border-dotted border-light/50`}
+      className={`relative overflow-hidden py-4 pt-10 px-1 mx-3 rounded-2xl ${theme === "dark" ? "bg-greenDark" : "bg-greenLight"}`}
     >
       <View
-        className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-light/10" : "bg-dark/10"}`}
+        className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-dark/50" : "bg-white/50"}`}
       >
         <Text
           className={`font-orbitron-bold -translate-y-1/2 top-1/2 leading-none text-lg ${theme === "dark" ? "text-light" : "text-dark"}`}
@@ -50,9 +65,15 @@ const Chart = () => {
           />
         </View>
       </View>
-      <View className="px-1 py-2"></View>
+      <View className="flex items-center justify-center p-1 my-4">
+        <PrecipitationChart
+          precipitationData={chanceOfPrecipitationData}
+          theme={theme}
+        />
+      </View>
+
       <Text
-        className={`absolute uppercase w-max right-2 bottom-2 leading-none font-genos-light ${theme === "dark" ? "text-light/80" : "text-dark/80"}`}
+        className={`absolute uppercase w-max right-2 bottom-2 leading-none font-genos-light ${theme === "dark" ? "text-dark" : "text-slate-800"}`}
       >
         Chance of precipitation
       </Text>

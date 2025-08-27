@@ -6,23 +6,34 @@ import { LocationDataType } from "../types/types";
 export default function useLocation(autoFetch: boolean = false) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [location, setLocation] = useState<LocationDataType | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const getLocation = useCallback(async () => {
     setIsLoading(true);
+    setErrorMsg(null);
+
     try {
+      // If location services are enabled
+      const providerStatus = await PhoneLocation.getProviderStatusAsync();
+      if (!providerStatus.locationServicesEnabled) {
+        throw new Error(
+          "Location services are disabled. Please enable them in device settings."
+        );
+      }
+
       //asking for location access
-      const { status } =
-        await PhoneLocation.requestForegroundPermissionsAsync();
+      const status = await PhoneLocation.requestForegroundPermissionsAsync();
 
       //if permission denied
-      if (status !== "granted") {
-        setIsLoading(false);
+      if (status.status !== "granted") {
         throw new Error("permisssion denied");
       }
 
       //if permission given, getting location coordinates
       const locationCoords = await PhoneLocation.getCurrentPositionAsync({
-        accuracy: PhoneLocation.Accuracy.Balanced,
+        accuracy: PhoneLocation.Accuracy.High, // Try higher accuracy
+        timeInterval: 10000, // Minimum time to wait (in milliseconds)
+        distanceInterval: 20, //every 20 meters
       });
 
       //getting postal address of location from coords
@@ -38,8 +49,12 @@ export default function useLocation(autoFetch: boolean = false) {
           locationCoords: locationCoords,
           geoAddress: geoAddress,
         });
-    } catch (error) {
-      console.log("location fetch error " + error);
+      else {
+        throw new Error("Unable to retrieve address from coordinates");
+      }
+    } catch (error: any) {
+      console.log(error);
+      setErrorMsg(error.message || "Failed to retrieve location");
     } finally {
       setIsLoading(false);
     }
@@ -49,5 +64,5 @@ export default function useLocation(autoFetch: boolean = false) {
     autoFetch && getLocation();
   }, [autoFetch, getLocation]);
 
-  return { location, isLoading, getLocation };
+  return { location, isLoading, getLocation, errorMsg };
 }

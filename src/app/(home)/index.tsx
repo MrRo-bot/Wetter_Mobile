@@ -49,9 +49,9 @@ export default function Home() {
           <components.Detail />
           <components.Hourly />
           <components.Daily />
+          <components.Wind />
           <components.Chart />
           <components.AirQuality />
-          <components.Wind />
           <components.Footer />
         </ScrollView>
       )}

@@ -65,7 +65,7 @@ export default function Layout() {
         }
         return false;
       } catch (error) {
-        console.error("First launch fetch Error " + error);
+        console.error(error);
         return false;
       }
     };
