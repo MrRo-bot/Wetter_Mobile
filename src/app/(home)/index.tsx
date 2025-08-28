@@ -1,4 +1,4 @@
-import Loader from "@/src/components/Loader";
+import Loader from "@/src/components/UI/Loader";
 import components from "@/src/constants/components";
 import useAqiData from "@/src/hooks/useAqiData";
 import useWeatherData from "@/src/hooks/useWeatherData";

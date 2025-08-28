@@ -59,7 +59,7 @@ const Hours = () => {
     <View className={`${theme === "dark" ? "bg-black" : "bg-light"}`}>
       <FlatList
         contentContainerClassName="pt-4 pb-8"
-        ItemSeparatorComponent={() => <View className="p-4" />}
+        ItemSeparatorComponent={() => <View className="p-3" />}
         data={hourlyDataFull}
         renderItem={({ item }: { item: HourlyWeatherObjectType }) => {
           let iconKey;
@@ -76,8 +76,6 @@ const Hours = () => {
             images[iconKey as keyof WeatherIconsType] || images.default;
 
           let altText = item.weatherMain;
-
-          console.log(item);
 
           return (
             <View

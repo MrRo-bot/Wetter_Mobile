@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Dimensions, View } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
-export const PrecipitationChart = ({
+
+const PrecipitationChart = ({
   precipitationData,
   theme,
 }: {
@@ -33,8 +34,8 @@ export const PrecipitationChart = ({
         disableScroll
         data={precipitationData}
         height={200}
-        width={parentWidth * 0.9}
-        spacing={parentWidth / 6}
+        width={parentWidth * 0.86}
+        spacing={parentWidth / 6.25}
         color="hsl(213, 100%, 70%)"
         thickness={2}
         startFillColor="hsla(213, 100%, 70%,0.3)"
@@ -52,17 +53,19 @@ export const PrecipitationChart = ({
         yAxisTextStyle={{
           color: theme === "dark" ? "black" : "gray",
           fontSize: 12,
-          width: 30,
+          width: 36,
         }}
         xAxisThickness={0}
         xAxisColor=""
         xAxisLabelsVerticalShift={0}
         xAxisLabelTextStyle={{
           color: theme === "dark" ? "black" : "gray",
-          fontSize: parentWidth * 0.025,
+          fontSize: parentWidth * 0.03,
           textAlign: "right",
         }}
       />
     </View>
   );
 };
+
+export default PrecipitationChart;

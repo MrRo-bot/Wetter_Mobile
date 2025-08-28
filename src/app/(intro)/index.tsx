@@ -1,4 +1,4 @@
-import MainButton from "@/src/components/MainButton";
+import components from "@/src/constants/components";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import React from "react";
@@ -49,7 +49,7 @@ export default function Intro() {
         </Text>
       </View>
 
-      <MainButton
+      <components.MainButton
         colorScheme={colorScheme}
         onPressFunc={() => router.navigate("/(intro)/location")}
         buttonText="Next"

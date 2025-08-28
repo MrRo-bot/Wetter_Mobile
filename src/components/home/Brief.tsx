@@ -64,7 +64,7 @@ const Brief = () => {
     <View className="gap-2 mx-3 mt-2">
       <View className="w-[calc(100vw-24px)] overflow-hidden h-96 rounded-2xl">
         {imageColorsLoading || unsplashLoading ? (
-          <View className={`w-full h-full bg-[#11111150]`} />
+          <View className={`w-full h-full bg-[#44444450]`} />
         ) : (
           <Image
             contentFit="cover"
@@ -81,7 +81,7 @@ const Brief = () => {
         <View className="flex-row flex-wrap items-center my-4">
           <Text
             style={{
-              color: imageColorsLoading ? "#11111150" : imageColor,
+              color: imageColorsLoading ? "#44444450" : imageColor,
               textShadowColor: imageColor,
               textShadowOffset: { width: 0, height: 2 },
               textShadowRadius: 8,
@@ -93,7 +93,7 @@ const Brief = () => {
 
           <Text
             style={{
-              color: imageColorsLoading ? "#11111150" : imageColor,
+              color: imageColorsLoading ? "#44444450" : imageColor,
               textShadowColor: imageColor,
               textShadowOffset: { width: 0, height: 2 },
               textShadowRadius: 8,
@@ -105,7 +105,7 @@ const Brief = () => {
           </Text>
           <Text
             style={{
-              color: imageColorsLoading ? "#11111150" : imageColor,
+              color: imageColorsLoading ? "#44444450" : imageColor,
               textShadowColor: imageColor,
               textShadowOffset: { width: 0, height: 2 },
               textShadowRadius: 8,
@@ -116,7 +116,7 @@ const Brief = () => {
           </Text>
           <Text
             style={{
-              color: imageColorsLoading ? "#11111150" : imageColor,
+              color: imageColorsLoading ? "#44444450" : imageColor,
               textShadowColor: imageColor,
               textShadowOffset: { width: 0, height: 2 },
               textShadowRadius: 8,

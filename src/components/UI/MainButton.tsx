@@ -1,6 +1,6 @@
+import { MainButtonType } from "@/src/types/types";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import { MainButtonType } from "../types/types";
 
 const MainButton = ({
   colorScheme,

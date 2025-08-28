@@ -3,10 +3,10 @@ import { Image } from "expo-image";
 import React, { useEffect } from "react";
 import { Pressable, Text, useColorScheme, View } from "react-native";
 
-import MainButton from "@/src/components/MainButton";
 import images from "@/src/constants/images";
 
-import Loader from "@/src/components/Loader";
+import Loader from "@/src/components/UI/Loader";
+import Components from "@/src/constants/components";
 import useLocation from "@/src/hooks/useLocation";
 import { locationStore } from "@/src/store/locationStore";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -62,7 +62,7 @@ export default function Location() {
           </View>
         )}
         <View className="mx-auto">
-          <MainButton
+          <Components.MainButton
             colorScheme={colorScheme}
             onPressFunc={getLocation}
             buttonText="Allow"

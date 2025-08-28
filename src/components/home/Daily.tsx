@@ -76,121 +76,120 @@ const Daily = () => {
   });
 
   return (
-    <Pressable onPress={() => router.navigate("/(home)/Days")}>
-      <View
-        style={
-          theme === "dark"
-            ? {
-                shadowColor: "#fff",
-                shadowOffset: {
-                  width: 0,
-                  height: 5,
-                },
-                shadowOpacity: 0.34,
-                shadowRadius: 6.27,
+    <View
+      style={
+        theme === "dark"
+          ? {
+              shadowColor: "#fff",
+              shadowOffset: {
+                width: 0,
+                height: 5,
+              },
+              shadowOpacity: 0.34,
+              shadowRadius: 6.27,
 
-                elevation: 10,
-              }
-            : {
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
+              elevation: 10,
+            }
+          : {
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
 
-                elevation: 5,
-              }
-        }
-        className={`relative overflow-hidden py-4 pt-10 mx-3 rounded-2xl ${theme === "dark" ? "bg-redDark" : "bg-redLight"}`}
+              elevation: 5,
+            }
+      }
+      className={`relative overflow-hidden py-4 pt-10 mx-3 rounded-2xl ${theme === "dark" ? "bg-redDark" : "bg-redLight"}`}
+    >
+      <Pressable
+        onPress={() => router.navigate("/(home)/Days")}
+        className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-dark/50" : "bg-white/50"}`}
       >
-        <View
-          className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-dark/50" : "bg-white/50"}`}
+        <Text
+          className={`font-orbitron-bold -translate-y-1/2 top-1/2 leading-none text-lg ${theme === "dark" ? "text-light " : "text-dark "}`}
         >
-          <Text
-            className={`font-orbitron-bold -translate-y-1/2 top-1/2 leading-none text-lg ${theme === "dark" ? "text-light " : "text-dark "}`}
-          >
-            DAILY
-          </Text>
-          <View className="absolute -translate-y-1/2 right-5 top-1/2">
-            <Entypo
-              className="rotate-45"
-              name="direction"
-              size={16}
-              color={theme === "dark" ? "white" : "black"}
-            />
-          </View>
-        </View>
-
-        <View className="px-1 mt-6">
-          <FlatList
-            ItemSeparatorComponent={() => <View className="p-1" />}
-            data={dailyData.slice(0, 8)}
-            horizontal={true}
-            renderItem={({ item }: { item: DailyWeatherObjectType }) => {
-              let iconKey;
-              iconKey =
-                !item.weatherIcon || item.weatherIcon === "default"
-                  ? (iconKey = "default")
-                  : Array.isArray(item.weatherIcon)
-                    ? item.weatherCode === 0
-                      ? item.weatherIcon[0]
-                      : item.weatherIcon[1]
-                    : item.weatherIcon;
-
-              let icon =
-                images[iconKey as keyof WeatherIconsType] || images.default;
-
-              let altText = item.weatherMain;
-
-              return (
-                <View
-                  key={item.id}
-                  className={`items-center rounded-2xl py-1 px-3  ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
-                >
-                  <Text className={`font-genos-medium text-3xl`}>
-                    {item.maxTemp}
-                  </Text>
-                  <Text className={`font-genos-medium text-3xl`}>
-                    {item.minTemp}
-                  </Text>
-
-                  <Text
-                    className={`font-orbitron-semiBold  text-sky-600/70 mt-1`}
-                  >
-                    {item.precipitation}
-                  </Text>
-                  <Image
-                    contentFit="cover"
-                    style={{ width: 48, height: 48, marginBlock: 7 }}
-                    source={icon}
-                    alt={altText}
-                  />
-                  <Text className={`font-orbitron-regular text-xs mt-1`}>
-                    {item.windSpeed}
-                  </Text>
-                  <Image
-                    contentFit="cover"
-                    style={{
-                      transform: `rotate(${item.windDirection}deg)`,
-                      width: 16,
-                      height: 16,
-                      marginBlock: 7,
-                    }}
-                    source={images.direction}
-                    alt="wind direction"
-                  />
-                  <Text className={`font-orbitron-semiBold mt-1`}>
-                    {item.dateStamp.slice(0, 3)}
-                  </Text>
-                </View>
-              );
-            }}
+          DAILY
+        </Text>
+        <View className="absolute -translate-y-1/2 right-5 top-1/2">
+          <Entypo
+            className="rotate-45"
+            name="direction"
+            size={16}
+            color={theme === "dark" ? "white" : "black"}
           />
         </View>
+      </Pressable>
+
+      <View className="px-1 mt-6">
+        <FlatList
+          ItemSeparatorComponent={() => <View className="p-1" />}
+          data={dailyData.slice(0, 8)}
+          horizontal={true}
+          renderItem={({ item }: { item: DailyWeatherObjectType }) => {
+            let iconKey;
+            iconKey =
+              !item.weatherIcon || item.weatherIcon === "default"
+                ? (iconKey = "default")
+                : Array.isArray(item.weatherIcon)
+                  ? item.weatherCode === 0
+                    ? item.weatherIcon[0]
+                    : item.weatherIcon[1]
+                  : item.weatherIcon;
+
+            let icon =
+              images[iconKey as keyof WeatherIconsType] || images.default;
+
+            let altText = item.weatherMain;
+
+            return (
+              <View
+                key={item.id}
+                className={`items-center rounded-2xl py-1 px-3  ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
+              >
+                <Text className={`font-genos-medium text-3xl`}>
+                  {item.maxTemp}
+                </Text>
+                <Text className={`font-genos-medium text-3xl`}>
+                  {item.minTemp}
+                </Text>
+
+                <Text
+                  className={`font-orbitron-semiBold  text-sky-600/70 mt-1`}
+                >
+                  {item.precipitation}
+                </Text>
+                <Image
+                  contentFit="cover"
+                  style={{ width: 48, height: 48, marginBlock: 7 }}
+                  source={icon}
+                  alt={altText}
+                />
+                <Text className={`font-orbitron-regular text-xs mt-1`}>
+                  {item.windSpeed}
+                </Text>
+                <Image
+                  contentFit="cover"
+                  style={{
+                    transform: `rotate(${item.windDirection}deg)`,
+                    width: 16,
+                    height: 16,
+                    marginBlock: 7,
+                  }}
+                  source={images.direction}
+                  alt="wind direction"
+                />
+                <Text className={`font-orbitron-semiBold mt-1`}>
+                  {item.dateStamp.slice(0, 3)}
+                </Text>
+              </View>
+            );
+          }}
+        />
       </View>
-    </Pressable>
+    </View>
   );
 };
 

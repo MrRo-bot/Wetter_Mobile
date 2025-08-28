@@ -1,8 +1,9 @@
+import Components from "@/src/constants/components";
 import { weatherStore } from "@/src/store/weatherStore";
 import { unixConv } from "@/src/utils/math";
 import Entypo from "@expo/vector-icons/Entypo";
-import { Text, useColorScheme, View } from "react-native";
-import { PrecipitationChart } from "../PrecipitationChart";
+import { router } from "expo-router";
+import { Pressable, Text, useColorScheme, View } from "react-native";
 
 const Chart = () => {
   let theme = useColorScheme();
@@ -12,9 +13,9 @@ const Chart = () => {
     const indexToShow = (i + 1) * 4;
 
     return {
-      value: weather.hourly.precipitation_probability[indexToShow],
+      value: weather?.hourly.precipitation_probability[indexToShow],
       label: unixConv?.timeStamp(
-        new Date(weather.hourly.time[indexToShow]).getTime() / 1000
+        new Date(weather?.hourly.time[indexToShow]).getTime() / 1000
       ).hour2,
     };
   });
@@ -48,7 +49,8 @@ const Chart = () => {
       }
       className={`relative overflow-hidden py-4 pt-10 px-1 mx-3 rounded-2xl ${theme === "dark" ? "bg-greenDark" : "bg-greenLight"}`}
     >
-      <View
+      <Pressable
+        onPress={() => router.navigate("/(home)/Charts")}
         className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-dark/50" : "bg-white/50"}`}
       >
         <Text
@@ -64,9 +66,9 @@ const Chart = () => {
             color={theme === "dark" ? "white" : "black"}
           />
         </View>
-      </View>
+      </Pressable>
       <View className="w-full">
-        <PrecipitationChart
+        <Components.PrecipitationChart
           precipitationData={chanceOfPrecipitationData}
           theme={theme}
         />

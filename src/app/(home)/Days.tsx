@@ -71,7 +71,7 @@ const Days = () => {
     <View className={`${theme === "dark" ? "bg-black" : "bg-light"}`}>
       <FlatList
         contentContainerClassName="pt-4 pb-8"
-        ItemSeparatorComponent={() => <View className="p-4" />}
+        ItemSeparatorComponent={() => <View className="p-3" />}
         data={dailyDataFull}
         renderItem={({ item }: { item: DailyWeatherObjectType }) => {
           let iconKey;
