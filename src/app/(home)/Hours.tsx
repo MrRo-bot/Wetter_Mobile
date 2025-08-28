@@ -4,6 +4,7 @@ import { HourlyWeatherObjectType, WeatherIconsType } from "@/src/types/types";
 import {
   closestTimestamp,
   degConv,
+  lenAndSpdConv,
   unixConv,
   valRound,
   weatherCodeConv,
@@ -11,6 +12,7 @@ import {
 } from "@/src/utils/math";
 import { Image } from "expo-image";
 import { FlatList, Text, useColorScheme, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Hours = () => {
   const theme = useColorScheme();
@@ -32,6 +34,22 @@ const Hours = () => {
       precipitation:
         hourly?.precipitation_probability[index] +
         units?.precipitation_probability,
+
+      precipitationAmount:
+        hourly?.precipitation[index] + " " + units?.precipitation,
+      visibility: lenAndSpdConv.km(hourly?.visibility[index]) + " " + "km",
+      uvIndex: valRound(hourly?.uv_index[index]) + units?.uv_index,
+      pressure:
+        valRound(hourly?.surface_pressure[index]) +
+        " " +
+        units?.surface_pressure,
+      soilTemp:
+        valRound(hourly?.soil_temperature_0cm[index]) +
+        units?.soil_temperature_0cm,
+      radiation:
+        valRound(hourly?.direct_normal_irradiance[index]) +
+        units?.direct_normal_irradiance,
+
       weatherIcon: weatherIconFind(weatherCode),
       weatherCode,
       weatherMain: weatherCodeConv(weatherCode),
@@ -56,7 +74,10 @@ const Hours = () => {
     };
   });
   return (
-    <View className={`${theme === "dark" ? "bg-black" : "bg-light"}`}>
+    <SafeAreaView
+      className={`${theme === "dark" ? "bg-black" : "bg-light"}`}
+      edges={["bottom"]}
+    >
       <FlatList
         contentContainerClassName="pt-4 pb-8"
         ItemSeparatorComponent={() => <View className="p-3" />}
@@ -144,27 +165,179 @@ const Hours = () => {
                   <Text
                     className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
                   >
-                    Wind: {item.windSpeed} • {item.wind}
+                    Wind:{" "}
+                    <Text
+                      style={{
+                        textShadowColor:
+                          theme === "dark" ? "text-white" : "text-rose-800",
+                        textShadowOffset: { width: 0, height: 2 },
+                        textShadowRadius: 6,
+                      }}
+                      className="text-xs font-orbitron-regular"
+                    >
+                      {item.windSpeed}
+                    </Text>{" "}
+                    • {item.wind}
                   </Text>
                   <Text
                     className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
                   >
-                    Gust: {item.gust}
+                    Gust:{" "}
+                    <Text
+                      style={{
+                        textShadowColor:
+                          theme === "dark" ? "text-white" : "text-rose-800",
+                        textShadowOffset: { width: 0, height: 2 },
+                        textShadowRadius: 6,
+                      }}
+                      className="text-xs font-orbitron-regular"
+                    >
+                      {item.gust}
+                    </Text>
                   </Text>
                   <Text
                     className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
                   >
-                    Clouds: {item.clouds}
+                    Clouds:{" "}
+                    <Text
+                      style={{
+                        textShadowColor:
+                          theme === "dark" ? "text-white" : "text-rose-800",
+                        textShadowOffset: { width: 0, height: 2 },
+                        textShadowRadius: 6,
+                      }}
+                      className="text-xs font-orbitron-regular"
+                    >
+                      {item.clouds}
+                    </Text>
                   </Text>
                   <Text
                     className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
                   >
-                    Humidity: {item.humidity}
+                    Humidity:{" "}
+                    <Text
+                      style={{
+                        textShadowColor:
+                          theme === "dark" ? "text-white" : "text-rose-800",
+                        textShadowOffset: { width: 0, height: 2 },
+                        textShadowRadius: 6,
+                      }}
+                      className="text-xs font-orbitron-regular"
+                    >
+                      {item.humidity}
+                    </Text>
                   </Text>
                   <Text
                     className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
                   >
-                    Dew point: {item.dewPoint}
+                    Rain:{" "}
+                    <Text
+                      style={{
+                        textShadowColor:
+                          theme === "dark" ? "text-white" : "text-rose-800",
+                        textShadowOffset: { width: 0, height: 2 },
+                        textShadowRadius: 6,
+                      }}
+                      className="text-xs font-orbitron-regular"
+                    >
+                      {item.precipitationAmount}
+                    </Text>
+                  </Text>
+                  <Text
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
+                  >
+                    Visibility:{" "}
+                    <Text
+                      style={{
+                        textShadowColor:
+                          theme === "dark" ? "text-white" : "text-rose-800",
+                        textShadowOffset: { width: 0, height: 2 },
+                        textShadowRadius: 6,
+                      }}
+                      className="text-xs font-orbitron-regular"
+                    >
+                      {item.visibility}
+                    </Text>
+                  </Text>
+                  <Text
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
+                  >
+                    UV Index:{" "}
+                    <Text
+                      style={{
+                        textShadowColor:
+                          theme === "dark" ? "text-white" : "text-rose-800",
+                        textShadowOffset: { width: 0, height: 2 },
+                        textShadowRadius: 6,
+                      }}
+                      className="text-xs font-orbitron-regular"
+                    >
+                      {item.uvIndex}
+                    </Text>
+                  </Text>
+                  <Text
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
+                  >
+                    Pressure:{" "}
+                    <Text
+                      style={{
+                        textShadowColor:
+                          theme === "dark" ? "text-white" : "text-rose-800",
+                        textShadowOffset: { width: 0, height: 2 },
+                        textShadowRadius: 6,
+                      }}
+                      className="text-xs font-orbitron-regular"
+                    >
+                      {item.pressure}
+                    </Text>
+                  </Text>
+                  <Text
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
+                  >
+                    Ground Temp:{" "}
+                    <Text
+                      style={{
+                        textShadowColor:
+                          theme === "dark" ? "text-white" : "text-rose-800",
+                        textShadowOffset: { width: 0, height: 2 },
+                        textShadowRadius: 6,
+                      }}
+                      className="text-xs font-orbitron-regular"
+                    >
+                      {item.soilTemp}
+                    </Text>
+                  </Text>
+                  <Text
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
+                  >
+                    Radiation:{" "}
+                    <Text
+                      style={{
+                        textShadowColor:
+                          theme === "dark" ? "text-white" : "text-rose-800",
+                        textShadowOffset: { width: 0, height: 2 },
+                        textShadowRadius: 6,
+                      }}
+                      className="text-xs font-orbitron-regular"
+                    >
+                      {item.radiation}
+                    </Text>
+                  </Text>
+                  <Text
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
+                  >
+                    Dew point:{" "}
+                    <Text
+                      style={{
+                        textShadowColor:
+                          theme === "dark" ? "text-white" : "text-rose-800",
+                        textShadowOffset: { width: 0, height: 2 },
+                        textShadowRadius: 6,
+                      }}
+                      className="text-xs font-orbitron-regular"
+                    >
+                      {item.dewPoint}
+                    </Text>
                   </Text>
                 </View>
               </View>
@@ -172,7 +345,7 @@ const Hours = () => {
           );
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

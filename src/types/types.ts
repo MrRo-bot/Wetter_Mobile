@@ -263,6 +263,12 @@ export interface HourlyWeatherObjectType {
   id: number;
   currentTemp: string;
   precipitation: string;
+  precipitationAmount: string;
+  visibility: string;
+  uvIndex: string;
+  pressure: string;
+  soilTemp: string;
+  radiation: string;
   weatherIcon: string[] | string;
   weatherCode: number;
   weatherMain: string;
@@ -290,6 +296,10 @@ export interface DailyWeatherObjectType {
   dateStamp: string;
   sunrise?: string;
   sunset?: string;
+  surfacePressure: string;
+  daylightDuration: string;
+  shortwaveRadiation: string;
+  uvIndex: string;
   summary?: string;
   weatherMain?: string;
   hourStamp?: string;
