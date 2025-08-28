@@ -164,19 +164,19 @@ const AirQuality = () => {
       <View className="flex-row items-center justify-start gap-4 mt-4">
         <View className="p-1 rounded-lg bg-slate-900">
           <Text
-            className={`text-5xl leading-none font-orbitron-medium ${aqiLevelColor}`}
+            className={`${aqiIndex >= 200 ? "text-3xl" : "text-5xl"} leading-none font-orbitron-medium ${aqiLevelColor}`}
           >
             {aqiIndex}
           </Text>
         </View>
-        <View className="text-wrap overflow-ellipsis">
+        <View className="w-9/12">
           <Text
             className={`text-lg font-orbitron-bold ${theme === "dark" ? "text-slate-800" : "text-dark"}`}
           >
             {aqiData?.level}
           </Text>
           <Text
-            className={`text-xl leading-none mt-2 font-genos-medium ${theme === "dark" ? "text-slate-800/70" : "text-dark/70"}`}
+            className={`text-lg tracking-tighter leading-none mt-2 font-genos-medium ${theme === "dark" ? "text-slate-800/70" : "text-dark/70"}`}
           >
             {aqiData?.desc}
           </Text>

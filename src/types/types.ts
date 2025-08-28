@@ -270,29 +270,29 @@ export interface HourlyWeatherObjectType {
   wind: string;
   windDirection: number;
   hourStamp: string;
-  feels_like: string;
-  gust: string;
-  clouds: string;
-  humidity: string;
-  dewPoint: string;
-  is_day: number;
+  feels_like?: string;
+  gust?: string;
+  clouds?: string;
+  humidity?: string;
+  dewPoint?: string;
+  is_day?: number;
 }
 
 export interface DailyWeatherObjectType {
   id: number;
-  sunrise: string;
-  sunset: string;
-  summary: string;
   maxTemp: string;
   minTemp: string;
   precipitation: string;
   weatherCode: number;
   weatherIcon: string[] | string;
-  weatherMain: string;
   windSpeed: string;
   windDirection: number;
-  hourStamp: string;
   dateStamp: string;
+  sunrise?: string;
+  sunset?: string;
+  summary?: string;
+  weatherMain?: string;
+  hourStamp?: string;
 }
 
 export interface WeatherIconsType {

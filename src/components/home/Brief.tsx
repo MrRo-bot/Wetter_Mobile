@@ -1,6 +1,6 @@
 import Entypo from "@expo/vector-icons/Entypo";
 import { Image } from "expo-image";
-import { Text, useColorScheme, View } from "react-native";
+import { Pressable, Text, useColorScheme, View } from "react-native";
 
 import { locationStore } from "@/src/store/locationStore";
 import { weatherStore } from "@/src/store/weatherStore";
@@ -8,6 +8,7 @@ import { weatherStore } from "@/src/store/weatherStore";
 import useUnsplashImage from "@/src/hooks/useUnsplashImage";
 
 import { degConv, unixConv, valRound, weatherCodeConv } from "@/src/utils/math";
+import { router } from "expo-router";
 
 const Brief = () => {
   let theme = useColorScheme();
@@ -53,7 +54,7 @@ const Brief = () => {
       : "";
   const precipitationAmount =
     precipitationSum > 0
-      ? ` around ${precipitationSum}${daily_units?.precipitation_sum}`
+      ? ` around ${precipitationSum} ${daily_units?.precipitation_sum}`
       : "";
 
   //Generate weather summary
@@ -147,7 +148,10 @@ const Brief = () => {
             {weatherCodeConv(current?.weather_code)}
           </Text>
 
-          <View className="relative mt-1">
+          <Pressable
+            onPress={() => router.navigate("/(home)/Days")}
+            className="relative mt-1"
+          >
             <Text
               className={`pr-8 text-lg leading-none font-genos-medium ${theme === "dark" ? "text-outlineDark/70" : "text-outlineLight/70"}`}
             >
@@ -161,7 +165,7 @@ const Brief = () => {
                 color={theme === "dark" ? "white" : "black"}
               />
             </View>
-          </View>
+          </Pressable>
         </View>
       </View>
     </View>

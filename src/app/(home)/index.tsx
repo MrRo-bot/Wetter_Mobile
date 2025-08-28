@@ -44,14 +44,14 @@ export default function Home() {
           <Loader />
         </View>
       ) : (
-        <ScrollView contentContainerClassName="gap-y-4">
+        <ScrollView contentContainerClassName="gap-y-8">
           <components.Brief />
           <components.Detail />
           <components.Hourly />
           <components.Daily />
-          <components.Wind />
           <components.Chart />
           <components.AirQuality />
+          <components.Wind />
           <components.Footer />
         </ScrollView>
       )}

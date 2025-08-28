@@ -29,7 +29,7 @@ const Footer = () => {
       >
         My socials 😘
       </Text>
-      <View className="flex flex-row items-center justify-center gap-4 mb-4">
+      <View className="flex flex-row items-center justify-center gap-4 mb-2">
         <Pressable
           onPress={() =>
             openLink("github://profile/MrRo-bot", "https://github.com/MrRo-bot")
@@ -37,7 +37,7 @@ const Footer = () => {
         >
           <Entypo
             name="github"
-            size={20}
+            size={24}
             color={theme === "dark" ? "white" : "black"}
           />
         </Pressable>
@@ -52,7 +52,7 @@ const Footer = () => {
         >
           <AntDesign
             name="linkedin-square"
-            size={20}
+            size={24}
             color={theme === "dark" ? "white" : "black"}
           />
         </Pressable>
@@ -66,7 +66,7 @@ const Footer = () => {
         >
           <FontAwesome6
             name="discord"
-            size={20}
+            size={24}
             color={theme === "dark" ? "white" : "black"}
           />
         </Pressable>

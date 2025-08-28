@@ -22,7 +22,7 @@ export const PrecipitationChart = ({
   };
 
   return (
-    <View className="justify-center w-screen p-2" onLayout={handleLayout}>
+    <View className="justify-center p-1" onLayout={handleLayout}>
       <LineChart
         areaChart
         curved
@@ -34,7 +34,7 @@ export const PrecipitationChart = ({
         data={precipitationData}
         height={200}
         width={parentWidth * 0.9}
-        spacing={parentWidth * 0.13}
+        spacing={parentWidth / 6}
         color="hsl(213, 100%, 70%)"
         thickness={2}
         startFillColor="hsla(213, 100%, 70%,0.3)"
@@ -43,7 +43,7 @@ export const PrecipitationChart = ({
         endOpacity={0.3}
         endSpacing={0}
         initialSpacing={0}
-        noOfSections={2}
+        noOfSections={4}
         maxValue={100}
         rulesType=""
         rulesColor=""
