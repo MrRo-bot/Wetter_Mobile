@@ -31,7 +31,7 @@ const useAqiData = (coordinates: { latitude: number; longitude: number }) => {
     latitude: "0",
     longitude: "0",
     timezone: "auto",
-    forecast_days: "7",
+    forecast_days: "5",
     hourly: [
       "us_aqi",
       "pm10",

@@ -208,6 +208,7 @@ export interface AQIType {
   };
   hourly: AQIHourlyType;
 }
+
 export interface UnsplashType {
   total: number;
   total_pages: number;

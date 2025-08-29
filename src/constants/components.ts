@@ -18,6 +18,9 @@ import Footer from "@/src/components/UI/Footer";
 import Loader from "@/src/components/UI/Loader";
 import MainButton from "@/src/components/UI/MainButton";
 
+import DailyAqiCharts from "../components/aqiCharts/DailyAqiCharts";
+import HourlyAqiCharts from "../components/aqiCharts/HourlyAqiCharts";
+
 export default {
   AirQuality,
   Brief,
@@ -38,4 +41,7 @@ export default {
   Footer,
   Loader,
   MainButton,
+
+  DailyAqiCharts,
+  HourlyAqiCharts,
 };

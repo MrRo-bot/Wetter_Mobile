@@ -111,7 +111,7 @@ const Days = () => {
           return (
             <View
               key={item.id}
-              className={`mx-4 p-2 justify-start rounded-2xl gap-3 ${theme === "dark" ? "bg-redDark" : "bg-redLight/50"}`}
+              className={`mx-4 p-2 justify-start rounded-2xl gap-3 ${theme === "dark" ? "bg-redDark" : "bg-redLight/20"}`}
             >
               <View className="flex-row items-center justify-start gap-4">
                 <View className="w-3/12">
@@ -128,8 +128,6 @@ const Days = () => {
                 <View className="justify-center w-9/12 gap-1">
                   <Text
                     style={{
-                      textShadowColor:
-                        theme === "dark" ? "text-white" : "text-pink-600",
                       textShadowOffset: { width: 0, height: 2 },
                       textShadowRadius: 6,
                     }}
@@ -140,8 +138,6 @@ const Days = () => {
                   <View className="flex-row gap-1">
                     <Text
                       style={{
-                        textShadowColor:
-                          theme === "dark" ? "text-white" : "text-pink-600",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
@@ -151,8 +147,6 @@ const Days = () => {
                     </Text>
                     <Text
                       style={{
-                        textShadowColor:
-                          theme === "dark" ? "text-white" : "text-pink-600",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
@@ -163,8 +157,6 @@ const Days = () => {
                     </Text>
                     <Text
                       style={{
-                        textShadowColor:
-                          theme === "dark" ? "text-white" : "text-pink-600",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
@@ -180,8 +172,6 @@ const Days = () => {
                 <View className="w-3/12">
                   <Text
                     style={{
-                      textShadowColor:
-                        theme === "dark" ? "text-blue-200" : "text-blue-600",
                       textShadowOffset: { width: 0, height: 2 },
                       textShadowRadius: 6,
                     }}
@@ -197,8 +187,6 @@ const Days = () => {
                     />
                     <Text
                       style={{
-                        textShadowColor:
-                          theme === "dark" ? "text-white" : "text-pink-600",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
@@ -215,8 +203,6 @@ const Days = () => {
                     />
                     <Text
                       style={{
-                        textShadowColor:
-                          theme === "dark" ? "text-white" : "text-pink-600",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
@@ -238,8 +224,6 @@ const Days = () => {
                     Daylight :{" "}
                     <Text
                       style={{
-                        textShadowColor:
-                          theme === "dark" ? "text-white" : "text-rose-800",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
@@ -254,8 +238,6 @@ const Days = () => {
                     Radiation :{" "}
                     <Text
                       style={{
-                        textShadowColor:
-                          theme === "dark" ? "text-white" : "text-rose-800",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
@@ -270,8 +252,6 @@ const Days = () => {
                     UV Index :{" "}
                     <Text
                       style={{
-                        textShadowColor:
-                          theme === "dark" ? "text-white" : "text-rose-800",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
@@ -286,8 +266,6 @@ const Days = () => {
                     Pressure :{" "}
                     <Text
                       style={{
-                        textShadowColor:
-                          theme === "dark" ? "text-white" : "text-rose-800",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}

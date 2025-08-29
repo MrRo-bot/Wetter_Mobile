@@ -32,6 +32,7 @@ const PrecipitationChart = ({
         animateOnDataChange
         hideDataPoints
         disableScroll
+        hideRules
         data={precipitationData}
         height={200}
         width={parentWidth * 0.86}
@@ -46,8 +47,6 @@ const PrecipitationChart = ({
         initialSpacing={0}
         noOfSections={4}
         maxValue={100}
-        rulesType=""
-        rulesColor=""
         yAxisLabelSuffix="%"
         yAxisThickness={0}
         yAxisTextStyle={{

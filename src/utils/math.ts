@@ -186,7 +186,7 @@ export const aqiDetailColors = ({
               : value > 54 && value <= 100:
       return {
         textColor: "black",
-        bgColor: "yellow",
+        bgColor: "gold",
       };
     case title === "PM2.5"
       ? value > 35.5 && value <= 55.5
