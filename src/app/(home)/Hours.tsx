@@ -116,14 +116,14 @@ const Hours = () => {
                 </View>
 
                 <View
-                  className={`relative w-9/12 font-orbitron-bold ${theme === "dark" ? "text-white" : "text-violet-800"}`}
+                  className={`relative w-9/12 font-orbitron-bold ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                 >
                   <Text
                     style={{
                       textShadowOffset: { width: 0, height: 2 },
                       textShadowRadius: 6,
                     }}
-                    className={`font-orbitron-medium ${theme === "dark" ? "text-white" : "text-violet-800"}`}
+                    className={`font-orbitron-medium ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                   >
                     {item.hourStamp}
                   </Text>
@@ -132,12 +132,12 @@ const Hours = () => {
                       textShadowOffset: { width: 0, height: 2 },
                       textShadowRadius: 6,
                     }}
-                    className={`font-orbitron-medium ${theme === "dark" ? "text-white" : "text-violet-800"}`}
+                    className={`font-orbitron-medium ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                   >
                     {item.feels_like}
                   </Text>
                   <Text
-                    className={`absolute -bottom-[26px] text-lg font-genos-medium ${theme === "dark" ? "text-white/90" : "text-dark/50"}`}
+                    className={`absolute -bottom-[26px] text-lg font-genos-medium ${theme === "dark" ? "text-light/90" : "text-dark/50"}`}
                   >
                     {item.weatherMain}
                   </Text>
@@ -157,156 +157,167 @@ const Hours = () => {
 
                 <View className="w-10/12">
                   <Text
-                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/90" : "text-slate-800/70"}`}
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     Wind -{" "}
                     <Text
                       style={{
+                        textShadowColor: theme === "dark" ? "white" : "dark",
                         textShadowOffset: { width: 0, height: 1 },
                         textShadowRadius: 8,
                       }}
-                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-white" : "text-violet-800"}`}
+                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item.windSpeed}
                     </Text>{" "}
                     • {item.wind}
                   </Text>
                   <Text
-                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/90" : "text-slate-800/70"}`}
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     Gust -{" "}
                     <Text
                       style={{
+                        textShadowColor: theme === "dark" ? "white" : "dark",
                         textShadowOffset: { width: 0, height: 1 },
                         textShadowRadius: 8,
                       }}
-                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-white" : "text-violet-800"}`}
+                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item.gust}
                     </Text>
                   </Text>
                   <Text
-                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/90" : "text-slate-800/70"}`}
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     Clouds -{" "}
                     <Text
                       style={{
+                        textShadowColor: theme === "dark" ? "white" : "dark",
                         textShadowOffset: { width: 0, height: 1 },
                         textShadowRadius: 8,
                       }}
-                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-white" : "text-violet-800"}`}
+                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item.clouds}
                     </Text>
                   </Text>
                   <Text
-                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/90" : "text-slate-800/70"}`}
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     Humidity -{" "}
                     <Text
                       style={{
+                        textShadowColor: theme === "dark" ? "white" : "dark",
                         textShadowOffset: { width: 0, height: 1 },
                         textShadowRadius: 8,
                       }}
-                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-white" : "text-violet-800"}`}
+                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item.humidity}
                     </Text>
                   </Text>
                   <Text
-                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/90" : "text-slate-800/70"}`}
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     Rain -{" "}
                     <Text
                       style={{
+                        textShadowColor: theme === "dark" ? "white" : "dark",
                         textShadowOffset: { width: 0, height: 1 },
                         textShadowRadius: 8,
                       }}
-                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-white" : "text-violet-800"}`}
+                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item.precipitationAmount}
                     </Text>
                   </Text>
                   <Text
-                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/90" : "text-slate-800/70"}`}
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     Visibility -{" "}
                     <Text
                       style={{
+                        textShadowColor: theme === "dark" ? "white" : "dark",
                         textShadowOffset: { width: 0, height: 1 },
                         textShadowRadius: 8,
                       }}
-                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-white" : "text-violet-800"}`}
+                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item.visibility}
                     </Text>
                   </Text>
                   <Text
-                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/90" : "text-slate-800/70"}`}
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     Uv index -{" "}
                     <Text
                       style={{
+                        textShadowColor: theme === "dark" ? "white" : "dark",
                         textShadowOffset: { width: 0, height: 1 },
                         textShadowRadius: 8,
                       }}
-                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-white" : "text-violet-800"}`}
+                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item.uvIndex}
                     </Text>
                   </Text>
                   <Text
-                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/90" : "text-slate-800/70"}`}
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     Pressure -{" "}
                     <Text
                       style={{
+                        textShadowColor: theme === "dark" ? "white" : "dark",
                         textShadowOffset: { width: 0, height: 1 },
                         textShadowRadius: 8,
                       }}
-                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-white" : "text-violet-800"}`}
+                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item.pressure}
                     </Text>
                   </Text>
                   <Text
-                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/90" : "text-slate-800/70"}`}
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     Ground temp -{" "}
                     <Text
                       style={{
+                        textShadowColor: theme === "dark" ? "white" : "dark",
                         textShadowOffset: { width: 0, height: 1 },
                         textShadowRadius: 8,
                       }}
-                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-white" : "text-violet-800"}`}
+                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item.soilTemp}
                     </Text>
                   </Text>
                   <Text
-                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/90" : "text-slate-800/70"}`}
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     Radiation -{" "}
                     <Text
                       style={{
+                        textShadowColor: theme === "dark" ? "white" : "dark",
                         textShadowOffset: { width: 0, height: 1 },
                         textShadowRadius: 8,
                       }}
-                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-white" : "text-violet-800"}`}
+                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item.radiation}
                     </Text>
                   </Text>
                   <Text
-                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-white/90" : "text-slate-800/70"}`}
+                    className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     Dew point -{" "}
                     <Text
                       style={{
+                        textShadowColor: theme === "dark" ? "white" : "dark",
                         textShadowOffset: { width: 0, height: 1 },
                         textShadowRadius: 8,
                       }}
-                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-white" : "text-violet-800"}`}
+                      className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                     >
                       {item.dewPoint}
                     </Text>

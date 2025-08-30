@@ -128,39 +128,43 @@ const Days = () => {
                 <View className="justify-center w-9/12 gap-1">
                   <Text
                     style={{
+                      textShadowColor: "dark",
                       textShadowOffset: { width: 0, height: 2 },
                       textShadowRadius: 6,
                     }}
-                    className={`font-orbitron-medium ${theme === "dark" ? "text-white" : "text-pink-600"}`}
+                    className={`font-orbitron-medium ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                   >
                     {item.dateStamp}
                   </Text>
                   <View className="flex-row gap-1">
                     <Text
                       style={{
+                        textShadowColor: "dark",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
-                      className={`font-orbitron-bold ${theme === "dark" ? "text-white" : "text-pink-600"}`}
+                      className={`font-orbitron-bold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
                       {item.maxTemp}
                     </Text>
                     <Text
                       style={{
+                        textShadowColor: "dark",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
-                      className={`font-orbitron-bold ${theme === "dark" ? "text-white" : "text-pink-600"}`}
+                      className={`font-orbitron-bold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
                       {" "}
                       /{" "}
                     </Text>
                     <Text
                       style={{
+                        textShadowColor: "dark",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
-                      className={`font-orbitron-bold ${theme === "dark" ? "text-white" : "text-pink-600"}`}
+                      className={`font-orbitron-bold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
                       {item.minTemp}
                     </Text>
@@ -172,6 +176,7 @@ const Days = () => {
                 <View className="w-3/12">
                   <Text
                     style={{
+                      textShadowColor: "dark",
                       textShadowOffset: { width: 0, height: 2 },
                       textShadowRadius: 6,
                     }}
@@ -187,6 +192,7 @@ const Days = () => {
                     />
                     <Text
                       style={{
+                        textShadowColor: "dark",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
@@ -203,6 +209,7 @@ const Days = () => {
                     />
                     <Text
                       style={{
+                        textShadowColor: "dark",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
@@ -214,62 +221,66 @@ const Days = () => {
                 </View>
                 <View className="w-9/12 max-w-72">
                   <Text
-                    className={`text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
+                    className={`text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     {item.summary}
                   </Text>
                   <Text
-                    className={`text-lg text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
+                    className={`text-lg text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     Daylight :{" "}
                     <Text
                       style={{
+                        textShadowColor: theme === "dark" ? "white" : "dark",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
-                      className="text-xs font-orbitron-regular"
+                      className="text-sm font-orbitron-regular"
                     >
                       {item.daylightDuration}
                     </Text>
                   </Text>
                   <Text
-                    className={`text-lg text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
+                    className={`text-lg text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     Radiation :{" "}
                     <Text
                       style={{
+                        textShadowColor: theme === "dark" ? "white" : "dark",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
-                      className="text-xs font-orbitron-regular"
+                      className="text-sm font-orbitron-regular"
                     >
                       {item.shortwaveRadiation}
                     </Text>
                   </Text>
                   <Text
-                    className={`text-lg text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
+                    className={`text-lg text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     UV Index :{" "}
                     <Text
                       style={{
+                        textShadowColor: theme === "dark" ? "white" : "dark",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
-                      className="text-xs font-orbitron-regular"
+                      className="text-sm font-orbitron-regular"
                     >
                       {item.uvIndex}
                     </Text>
                   </Text>
                   <Text
-                    className={`text-lg text-left font-genos-medium ${theme === "dark" ? "text-white/70" : "text-slate-800/70"}`}
+                    className={`text-lg text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     Pressure :{" "}
                     <Text
                       style={{
+                        textShadowColor: theme === "dark" ? "white" : "dark",
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
-                      className="text-xs font-orbitron-regular"
+                      className="text-sm font-orbitron-regular"
                     >
                       {item.surfacePressure}
                     </Text>
