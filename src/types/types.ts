@@ -343,5 +343,7 @@ export interface WeatherIconsType {
   thunderstorm: string;
   slight_thunder_with_hail: string;
   heavy_thunder_with_hail: string;
+  icon_dark: string;
+  icon_light: string;
   default: string;
 }

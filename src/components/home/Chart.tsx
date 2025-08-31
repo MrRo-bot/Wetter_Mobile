@@ -1,9 +1,9 @@
-import Components from "@/src/constants/components";
 import { weatherStore } from "@/src/store/weatherStore";
 import { unixConv } from "@/src/utils/math";
 import Entypo from "@expo/vector-icons/Entypo";
 import { router } from "expo-router";
 import { Pressable, Text, useColorScheme, View } from "react-native";
+import PrecipitationChart from "../charts/PrecipitationChart";
 
 const Chart = () => {
   let theme = useColorScheme();
@@ -68,7 +68,7 @@ const Chart = () => {
         </View>
       </Pressable>
       <View className="w-full">
-        <Components.PrecipitationChart
+        <PrecipitationChart
           precipitationData={chanceOfPrecipitationData}
           theme={theme}
         />

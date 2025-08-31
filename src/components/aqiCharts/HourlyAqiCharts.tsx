@@ -10,7 +10,8 @@ const HourlyAqiCharts = () => {
   const { aqi } = aqiStore();
 
   const currentTimeIndex = aqi?.hourly?.time.indexOf(
-    closestTimestamp(aqi?.current?.time, aqi?.hourly?.time)
+    aqi?.current?.time &&
+      closestTimestamp(aqi?.current?.time, aqi?.hourly?.time)
   );
 
   const aqiForecast: AQIHourlyType = {

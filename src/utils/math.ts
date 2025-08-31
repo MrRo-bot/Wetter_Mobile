@@ -384,7 +384,7 @@ export const closestTimestamp = (
   hourlyTimestampArray: string[]
 ) => {
   const currentTimestamp = new Date(currTimestamp).getTime() / 1000;
-  if (isNaN(currentTimestamp)) throw new Error("Invalid currTimestamp");
+  if (!currentTimestamp) throw new Error("currTimestamp not available");
 
   return hourlyTimestampArray.reduce((a, b) => {
     const aTime = new Date(a).getTime() / 1000;

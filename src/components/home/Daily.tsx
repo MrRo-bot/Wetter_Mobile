@@ -57,7 +57,7 @@ const Daily = () => {
         .clockTime,
       summary: `${weatherCodeConv(weatherCode)}. Wind ${degConv(
         daily?.winddirection_10m_dominant[i]
-      ).cardinal.toLowerCase()} at ${
+      ).cardinal?.toLowerCase()} at ${
         valRound(daily?.wind_speed_10m_max[i]) + " " + units?.wind_speed_10m_max
       }${
         daily?.precipitation_probability_max[i] === null ||

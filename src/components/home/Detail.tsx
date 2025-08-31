@@ -14,7 +14,7 @@ const Detail = () => {
   const { daily, hourly, current, current_units, daily_units } = weather;
 
   const currentTimeIndex = hourly?.time.indexOf(
-    closestTimestamp(current?.time, hourly?.time)
+    current?.time && closestTimestamp(current?.time, hourly?.time)
   );
 
   const detailObj = [

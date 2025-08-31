@@ -66,7 +66,7 @@ const Days = () => {
 
       summary: `${weatherCodeConv(weatherCode)}. Wind ${degConv(
         daily?.winddirection_10m_dominant[i]
-      ).cardinal.toLowerCase()} at ${
+      ).cardinal?.toLowerCase()} at ${
         valRound(daily?.wind_speed_10m_max[i]) + " " + units?.wind_speed_10m_max
       }. Gusts around ${
         valRound(daily?.wind_gusts_10m_max[i]) + " " + units?.wind_gusts_10m_max

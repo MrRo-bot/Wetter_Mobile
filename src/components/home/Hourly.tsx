@@ -26,7 +26,7 @@ const Hourly = () => {
   const { hourly, hourly_units: units, current } = weather;
 
   const currentTimeIndex = hourly?.time.indexOf(
-    closestTimestamp(current?.time, hourly?.time)
+    current?.time && closestTimestamp(current?.time, hourly?.time)
   );
 
   //next 48 hours
@@ -155,7 +155,7 @@ const Hourly = () => {
                   alt="wind direction"
                 />
                 <Text className={`font-orbitron-semiBold text-sm mt-1`}>
-                  {item.hourStamp.toLowerCase()}
+                  {item.hourStamp?.toLowerCase()}
                 </Text>
               </View>
             );

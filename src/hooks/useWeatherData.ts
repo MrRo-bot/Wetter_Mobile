@@ -31,8 +31,8 @@ const useWeatherData = (coordinates: {
   }, []);
 
   const paramsObj = {
-    latitude: "0",
-    longitude: "0",
+    latitude: "",
+    longitude: "",
     timezone: "auto",
     forecast_days: "16",
     forecast_hours: "48",

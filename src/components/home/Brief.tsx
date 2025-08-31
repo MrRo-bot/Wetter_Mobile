@@ -138,7 +138,8 @@ const Brief = () => {
           <Text
             className={`text-4xl leading-none tracking-wider font-genos-medium ${theme === "dark" ? "text-outlineDark" : "text-outlineLight"}`}
           >
-            {locations[0]?.geoAddress[0].district ||
+            {locations[0]?.geoAddress[0].street ??
+              locations[0]?.geoAddress[0].district ??
               locations[0]?.geoAddress[0].city}
           </Text>
 

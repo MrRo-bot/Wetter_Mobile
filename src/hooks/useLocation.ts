@@ -1,5 +1,4 @@
 import * as PhoneLocation from "expo-location";
-
 import { useCallback, useEffect, useState } from "react";
 import { LocationDataType } from "../types/types";
 
@@ -13,20 +12,12 @@ export default function useLocation(autoFetch: boolean = false) {
     setErrorMsg(null);
 
     try {
-      // If location services are enabled
-      const providerStatus = await PhoneLocation.getProviderStatusAsync();
-      if (!providerStatus.locationServicesEnabled) {
-        throw new Error(
-          "Location services are disabled. Please enable them in device settings."
-        );
-      }
-
       //asking for location access
       const status = await PhoneLocation.requestForegroundPermissionsAsync();
 
       //if permission denied
       if (status.status !== "granted") {
-        throw new Error("permisssion denied");
+        throw new Error("Location permisssion denied");
       }
 
       //if permission given, getting location coordinates
@@ -43,17 +34,18 @@ export default function useLocation(autoFetch: boolean = false) {
       });
 
       //if geoAddress is available then send data to user
-      if (geoAddress.length)
-        setLocation({
-          id: `${geoAddress[0].city}-${locationCoords?.coords?.latitude}-${locationCoords?.coords?.longitude}`,
+      if (geoAddress.length > 0) {
+        const newLocation: LocationDataType = {
+          id: `${geoAddress[0].city || "unknown"}-${locationCoords?.coords?.latitude}-${locationCoords?.coords?.longitude}`,
           locationCoords: locationCoords,
           geoAddress: geoAddress,
-        });
-      else {
+        };
+        setLocation(newLocation);
+        return newLocation;
+      } else {
         throw new Error("Unable to retrieve address from coordinates");
       }
     } catch (error: any) {
-      console.log(error);
       setErrorMsg(error.message || "Failed to retrieve location");
     } finally {
       setIsLoading(false);
@@ -61,7 +53,7 @@ export default function useLocation(autoFetch: boolean = false) {
   }, []);
 
   useEffect(() => {
-    autoFetch && getLocation();
+    if (autoFetch) getLocation();
   }, [autoFetch, getLocation]);
 
   return { location, isLoading, getLocation, errorMsg };

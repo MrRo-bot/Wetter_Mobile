@@ -28,8 +28,8 @@ const useAqiData = (coordinates: { latitude: number; longitude: number }) => {
   }, []);
 
   const paramsObj = {
-    latitude: "0",
-    longitude: "0",
+    latitude: "",
+    longitude: "",
     timezone: "auto",
     forecast_days: "5",
     hourly: [

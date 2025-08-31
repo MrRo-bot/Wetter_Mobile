@@ -21,7 +21,7 @@ const Hours = () => {
   const { hourly, hourly_units: units, current } = weather;
 
   const currentTimeIndex = hourly?.time.indexOf(
-    closestTimestamp(current?.time, hourly?.time)
+    current?.time && closestTimestamp(current?.time, hourly?.time)
   );
 
   const hourlyDataFull = Array.from({ length: 47 }, (_, i) => {

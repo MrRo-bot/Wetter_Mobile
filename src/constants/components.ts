@@ -8,7 +8,6 @@ import Wind from "@/src/components/home/Wind";
 
 import DewPointChart from "@/src/components/charts/DewPointChart";
 import HumidityChart from "@/src/components/charts/HumidityChart";
-import PrecipitationChart from "@/src/components/charts/PrecipitationChart";
 import Radiation from "@/src/components/charts/Radiation";
 import Temperature from "@/src/components/charts/Temperature";
 import UVChart from "@/src/components/charts/UVChart";
@@ -32,7 +31,6 @@ export default {
 
   DewPointChart,
   HumidityChart,
-  PrecipitationChart,
   Temperature,
   Radiation,
   UVChart,

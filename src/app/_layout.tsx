@@ -1,14 +1,22 @@
-import { useFonts } from "expo-font";
-import * as NavigationBar from "expo-navigation-bar";
-import { Stack, router } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useEffect } from "react";
-import { Platform, StatusBar, useColorScheme } from "react-native";
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
+import { useFonts } from "expo-font";
+import { Image } from "expo-image";
+import * as NavigationBar from "expo-navigation-bar";
+import { router, Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import React, { useEffect, useState } from "react";
+import { Platform, StatusBar, Text, useColorScheme, View } from "react-native";
+import Animated, {
+  cancelAnimation,
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
+import images from "../constants/images";
 import "../global.css";
 import { locationStore } from "../store/locationStore";
 
@@ -20,6 +28,8 @@ SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
   const { locations } = locationStore();
+  const [hasLaunched, setHasLaunched] = useState<boolean | null>(null);
+  const [isReady, setIsReady] = useState(false);
 
   //all fonts imported
   const [fontsLoaded] = useFonts({
@@ -42,48 +52,107 @@ export default function Layout() {
   });
 
   //sysmte theme checker
-  let colorScheme = useColorScheme();
+  let theme = useColorScheme();
 
   const themeBackground =
-    colorScheme === "dark" ? "hsl(264, 14%, 7%)" : "hsl(266, 54%, 97%)";
-  const themeStyle = colorScheme === "dark" ? "light-content" : "dark-content";
-  const themeScheme = colorScheme === "dark" ? "light" : "dark";
+    theme === "dark" ? "hsl(264, 14%, 7%)" : "hsl(266, 54%, 97%)";
+  const themeStyle = theme === "dark" ? "light-content" : "dark-content";
+  const themeScheme = theme === "dark" ? "light" : "dark";
 
   //navigation bar theming
   if (Platform.OS === "android") {
     NavigationBar.setStyle(themeScheme);
   }
 
-  //checking for initial launch to show intro routes
+  // Prepare app and handle navigation
   useEffect(() => {
-    const checkFirstLaunch = async () => {
+    const prepareApp = async () => {
       try {
-        const hasLaunched = await AsyncStorage.getItem("hasLaunched");
-        if (!hasLaunched) {
-          await AsyncStorage.setItem("hasLaunched", "true");
-          return true;
+        // Wait for AsyncStorage to load hasLaunched
+        const storedValue = await AsyncStorage.getItem("hasLaunched");
+        if (storedValue === null) {
+          // First launch
+          if (locations) {
+            setHasLaunched(true);
+            await AsyncStorage.setItem("hasLaunched", JSON.stringify(true));
+          } else {
+            setHasLaunched(false);
+            await AsyncStorage.setItem("hasLaunched", JSON.stringify(false));
+          }
+        } else {
+          setHasLaunched(JSON.parse(storedValue));
         }
-        return false;
+
+        setIsReady(true);
       } catch (error) {
-        console.error(error);
-        return false;
-      }
-    };
-    const initializeNavigation = async () => {
-      const isFirstLaunch = await checkFirstLaunch();
-      if (isFirstLaunch && locations) {
-        SplashScreen.hideAsync();
-        router.replace("/(intro)");
-      } else {
-        SplashScreen.hideAsync();
-        router.replace("/(home)");
+        console.error("Error with AsyncStorage:", error);
+        setHasLaunched(false);
+        setIsReady(true);
       }
     };
 
-    if (fontsLoaded && locations) {
-      initializeNavigation();
+    prepareApp();
+  }, []);
+
+  useEffect(() => {
+    if (!isReady || !fontsLoaded || hasLaunched === null) {
+      return;
     }
-  }, [fontsLoaded, locations]);
+    if (hasLaunched && (!locations || locations.length === 0)) {
+      router.replace("/(intro)");
+    } else if (hasLaunched && locations && locations.length > 0) {
+      router.replace("/(home)");
+    }
+
+    SplashScreen.hideAsync();
+  }, [isReady, fontsLoaded, hasLaunched, locations]);
+
+  const scale = useSharedValue(1); // Initial scale value
+  // Animation setup
+  useEffect(() => {
+    const animation = withRepeat(
+      withSequence(
+        withTiming(1.5, { duration: 800, easing: Easing.inOut(Easing.ease) }), // Scale up
+        withTiming(1, { duration: 800, easing: Easing.inOut(Easing.ease) }) // Scale down
+      ),
+      -1 // Repeat indefinitely
+    );
+
+    scale.value = animation;
+
+    // Cleanup to prevent flickering or memory leaks
+    return () => {
+      cancelAnimation(scale);
+    };
+  }, [scale]);
+
+  // Animated style
+  const animatedPulse = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+  if (!isReady || !fontsLoaded || hasLaunched === null) {
+    return (
+      <View
+        style={{ flex: 1, backgroundColor: themeBackground }}
+        className="items-center justify-center w-full h-full"
+      >
+        <Animated.View style={[animatedPulse]}>
+          <Image
+            style={{ width: 300, height: 300 }}
+            source={theme === "dark" ? images.icon_light : images.icon_dark}
+          />
+        </Animated.View>
+        <Text
+          className={`font-orbitron-semiBold mt-8 tracking-widest text-4xl text-center ${theme === "dark" ? "text-redLight" : "text-redDark"}`}
+        >
+          WETTER
+        </Text>
+      </View>
+    );
+  }
 
   //wrapping query client all over the project
   const queryClient = new QueryClient();
