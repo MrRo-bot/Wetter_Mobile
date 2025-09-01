@@ -74,7 +74,7 @@ const Chart = () => {
         />
       </View>
       <Text
-        className={`text-right uppercase w-max leading-none font-genos-regular ${theme === "dark" ? "text-dark" : "text-slate-800"}`}
+        className={`text-right uppercase w-max pr-3 leading-none font-genos-regular ${theme === "dark" ? "text-dark" : "text-slate-800"}`}
       >
         Chance of precipitation
       </Text>

@@ -160,7 +160,12 @@ export default function Layout() {
   return (
     <QueryClientProvider client={queryClient}>
       <StatusBar barStyle={themeStyle} backgroundColor={themeBackground} />
-      <Stack screenOptions={{ headerShown: false }} />
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: { backgroundColor: themeBackground },
+        }}
+      />
     </QueryClientProvider>
   );
 }

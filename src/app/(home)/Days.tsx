@@ -115,7 +115,7 @@ const Days = () => {
             >
               <View className="flex-row items-center justify-start gap-4">
                 <View className="w-3/12">
-                  <View className="p-2 mx-auto rounded-2xl max-w-max max-h-max bg-dark/30">
+                  <View className="p-2 mx-auto rounded-2xl max-w-max max-h-max bg-dark/10">
                     <Image
                       contentFit="cover"
                       style={{ width: 40, height: 40 }}

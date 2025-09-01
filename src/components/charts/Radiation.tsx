@@ -30,10 +30,10 @@ const Radiation = () => {
     setParentWidth(width);
   };
   return (
-    <View>
-      <View className="h-12 pl-2">
+    <View className="gap-4">
+      <View className="pl-2">
         <Text
-          className={`font-orbitron-bold -translate-y-1/2 top-1/2 leading-none text-lg ${theme === "dark" ? "text-light" : "text-dark"}`}
+          className={`font-orbitron-bold  leading-none text-lg ${theme === "dark" ? "text-light" : "text-dark"}`}
         >
           NORMAL RADIATION (W/m²)
         </Text>

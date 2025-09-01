@@ -9,7 +9,7 @@ const Charts = () => {
       className={`${theme === "dark" ? "bg-black" : "bg-light"}`}
       edges={["bottom"]}
     >
-      <ScrollView contentContainerClassName="gap-y-12 px-3">
+      <ScrollView contentContainerClassName="gap-y-12 p-3">
         <components.WindChart />
         <components.HumidityChart />
         <components.Temperature />
