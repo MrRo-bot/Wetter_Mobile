@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
   let colorScheme = useColorScheme();
-  const statusToastRef = useRef<ToastRef>(null);
+  const toastRef = useRef<ToastRef>(null);
 
   const { locations } = locationStore();
   const { addWeather } = weatherStore();
@@ -24,6 +24,9 @@ export default function Home() {
     data: weatherData,
     isError: weatherIsError,
     error: weatherError,
+    dataUpdatedAt: weatherLastUpdated,
+    fetchStatus,
+    refetch,
   } = useWeatherData({
     latitude: locations[0]?.locationCoords?.coords?.latitude,
     longitude: locations[0]?.locationCoords?.coords?.longitude,
@@ -32,7 +35,6 @@ export default function Home() {
   const {
     isLoading: aqiLoading,
     data: aqiData,
-
     isError: imageIsError,
     error: imageError,
   } = useAqiData({
@@ -50,7 +52,7 @@ export default function Home() {
 
   useEffect(() => {
     weatherIsError &&
-      statusToastRef.current?.show({
+      toastRef.current?.show({
         type: "error",
         description: weatherError + " 😭",
       });
@@ -58,7 +60,7 @@ export default function Home() {
 
   useEffect(() => {
     imageIsError &&
-      statusToastRef.current?.show({
+      toastRef.current?.show({
         type: "error",
         description: imageError + " 😭",
       });
@@ -75,7 +77,13 @@ export default function Home() {
         </View>
       ) : (
         <ScrollView contentContainerClassName="gap-y-8">
-          <components.Brief />
+          <components.Brief
+            weatherRefetch={refetch}
+            lastUpdated={weatherLastUpdated}
+            toast={toastRef}
+            queryStatus={fetchStatus}
+            error={weatherError}
+          />
           <components.Detail />
           <components.Hourly />
           <components.Daily />
@@ -85,7 +93,7 @@ export default function Home() {
           <components.Footer />
         </ScrollView>
       )}
-      <ToastMessage ref={statusToastRef} />
+      <ToastMessage ref={toastRef} />
     </SafeAreaView>
   );
 }

@@ -7,11 +7,32 @@ import { weatherStore } from "@/src/store/weatherStore";
 
 import useUnsplashImage from "@/src/hooks/useUnsplashImage";
 
+import { ToastRef, WeatherDataType } from "@/src/types/types";
 import { degConv, unixConv, valRound, weatherCodeConv } from "@/src/utils/math";
+import NetInfo from "@react-native-community/netinfo";
+import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 import { router } from "expo-router";
+import { RefObject, useEffect, useState } from "react";
 
-const Brief = () => {
+const Brief = ({
+  weatherRefetch,
+  lastUpdated,
+  toast,
+  queryStatus,
+  error,
+}: {
+  weatherRefetch: (
+    options?: RefetchOptions | undefined
+  ) => Promise<QueryObserverResult<WeatherDataType, Error>>;
+  lastUpdated: number;
+  toast: RefObject<ToastRef | null>;
+  queryStatus: "fetching" | "idle" | "paused";
+  error: Error | null;
+}) => {
   let theme = useColorScheme();
+  const [isConnected, setIsConnected] = useState<boolean | null>(true);
+  const [showOffline, setShowOffline] = useState(false);
+
   const { weather } = weatherStore();
   const { locations } = locationStore();
 
@@ -60,20 +81,93 @@ const Brief = () => {
   //Generate weather summary
   const weatherSummary = `${isDay ? "Today" : "Tonight"} - ${weatherCode}. Wind ${windDirection?.cardinal} at ${windSpeed}. Gusts ${gustDirection?.cardinal} at ${gustSpeed}${precipitationText}${precipitationAmount}.`;
 
+  useEffect(() => {
+    NetInfo.fetch().then((state) => {
+      setIsConnected(state?.isConnected);
+      if (!state.isConnected) {
+        setShowOffline(true);
+      }
+    });
+
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setIsConnected(state.isConnected);
+      if (!state.isConnected) {
+        setShowOffline(true);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleRefetch = () => {
+    if (isConnected) {
+      weatherRefetch();
+      setShowOffline(false);
+    } else {
+      toast.current?.show({
+        type: "error",
+        description: "Please check your internet 😭",
+      });
+    }
+  };
+
+  useEffect(() => {
+    queryStatus === "fetching" &&
+      toast.current?.show({
+        type: "pending",
+        description: "connecting...",
+      });
+
+    queryStatus === "idle" &&
+      toast.current?.show({
+        type: "success",
+        description: "Weather fetched...",
+      });
+
+    error !== null &&
+      toast.current?.show({
+        type: "error",
+        description: "Error or Data not found!!!",
+      });
+  }, [error, queryStatus, toast]);
+
   return (
     <View className="gap-2 mx-3 mt-2">
-      <View className="w-[calc(100vw-24px)] overflow-hidden h-96 rounded-2xl">
+      <View className="relative w-[calc(100vw-24px)] overflow-hidden h-96 rounded-2xl">
         {imageColorsLoading || unsplashLoading ? (
           <View className={`w-full h-full bg-[#44444450]`} />
         ) : (
-          <Image
-            contentFit="cover"
-            style={{
-              width: "100%",
-              height: "100%",
-            }}
-            source={{ uri: imageColorsData?.url }}
-          />
+          <>
+            <Image
+              contentFit="cover"
+              style={{
+                width: "100%",
+                height: "100%",
+              }}
+              source={{ uri: imageColorsData?.url }}
+            />
+            {showOffline && (
+              <View className="absolute flex-row items-center justify-center gap-3 px-4 py-2 rounded-tr-full rounded-br-full top-12 bg-black/70">
+                <View className="pr-4 border-r-2 w-60 border-r-solid border-r-light/10">
+                  <Text className="text-lg text-white font-orbitron-regular">
+                    OFFLINE MODE
+                  </Text>
+                  <Text className="text-base text-white font-genos-light">
+                    Last updated{" "}
+                    {Math.round((Date.now() - lastUpdated) / 1000 / 60)} minutes
+                    ago
+                  </Text>
+                </View>
+                <Pressable onPress={() => handleRefetch()}>
+                  <Entypo
+                    name="cycle"
+                    size={20}
+                    color={theme === "dark" ? "black" : "white"}
+                  />
+                </Pressable>
+              </View>
+            )}
+          </>
         )}
       </View>
 

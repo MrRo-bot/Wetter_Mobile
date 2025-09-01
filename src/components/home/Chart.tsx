@@ -13,7 +13,7 @@ const Chart = () => {
     const indexToShow = (i + 1) * 4;
 
     return {
-      value: weather?.hourly.precipitation_probability[indexToShow],
+      value: weather?.hourly?.precipitation_probability[indexToShow],
       label: unixConv?.timeStamp(
         new Date(weather?.hourly.time[indexToShow]).getTime() / 1000
       ).hour2,

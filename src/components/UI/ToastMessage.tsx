@@ -39,7 +39,7 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
           key={toast.id}
           className={`absolute w-max max-w-[90%] self-center rounded-lg px-3 py-1.5 flex-row items-center z-50 ${theme === "dark" ? "bg-dark/95" : "bg-light/95"}`}
           style={{
-            bottom: 32 + index * 70,
+            bottom: 50 + index * 70,
           }}
           entering={FadeInDown.duration(300)}
           exiting={FadeOutDown.duration(300)}
