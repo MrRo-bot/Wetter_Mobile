@@ -1,27 +1,41 @@
 import Loader from "@/src/components/UI/Loader";
+import ToastMessage from "@/src/components/UI/ToastMessage";
 import components from "@/src/constants/components";
 import useAqiData from "@/src/hooks/useAqiData";
 import useWeatherData from "@/src/hooks/useWeatherData";
 import { aqiStore } from "@/src/store/aqiStore";
 import { locationStore } from "@/src/store/locationStore";
 import { weatherStore } from "@/src/store/weatherStore";
-import { useEffect } from "react";
+import { ToastRef } from "@/src/types/types";
+import { useEffect, useRef } from "react";
 import { ScrollView, useColorScheme, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
   let colorScheme = useColorScheme();
+  const statusToastRef = useRef<ToastRef>(null);
 
   const { locations } = locationStore();
   const { addWeather } = weatherStore();
   const { addAQI } = aqiStore();
 
-  const { isLoading: weatherLoading, data: weatherData } = useWeatherData({
+  const {
+    isLoading: weatherLoading,
+    data: weatherData,
+    isError: weatherIsError,
+    error: weatherError,
+  } = useWeatherData({
     latitude: locations[0]?.locationCoords?.coords?.latitude,
     longitude: locations[0]?.locationCoords?.coords?.longitude,
   });
 
-  const { isLoading: aqiLoading, data: aqiData } = useAqiData({
+  const {
+    isLoading: aqiLoading,
+    data: aqiData,
+
+    isError: imageIsError,
+    error: imageError,
+  } = useAqiData({
     latitude: locations[0]?.locationCoords?.coords?.latitude,
     longitude: locations[0]?.locationCoords?.coords?.longitude,
   });
@@ -33,6 +47,22 @@ export default function Home() {
   useEffect(() => {
     if (aqiData) addAQI(aqiData);
   }, [addAQI, aqiData]);
+
+  useEffect(() => {
+    weatherIsError &&
+      statusToastRef.current?.show({
+        type: "error",
+        description: weatherError + " 😭",
+      });
+  }, [weatherError, weatherIsError]);
+
+  useEffect(() => {
+    imageIsError &&
+      statusToastRef.current?.show({
+        type: "error",
+        description: imageError + " 😭",
+      });
+  }, [imageError, imageIsError]);
 
   return (
     <SafeAreaView
@@ -55,6 +85,7 @@ export default function Home() {
           <components.Footer />
         </ScrollView>
       )}
+      <ToastMessage ref={statusToastRef} />
     </SafeAreaView>
   );
 }

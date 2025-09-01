@@ -347,3 +347,25 @@ export interface WeatherIconsType {
   icon_light: string;
   default: string;
 }
+
+export type ToastType = "success" | "error" | "pending";
+
+export interface ToastConfig {
+  id: string;
+  isVisible: boolean;
+  type: ToastType;
+  text?: string;
+  description?: string;
+  timeout?: number;
+}
+
+export interface ShowToastParams {
+  type: ToastType;
+  text?: string;
+  description?: string;
+  timeout?: number;
+}
+
+export interface ToastRef {
+  show: (params: ShowToastParams) => void;
+}
