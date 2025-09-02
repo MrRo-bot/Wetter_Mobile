@@ -1,4 +1,5 @@
 import Entypo from "@expo/vector-icons/Entypo";
+import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import { Pressable, Text, useColorScheme, View } from "react-native";
 
@@ -121,7 +122,8 @@ const Brief = ({
     queryStatus === "idle" &&
       toast.current?.show({
         type: "success",
-        description: "Weather fetched...",
+        timeout: 4000000000,
+        description: "success...",
       });
 
     error !== null &&
@@ -147,21 +149,26 @@ const Brief = ({
               source={{ uri: imageColorsData?.url }}
             />
             {showOffline && (
-              <View className="absolute flex-row items-center justify-center gap-4 px-4 py-2 rounded-tr-full rounded-br-full top-12 bg-black/70">
+              <BlurView
+                experimentalBlurMethod="dimezisBlurView"
+                intensity={20}
+                tint={theme === "dark" ? "dark" : "light"}
+                className="absolute flex-row items-center justify-center gap-4 px-4 py-2 overflow-hidden rounded-tr-full rounded-br-full shadow-sm top-12 bg-clip-padding bg-black/10"
+              >
                 <View className="pr-4 border-r-2 w-60 border-r-solid border-r-light/10">
                   <Text className="text-lg text-white font-orbitron-regular">
                     OFFLINE MODE
                   </Text>
                   <Text className="text-base text-white font-genos-light">
                     Last updated{" "}
-                    {Math.round((Date.now() - lastUpdated) / 1000 / 60)} minutes
-                    ago
+                    {Math.round((Date.now() - lastUpdated) / 1000 / 60)}{" "}
+                    minute&apos;s ago
                   </Text>
                 </View>
                 <Pressable onPress={() => handleRefetch()}>
                   <Entypo name="cycle" size={20} color="white" />
                 </Pressable>
-              </View>
+              </BlurView>
             )}
           </>
         )}

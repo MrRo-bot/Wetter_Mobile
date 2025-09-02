@@ -141,7 +141,7 @@ export default function Layout() {
       >
         <Animated.View style={[animatedPulse]}>
           <Image
-            style={{ width: 200, height: 200 }}
+            style={{ width: 150, height: 150 }}
             source={
               theme === "dark"
                 ? images.toast_icon_light
@@ -150,7 +150,7 @@ export default function Layout() {
           />
         </Animated.View>
         <Text
-          className={`font-orbitron-semiBold mt-8 w-full tracking-widest text-4xl text-center ${theme === "dark" ? "text-redLight" : "text-redDark"}`}
+          className={`font-orbitron-semiBold mt-12 w-full tracking-widest text-4xl text-center ${theme === "dark" ? "text-redLight" : "text-redDark"}`}
         >
           WETTER
         </Text>

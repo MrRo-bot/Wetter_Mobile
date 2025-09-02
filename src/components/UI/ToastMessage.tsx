@@ -1,5 +1,6 @@
 import images from "@/src/constants/images";
 import { ShowToastParams, ToastConfig, ToastRef } from "@/src/types/types";
+import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import React, { Ref, useImperativeHandle, useState } from "react";
 import { Text, useColorScheme, View } from "react-native";
@@ -32,41 +33,57 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
     <>
       {toasts.map((toast, index) => (
         <Animated.View
-          key={toast?.id}
-          className={`absolute w-max max-w-[90%] border-2 p-3 gap-2 border-dotted self-center rounded-full flex-row items-center z-50 ${theme === "dark" ? "bg-dark/95 border-light/50" : "bg-light/95 border-dark/10"}`}
+          key={toast.id}
           style={{
-            bottom: 50 + index * 5,
+            bottom: 70 + index * 5,
+            marginInline: "auto",
           }}
           entering={FadeInDown.duration(300)}
           exiting={FadeOutUp.duration(300)}
+          className="absolute z-50 items-center justify-center w-full"
         >
-          <Image
-            style={{ width: 28, height: 28 }}
-            source={
-              theme === "dark"
-                ? images.toast_icon_light
-                : images.toast_icon_dark
-            }
-          />
-          <View>
-            {toast?.text && (
-              <Text
-                className={`text-lg font-orbitron-bold ${
-                  theme === "dark" ? "text-white/70" : "text-black/70"
-                }`}
+          <View
+            className={`border-2 border-solid w-max rounded-full overflow-hidden ${theme === "dark" ? "border-dark/20" : "border-dark/10"}`}
+          >
+            <BlurView
+              experimentalBlurMethod="dimezisBlurView"
+              intensity={20}
+              tint={theme === "dark" ? "dark" : "light"}
+              className="flex-row items-center justify-center gap-2 p-3 bg-clip-padding"
+            >
+              <View
+                className={`rounded-full shadow-sm p-1 ${theme === "dark" ? "bg-dark" : "bg-light"}`}
               >
-                {toast?.text}
-              </Text>
-            )}
-            {toast?.description && (
-              <Text
-                className={`font-orbitron-semiBold tracking-wide ${
-                  theme === "dark" ? "text-white/70" : "text-black/70"
-                }`}
-              >
-                {toast?.description}
-              </Text>
-            )}
+                <Image
+                  style={{ width: 28, height: 28 }}
+                  source={
+                    theme === "dark"
+                      ? images.toast_icon_light
+                      : images.toast_icon_dark
+                  }
+                />
+              </View>
+              <View>
+                {toast.text && (
+                  <Text
+                    className={`text-lg font-orbitron-bold ${
+                      theme === "dark" ? "text-white" : "text-black"
+                    }`}
+                  >
+                    {toast.text}
+                  </Text>
+                )}
+                {toast.description && (
+                  <Text
+                    className={`font-orbitron-semiBold tracking-wide ${
+                      theme === "dark" ? "text-white" : "text-black"
+                    }`}
+                  >
+                    {toast.description}
+                  </Text>
+                )}
+              </View>
+            </BlurView>
           </View>
         </Animated.View>
       ))}

@@ -114,7 +114,7 @@ const Days = () => {
               className={`mx-4 p-2 justify-start rounded-2xl gap-3 ${theme === "dark" ? "bg-redDark" : "bg-redLight/20"}`}
             >
               <View className="flex-row items-center justify-start gap-4">
-                <View className="w-3/12">
+                <View className="w-2/12">
                   <View className="p-2 mx-auto rounded-2xl max-w-max max-h-max bg-dark/10">
                     <Image
                       contentFit="cover"
@@ -125,14 +125,14 @@ const Days = () => {
                   </View>
                 </View>
 
-                <View className="justify-center w-9/12 gap-1">
+                <View className="justify-center w-10/12 gap-1">
                   <Text
                     style={{
                       textShadowColor: "dark",
                       textShadowOffset: { width: 0, height: 2 },
                       textShadowRadius: 6,
                     }}
-                    className={`font-orbitron-medium ${theme === "dark" ? "text-light" : "text-pink-600"}`}
+                    className={`font-orbitron-medium tracking-tighter ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                   >
                     {item?.dateStamp}
                   </Text>
@@ -173,7 +173,7 @@ const Days = () => {
               </View>
 
               <View className="flex-row items-start justify-start gap-4">
-                <View className="w-3/12">
+                <View className="w-2/12">
                   <Text
                     style={{
                       textShadowColor: "dark",
@@ -219,7 +219,7 @@ const Days = () => {
                     </Text>
                   </View>
                 </View>
-                <View className="w-9/12 max-w-72">
+                <View className="w-10/12 max-w-72">
                   <Text
                     className={`text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
