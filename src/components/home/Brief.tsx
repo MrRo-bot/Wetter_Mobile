@@ -122,7 +122,7 @@ const Brief = ({
     queryStatus === "idle" &&
       toast.current?.show({
         type: "success",
-        timeout: 4000000000,
+        timeout: 8000,
         description: "success...",
       });
 

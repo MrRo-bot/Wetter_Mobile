@@ -169,8 +169,6 @@
         "expo-asset",
         {
           "assets": [
-            "./src/assets/icons/toast-icon-dark.png",
-            "./src/assets/icons/toast-icon-light.png",
             "./src/assets/images/alert.gif",
             "./src/assets/images/aqi_meter.png",
             "./src/assets/images/blades.png",
@@ -179,6 +177,8 @@
             "./src/assets/images/introduction.png",
             "./src/assets/images/location.gif",
             "./src/assets/images/search.gif",
+            "./src/assets/images/toast_icon_dark.png",
+            "./src/assets/images/toast_icon_light.png",
             "./src/assets/images/wind_mill.png",
             "./src/assets/images/brief/clock.gif",
             "./src/assets/images/brief/dew_point.gif",

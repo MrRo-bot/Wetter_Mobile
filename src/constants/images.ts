@@ -1,5 +1,5 @@
-import toastIconDark from "@/src/assets/icons/toast-icon-dark.png";
-import toastIconLight from "@/src/assets/icons/toast-icon-light.png";
+import toastIconDark from "@/src/assets/images/toast_icon_dark.png";
+import toastIconLight from "@/src/assets/images/toast_icon_light.png";
 
 import alert from "@/src/assets/images/alert.gif";
 import aqiMeter from "@/src/assets/images/aqi_meter.png";
