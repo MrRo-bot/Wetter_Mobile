@@ -9,16 +9,16 @@ import { Pressable, Text, useColorScheme, View } from "react-native";
 const AirQuality = () => {
   let theme = useColorScheme();
   const { aqi } = aqiStore();
-  const aqiIndex = aqi?.current.us_aqi;
+  const aqiIndex = aqi?.current?.us_aqi;
   const aqiObject = aqiDesc(aqiIndex);
 
   const aqiDetail = [
-    { title: "PM2.5", value: aqi?.current.pm2_5 },
-    { title: "PM10", value: aqi?.current.pm10 },
-    { title: "O3", value: aqi?.current.ozone },
-    { title: "CO", value: aqi?.current.carbon_monoxide },
-    { title: "SO2", value: aqi?.current.sulphur_dioxide },
-    { title: "NO2", value: aqi?.current.nitrogen_dioxide },
+    { title: "PM2.5", value: aqi?.current?.pm2_5 },
+    { title: "PM10", value: aqi?.current?.pm10 },
+    { title: "O3", value: aqi?.current?.ozone },
+    { title: "CO", value: aqi?.current?.carbon_monoxide },
+    { title: "SO2", value: aqi?.current?.sulphur_dioxide },
+    { title: "NO2", value: aqi?.current?.nitrogen_dioxide },
   ];
 
   const aqiData = {

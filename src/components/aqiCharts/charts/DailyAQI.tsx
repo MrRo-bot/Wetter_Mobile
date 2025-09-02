@@ -22,7 +22,7 @@ const DailyAQI = ({
   const aqiChartData = Array.from({ length: 5 }, (_, i) => {
     const aqiDay = aqiForecast[i];
     const aqiDayObj = aqiDay[aqiParameter].filter(
-      (x: number | null) => x !== null
+      (x: null | number) => x !== null
     );
 
     return {
@@ -40,7 +40,7 @@ const DailyAQI = ({
         },
       ],
       label: unixConv
-        ?.timeStamp(new Date(aqiDay.time[i]).getTime() / 1000)
+        ?.timeStamp(new Date(aqiDay?.time[i]).getTime() / 1000)
         .day.slice(0, 3),
     };
   });

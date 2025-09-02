@@ -1,24 +1,20 @@
+import images from "@/src/constants/images";
 import { ShowToastParams, ToastConfig, ToastRef } from "@/src/types/types";
+import { Image } from "expo-image";
 import React, { Ref, useImperativeHandle, useState } from "react";
 import { Text, useColorScheme, View } from "react-native";
-import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
+import Animated, { FadeInDown, FadeOutUp } from "react-native-reanimated";
 
 const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
   let theme = useColorScheme();
   const [toasts, setToasts] = useState<ToastConfig[]>([]);
-
-  const TOAST_TYPES = {
-    success: { icon: "✅" },
-    error: { icon: "❌" },
-    pending: { icon: "⌛" },
-  };
 
   useImperativeHandle(ref, () => ({
     show: ({
       type = "success",
       text,
       description,
-      timeout = 3000,
+      timeout = 4000,
     }: ShowToastParams) => {
       const id = Date.now().toString();
       setToasts((prev) => [
@@ -36,32 +32,39 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
     <>
       {toasts.map((toast, index) => (
         <Animated.View
-          key={toast.id}
-          className={`absolute w-max max-w-[90%] self-center rounded-lg px-3 py-1.5 flex-row items-center z-50 ${theme === "dark" ? "bg-dark/95" : "bg-light/95"}`}
+          key={toast?.id}
+          className={`absolute w-max max-w-[90%] border-2 p-3 gap-2 border-dotted self-center rounded-full flex-row items-center z-50 ${theme === "dark" ? "bg-dark/95 border-light/50" : "bg-light/95 border-dark/10"}`}
           style={{
-            bottom: 50 + index * 70,
+            bottom: 50 + index * 5,
           }}
           entering={FadeInDown.duration(300)}
-          exiting={FadeOutDown.duration(300)}
+          exiting={FadeOutUp.duration(300)}
         >
-          <Text className="mr-3 text-base">{TOAST_TYPES[toast.type].icon}</Text>
+          <Image
+            style={{ width: 28, height: 28 }}
+            source={
+              theme === "dark"
+                ? images.toast_icon_light
+                : images.toast_icon_dark
+            }
+          />
           <View>
-            {toast.text && (
+            {toast?.text && (
               <Text
-                className={`tracking-wider font-orbitron-bold ${
+                className={`text-lg font-orbitron-bold ${
                   theme === "dark" ? "text-white/70" : "text-black/70"
                 }`}
               >
-                {toast.text}
+                {toast?.text}
               </Text>
             )}
-            {toast.description && (
+            {toast?.description && (
               <Text
-                className={`text-sm tracking-wide ${
+                className={`font-orbitron-semiBold tracking-wide ${
                   theme === "dark" ? "text-white/70" : "text-black/70"
                 }`}
               >
-                {toast.description}
+                {toast?.description}
               </Text>
             )}
           </View>

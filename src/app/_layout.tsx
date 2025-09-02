@@ -92,15 +92,15 @@ export default function Layout() {
     };
 
     prepareApp();
-  }, []);
+  }, [locations]); //maybe location dont need to be added
 
   useEffect(() => {
     if (!isReady || !fontsLoaded || hasLaunched === null) {
       return;
     }
-    if (hasLaunched && (!locations || locations.length === 0)) {
+    if (hasLaunched && (!locations || locations?.length === 0)) {
       router.replace("/(intro)");
-    } else if (hasLaunched && locations && locations.length > 0) {
+    } else if (hasLaunched && locations && locations?.length > 0) {
       router.replace("/(home)");
     }
 
@@ -141,12 +141,16 @@ export default function Layout() {
       >
         <Animated.View style={[animatedPulse]}>
           <Image
-            style={{ width: 300, height: 300 }}
-            source={theme === "dark" ? images.icon_light : images.icon_dark}
+            style={{ width: 200, height: 200 }}
+            source={
+              theme === "dark"
+                ? images.toast_icon_light
+                : images.toast_icon_dark
+            }
           />
         </Animated.View>
         <Text
-          className={`font-orbitron-semiBold mt-8 tracking-widest text-4xl text-center ${theme === "dark" ? "text-redLight" : "text-redDark"}`}
+          className={`font-orbitron-semiBold mt-8 w-full tracking-widest text-4xl text-center ${theme === "dark" ? "text-redLight" : "text-redDark"}`}
         >
           WETTER
         </Text>

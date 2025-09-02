@@ -147,7 +147,7 @@ const Brief = ({
               source={{ uri: imageColorsData?.url }}
             />
             {showOffline && (
-              <View className="absolute flex-row items-center justify-center gap-3 px-4 py-2 rounded-tr-full rounded-br-full top-12 bg-black/70">
+              <View className="absolute flex-row items-center justify-center gap-4 px-4 py-2 rounded-tr-full rounded-br-full top-12 bg-black/70">
                 <View className="pr-4 border-r-2 w-60 border-r-solid border-r-light/10">
                   <Text className="text-lg text-white font-orbitron-regular">
                     OFFLINE MODE
@@ -159,11 +159,7 @@ const Brief = ({
                   </Text>
                 </View>
                 <Pressable onPress={() => handleRefetch()}>
-                  <Entypo
-                    name="cycle"
-                    size={20}
-                    color={theme === "dark" ? "black" : "white"}
-                  />
+                  <Entypo name="cycle" size={20} color="white" />
                 </Pressable>
               </View>
             )}

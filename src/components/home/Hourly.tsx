@@ -25,7 +25,7 @@ const Hourly = () => {
 
   const { hourly, hourly_units: units, current } = weather;
 
-  const currentTimeIndex = hourly?.time.indexOf(
+  const currentTimeIndex = hourly?.time?.indexOf(
     current?.time && closestTimestamp(current?.time, hourly?.time)
   );
 
@@ -103,36 +103,36 @@ const Hourly = () => {
       <View className="px-1 mt-6">
         <FlatList
           ItemSeparatorComponent={() => <View className="p-1" />}
-          data={hourlyData.slice(0, 24)}
+          data={hourlyData?.slice(0, 24)}
           horizontal={true}
           renderItem={({ item }: { item: HourlyWeatherObjectType }) => {
             let iconKey;
             iconKey =
-              !item.weatherIcon || item.weatherIcon === "default"
+              !item?.weatherIcon || item?.weatherIcon === "default"
                 ? (iconKey = "default")
-                : Array.isArray(item.weatherIcon)
-                  ? item.weatherCode === 0
-                    ? item.weatherIcon[0]
-                    : item.weatherIcon[1]
-                  : item.weatherIcon;
+                : Array.isArray(item?.weatherIcon)
+                  ? item?.weatherCode === 0
+                    ? item?.weatherIcon[0]
+                    : item?.weatherIcon[1]
+                  : item?.weatherIcon;
 
             let icon =
               images[iconKey as keyof WeatherIconsType] || images.default;
 
-            let altText = item.weatherMain;
+            let altText = item?.weatherMain;
 
             return (
               <View
-                key={item.id}
+                key={item?.id}
                 className={` items-center rounded-2xl justify-between py-1 px-3 ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`} //color first data column to show current hour temperature
               >
                 <Text className={`font-genos-medium text-3xl`}>
-                  {item.currentTemp}
+                  {item?.currentTemp}
                 </Text>
                 <Text
                   className={`font-orbitron-semiBold  text-sky-600/70 mt-1`}
                 >
-                  {item.precipitation}
+                  {item?.precipitation}
                 </Text>
                 <Image
                   contentFit="cover"
@@ -141,12 +141,12 @@ const Hourly = () => {
                   alt={altText}
                 />
                 <Text className={`font-orbitron-regular text-xs mt-1`}>
-                  {item.windSpeed}
+                  {item?.windSpeed}
                 </Text>
                 <Image
                   contentFit="cover"
                   style={{
-                    transform: `rotate(${item.windDirection}deg)`,
+                    transform: `rotate(${item?.windDirection}deg)`,
                     width: 16,
                     height: 16,
                     marginBlock: 7,
@@ -155,7 +155,7 @@ const Hourly = () => {
                   alt="wind direction"
                 />
                 <Text className={`font-orbitron-semiBold text-sm mt-1`}>
-                  {item.hourStamp?.toLowerCase()}
+                  {item?.hourStamp?.toLowerCase()}
                 </Text>
               </View>
             );

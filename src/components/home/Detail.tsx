@@ -90,20 +90,20 @@ const Detail = () => {
       <View className="flex-row flex-wrap items-center justify-between mt-4 gap-y-2">
         {detailObj.map((detail) => (
           <View
-            key={detail.icon}
+            key={detail?.icon}
             className={`w-[32%] items-center justify-center p-2 rounded-2xl ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
           >
             <Image
               contentFit="cover"
               style={{ width: 48, height: 48 }}
-              source={detail.icon}
-              alt={detail.heading}
+              source={detail?.icon}
+              alt={detail?.heading}
             />
             <Text className={`text-xs mt-1 font-orbitron-bold text-dark`}>
-              {detail.heading}
+              {detail?.heading}
             </Text>
             <Text className={`text-2xl mt-2 font-genos-regular text-dark`}>
-              {detail.data}
+              {detail?.data}
             </Text>
           </View>
         ))}

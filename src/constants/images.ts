@@ -1,5 +1,5 @@
-import iconDark from "@/src/assets/icons/splash-icon-dark.png";
-import iconLight from "@/src/assets/icons/splash-icon-light.png";
+import toastIconDark from "@/src/assets/icons/toast-icon-dark.png";
+import toastIconLight from "@/src/assets/icons/toast-icon-light.png";
 
 import alert from "@/src/assets/images/alert.gif";
 import aqiMeter from "@/src/assets/images/aqi_meter.png";
@@ -79,8 +79,8 @@ const images: WeatherIconsType = {
   thunderstorm,
   slight_thunder_with_hail: slightThunderWithHail,
   heavy_thunder_with_hail: heavyThunderWithHail,
-  icon_dark: iconDark,
-  icon_light: iconLight,
+  toast_icon_dark: toastIconDark,
+  toast_icon_light: toastIconLight,
   default: alert,
 };
 

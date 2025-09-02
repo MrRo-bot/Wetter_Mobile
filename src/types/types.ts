@@ -343,8 +343,8 @@ export interface WeatherIconsType {
   thunderstorm: string;
   slight_thunder_with_hail: string;
   heavy_thunder_with_hail: string;
-  icon_dark: string;
-  icon_light: string;
+  toast_icon_dark: string;
+  toast_icon_light: string;
   default: string;
 }
 
@@ -363,7 +363,7 @@ export interface ShowToastParams {
   type: ToastType;
   text?: string;
   description?: string;
-  timeout?: number;
+  timeout?: number | 4000;
 }
 
 export interface ToastRef {

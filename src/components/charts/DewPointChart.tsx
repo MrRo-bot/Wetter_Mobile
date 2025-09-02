@@ -13,11 +13,11 @@ const DewPointChart = () => {
 
   const dewPointData = Array.from({ length: 24 }, (_, i) => {
     return {
-      value: weather?.hourly.dew_point_2m[i],
+      value: weather?.hourly?.dew_point_2m[i],
       label:
         (i + 1) % 4 === 0
           ? unixConv?.timeStamp(
-              new Date(weather?.hourly.time[i]).getTime() / 1000
+              new Date(weather?.hourly?.time[i]).getTime() / 1000
             ).hour2
           : "",
     };

@@ -41,7 +41,7 @@ export default function HomeLayout() {
             backgroundColor: themeBackground,
           },
           headerTintColor: themeTint,
-          headerTitle: clock,
+          headerTitle: clock ? clock : "0:00",
           headerTitleStyle: {
             fontFamily: "genos-light",
             fontSize: 24,

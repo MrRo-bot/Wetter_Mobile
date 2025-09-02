@@ -1,14 +1,16 @@
 import { Image } from "expo-image";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Pressable, Text, useColorScheme, View } from "react-native";
 
 import images from "@/src/constants/images";
 
 import Loader from "@/src/components/UI/Loader";
+import ToastMessage from "@/src/components/UI/ToastMessage";
 import Components from "@/src/constants/components";
 import useLocation from "@/src/hooks/useLocation";
 import { locationStore } from "@/src/store/locationStore";
+import { ToastRef } from "@/src/types/types";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Location() {
@@ -21,10 +23,19 @@ export default function Location() {
   } = useLocation();
   const location = locationStore();
 
+  const toastRef = useRef<ToastRef>(null);
+
   useEffect(() => {
-    if (!isLoading && fetchedLocation) location.addLocation(fetchedLocation);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading, fetchedLocation]);
+    errorMsg &&
+      toastRef?.current?.show({
+        type: "error",
+        description: errorMsg + " 😭",
+      });
+  }, [errorMsg]);
+
+  useEffect(() => {
+    if (!isLoading && fetchedLocation) location?.addLocation(fetchedLocation);
+  }, [isLoading, fetchedLocation, location]); //maybe location dont need to be added
 
   return (
     <SafeAreaView
@@ -85,6 +96,7 @@ export default function Location() {
           </Pressable>
         </View>
       </View>
+      <ToastMessage ref={toastRef} />
     </SafeAreaView>
   );
 }

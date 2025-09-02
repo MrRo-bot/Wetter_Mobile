@@ -15,14 +15,14 @@ const DailyAqiCharts = () => {
     const start = (i - 1) * 24;
     const end = i * 24;
     aqiForecast.push({
-      us_aqi: aqi?.hourly.us_aqi.slice(start, end),
-      carbon_monoxide: aqi?.hourly.carbon_monoxide.slice(start, end),
-      nitrogen_dioxide: aqi?.hourly.nitrogen_dioxide.slice(start, end),
-      ozone: aqi?.hourly.ozone.slice(start, end),
-      pm10: aqi?.hourly.pm10.slice(start, end),
-      pm2_5: aqi?.hourly.pm2_5.slice(start, end),
-      sulphur_dioxide: aqi?.hourly.sulphur_dioxide.slice(start, end),
-      time: aqi?.hourly.time.slice(start, end),
+      us_aqi: aqi?.hourly?.us_aqi?.slice(start, end),
+      carbon_monoxide: aqi?.hourly?.carbon_monoxide?.slice(start, end),
+      nitrogen_dioxide: aqi?.hourly?.nitrogen_dioxide?.slice(start, end),
+      ozone: aqi?.hourly?.ozone?.slice(start, end),
+      pm10: aqi?.hourly?.pm10?.slice(start, end),
+      pm2_5: aqi?.hourly?.pm2_5?.slice(start, end),
+      sulphur_dioxide: aqi?.hourly?.sulphur_dioxide?.slice(start, end),
+      time: aqi?.hourly?.time?.slice(start, end),
     });
   }
 

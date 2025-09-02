@@ -95,22 +95,22 @@ const Days = () => {
         renderItem={({ item }: { item: DailyWeatherObjectType }) => {
           let iconKey;
           iconKey =
-            !item.weatherIcon || item.weatherIcon === "default"
+            !item?.weatherIcon || item?.weatherIcon === "default"
               ? (iconKey = "default")
-              : Array.isArray(item.weatherIcon)
-                ? item.weatherCode === 0
-                  ? item.weatherIcon[0]
-                  : item.weatherIcon[1]
-                : item.weatherIcon;
+              : Array.isArray(item?.weatherIcon)
+                ? item?.weatherCode === 0
+                  ? item?.weatherIcon[0]
+                  : item?.weatherIcon[1]
+                : item?.weatherIcon;
 
           let icon =
             images[iconKey as keyof WeatherIconsType] || images.default;
 
-          let altText = item.weatherMain;
+          let altText = item?.weatherMain;
 
           return (
             <View
-              key={item.id}
+              key={item?.id}
               className={`mx-4 p-2 justify-start rounded-2xl gap-3 ${theme === "dark" ? "bg-redDark" : "bg-redLight/20"}`}
             >
               <View className="flex-row items-center justify-start gap-4">
@@ -134,7 +134,7 @@ const Days = () => {
                     }}
                     className={`font-orbitron-medium ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                   >
-                    {item.dateStamp}
+                    {item?.dateStamp}
                   </Text>
                   <View className="flex-row gap-1">
                     <Text
@@ -145,7 +145,7 @@ const Days = () => {
                       }}
                       className={`font-orbitron-bold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
-                      {item.maxTemp}
+                      {item?.maxTemp}
                     </Text>
                     <Text
                       style={{
@@ -166,7 +166,7 @@ const Days = () => {
                       }}
                       className={`font-orbitron-bold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
-                      {item.minTemp}
+                      {item?.minTemp}
                     </Text>
                   </View>
                 </View>
@@ -182,7 +182,7 @@ const Days = () => {
                     }}
                     className={`text-sm text-center font-orbitron-semiBold ${theme === "dark" ? "text-blue-200" : "text-blue-600"}`}
                   >
-                    {item.precipitation}
+                    {item?.precipitation}
                   </Text>
                   <View className="mx-auto mt-1">
                     <Image
@@ -198,7 +198,7 @@ const Days = () => {
                       }}
                       className={`font-genos-semiBold ${theme === "dark" ? "text-white" : "text-pink-600"}`}
                     >
-                      {item.sunrise}
+                      {item?.sunrise}
                     </Text>
                   </View>
                   <View className="mx-auto mt-1">
@@ -215,7 +215,7 @@ const Days = () => {
                       }}
                       className={`font-genos-semiBold ${theme === "dark" ? "text-white" : "text-pink-600"}`}
                     >
-                      {item.sunset}
+                      {item?.sunset}
                     </Text>
                   </View>
                 </View>
@@ -223,7 +223,7 @@ const Days = () => {
                   <Text
                     className={`text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
-                    {item.summary}
+                    {item?.summary}
                   </Text>
                   <Text
                     className={`text-lg text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
@@ -237,7 +237,7 @@ const Days = () => {
                       }}
                       className="text-sm font-orbitron-regular"
                     >
-                      {item.daylightDuration}
+                      {item?.daylightDuration}
                     </Text>
                   </Text>
                   <Text
@@ -252,7 +252,7 @@ const Days = () => {
                       }}
                       className="text-sm font-orbitron-regular"
                     >
-                      {item.shortwaveRadiation}
+                      {item?.shortwaveRadiation}
                     </Text>
                   </Text>
                   <Text
@@ -267,7 +267,7 @@ const Days = () => {
                       }}
                       className="text-sm font-orbitron-regular"
                     >
-                      {item.uvIndex}
+                      {item?.uvIndex}
                     </Text>
                   </Text>
                   <Text
@@ -282,7 +282,7 @@ const Days = () => {
                       }}
                       className="text-sm font-orbitron-regular"
                     >
-                      {item.surfacePressure}
+                      {item?.surfacePressure}
                     </Text>
                   </Text>
                 </View>

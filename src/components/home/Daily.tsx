@@ -131,35 +131,35 @@ const Daily = () => {
           renderItem={({ item }: { item: DailyWeatherObjectType }) => {
             let iconKey;
             iconKey =
-              !item.weatherIcon || item.weatherIcon === "default"
+              !item?.weatherIcon || item?.weatherIcon === "default"
                 ? (iconKey = "default")
-                : Array.isArray(item.weatherIcon)
-                  ? item.weatherCode === 0
-                    ? item.weatherIcon[0]
-                    : item.weatherIcon[1]
-                  : item.weatherIcon;
+                : Array.isArray(item?.weatherIcon)
+                  ? item?.weatherCode === 0
+                    ? item?.weatherIcon[0]
+                    : item?.weatherIcon[1]
+                  : item?.weatherIcon;
 
             let icon =
               images[iconKey as keyof WeatherIconsType] || images.default;
 
-            let altText = item.weatherMain;
+            let altText = item?.weatherMain;
 
             return (
               <View
-                key={item.id}
+                key={item?.id}
                 className={`items-center rounded-2xl py-1 px-3  ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
               >
                 <Text className={`font-genos-medium text-3xl`}>
-                  {item.maxTemp}
+                  {item?.maxTemp}
                 </Text>
                 <Text className={`font-genos-medium text-3xl`}>
-                  {item.minTemp}
+                  {item?.minTemp}
                 </Text>
 
                 <Text
                   className={`font-orbitron-semiBold  text-sky-600/70 mt-1`}
                 >
-                  {item.precipitation}
+                  {item?.precipitation}
                 </Text>
                 <Image
                   contentFit="cover"
@@ -168,12 +168,12 @@ const Daily = () => {
                   alt={altText}
                 />
                 <Text className={`font-orbitron-regular text-xs mt-1`}>
-                  {item.windSpeed}
+                  {item?.windSpeed}
                 </Text>
                 <Image
                   contentFit="cover"
                   style={{
-                    transform: `rotate(${item.windDirection}deg)`,
+                    transform: `rotate(${item?.windDirection}deg)`,
                     width: 16,
                     height: 16,
                     marginBlock: 7,
@@ -182,7 +182,7 @@ const Daily = () => {
                   alt="wind direction"
                 />
                 <Text className={`font-orbitron-semiBold mt-1`}>
-                  {item.dateStamp.slice(0, 3)}
+                  {item?.dateStamp.slice(0, 3)}
                 </Text>
               </View>
             );

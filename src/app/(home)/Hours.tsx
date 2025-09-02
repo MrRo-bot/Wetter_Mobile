@@ -85,22 +85,22 @@ const Hours = () => {
         renderItem={({ item }: { item: HourlyWeatherObjectType }) => {
           let iconKey;
           iconKey =
-            !item.weatherIcon || item.weatherIcon === "default"
+            !item?.weatherIcon || item?.weatherIcon === "default"
               ? (iconKey = "default")
-              : Array.isArray(item.weatherIcon)
-                ? item.weatherCode === 0
-                  ? item.weatherIcon[0]
-                  : item.weatherIcon[1]
-                : item.weatherIcon;
+              : Array.isArray(item?.weatherIcon)
+                ? item?.weatherCode === 0
+                  ? item?.weatherIcon[0]
+                  : item?.weatherIcon[1]
+                : item?.weatherIcon;
 
           let icon =
             images[iconKey as keyof WeatherIconsType] || images.default;
 
-          let altText = item.weatherMain;
+          let altText = item?.weatherMain;
 
           return (
             <View
-              key={item.id}
+              key={item?.id}
               className={`mx-4 p-2 justify-start rounded-2xl gap-6 ${theme === "dark" ? "bg-purpleDark" : "bg-purpleLight/20"}`}
             >
               <View className="flex-row items-center justify-start gap-4">
@@ -125,7 +125,7 @@ const Hours = () => {
                     }}
                     className={`font-orbitron-medium ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                   >
-                    {item.hourStamp}
+                    {item?.hourStamp}
                   </Text>
                   <Text
                     style={{
@@ -134,12 +134,12 @@ const Hours = () => {
                     }}
                     className={`font-orbitron-medium ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                   >
-                    {item.feels_like}
+                    {item?.feels_like}
                   </Text>
                   <Text
                     className={`absolute -bottom-[26px] text-lg font-genos-medium ${theme === "dark" ? "text-light/90" : "text-dark/50"}`}
                   >
-                    {item.weatherMain}
+                    {item?.weatherMain}
                   </Text>
                 </View>
               </View>
@@ -152,7 +152,7 @@ const Hours = () => {
                   }}
                   className={`w-2/12 text-sm text-center font-orbitron-semiBold ${theme === "dark" ? "text-blue-200" : "text-blue-600"}`}
                 >
-                  {item.precipitation}
+                  {item?.precipitation}
                 </Text>
 
                 <View className="w-10/12">
@@ -168,9 +168,9 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item.windSpeed}
+                      {item?.windSpeed}
                     </Text>{" "}
-                    • {item.wind}
+                    • {item?.wind}
                   </Text>
                   <Text
                     className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
@@ -184,7 +184,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item.gust}
+                      {item?.gust}
                     </Text>
                   </Text>
                   <Text
@@ -199,7 +199,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item.clouds}
+                      {item?.clouds}
                     </Text>
                   </Text>
                   <Text
@@ -214,7 +214,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item.humidity}
+                      {item?.humidity}
                     </Text>
                   </Text>
                   <Text
@@ -229,7 +229,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item.precipitationAmount}
+                      {item?.precipitationAmount}
                     </Text>
                   </Text>
                   <Text
@@ -244,7 +244,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item.visibility}
+                      {item?.visibility}
                     </Text>
                   </Text>
                   <Text
@@ -259,7 +259,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item.uvIndex}
+                      {item?.uvIndex}
                     </Text>
                   </Text>
                   <Text
@@ -274,7 +274,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item.pressure}
+                      {item?.pressure}
                     </Text>
                   </Text>
                   <Text
@@ -289,7 +289,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item.soilTemp}
+                      {item?.soilTemp}
                     </Text>
                   </Text>
                   <Text
@@ -304,7 +304,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item.radiation}
+                      {item?.radiation}
                     </Text>
                   </Text>
                   <Text
@@ -319,7 +319,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                     >
-                      {item.dewPoint}
+                      {item?.dewPoint}
                     </Text>
                   </Text>
                 </View>
