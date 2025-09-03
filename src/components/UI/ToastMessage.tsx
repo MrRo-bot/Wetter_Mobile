@@ -43,11 +43,11 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
           className="absolute z-50 items-center justify-center w-full"
         >
           <View
-            className={`border-2 border-solid w-max rounded-full overflow-hidden ${theme === "dark" ? "border-light/70" : "border-dark/30"}`}
+            className={`border-2 border-solid w-max max-w-[90%] rounded-full overflow-hidden ${theme === "dark" ? "border-light/70" : "border-dark/30"}`}
           >
             <BlurView
               experimentalBlurMethod="dimezisBlurView"
-              intensity={20}
+              intensity={theme === "dark" ? 20 : 50}
               tint={theme === "dark" ? "dark" : "light"}
               className="flex-row items-center justify-center gap-2 p-3 bg-clip-padding"
             >

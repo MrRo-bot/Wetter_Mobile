@@ -7,12 +7,12 @@ import Animated from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Intro() {
-  let colorScheme = useColorScheme();
+  let theme = useColorScheme();
 
   return (
     <SafeAreaView
       edges={["right", "left", "bottom"]}
-      className={`h-full justify-evenly items-center ${colorScheme === "dark" ? "bg-dark" : "bg-light"}`}
+      className={`h-full justify-evenly items-center ${theme === "dark" ? "bg-dark" : "bg-light"}`}
     >
       <View className="w-full">
         <Image
@@ -37,20 +37,20 @@ export default function Intro() {
           }}
         >
           <Text
-            className={`font-orbitron-black tracking-widest text-5xl text-center ${colorScheme === "dark" ? "text-redLight" : "text-redDark"}`}
+            className={`font-orbitron-black tracking-widest text-5xl text-center ${theme === "dark" ? "text-redLight" : "text-redDark"}`}
           >
             Wetter
           </Text>
         </Animated.View>
         <Text
-          className={`font-genos-regular tracking-widest text-2xl mt-4 text-center ${colorScheme === "dark" ? "text-light" : "text-dark"}`}
+          className={`font-genos-regular tracking-widest text-2xl mt-4 text-center ${theme === "dark" ? "text-light" : "text-dark"}`}
         >
           A minimal weather app
         </Text>
       </View>
 
       <components.MainButton
-        colorScheme={colorScheme}
+        theme={theme}
         onPressFunc={() => router.navigate("/(intro)/location")}
         buttonText="Next"
         darkBgColor="bg-redLight"

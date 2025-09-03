@@ -21,9 +21,9 @@ const DailyAQI = ({
 
   const aqiChartData = Array.from({ length: 5 }, (_, i) => {
     const aqiDay = aqiForecast[i];
-    const aqiDayObj = aqiDay[aqiParameter].filter(
-      (x: null | number) => x !== null
-    );
+    const aqiDayObj = (
+      aqiDay[aqiParameter as keyof AQIHourlyType] as number[]
+    ).filter((x: null | number) => x !== null);
 
     return {
       stacks: [

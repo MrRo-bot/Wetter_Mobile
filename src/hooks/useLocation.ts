@@ -12,28 +12,23 @@ export default function useLocation(autoFetch: boolean = false) {
     setErrorMsg(null);
 
     try {
-      //asking for location access
       const status = await PhoneLocation.requestForegroundPermissionsAsync();
 
-      //if permission denied
       if (status.status !== "granted") {
         throw new Error("Location permisssion denied");
       }
 
-      //if permission given, getting location coordinates
       const locationCoords = await PhoneLocation.getCurrentPositionAsync({
-        accuracy: PhoneLocation.Accuracy.High, // Try higher accuracy
-        timeInterval: 10000, // Minimum time to wait (in milliseconds)
-        distanceInterval: 20, //every 20 meters
+        accuracy: PhoneLocation.Accuracy.High,
+        timeInterval: 10000,
+        distanceInterval: 20,
       });
 
-      //getting postal address of location from coords
       const geoAddress = await PhoneLocation.reverseGeocodeAsync({
         latitude: locationCoords?.coords?.latitude,
         longitude: locationCoords?.coords?.longitude,
       });
 
-      //if geoAddress is available then send data to user
       if (geoAddress.length > 0) {
         const newLocation: LocationDataType = {
           id: `${geoAddress[0].city || "unknown"}-${locationCoords?.coords?.latitude}-${locationCoords?.coords?.longitude}`,

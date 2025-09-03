@@ -12,7 +12,7 @@ import { ScrollView, useColorScheme, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
-  let colorScheme = useColorScheme();
+  let theme = useColorScheme();
   const toastRef = useRef<ToastRef>(null);
 
   const { locations } = locationStore();
@@ -69,7 +69,7 @@ export default function Home() {
   return (
     <SafeAreaView
       edges={["right", "left", "bottom"]}
-      className={`h-full ${colorScheme === "dark" ? "bg-black" : "bg-light"}`}
+      className={`h-full ${theme === "dark" ? "bg-black" : "bg-light"}`}
     >
       {weatherLoading && aqiLoading ? (
         <View className="justify-center w-full h-full">

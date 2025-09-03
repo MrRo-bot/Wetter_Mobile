@@ -1,5 +1,9 @@
 import { LocationGeocodedAddress, LocationObject } from "expo-location";
-import { ColorSchemeName, GestureResponderEvent } from "react-native";
+import {
+  ColorSchemeName,
+  GestureResponderEvent,
+  ImageSourcePropType,
+} from "react-native";
 
 export interface LocationDataType {
   id: string;
@@ -27,7 +31,7 @@ export interface MainButtonType {
   buttonText: string;
   darkColor: string;
   lightColor: string;
-  colorScheme: ColorSchemeName;
+  theme: ColorSchemeName;
   darkBgColor: string;
   lightBgColor: string;
 }
@@ -263,13 +267,6 @@ export interface UnsplashType {
 export interface HourlyWeatherObjectType {
   id: number;
   currentTemp: string;
-  precipitation: string;
-  precipitationAmount: string;
-  visibility: string;
-  uvIndex: string;
-  pressure: string;
-  soilTemp: string;
-  radiation: string;
   weatherIcon: string[] | string;
   weatherCode: number;
   weatherMain: string;
@@ -277,6 +274,13 @@ export interface HourlyWeatherObjectType {
   wind: string;
   windDirection: number;
   hourStamp: string;
+  precipitationAmount?: string;
+  soilTemp?: string;
+  radiation?: string;
+  precipitation?: string;
+  visibility?: string;
+  uvIndex?: string;
+  pressure?: string;
   feels_like?: string;
   gust?: string;
   clouds?: string;
@@ -295,57 +299,57 @@ export interface DailyWeatherObjectType {
   windSpeed: string;
   windDirection: number;
   dateStamp: string;
-  sunrise?: string;
-  sunset?: string;
-  surfacePressure: string;
-  daylightDuration: string;
-  shortwaveRadiation: string;
-  uvIndex: string;
-  summary?: string;
-  weatherMain?: string;
-  hourStamp?: string;
+  sunrise: string;
+  sunset: string;
+  summary: string;
+  weatherMain: string;
+  hourStamp: string;
+  surfacePressure?: string;
+  daylightDuration?: string;
+  shortwaveRadiation?: string;
+  uvIndex?: string;
 }
 
 export interface WeatherIconsType {
-  alert: string;
-  aqi_meter: string;
-  blades: string;
-  direction: string;
-  hot_alert: string;
-  introduction: string;
-  location: string;
-  search: string;
-  wind_mill: string;
-  clock: string;
-  dew_point: string;
-  humidity: string;
-  pressure: string;
-  sunrise: string;
-  sunset: string;
-  thermometer: string;
-  uv: string;
-  visibility: string;
-  clear_day: string;
-  clear_night: string;
-  partly_cloudy_day: string;
-  partly_cloudy_night: string;
-  overcast: string;
-  fog: string;
-  moderate_drizzle: string;
-  dense_drizzle: string;
-  freezing_drizzle: string;
-  slight_rain: string;
-  moderate_rain: string;
-  heavy_rain: string;
-  slight_snow: string;
-  moderate_snow: string;
-  heavy_snow: string;
-  thunderstorm: string;
-  slight_thunder_with_hail: string;
-  heavy_thunder_with_hail: string;
-  toast_icon_dark: string;
-  toast_icon_light: string;
-  default: string;
+  alert: ImageSourcePropType;
+  aqi_meter: ImageSourcePropType;
+  blades: ImageSourcePropType;
+  direction: ImageSourcePropType;
+  hot_alert: ImageSourcePropType;
+  introduction: ImageSourcePropType;
+  location: ImageSourcePropType;
+  search: ImageSourcePropType;
+  wind_mill: ImageSourcePropType;
+  clock: ImageSourcePropType;
+  dew_point: ImageSourcePropType;
+  humidity: ImageSourcePropType;
+  pressure: ImageSourcePropType;
+  sunrise: ImageSourcePropType;
+  sunset: ImageSourcePropType;
+  thermometer: ImageSourcePropType;
+  uv: ImageSourcePropType;
+  visibility: ImageSourcePropType;
+  clear_day: ImageSourcePropType;
+  clear_night: ImageSourcePropType;
+  partly_cloudy_day: ImageSourcePropType;
+  partly_cloudy_night: ImageSourcePropType;
+  overcast: ImageSourcePropType;
+  fog: ImageSourcePropType;
+  moderate_drizzle: ImageSourcePropType;
+  dense_drizzle: ImageSourcePropType;
+  freezing_drizzle: ImageSourcePropType;
+  slight_rain: ImageSourcePropType;
+  moderate_rain: ImageSourcePropType;
+  heavy_rain: ImageSourcePropType;
+  slight_snow: ImageSourcePropType;
+  moderate_snow: ImageSourcePropType;
+  heavy_snow: ImageSourcePropType;
+  thunderstorm: ImageSourcePropType;
+  slight_thunder_with_hail: ImageSourcePropType;
+  heavy_thunder_with_hail: ImageSourcePropType;
+  toast_icon_dark: ImageSourcePropType;
+  toast_icon_light: ImageSourcePropType;
+  default: ImageSourcePropType;
 }
 
 export type ToastType = "success" | "error" | "pending";

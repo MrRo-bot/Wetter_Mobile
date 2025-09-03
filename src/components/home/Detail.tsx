@@ -90,7 +90,7 @@ const Detail = () => {
       <View className="flex-row flex-wrap items-center justify-between mt-4 gap-y-2">
         {detailObj.map((detail) => (
           <View
-            key={detail?.icon}
+            key={detail?.heading}
             className={`w-[32%] items-center justify-center p-2 rounded-2xl ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
           >
             <Image

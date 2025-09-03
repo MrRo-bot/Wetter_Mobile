@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
 
 export default function HomeLayout() {
-  let colorScheme = useColorScheme();
+  let theme = useColorScheme();
   const [clock, setClock] = useState(
     new Date().toLocaleString("en-US", {
       hour: "numeric",
@@ -29,9 +29,9 @@ export default function HomeLayout() {
   }, []);
 
   const themeBackground =
-    colorScheme === "dark" ? "rgb(17, 15, 20)" : "rgb(247, 243, 251)";
+    theme === "dark" ? "rgb(17, 15, 20)" : "rgb(247, 243, 251)";
   const themeTint =
-    colorScheme === "dark" ? "hsl(266, 54%, 97%)" : "hsl(264, 14%, 7%)";
+    theme === "dark" ? "hsl(266, 54%, 97%)" : "hsl(264, 14%, 7%)";
 
   return (
     <>
