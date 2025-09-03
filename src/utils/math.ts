@@ -428,16 +428,18 @@ export const wingSpeed = (value: number): number => {
   }
 };
 
-// export const alertIcon = (code:number):string => {
-//   switch (true) {
-//     case 65:
-//     case 67:
-//     case 75:
-//     case 82:
-//     case 86:
-//     case 95:
-//     case 96:
-//     case 99:
-//       return "alert";
-//   }
-// };
+export const alertIcon = (code: number): string => {
+  switch (code) {
+    case 65:
+    case 67:
+    case 75:
+    case 82:
+    case 86:
+    case 95:
+    case 96:
+    case 99:
+      return "alert";
+    default:
+      return "";
+  }
+};

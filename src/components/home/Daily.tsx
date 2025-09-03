@@ -118,7 +118,7 @@ const Daily = () => {
             className="rotate-45"
             name="direction"
             size={16}
-            color={theme === "dark" ? "white" : "black"}
+            color={theme === "dark" ? "salmon" : "indianred"}
           />
         </View>
       </Pressable>

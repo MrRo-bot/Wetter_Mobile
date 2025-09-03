@@ -96,7 +96,7 @@ const Hourly = () => {
             className="rotate-45"
             name="direction"
             size={16}
-            color={theme === "dark" ? "white" : "black"}
+            color={theme === "dark" ? "violet" : "purple"}
           />
         </View>
       </Pressable>

@@ -2,11 +2,13 @@ import Loader from "@/src/components/UI/Loader";
 import ToastMessage from "@/src/components/UI/ToastMessage";
 import components from "@/src/constants/components";
 import useAqiData from "@/src/hooks/useAqiData";
+import useUnsplashImage from "@/src/hooks/useUnsplashImage";
 import useWeatherData from "@/src/hooks/useWeatherData";
 import { aqiStore } from "@/src/store/aqiStore";
 import { locationStore } from "@/src/store/locationStore";
 import { weatherStore } from "@/src/store/weatherStore";
 import { ToastRef } from "@/src/types/types";
+import { weatherCodeConv } from "@/src/utils/math";
 import { useEffect, useRef } from "react";
 import { ScrollView, useColorScheme, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,7 +18,7 @@ export default function Home() {
   const toastRef = useRef<ToastRef>(null);
 
   const { locations } = locationStore();
-  const { addWeather } = weatherStore();
+  const { weather, addWeather } = weatherStore();
   const { addAQI } = aqiStore();
 
   const {
@@ -41,6 +43,22 @@ export default function Home() {
     latitude: locations[0]?.locationCoords?.coords?.latitude,
     longitude: locations[0]?.locationCoords?.coords?.longitude,
   });
+
+  const weatherCode = weatherCodeConv(weather?.daily?.weather_code[0]);
+
+  //getting image based on weather type
+  const { imageColorsLoading, imageColorsData, unsplashLoading } =
+    useUnsplashImage(weatherCode);
+
+  const shadowColor =
+    imageColorsData?.imageColors?.platform === "android" ||
+    imageColorsData?.imageColors?.platform === "web"
+      ? theme === "dark"
+        ? imageColorsData?.imageColors?.vibrant
+        : imageColorsData?.imageColors?.muted
+      : theme === "dark"
+        ? imageColorsData?.imageColors?.quality
+        : imageColorsData?.imageColors?.primary;
 
   useEffect(() => {
     if (weatherData) addWeather(weatherData);
@@ -83,6 +101,9 @@ export default function Home() {
             toast={toastRef}
             queryStatus={fetchStatus}
             error={weatherError}
+            imageColorsLoading={imageColorsLoading}
+            imageColorsData={imageColorsData}
+            unsplashLoading={unsplashLoading}
           />
           <components.Detail />
           <components.Hourly />

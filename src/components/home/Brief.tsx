@@ -6,14 +6,19 @@ import { Pressable, Text, useColorScheme, View } from "react-native";
 import { locationStore } from "@/src/store/locationStore";
 import { weatherStore } from "@/src/store/weatherStore";
 
-import useUnsplashImage from "@/src/hooks/useUnsplashImage";
-
 import { ToastRef, WeatherDataType } from "@/src/types/types";
-import { degConv, unixConv, valRound, weatherCodeConv } from "@/src/utils/math";
+import {
+  alertIcon,
+  degConv,
+  unixConv,
+  valRound,
+  weatherCodeConv,
+} from "@/src/utils/math";
 import NetInfo from "@react-native-community/netinfo";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { RefObject, useEffect, useState } from "react";
+import { ImageColorsResult } from "react-native-image-colors";
 
 const Brief = ({
   weatherRefetch,
@@ -21,6 +26,9 @@ const Brief = ({
   toast,
   queryStatus,
   error,
+  imageColorsLoading,
+  imageColorsData,
+  unsplashLoading,
 }: {
   weatherRefetch: (
     options?: RefetchOptions | undefined
@@ -29,6 +37,15 @@ const Brief = ({
   toast: RefObject<ToastRef | null>;
   queryStatus: "fetching" | "idle" | "paused";
   error: Error | null;
+  imageColorsLoading: boolean;
+  imageColorsData:
+    | {
+        imageIndex: number;
+        url: string;
+        imageColors: ImageColorsResult;
+      }
+    | undefined;
+  unsplashLoading: boolean;
 }) => {
   let theme = useColorScheme();
   const [isConnected, setIsConnected] = useState<boolean | null>(true);
@@ -45,10 +62,6 @@ const Brief = ({
   const timestring = unixConv.timeStamp(
     new Date(current?.time).getTime() / 1000
   );
-
-  //getting image based on weather type
-  const { imageColorsLoading, imageColorsData, unsplashLoading } =
-    useUnsplashImage(weatherCode);
 
   //Getting color data from image
   const imageColor =
@@ -232,13 +245,28 @@ const Brief = ({
             {`${timestring?.day?.substring(0, 3)}, ${timestring.month} ${timestring.date}`}
           </Text>
 
-          <Text
-            className={`text-4xl leading-none tracking-wider font-genos-medium ${theme === "dark" ? "text-outlineDark" : "text-outlineLight"}`}
-          >
-            {locations[0]?.geoAddress[0].street ??
-              locations[0]?.geoAddress[0].district ??
-              locations[0]?.geoAddress[0].city}
-          </Text>
+          <View className="flex-row items-end justify-between">
+            <Text
+              className={`text-4xl leading-none tracking-wider font-genos-medium ${theme === "dark" ? "text-outlineDark" : "text-outlineLight"}`}
+            >
+              {locations[0]?.geoAddress[0].street ??
+                locations[0]?.geoAddress[0].city ??
+                locations[0]?.geoAddress[0].district}
+            </Text>
+            {alertIcon(daily?.weather_code[0]) === "alert" && (
+              <View
+                className={`items-center justify-center p-2 mr-4 rounded-full ${theme === "dark" ? "bg-gray-500/70" : "bg-gray-500/10"}`}
+              >
+                <Entypo
+                  name="warning"
+                  size={16}
+                  style={{
+                    color: imageColorsLoading ? "#44444450" : imageColor,
+                  }}
+                />
+              </View>
+            )}
+          </View>
 
           <Text
             className={`text-2xl leading-none font-genos-regular ${theme === "dark" ? "text-light" : "text-dark"}`}
