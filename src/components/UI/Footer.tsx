@@ -22,7 +22,7 @@ const Footer = () => {
     } catch (error) {
       toastRef.current?.show({
         type: "error",
-        description: "Error opening URL: " + error + " 😭",
+        description: `Error opening URL: ${error} 😭`,
       });
       await Linking.openURL(webUrl);
     }

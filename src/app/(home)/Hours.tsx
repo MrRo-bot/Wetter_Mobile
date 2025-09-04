@@ -31,29 +31,18 @@ const Hours = () => {
 
     return {
       id: i,
-      currentTemp: valRound(hourly?.temperature_2m[index]) + "°",
-      precipitation:
-        hourly?.precipitation_probability[index] +
-        units?.precipitation_probability,
-      precipitationAmount:
-        hourly?.precipitation[index] + " " + units?.precipitation,
-      visibility: lenAndSpdConv.km(hourly?.visibility[index]) + " " + "km",
-      uvIndex: valRound(hourly?.uv_index[index]) + units?.uv_index,
-      pressure:
-        valRound(hourly?.surface_pressure[index]) +
-        " " +
-        units?.surface_pressure,
-      soilTemp:
-        valRound(hourly?.soil_temperature_0cm[index]) +
-        units?.soil_temperature_0cm,
-      radiation:
-        valRound(hourly?.direct_normal_irradiance[index]) +
-        units?.direct_normal_irradiance,
+      currentTemp: `${valRound(hourly?.temperature_2m[index])}°c`,
+      precipitation: `${hourly?.precipitation_probability[index]} ${units?.precipitation_probability}`,
+      precipitationAmount: `${hourly?.precipitation[index]} ${units?.precipitation}`,
+      visibility: `${lenAndSpdConv.km(hourly?.visibility[index])} km`,
+      uvIndex: `${valRound(hourly?.uv_index[index])} units?.uv_index`,
+      pressure: `${valRound(hourly?.surface_pressure[index])} ${units?.surface_pressure}`,
+      soilTemp: `${valRound(hourly?.soil_temperature_0cm[index])} ${units?.soil_temperature_0cm}`,
+      radiation: `${valRound(hourly?.direct_normal_irradiance[index])} ${units?.direct_normal_irradiance}`,
       weatherIcon: weatherIconFind(weatherCode),
       weatherCode,
       weatherMain: weatherCodeConv(weatherCode),
-      windSpeed:
-        valRound(hourly?.wind_speed_10m[index]) + " " + units?.wind_speed_10m,
+      windSpeed: `${valRound(hourly?.wind_speed_10m[index])} ${units?.wind_speed_10m}`,
       wind: degConv(hourly?.wind_direction_10m[index]).cardinal,
       windDirection: degConv(hourly?.wind_direction_10m[index]).rotationDeg,
       hourStamp: unixConv?.timeStamp(
@@ -61,13 +50,11 @@ const Hours = () => {
       ).hour2,
       feels_like: `${valRound(
         hourly?.temperature_2m[index]
-      )}° - Feels Like: ${valRound(hourly?.apparent_temperature[index])}°`,
-      gust:
-        valRound(hourly?.wind_gusts_10m[index]) + " " + units?.wind_gusts_10m,
-      clouds: hourly?.cloud_cover[index] + units?.cloud_cover,
-      humidity:
-        hourly?.relative_humidity_2m[index] + units?.relative_humidity_2m,
-      dewPoint: valRound(hourly?.dew_point_2m[index]) + "°",
+      )}°c - Feels Like: ${valRound(hourly?.apparent_temperature[index])}°c`,
+      gust: `${valRound(hourly?.wind_gusts_10m[index])} ${units?.wind_gusts_10m}`,
+      clouds: `${hourly?.cloud_cover[index]} ${units?.cloud_cover}`,
+      humidity: `{hourly?.relative_humidity_2m[index]} ${units?.relative_humidity_2m}`,
+      dewPoint: `${valRound(hourly?.dew_point_2m[index])}°`,
       is_day: hourly?.is_day[index],
     };
   });
@@ -121,7 +108,7 @@ const Hours = () => {
                     }}
                     className={`font-orbitron-medium ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                   >
-                    {item?.hourStamp}
+                    {item?.hourStamp ?? "..."}
                   </Text>
                   <Text
                     style={{
@@ -130,12 +117,12 @@ const Hours = () => {
                     }}
                     className={`font-orbitron-medium ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                   >
-                    {item?.feels_like}
+                    {item?.feels_like ?? "..."}
                   </Text>
                   <Text
                     className={`absolute -bottom-[26px] text-lg font-genos-medium ${theme === "dark" ? "text-light/90" : "text-dark/50"}`}
                   >
-                    {item?.weatherMain}
+                    {item?.weatherMain ?? "..."}
                   </Text>
                 </View>
               </View>
@@ -148,7 +135,7 @@ const Hours = () => {
                   }}
                   className={`w-2/12 text-sm text-center font-orbitron-semiBold ${theme === "dark" ? "text-blue-200" : "text-blue-600"}`}
                 >
-                  {item?.precipitation}
+                  {item?.precipitation ?? "..."}
                 </Text>
 
                 <View className="w-10/12">
@@ -164,9 +151,9 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item?.windSpeed}
+                      {item?.windSpeed ?? "..."}
                     </Text>{" "}
-                    • {item?.wind}
+                    • {item?.wind ?? "..."}
                   </Text>
                   <Text
                     className={`text-lg leading-none text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
@@ -180,7 +167,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item?.gust}
+                      {item?.gust ?? "..."}
                     </Text>
                   </Text>
                   <Text
@@ -195,7 +182,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item?.clouds}
+                      {item?.clouds ?? "..."}
                     </Text>
                   </Text>
                   <Text
@@ -210,7 +197,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item?.humidity}
+                      {item?.humidity ?? "..."}
                     </Text>
                   </Text>
                   <Text
@@ -225,7 +212,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item?.precipitationAmount}
+                      {item?.precipitationAmount ?? "..."}
                     </Text>
                   </Text>
                   <Text
@@ -240,7 +227,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item?.visibility}
+                      {item?.visibility ?? "..."}
                     </Text>
                   </Text>
                   <Text
@@ -255,7 +242,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item?.uvIndex}
+                      {item?.uvIndex ?? "..."}
                     </Text>
                   </Text>
                   <Text
@@ -270,7 +257,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item?.pressure}
+                      {item?.pressure ?? "..."}
                     </Text>
                   </Text>
                   <Text
@@ -285,7 +272,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item?.soilTemp}
+                      {item?.soilTemp ?? "..."}
                     </Text>
                   </Text>
                   <Text
@@ -300,7 +287,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
-                      {item?.radiation}
+                      {item?.radiation ?? "..."}
                     </Text>
                   </Text>
                   <Text
@@ -315,7 +302,7 @@ const Hours = () => {
                       }}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                     >
-                      {item?.dewPoint}
+                      {item?.dewPoint ?? "..."}
                     </Text>
                   </Text>
                 </View>

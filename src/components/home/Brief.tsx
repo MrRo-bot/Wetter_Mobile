@@ -170,7 +170,8 @@ const Brief = ({
             }}
             className={`font-orbitron-regular mr-4 text-5xl leading-none`}
           >
-            {valRound(current?.temperature_2m)} {current_units?.temperature_2m}
+            {valRound(current?.temperature_2m) ?? "..."}{" "}
+            {current_units?.temperature_2m ?? "..."}
           </Text>
 
           <Text
@@ -182,8 +183,8 @@ const Brief = ({
             }}
             className={`font-orbitron-semiBold self-start text-lg leading-none`}
           >
-            {valRound(daily?.temperature_2m_max[0])}{" "}
-            {daily_units?.temperature_2m_max}
+            {valRound(daily?.temperature_2m_max[0]) ?? "..."}{" "}
+            {daily_units?.temperature_2m_max ?? "..."}
           </Text>
           <Text
             style={{
@@ -205,8 +206,8 @@ const Brief = ({
             }}
             className={`font-orbitron-semiBold self-end text-lg leading-none`}
           >
-            {valRound(daily?.temperature_2m_min[0])}{" "}
-            {daily_units?.temperature_2m_min}
+            {valRound(daily?.temperature_2m_min[0] ?? "...")}{" "}
+            {daily_units?.temperature_2m_min ?? "..."}
           </Text>
         </View>
 
@@ -214,7 +215,7 @@ const Brief = ({
           <Text
             className={`text-lg leading-none font-genos-regular uppercase ${theme === "dark" ? "text-outlineDark/70" : "text-outlineLight/70"}`}
           >
-            {`${timestring?.day?.substring(0, 3)}, ${timestring.month} ${timestring.date}`}
+            {`${timestring?.day?.substring(0, 3) ?? "..."}, ${timestring.month ?? "..."} ${timestring.date ?? "..."}`}
           </Text>
 
           <View className="flex-row items-end justify-between">
@@ -223,7 +224,8 @@ const Brief = ({
             >
               {locations[0]?.geoAddress[0].street ??
                 locations[0]?.geoAddress[0].city ??
-                locations[0]?.geoAddress[0].district}
+                locations[0]?.geoAddress[0].district ??
+                "..."}
             </Text>
             {alertIcon(current?.weather_code) === "alert" && (
               <View
@@ -243,7 +245,7 @@ const Brief = ({
           <Text
             className={`text-2xl leading-none font-genos-regular ${theme === "dark" ? "text-light" : "text-dark"}`}
           >
-            {weatherCodeConv(current?.weather_code)}
+            {weatherCodeConv(current?.weather_code) ?? "..."}
           </Text>
 
           <Pressable
@@ -253,7 +255,7 @@ const Brief = ({
             <Text
               className={`pr-8 text-lg leading-none font-genos-medium ${theme === "dark" ? "text-outlineDark/70" : "text-outlineLight/70"}`}
             >
-              {weatherSummary}
+              {weatherSummary ?? "..."}
             </Text>
             <View className="absolute right-0 -translate-y-1/2 top-1/2">
               <Entypo

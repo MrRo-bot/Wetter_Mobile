@@ -28,7 +28,7 @@ export default function Location() {
     errorMsg &&
       toastRef?.current?.show({
         type: "error",
-        description: errorMsg + " 😭",
+        description: `${errorMsg} 😭`,
       });
   }, [errorMsg]);
 

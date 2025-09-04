@@ -67,7 +67,7 @@ export default function Home() {
     weatherIsError &&
       toastRef.current?.show({
         type: "error",
-        description: weatherError + " 😭",
+        description: `${weatherError} 😭`,
       });
   }, [weatherError, weatherIsError]);
 
@@ -75,7 +75,7 @@ export default function Home() {
     unsplashError &&
       toastRef.current?.show({
         type: "error",
-        description: unsplashError + " 😭",
+        description: `${unsplashError} 😭`,
       });
   }, [unsplashError]);
 
@@ -83,7 +83,7 @@ export default function Home() {
     imageColorsError &&
       toastRef.current?.show({
         type: "error",
-        description: imageColorsError + " 😭",
+        description: `${imageColorsError} 😭`,
       });
   }, [imageColorsError]);
 
@@ -91,7 +91,7 @@ export default function Home() {
     imageIsError &&
       toastRef.current?.show({
         type: "error",
-        description: imageError + " 😭",
+        description: `${imageError} 😭`,
       });
   }, [imageError, imageIsError]);
 

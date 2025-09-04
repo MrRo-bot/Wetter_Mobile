@@ -19,14 +19,12 @@ const Detail = () => {
     {
       icon: images.thermometer,
       heading: "Feels Like",
-      data:
-        valRound(current?.apparent_temperature) +
-        current_units?.apparent_temperature,
+      data: `${valRound(current?.apparent_temperature)} ${current_units?.apparent_temperature}`,
     },
     {
       icon: images.humidity,
       heading: "Humidity",
-      data: current?.relative_humidity_2m + "%",
+      data: `${valRound(current?.relative_humidity_2m)} %`,
     },
     {
       icon: images.uv,
@@ -36,18 +34,17 @@ const Detail = () => {
     {
       icon: images.visibility,
       heading: "Visibility",
-      data: lenAndSpdConv.km(hourly?.visibility[currentTimeIndex]) + "km",
+      data: `${lenAndSpdConv.km(hourly?.visibility[currentTimeIndex])} km`,
     },
     {
       icon: images.pressure,
       heading: "Pressure",
-      data: valRound(current?.surface_pressure) + current_units?.precipitation,
+      data: `${valRound(current?.surface_pressure)} ${current_units?.precipitation}`,
     },
     {
       icon: images.dew_point,
       heading: "Dew Point",
-      data:
-        valRound(daily?.dew_point_2m_mean[0]) + daily_units?.dew_point_2m_mean,
+      data: `${valRound(daily?.dew_point_2m_mean[0])} ${daily_units?.dew_point_2m_mean}`,
     },
   ];
 
@@ -98,10 +95,10 @@ const Detail = () => {
               alt={detail?.heading}
             />
             <Text className={`text-xs mt-1 font-orbitron-bold text-dark`}>
-              {detail?.heading}
+              {detail?.heading ?? "..."}
             </Text>
             <Text className={`text-2xl mt-2 font-genos-regular text-dark`}>
-              {detail?.data}
+              {detail?.data ?? "..."}
             </Text>
           </View>
         ))}

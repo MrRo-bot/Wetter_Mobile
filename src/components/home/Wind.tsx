@@ -100,12 +100,10 @@ const Wind = () => {
 
         <View className="mb-2">
           <Text className="text-2xl font-orbitron-regular text-dark/90">
-            {weather?.current?.wind_speed_10m +
-              " " +
-              weather?.current_units?.wind_speed_10m}
+            {`${weather?.current?.wind_speed_10m ?? "..."} ${weather?.current_units?.wind_speed_10m ?? "..."}`}
           </Text>
           <Text className={`mt-1 leading-0 font-genos-bold text-dark/60`}>
-            {degConv(weather?.current?.wind_direction_10m).cardinal}
+            {degConv(weather?.current?.wind_direction_10m).cardinal ?? "..."}
           </Text>
         </View>
       </View>

@@ -31,15 +31,12 @@ const Hourly = () => {
 
     return {
       id: i,
-      currentTemp: valRound(hourly?.temperature_2m[index]) + "°",
-      precipitation:
-        hourly?.precipitation_probability[index] +
-        units?.precipitation_probability,
+      currentTemp: `${valRound(hourly?.temperature_2m[index])} °c`,
+      precipitation: `${hourly?.precipitation_probability[index]} ${units?.precipitation_probability}`,
       weatherIcon: weatherIconFind(weatherCode),
       weatherCode,
       weatherMain: weatherCodeConv(weatherCode),
-      windSpeed:
-        valRound(hourly?.wind_speed_10m[index]) + " " + units?.wind_speed_10m,
+      windSpeed: `${valRound(hourly?.wind_speed_10m[index])} ${units?.wind_speed_10m}`,
       wind: degConv(hourly?.wind_direction_10m[index]).cardinal,
       windDirection: degConv(hourly?.wind_direction_10m[index]).rotationDeg,
       hourStamp: unixConv?.timeStamp(
@@ -119,15 +116,15 @@ const Hourly = () => {
             return (
               <View
                 key={item?.id}
-                className={` items-center rounded-2xl justify-between py-1 px-3 ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`} //color first data column to show current hour temperature
+                className={` items-center rounded-2xl justify-between py-1 px-3 ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
               >
                 <Text className={`font-genos-medium text-3xl`}>
-                  {item?.currentTemp}
+                  {item?.currentTemp ?? "..."}
                 </Text>
                 <Text
                   className={`font-orbitron-semiBold  text-sky-600/70 mt-1`}
                 >
-                  {item?.precipitation}
+                  {item?.precipitation ?? "..."}
                 </Text>
                 <Image
                   contentFit="cover"
@@ -136,12 +133,12 @@ const Hourly = () => {
                   alt={altText}
                 />
                 <Text className={`font-orbitron-regular text-xs mt-1`}>
-                  {item?.windSpeed}
+                  {item?.windSpeed ?? "..."}
                 </Text>
                 <Image
                   contentFit="cover"
                   style={{
-                    transform: `rotate(${item?.windDirection}deg)`,
+                    transform: `rotate(${item?.windDirection ?? 0}deg)`,
                     width: 16,
                     height: 16,
                     marginBlock: 7,
@@ -150,7 +147,7 @@ const Hourly = () => {
                   alt="wind direction"
                 />
                 <Text className={`font-orbitron-semiBold text-sm mt-1`}>
-                  {item?.hourStamp?.toLowerCase()}
+                  {item?.hourStamp?.toLowerCase() ?? "..."}
                 </Text>
               </View>
             );

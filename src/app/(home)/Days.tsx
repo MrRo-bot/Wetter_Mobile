@@ -23,19 +23,15 @@ const Days = () => {
 
     return {
       id: i,
-      maxTemp: valRound(daily?.temperature_2m_max[i]) + "°",
-      minTemp: valRound(daily?.temperature_2m_min[i]) + "°",
+      maxTemp: `${valRound(daily?.temperature_2m_max[i])}°c`,
+      minTemp: `${valRound(daily?.temperature_2m_min[i])}°c`,
       weatherCode,
       weatherIcon: weatherIconFind(weatherCode),
       precipitation:
         daily?.precipitation_probability_max[i] === null
           ? "0%"
-          : daily?.precipitation_probability_max[i] +
-            units?.precipitation_probability_max,
-      windSpeed:
-        valRound(daily?.wind_speed_10m_max[i]) +
-        " " +
-        units?.wind_speed_10m_max,
+          : `${daily?.precipitation_probability_max[i]} ${units?.precipitation_probability_max}`,
+      windSpeed: `${valRound(daily?.wind_speed_10m_max[i])} ${units?.wind_speed_10m_max}`,
       windDirection: degConv(daily?.winddirection_10m_dominant[i]).rotationDeg,
       dateStamp: `${
         unixConv.timeStamp(new Date(daily?.time[i]).getTime() / 1000).day
@@ -49,17 +45,10 @@ const Days = () => {
         .clockTime,
       sunset: unixConv.timeStamp(new Date(daily?.sunset[i]).getTime() / 1000)
         .clockTime,
-      daylightDuration:
-        valRound(daily?.daylight_duration[i] / 60 / 60) + " " + "hours",
-      surfacePressure:
-        valRound(daily?.surface_pressure_mean[i]) +
-        " " +
-        units?.surface_pressure_mean,
-      shortwaveRadiation:
-        valRound(daily?.shortwave_radiation_sum[i]) +
-        " " +
-        units?.shortwave_radiation_sum,
-      uvIndex: valRound(daily?.uv_index_max[i]) + " " + units?.uv_index_max,
+      daylightDuration: `${valRound(daily?.daylight_duration[i] / 60 / 60)} hours`,
+      surfacePressure: `${valRound(daily?.surface_pressure_mean[i])} ${units?.surface_pressure_mean}`,
+      shortwaveRadiation: `${valRound(daily?.shortwave_radiation_sum[i])} ${units?.shortwave_radiation_sum}`,
+      uvIndex: `${valRound(daily?.uv_index_max[i])} ${units?.uv_index_max}`,
       summary: `${weatherCodeConv(weatherCode)}. Wind ${degConv(
         daily?.winddirection_10m_dominant[i]
       ).cardinal?.toLowerCase()} at ${
@@ -128,7 +117,7 @@ const Days = () => {
                     }}
                     className={`font-orbitron-medium tracking-tighter ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                   >
-                    {item?.dateStamp}
+                    {item?.dateStamp ?? "..."}
                   </Text>
                   <View className="flex-row gap-1">
                     <Text
@@ -139,7 +128,7 @@ const Days = () => {
                       }}
                       className={`font-orbitron-bold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
-                      {item?.maxTemp}
+                      {item?.maxTemp ?? "..."}
                     </Text>
                     <Text
                       style={{
@@ -160,7 +149,7 @@ const Days = () => {
                       }}
                       className={`font-orbitron-bold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
-                      {item?.minTemp}
+                      {item?.minTemp ?? "..."}
                     </Text>
                   </View>
                 </View>
@@ -176,7 +165,7 @@ const Days = () => {
                     }}
                     className={`text-sm text-center font-orbitron-semiBold ${theme === "dark" ? "text-blue-200" : "text-blue-600"}`}
                   >
-                    {item?.precipitation}
+                    {item?.precipitation ?? "..."}
                   </Text>
                   <View className="mx-auto mt-1">
                     <Image
@@ -192,7 +181,7 @@ const Days = () => {
                       }}
                       className={`font-genos-semiBold ${theme === "dark" ? "text-white" : "text-pink-600"}`}
                     >
-                      {item?.sunrise}
+                      {item?.sunrise ?? "..."}
                     </Text>
                   </View>
                   <View className="mx-auto mt-1">
@@ -209,7 +198,7 @@ const Days = () => {
                       }}
                       className={`font-genos-semiBold ${theme === "dark" ? "text-white" : "text-pink-600"}`}
                     >
-                      {item?.sunset}
+                      {item?.sunset ?? "..."}
                     </Text>
                   </View>
                 </View>
@@ -217,7 +206,7 @@ const Days = () => {
                   <Text
                     className={`text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
-                    {item?.summary}
+                    {item?.summary ?? "..."}
                   </Text>
                   <Text
                     className={`text-lg text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
@@ -231,7 +220,7 @@ const Days = () => {
                       }}
                       className="text-sm font-orbitron-regular"
                     >
-                      {item?.daylightDuration}
+                      {item?.daylightDuration ?? "..."}
                     </Text>
                   </Text>
                   <Text
@@ -246,7 +235,7 @@ const Days = () => {
                       }}
                       className="text-sm font-orbitron-regular"
                     >
-                      {item?.shortwaveRadiation}
+                      {item?.shortwaveRadiation ?? "..."}
                     </Text>
                   </Text>
                   <Text
@@ -261,7 +250,7 @@ const Days = () => {
                       }}
                       className="text-sm font-orbitron-regular"
                     >
-                      {item?.uvIndex}
+                      {item?.uvIndex ?? "..."}
                     </Text>
                   </Text>
                   <Text
@@ -276,7 +265,7 @@ const Days = () => {
                       }}
                       className="text-sm font-orbitron-regular"
                     >
-                      {item?.surfacePressure}
+                      {item?.surfacePressure ?? "..."}
                     </Text>
                   </Text>
                 </View>

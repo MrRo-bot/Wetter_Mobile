@@ -120,13 +120,13 @@ const AirQuality = () => {
                 style={{ color: colorObj.textColor }}
                 className={`mt-1 leading-none font-orbitron-bold `}
               >
-                {detail.title}
+                {detail.title ?? "..."}
               </Text>
               <Text
                 style={{ color: colorObj.textColor }}
                 className={`mt-2 text-2xl leading-none font-genos-regular `}
               >
-                {detail.value}
+                {detail.value ?? "..."}
               </Text>
             </View>
           );
@@ -139,19 +139,19 @@ const AirQuality = () => {
           <Text
             className={`${aqiIndex >= 200 ? "text-3xl" : "text-5xl"} leading-none font-orbitron-medium ${aqiLevelColor}`}
           >
-            {aqiIndex}
+            {aqiIndex ?? "..."}
           </Text>
         </View>
         <View className="w-9/12">
           <Text
             className={`text-lg font-orbitron-bold ${theme === "dark" ? "text-slate-200" : "text-dark"}`}
           >
-            {aqiData?.level}
+            {aqiData?.level ?? "..."}
           </Text>
           <Text
             className={`text-lg tracking-tighter leading-none mt-2 font-genos-medium ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
           >
-            {aqiData?.desc}
+            {aqiData?.desc ?? "..."}
           </Text>
         </View>
       </View>

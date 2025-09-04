@@ -25,19 +25,15 @@ const Daily = () => {
 
     return {
       id: i,
-      maxTemp: valRound(daily?.temperature_2m_max[i]) + "°",
-      minTemp: valRound(daily?.temperature_2m_min[i]) + "°",
+      maxTemp: `${valRound(daily?.temperature_2m_max[i])} °c`,
+      minTemp: `${valRound(daily?.temperature_2m_min[i])} °c`,
       weatherCode,
       weatherIcon: weatherIconFind(weatherCode),
       precipitation:
         daily?.precipitation_probability_max[i] === null
           ? "0%"
-          : daily?.precipitation_probability_max[i] +
-            units?.precipitation_probability_max,
-      windSpeed:
-        valRound(daily?.wind_speed_10m_max[i]) +
-        " " +
-        units?.wind_speed_10m_max,
+          : `${daily?.precipitation_probability_max[i]} ${units?.precipitation_probability_max}`,
+      windSpeed: `${valRound(daily?.wind_speed_10m_max[i])} ${units?.wind_speed_10m_max}`,
       windDirection: degConv(daily?.winddirection_10m_dominant[i]).rotationDeg,
       dateStamp: `${
         unixConv.timeStamp(new Date(daily?.time[i]).getTime() / 1000).day
@@ -50,16 +46,14 @@ const Daily = () => {
         .clockTime,
       summary: `${weatherCodeConv(weatherCode)}. Wind ${degConv(
         daily?.winddirection_10m_dominant[i]
-      ).cardinal?.toLowerCase()} at ${
-        valRound(daily?.wind_speed_10m_max[i]) + " " + units?.wind_speed_10m_max
-      }${
+      ).cardinal?.toLowerCase()} at ${`${valRound(daily?.wind_speed_10m_max[i])} ${units?.wind_speed_10m_max}`}${
         daily?.precipitation_probability_max[i] === null ||
         daily?.precipitation_probability_max[i] === 0
           ? ""
           : `. Chance of precipitation ${daily?.precipitation_probability_max[i]}${units?.precipitation_probability_max}`
       } around ${
         daily?.precipitation_sum[i] > 0
-          ? daily?.precipitation_sum[i] + units?.precipitation_sum
+          ? `${daily?.precipitation_sum[i]} ${units?.precipitation_sum}`
           : ""
       }`,
       weatherMain: weatherCodeConv(weatherCode),
@@ -143,16 +137,16 @@ const Daily = () => {
                 className={`items-center rounded-2xl py-1 px-3  ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
               >
                 <Text className={`font-genos-medium text-3xl`}>
-                  {item?.maxTemp}
+                  {item?.maxTemp ?? "..."}
                 </Text>
                 <Text className={`font-genos-medium text-3xl`}>
-                  {item?.minTemp}
+                  {item?.minTemp ?? "..."}
                 </Text>
 
                 <Text
                   className={`font-orbitron-semiBold  text-sky-600/70 mt-1`}
                 >
-                  {item?.precipitation}
+                  {item?.precipitation ?? "..."}
                 </Text>
                 <Image
                   contentFit="cover"
@@ -166,7 +160,7 @@ const Daily = () => {
                 <Image
                   contentFit="cover"
                   style={{
-                    transform: `rotate(${item?.windDirection}deg)`,
+                    transform: `rotate(${item?.windDirection ?? 0}deg)`,
                     width: 16,
                     height: 16,
                     marginBlock: 7,
@@ -175,7 +169,7 @@ const Daily = () => {
                   alt="wind direction"
                 />
                 <Text className={`font-orbitron-semiBold mt-1`}>
-                  {item?.dateStamp.slice(0, 3)}
+                  {item?.dateStamp.slice(0, 3) ?? "..."}
                 </Text>
               </View>
             );

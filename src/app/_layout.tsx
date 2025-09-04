@@ -84,7 +84,7 @@ export default function Layout() {
       } catch (error) {
         toastRef.current?.show({
           type: "error",
-          description: "Error with AsyncStorage: " + error + " 😭",
+          description: `Error with AsyncStorage: ${error} 😭`,
         });
         setHasLaunched(false);
         setIsReady(true);
