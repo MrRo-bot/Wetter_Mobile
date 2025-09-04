@@ -52,9 +52,9 @@ const Brief = ({
     new Date(current?.time).getTime() / 1000
   );
   const windDirection = degConv(current?.wind_direction_10m);
-  const windSpeed = `${valRound(daily?.wind_speed_10m_max[0])}${daily_units?.wind_speed_10m_max}`;
+  const windSpeed = `${valRound(daily?.wind_speed_10m_max[0])} ${daily_units?.wind_speed_10m_max}`;
   const gustDirection = degConv(current?.wind_gusts_10m);
-  const gustSpeed = `${valRound(daily?.wind_gusts_10m_max[0])}${daily_units?.wind_gusts_10m_max}`;
+  const gustSpeed = `${valRound(daily?.wind_gusts_10m_max[0])} ${daily_units?.wind_gusts_10m_max}`;
   const precipitationProbability = daily?.precipitation_probability_max[0];
   const precipitationSum = daily?.precipitation_sum[0];
   const precipitationText =

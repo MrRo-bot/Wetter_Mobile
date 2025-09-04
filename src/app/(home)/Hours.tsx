@@ -32,12 +32,12 @@ const Hours = () => {
     return {
       id: i,
       currentTemp: `${valRound(hourly?.temperature_2m[index])}°c`,
-      precipitation: `${hourly?.precipitation_probability[index]} ${units?.precipitation_probability}`,
+      precipitation: `${hourly?.precipitation_probability[index]}${units?.precipitation_probability}`,
       precipitationAmount: `${hourly?.precipitation[index]} ${units?.precipitation}`,
       visibility: `${lenAndSpdConv.km(hourly?.visibility[index])} km`,
-      uvIndex: `${valRound(hourly?.uv_index[index])} units?.uv_index`,
+      uvIndex: `${valRound(hourly?.uv_index[index])}`,
       pressure: `${valRound(hourly?.surface_pressure[index])} ${units?.surface_pressure}`,
-      soilTemp: `${valRound(hourly?.soil_temperature_0cm[index])} ${units?.soil_temperature_0cm}`,
+      soilTemp: `${valRound(hourly?.soil_temperature_0cm[index])}${units?.soil_temperature_0cm}`,
       radiation: `${valRound(hourly?.direct_normal_irradiance[index])} ${units?.direct_normal_irradiance}`,
       weatherIcon: weatherIconFind(weatherCode),
       weatherCode,
@@ -52,8 +52,8 @@ const Hours = () => {
         hourly?.temperature_2m[index]
       )}°c - Feels Like: ${valRound(hourly?.apparent_temperature[index])}°c`,
       gust: `${valRound(hourly?.wind_gusts_10m[index])} ${units?.wind_gusts_10m}`,
-      clouds: `${hourly?.cloud_cover[index]} ${units?.cloud_cover}`,
-      humidity: `{hourly?.relative_humidity_2m[index]} ${units?.relative_humidity_2m}`,
+      clouds: `${hourly?.cloud_cover[index]}${units?.cloud_cover}`,
+      humidity: `${hourly?.relative_humidity_2m[index]}${units?.relative_humidity_2m}`,
       dewPoint: `${valRound(hourly?.dew_point_2m[index])}°`,
       is_day: hourly?.is_day[index],
     };

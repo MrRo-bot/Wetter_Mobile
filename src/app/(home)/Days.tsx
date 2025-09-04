@@ -30,7 +30,7 @@ const Days = () => {
       precipitation:
         daily?.precipitation_probability_max[i] === null
           ? "0%"
-          : `${daily?.precipitation_probability_max[i]} ${units?.precipitation_probability_max}`,
+          : `${daily?.precipitation_probability_max[i]}${units?.precipitation_probability_max}`,
       windSpeed: `${valRound(daily?.wind_speed_10m_max[i])} ${units?.wind_speed_10m_max}`,
       windDirection: degConv(daily?.winddirection_10m_dominant[i]).rotationDeg,
       dateStamp: `${

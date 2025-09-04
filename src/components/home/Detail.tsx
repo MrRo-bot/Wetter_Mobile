@@ -19,12 +19,12 @@ const Detail = () => {
     {
       icon: images.thermometer,
       heading: "Feels Like",
-      data: `${valRound(current?.apparent_temperature)} ${current_units?.apparent_temperature}`,
+      data: `${valRound(current?.apparent_temperature)}${current_units?.apparent_temperature}`,
     },
     {
       icon: images.humidity,
       heading: "Humidity",
-      data: `${valRound(current?.relative_humidity_2m)} %`,
+      data: `${valRound(current?.relative_humidity_2m)}%`,
     },
     {
       icon: images.uv,
@@ -44,7 +44,7 @@ const Detail = () => {
     {
       icon: images.dew_point,
       heading: "Dew Point",
-      data: `${valRound(daily?.dew_point_2m_mean[0])} ${daily_units?.dew_point_2m_mean}`,
+      data: `${valRound(daily?.dew_point_2m_mean[0])}৹`,
     },
   ];
 

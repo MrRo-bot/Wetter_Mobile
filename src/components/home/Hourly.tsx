@@ -31,8 +31,8 @@ const Hourly = () => {
 
     return {
       id: i,
-      currentTemp: `${valRound(hourly?.temperature_2m[index])} °c`,
-      precipitation: `${hourly?.precipitation_probability[index]} ${units?.precipitation_probability}`,
+      currentTemp: `${valRound(hourly?.temperature_2m[index])}°c`,
+      precipitation: `${hourly?.precipitation_probability[index]}${units?.precipitation_probability}`,
       weatherIcon: weatherIconFind(weatherCode),
       weatherCode,
       weatherMain: weatherCodeConv(weatherCode),
