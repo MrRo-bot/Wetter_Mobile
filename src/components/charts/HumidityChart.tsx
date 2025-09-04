@@ -47,8 +47,7 @@ const HumidityChart = () => {
           width={parentWidth * 0.9}
           noOfSections={5}
           data={humidityData}
-          // frontColor={"#1B6BB0"}
-          // gradientColor={"#d559a2"}
+          frontColor={theme === "dark" ? "#b0303f" : "#ff8b39"}
           yAxisColor={theme === "dark" ? "gray" : "black"}
           yAxisLabelWidth={parentWidth * 0.09}
           yAxisTextStyle={{

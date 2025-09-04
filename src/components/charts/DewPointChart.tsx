@@ -49,8 +49,9 @@ const DewPointChart = () => {
           barWidth={35}
           capColor={theme === "dark" ? "rgb(178,65,105)" : "rgb(78, 0, 142)"}
           capThickness={4}
-          // frontColor={"rgba(219, 182, 249,0.2)"}
-          // gradientColor={"rgba(200, 100, 244,0.8)"}
+          frontColor={
+            theme === "dark" ? "rgba(178, 65, 105,0.4)" : "rgba(78,0,142,0.2)"
+          }
           width={parentWidth * 0.9}
           noOfSections={5}
           yAxisColor={theme === "dark" ? "gray" : "black"}

@@ -49,8 +49,7 @@ const UVChart = () => {
           width={parentWidth * 0.9}
           noOfSections={5}
           data={windData}
-          // frontColor={"#d559a220"}
-          // gradientColor={"#1B6BB0"}
+          frontColor={theme === "dark" ? "#ae7ef1" : "#1b6bb0"}
           yAxisColor={theme === "dark" ? "gray" : "black"}
           yAxisLabelWidth={parentWidth * 0.09}
           yAxisTextStyle={{
