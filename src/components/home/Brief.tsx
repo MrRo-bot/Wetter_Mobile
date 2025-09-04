@@ -1,3 +1,4 @@
+import images from "@/src/constants/images";
 import { locationStore } from "@/src/store/locationStore";
 import { weatherStore } from "@/src/store/weatherStore";
 import { BriefType } from "@/src/types/types";
@@ -229,14 +230,12 @@ const Brief = ({
             </Text>
             {alertIcon(current?.weather_code) === "alert" && (
               <View
-                className={`items-center justify-center p-2 w-10 h-10 mr-4 rounded-full ${theme === "dark" ? "bg-gray-500/70" : "bg-gray-500/10"}`}
+                className={`items-center justify-center p-1 mr-4 rounded-full ${theme === "dark" ? "bg-gray-500/30" : "bg-gray-500/10"}`}
               >
-                <Entypo
-                  name="warning"
-                  size={16}
-                  style={{
-                    color: imageColorsLoading ? "#44444450" : imageColor,
-                  }}
+                <Image
+                  style={{ marginInline: "auto", width: 18, height: 18 }}
+                  source={images.alert}
+                  alt={"alert"}
                 />
               </View>
             )}

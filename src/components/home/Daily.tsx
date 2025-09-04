@@ -136,10 +136,10 @@ const Daily = () => {
                 key={item?.id}
                 className={`items-center rounded-2xl py-1 px-3  ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
               >
-                <Text className={`font-genos-medium text-3xl`}>
+                <Text className={`font-genos-medium text-2xl`}>
                   {item?.maxTemp ?? "..."}
                 </Text>
-                <Text className={`font-genos-medium text-3xl`}>
+                <Text className={`font-genos-medium text-2xl`}>
                   {item?.minTemp ?? "..."}
                 </Text>
 

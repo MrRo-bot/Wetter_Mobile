@@ -27,8 +27,6 @@ const useUnsplashImage = (weatherType: string) => {
   const paramsObj = {
     client_id: "",
     query: "",
-    page: "1",
-    per_page: "40",
     orientation: "squarish",
   };
   if (weatherType && unsplashKey) {
@@ -85,7 +83,6 @@ const useUnsplashImage = (weatherType: string) => {
     queryFn: () => fetchUnsplashImage(),
     enabled: !!weatherType,
     staleTime: 15 * 60 * 1000,
-    refetchOnWindowFocus: false,
   });
 
   //choosing random url
@@ -112,7 +109,6 @@ const useUnsplashImage = (weatherType: string) => {
     queryFn: () => getUnsplashImageColors(imageData),
     enabled: !!imageData,
     staleTime: 15 * 60 * 1000,
-    refetchOnWindowFocus: false,
   });
 
   return {

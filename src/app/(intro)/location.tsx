@@ -34,7 +34,7 @@ export default function Location() {
 
   useEffect(() => {
     if (!isLoading && fetchedLocation) location?.addLocation(fetchedLocation);
-  }, [isLoading, fetchedLocation, location]); //maybe location dont need to be added
+  }, [isLoading, fetchedLocation]);
 
   return (
     <SafeAreaView

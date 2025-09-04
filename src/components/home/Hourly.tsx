@@ -118,7 +118,7 @@ const Hourly = () => {
                 key={item?.id}
                 className={` items-center rounded-2xl justify-between py-1 px-3 ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
               >
-                <Text className={`font-genos-medium text-3xl`}>
+                <Text className={`font-genos-medium text-2xl`}>
                   {item?.currentTemp ?? "..."}
                 </Text>
                 <Text

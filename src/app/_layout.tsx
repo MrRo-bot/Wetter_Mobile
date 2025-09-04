@@ -92,7 +92,7 @@ export default function Layout() {
     };
 
     prepareApp();
-  }, [locations]); //maybe location dont need to be added
+  }, []);
 
   useEffect(() => {
     if (!isReady || !fontsLoaded || hasLaunched === null) {
