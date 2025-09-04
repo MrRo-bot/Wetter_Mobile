@@ -5,7 +5,7 @@ import { Image } from "expo-image";
 import * as NavigationBar from "expo-navigation-bar";
 import { router, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Platform, StatusBar, Text, useColorScheme, View } from "react-native";
 import Animated, {
   cancelAnimation,
@@ -19,6 +19,7 @@ import Animated, {
 import images from "../constants/images";
 import "../global.css";
 import { locationStore } from "../store/locationStore";
+import { ToastRef } from "../types/types";
 
 SplashScreen.setOptions({
   duration: 500,
@@ -27,11 +28,13 @@ SplashScreen.setOptions({
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
-  const { locations } = locationStore();
-  const [hasLaunched, setHasLaunched] = useState<boolean | null>(null);
   const [isReady, setIsReady] = useState(false);
 
-  //all fonts imported
+  const [hasLaunched, setHasLaunched] = useState<boolean | null>(null);
+  const toastRef = useRef<ToastRef>(null);
+
+  const { locations } = locationStore();
+
   const [fontsLoaded] = useFonts({
     "genos-thin": require("@/src/assets/fonts/Genos-Thin.otf"),
     "genos-extraLight": require("@/src/assets/fonts/Genos-ExtraLight.otf"),
@@ -51,7 +54,6 @@ export default function Layout() {
     "orbitron-black": require("@/src/assets/fonts/Orbitron-Black.otf"),
   });
 
-  //sysmte theme checker
   let theme = useColorScheme();
 
   const themeBackground =
@@ -59,19 +61,15 @@ export default function Layout() {
   const themeStyle = theme === "dark" ? "light-content" : "dark-content";
   const themeScheme = theme === "dark" ? "light" : "dark";
 
-  //navigation bar theming
   if (Platform.OS === "android") {
     NavigationBar.setStyle(themeScheme);
   }
 
-  // Prepare app and handle navigation
   useEffect(() => {
     const prepareApp = async () => {
       try {
-        // Wait for AsyncStorage to load hasLaunched
         const storedValue = await AsyncStorage.getItem("hasLaunched");
         if (storedValue === null) {
-          // First launch
           if (locations) {
             setHasLaunched(true);
             await AsyncStorage.setItem("hasLaunched", JSON.stringify(true));
@@ -82,10 +80,12 @@ export default function Layout() {
         } else {
           setHasLaunched(JSON.parse(storedValue));
         }
-
         setIsReady(true);
       } catch (error) {
-        console.error("Error with AsyncStorage:", error);
+        toastRef.current?.show({
+          type: "error",
+          description: "Error with AsyncStorage: " + error + " 😭",
+        });
         setHasLaunched(false);
         setIsReady(true);
       }
@@ -103,30 +103,25 @@ export default function Layout() {
     } else if (hasLaunched && locations && locations?.length > 0) {
       router.replace("/(home)");
     }
-
     SplashScreen.hideAsync();
   }, [isReady, fontsLoaded, hasLaunched, locations]);
 
-  const scale = useSharedValue(1); // Initial scale value
-  // Animation setup
+  const scale = useSharedValue(1);
   useEffect(() => {
     const animation = withRepeat(
       withSequence(
-        withTiming(1.5, { duration: 800, easing: Easing.inOut(Easing.ease) }), // Scale up
-        withTiming(1, { duration: 800, easing: Easing.inOut(Easing.ease) }) // Scale down
+        withTiming(1.5, { duration: 800, easing: Easing.inOut(Easing.ease) }),
+        withTiming(1, { duration: 800, easing: Easing.inOut(Easing.ease) })
       ),
-      -1 // Repeat indefinitely
+      -1
     );
-
     scale.value = animation;
 
-    // Cleanup to prevent flickering or memory leaks
     return () => {
       cancelAnimation(scale);
     };
   }, [scale]);
 
-  // Animated style
   const animatedPulse = useAnimatedStyle(() => {
     return {
       transform: [{ scale: scale.value }],
@@ -158,7 +153,6 @@ export default function Layout() {
     );
   }
 
-  //wrapping query client all over the project
   const queryClient = new QueryClient();
 
   return (

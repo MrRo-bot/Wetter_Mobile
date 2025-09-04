@@ -5,22 +5,22 @@ import type { AppStateStatus } from "react-native";
 import { AppState, Platform } from "react-native";
 import { AQIType } from "../types/types";
 
-//check its usage how it works
+//react query sets whether status is online or offline
 onlineManager.setEventListener((setOnline) => {
   return NetInfo.addEventListener((state) => {
     setOnline(!!state.isConnected);
   });
 });
 
+//check if focus is in background or foreground
 const useAqiData = (coordinates: { latitude: number; longitude: number }) => {
-  //check its usage how it works
   function onAppStateChange(status: AppStateStatus) {
     if (Platform.OS !== "web") {
       focusManager.setFocused(status === "active");
     }
   }
 
-  //check its usage how it works
+  //effect for subscribing to change in app state
   useEffect(() => {
     const subscription = AppState.addEventListener("change", onAppStateChange);
 

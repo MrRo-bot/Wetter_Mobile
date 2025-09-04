@@ -6,10 +6,12 @@ import { unixConv } from "../../utils/math";
 
 const HumidityChart = () => {
   let theme = useColorScheme();
-  const { weather } = weatherStore();
+
   const [parentWidth, setParentWidth] = useState(
     Dimensions.get("window").width
   );
+
+  const { weather } = weatherStore();
 
   const humidityData = Array.from({ length: 24 }, (_, i) => {
     return {
@@ -23,7 +25,6 @@ const HumidityChart = () => {
     };
   });
 
-  // Handle layout changes to update container width
   const handleLayout = (event: { nativeEvent: { layout: { width: any } } }) => {
     const { width } = event.nativeEvent.layout;
     setParentWidth(width);
@@ -40,15 +41,14 @@ const HumidityChart = () => {
 
       <View onLayout={handleLayout}>
         <BarChart
-          showGradient
           hideRules
           isAnimated
           adjustToWidth
           width={parentWidth * 0.9}
           noOfSections={5}
           data={humidityData}
-          frontColor={"#1B6BB0"}
-          gradientColor={"#d559a2"}
+          // frontColor={"#1B6BB0"}
+          // gradientColor={"#d559a2"}
           yAxisColor={theme === "dark" ? "gray" : "black"}
           yAxisLabelWidth={parentWidth * 0.09}
           yAxisTextStyle={{

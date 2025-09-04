@@ -4,6 +4,7 @@ import { useColorScheme } from "react-native";
 
 export default function HomeLayout() {
   let theme = useColorScheme();
+
   const [clock, setClock] = useState(
     new Date().toLocaleString("en-US", {
       hour: "numeric",
@@ -30,6 +31,7 @@ export default function HomeLayout() {
 
   const themeBackground =
     theme === "dark" ? "rgb(17, 15, 20)" : "rgb(247, 243, 251)";
+
   const themeTint =
     theme === "dark" ? "hsl(266, 54%, 97%)" : "hsl(264, 14%, 7%)";
 

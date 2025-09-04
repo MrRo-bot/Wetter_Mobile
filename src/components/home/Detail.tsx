@@ -1,14 +1,12 @@
+import images from "@/src/constants/images";
+import { weatherStore } from "@/src/store/weatherStore";
+import { closestTimestamp, lenAndSpdConv, valRound } from "@/src/utils/math";
 import { Image } from "expo-image";
 import { Text, useColorScheme, View } from "react-native";
 
-import { weatherStore } from "@/src/store/weatherStore";
-
-import images from "@/src/constants/images";
-
-import { closestTimestamp, lenAndSpdConv, valRound } from "@/src/utils/math";
-
 const Detail = () => {
   let theme = useColorScheme();
+
   const { weather } = weatherStore();
 
   const { daily, hourly, current, current_units, daily_units } = weather;

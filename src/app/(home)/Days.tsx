@@ -18,7 +18,6 @@ const Days = () => {
 
   const { daily, daily_units: units } = weather;
 
-  // next 16 days
   const dailyDataFull = Array.from({ length: 16 }, (_, i) => {
     const weatherCode = daily?.weather_code[i];
 
@@ -43,11 +42,9 @@ const Days = () => {
       }, ${unixConv.timeStamp(new Date(daily?.time[i]).getTime() / 1000).month} ${
         unixConv.timeStamp(new Date(daily?.time[i]).getTime() / 1000).date
       }`.toUpperCase(),
-
       weatherMain: weatherCodeConv(weatherCode),
       hourStamp: unixConv.timeStamp(new Date(daily?.time[i]).getTime() / 1000)
         .hour2,
-
       sunrise: unixConv.timeStamp(new Date(daily?.sunrise[i]).getTime() / 1000)
         .clockTime,
       sunset: unixConv.timeStamp(new Date(daily?.sunset[i]).getTime() / 1000)
@@ -63,7 +60,6 @@ const Days = () => {
         " " +
         units?.shortwave_radiation_sum,
       uvIndex: valRound(daily?.uv_index_max[i]) + " " + units?.uv_index_max,
-
       summary: `${weatherCodeConv(weatherCode)}. Wind ${degConv(
         daily?.winddirection_10m_dominant[i]
       ).cardinal?.toLowerCase()} at ${
@@ -89,8 +85,6 @@ const Days = () => {
       edges={["bottom"]}
     >
       <FlatList
-        contentContainerClassName="pt-4 pb-8"
-        ItemSeparatorComponent={() => <View className="p-3" />}
         data={dailyDataFull}
         renderItem={({ item }: { item: DailyWeatherObjectType }) => {
           let iconKey;
@@ -290,6 +284,10 @@ const Days = () => {
             </View>
           );
         }}
+        maxToRenderPerBatch={3}
+        windowSize={5}
+        contentContainerClassName="pt-4 pb-8"
+        ItemSeparatorComponent={() => <View className="p-3" />}
       />
     </SafeAreaView>
   );

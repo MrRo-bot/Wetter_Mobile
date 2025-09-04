@@ -15,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
   let theme = useColorScheme();
+
   const toastRef = useRef<ToastRef>(null);
 
   const { locations } = locationStore();
@@ -46,19 +47,13 @@ export default function Home() {
 
   const weatherCode = weatherCodeConv(weather?.daily?.weather_code[0]);
 
-  //getting image based on weather type
-  const { imageColorsLoading, imageColorsData, unsplashLoading } =
-    useUnsplashImage(weatherCode);
-
-  const shadowColor =
-    imageColorsData?.imageColors?.platform === "android" ||
-    imageColorsData?.imageColors?.platform === "web"
-      ? theme === "dark"
-        ? imageColorsData?.imageColors?.vibrant
-        : imageColorsData?.imageColors?.muted
-      : theme === "dark"
-        ? imageColorsData?.imageColors?.quality
-        : imageColorsData?.imageColors?.primary;
+  const {
+    imageColorsLoading,
+    imageColorsData,
+    unsplashLoading,
+    unsplashError,
+    imageColorsError,
+  } = useUnsplashImage(weatherCode);
 
   useEffect(() => {
     if (weatherData) addWeather(weatherData);
@@ -75,6 +70,22 @@ export default function Home() {
         description: weatherError + " 😭",
       });
   }, [weatherError, weatherIsError]);
+
+  useEffect(() => {
+    unsplashError &&
+      toastRef.current?.show({
+        type: "error",
+        description: unsplashError + " 😭",
+      });
+  }, [unsplashError]);
+
+  useEffect(() => {
+    imageColorsError &&
+      toastRef.current?.show({
+        type: "error",
+        description: imageColorsError + " 😭",
+      });
+  }, [imageColorsError]);
 
   useEffect(() => {
     imageIsError &&

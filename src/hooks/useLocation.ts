@@ -38,7 +38,7 @@ export default function useLocation(autoFetch: boolean = false) {
         setLocation(newLocation);
         return newLocation;
       } else {
-        throw new Error("Unable to retrieve address from coordinates");
+        throw new Error("Unable to retrieve address");
       }
     } catch (error: any) {
       setErrorMsg(error.message || "Failed to retrieve location");

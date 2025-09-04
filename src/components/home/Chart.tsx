@@ -7,6 +7,7 @@ import PrecipitationChart from "../charts/PrecipitationChart";
 
 const Chart = () => {
   let theme = useColorScheme();
+
   const { weather } = weatherStore();
 
   const chanceOfPrecipitationData = Array.from({ length: 7 }, (_, i) => {

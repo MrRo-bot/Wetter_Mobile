@@ -1,12 +1,6 @@
-import Entypo from "@expo/vector-icons/Entypo";
-import { BlurView } from "expo-blur";
-import { Image } from "expo-image";
-import { Pressable, Text, useColorScheme, View } from "react-native";
-
 import { locationStore } from "@/src/store/locationStore";
 import { weatherStore } from "@/src/store/weatherStore";
-
-import { ToastRef, WeatherDataType } from "@/src/types/types";
+import { BriefType } from "@/src/types/types";
 import {
   alertIcon,
   degConv,
@@ -14,11 +8,13 @@ import {
   valRound,
   weatherCodeConv,
 } from "@/src/utils/math";
+import Entypo from "@expo/vector-icons/Entypo";
 import NetInfo from "@react-native-community/netinfo";
-import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
+import { BlurView } from "expo-blur";
+import { Image } from "expo-image";
 import { router } from "expo-router";
-import { RefObject, useEffect, useState } from "react";
-import { ImageColorsResult } from "react-native-image-colors";
+import { useEffect, useState } from "react";
+import { Pressable, Text, useColorScheme, View } from "react-native";
 
 const Brief = ({
   weatherRefetch,
@@ -29,25 +25,9 @@ const Brief = ({
   imageColorsLoading,
   imageColorsData,
   unsplashLoading,
-}: {
-  weatherRefetch: (
-    options?: RefetchOptions | undefined
-  ) => Promise<QueryObserverResult<WeatherDataType, Error>>;
-  lastUpdated: number;
-  toast: RefObject<ToastRef | null>;
-  queryStatus: "fetching" | "idle" | "paused";
-  error: Error | null;
-  imageColorsLoading: boolean;
-  imageColorsData:
-    | {
-        imageIndex: number;
-        url: string;
-        imageColors: ImageColorsResult;
-      }
-    | undefined;
-  unsplashLoading: boolean;
-}) => {
+}: BriefType) => {
   let theme = useColorScheme();
+
   const [isConnected, setIsConnected] = useState<boolean | null>(true);
   const [showOffline, setShowOffline] = useState(false);
 
@@ -56,14 +36,6 @@ const Brief = ({
 
   const { daily, current, daily_units, current_units } = weather;
 
-  //weather code day/night indicator and current time
-  const weatherCode = weatherCodeConv(daily?.weather_code[0]);
-  const isDay = current?.is_day;
-  const timestring = unixConv.timeStamp(
-    new Date(current?.time).getTime() / 1000
-  );
-
-  //Getting color data from image
   const imageColor =
     imageColorsData?.imageColors?.platform === "android" ||
     imageColorsData?.imageColors?.platform === "web"
@@ -74,13 +46,15 @@ const Brief = ({
         ? imageColorsData?.imageColors?.quality
         : imageColorsData?.imageColors?.primary;
 
-  //Process wind and gust data
+  const weatherCode = weatherCodeConv(daily?.weather_code[0]);
+  const isDay = current?.is_day;
+  const timestring = unixConv.timeStamp(
+    new Date(current?.time).getTime() / 1000
+  );
   const windDirection = degConv(current?.wind_direction_10m);
   const windSpeed = `${valRound(daily?.wind_speed_10m_max[0])}${daily_units?.wind_speed_10m_max}`;
   const gustDirection = degConv(current?.wind_gusts_10m);
   const gustSpeed = `${valRound(daily?.wind_gusts_10m_max[0])}${daily_units?.wind_gusts_10m_max}`;
-
-  //Build precipitation text
   const precipitationProbability = daily?.precipitation_probability_max[0];
   const precipitationSum = daily?.precipitation_sum[0];
   const precipitationText =
@@ -91,8 +65,6 @@ const Brief = ({
     precipitationSum > 0
       ? ` around ${precipitationSum} ${daily_units?.precipitation_sum}`
       : "";
-
-  //Generate weather summary
   const weatherSummary = `${isDay ? "Today" : "Tonight"} - ${weatherCode}. Wind ${windDirection?.cardinal} at ${windSpeed}. Gusts ${gustDirection?.cardinal} at ${gustSpeed}${precipitationText}${precipitationAmount}.`;
 
   useEffect(() => {
@@ -120,7 +92,7 @@ const Brief = ({
     } else {
       toast.current?.show({
         type: "error",
-        description: "Please check your internet 😭",
+        description: "Check your internet 🛜",
       });
     }
   };
@@ -253,9 +225,9 @@ const Brief = ({
                 locations[0]?.geoAddress[0].city ??
                 locations[0]?.geoAddress[0].district}
             </Text>
-            {alertIcon(daily?.weather_code[0]) === "alert" && (
+            {alertIcon(current?.weather_code) === "alert" && (
               <View
-                className={`items-center justify-center p-2 mr-4 rounded-full ${theme === "dark" ? "bg-gray-500/70" : "bg-gray-500/10"}`}
+                className={`items-center justify-center p-2 w-10 h-10 mr-4 rounded-full ${theme === "dark" ? "bg-gray-500/70" : "bg-gray-500/10"}`}
               >
                 <Entypo
                   name="warning"

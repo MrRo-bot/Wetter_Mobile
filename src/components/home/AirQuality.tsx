@@ -8,10 +8,11 @@ import { Pressable, Text, useColorScheme, View } from "react-native";
 
 const AirQuality = () => {
   let theme = useColorScheme();
+
   const { aqi } = aqiStore();
+
   const aqiIndex = aqi?.current?.us_aqi;
   const aqiObject = aqiDesc(aqiIndex);
-
   const aqiDetail = [
     { title: "PM2.5", value: aqi?.current?.pm2_5 },
     { title: "PM10", value: aqi?.current?.pm10 },
@@ -20,7 +21,6 @@ const AirQuality = () => {
     { title: "SO2", value: aqi?.current?.sulphur_dioxide },
     { title: "NO2", value: aqi?.current?.nitrogen_dioxide },
   ];
-
   const aqiData = {
     level: aqiObject?.level,
     desc: aqiObject?.desc,
@@ -42,7 +42,6 @@ const AirQuality = () => {
                     : 96,
     color: aqiObject?.color,
   };
-
   const aqiLevelColor =
     aqiData?.color === "green"
       ? "text-green"
@@ -150,7 +149,7 @@ const AirQuality = () => {
             {aqiData?.level}
           </Text>
           <Text
-            className={`text-lg tracking-tighter leading-none mt-2 font-genos-medium ${theme === "dark" ? "text-slate-200" : "text-dark/70"}`}
+            className={`text-lg tracking-tighter leading-none mt-2 font-genos-medium ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
           >
             {aqiData?.desc}
           </Text>
@@ -159,37 +158,37 @@ const AirQuality = () => {
       <View className="gap-1 mt-2">
         <View className="flex-row mx-auto">
           <Text
-            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-dark/70"}`}
+            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
           >
             0
           </Text>
           <Text
-            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-dark/70"}`}
+            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
           >
             50
           </Text>
           <Text
-            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-dark/70"}`}
+            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
           >
             100
           </Text>
           <Text
-            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-dark/70"}`}
+            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
           >
             150
           </Text>
           <Text
-            className={`text-xs w-[20%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-dark/70"}`}
+            className={`text-xs w-[20%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
           >
             200
           </Text>
           <Text
-            className={`text-xs w-[30%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-dark/70"}`}
+            className={`text-xs w-[30%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
           >
             300
           </Text>
           <Text
-            className={`text-xs font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-dark/70"}`}
+            className={`text-xs font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
           >
             500
           </Text>
@@ -209,12 +208,12 @@ const AirQuality = () => {
         </View>
         <View className="flex-row justify-between">
           <Text
-            className={`font-genos-medium ${theme === "dark" ? "text-slate-200" : "text-dark/70"}`}
+            className={`font-genos-medium ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
           >
             Good
           </Text>
           <Text
-            className={`font-genos-medium ${theme === "dark" ? "text-slate-200" : "text-dark/70"}`}
+            className={`font-genos-medium ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
           >
             Hazardous
           </Text>

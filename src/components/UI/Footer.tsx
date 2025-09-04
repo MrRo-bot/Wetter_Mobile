@@ -1,12 +1,15 @@
+import { ToastRef } from "@/src/types/types";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import * as Linking from "expo-linking";
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { Pressable, Text, useColorScheme, View } from "react-native";
 
 const Footer = () => {
   let theme = useColorScheme();
+
+  const toastRef = useRef<ToastRef>(null);
 
   const openLink = useCallback(async (appUrl: string, webUrl: string) => {
     const canOpen = await Linking.canOpenURL(appUrl);
@@ -17,7 +20,10 @@ const Footer = () => {
         await Linking.openURL(webUrl);
       }
     } catch (error) {
-      console.error("Error opening URL:", error);
+      toastRef.current?.show({
+        type: "error",
+        description: "Error opening URL: " + error + " 😭",
+      });
       await Linking.openURL(webUrl);
     }
   }, []);

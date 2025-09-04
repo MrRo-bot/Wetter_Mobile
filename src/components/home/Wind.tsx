@@ -14,6 +14,7 @@ import Animated, {
 
 const Wind = () => {
   const theme = useColorScheme();
+
   const { weather } = weatherStore();
 
   const rotate = useSharedValue(0);

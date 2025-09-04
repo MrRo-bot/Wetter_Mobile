@@ -1,9 +1,12 @@
+import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 import { LocationGeocodedAddress, LocationObject } from "expo-location";
+import { RefObject } from "react";
 import {
   ColorSchemeName,
   GestureResponderEvent,
   ImageSourcePropType,
 } from "react-native";
+import { ImageColorsResult } from "react-native-image-colors";
 
 export interface LocationDataType {
   id: string;
@@ -372,4 +375,23 @@ export interface ShowToastParams {
 
 export interface ToastRef {
   show: (params: ShowToastParams) => void;
+}
+
+export interface BriefType {
+  weatherRefetch: (
+    options?: RefetchOptions | undefined
+  ) => Promise<QueryObserverResult<WeatherDataType, Error>>;
+  lastUpdated: number;
+  toast: RefObject<ToastRef | null>;
+  queryStatus: "fetching" | "idle" | "paused";
+  error: Error | null;
+  imageColorsLoading: boolean;
+  imageColorsData:
+    | {
+        imageIndex: number;
+        url: string;
+        imageColors: ImageColorsResult;
+      }
+    | undefined;
+  unsplashLoading: boolean;
 }

@@ -61,4 +61,3 @@ export default function Intro() {
     </SafeAreaView>
   );
 }
-// duration delay repeat

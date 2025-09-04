@@ -45,7 +45,6 @@ const DailyAQI = ({
     };
   });
 
-  // Handle layout changes to update container width
   const handleLayout = (event: { nativeEvent: { layout: { width: any } } }) => {
     const { width } = event.nativeEvent.layout;
     setParentWidth(width);

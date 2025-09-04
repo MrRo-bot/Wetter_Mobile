@@ -1,14 +1,6 @@
-import { Image } from "expo-image";
-import { FlatList, Pressable, Text, useColorScheme, View } from "react-native";
-
-import Entypo from "@expo/vector-icons/Entypo";
-
-import { weatherStore } from "@/src/store/weatherStore";
-
 import images from "@/src/constants/images";
-
+import { weatherStore } from "@/src/store/weatherStore";
 import { HourlyWeatherObjectType, WeatherIconsType } from "@/src/types/types";
-
 import {
   closestTimestamp,
   degConv,
@@ -17,10 +9,14 @@ import {
   weatherCodeConv,
   weatherIconFind,
 } from "@/src/utils/math";
+import Entypo from "@expo/vector-icons/Entypo";
+import { Image } from "expo-image";
 import { router } from "expo-router";
+import { FlatList, Pressable, Text, useColorScheme, View } from "react-native";
 
 const Hourly = () => {
   let theme = useColorScheme();
+
   const { weather } = weatherStore();
 
   const { hourly, hourly_units: units, current } = weather;
@@ -29,7 +25,6 @@ const Hourly = () => {
     current?.time && closestTimestamp(current?.time, hourly?.time)
   );
 
-  //next 48 hours
   const hourlyData = Array.from({ length: 24 }, (_, i) => {
     const index = currentTimeIndex + i;
     const weatherCode = hourly?.weather_code[index];

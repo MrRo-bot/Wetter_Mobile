@@ -1,12 +1,12 @@
 import { aqiStore } from "@/src/store/aqiStore";
 import { AQIHourlyType } from "@/src/types/types";
-
 import React from "react";
 import { Text, useColorScheme, View } from "react-native";
 import DailyAQI from "./charts/DailyAQI";
 
 const DailyAqiCharts = () => {
   let theme = useColorScheme();
+
   const { aqi } = aqiStore();
 
   const aqiForecast: AQIHourlyType[] = [];

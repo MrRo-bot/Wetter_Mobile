@@ -1,12 +1,6 @@
-import { Image } from "expo-image";
-import { FlatList, Pressable, Text, useColorScheme, View } from "react-native";
-
-import Entypo from "@expo/vector-icons/Entypo";
-
-import { weatherStore } from "@/src/store/weatherStore";
-
 import images from "@/src/constants/images";
-
+import { weatherStore } from "@/src/store/weatherStore";
+import { DailyWeatherObjectType, WeatherIconsType } from "@/src/types/types";
 import {
   degConv,
   unixConv,
@@ -14,17 +8,18 @@ import {
   weatherCodeConv,
   weatherIconFind,
 } from "@/src/utils/math";
-
-import { DailyWeatherObjectType, WeatherIconsType } from "@/src/types/types";
+import Entypo from "@expo/vector-icons/Entypo";
+import { Image } from "expo-image";
 import { router } from "expo-router";
+import { FlatList, Pressable, Text, useColorScheme, View } from "react-native";
 
 const Daily = () => {
   let theme = useColorScheme();
+
   let { weather } = weatherStore();
 
   const { daily, daily_units: units } = weather;
 
-  // next 16 days
   const dailyData = Array.from({ length: 16 }, (_, i) => {
     const weatherCode = daily?.weather_code[i];
 
@@ -49,8 +44,6 @@ const Daily = () => {
       }, ${unixConv.timeStamp(new Date(daily?.time[i]).getTime() / 1000).month} ${
         unixConv.timeStamp(new Date(daily?.time[i]).getTime() / 1000).date
       }`.toUpperCase(),
-
-      //extra info in daily page route
       sunrise: unixConv.timeStamp(new Date(daily?.sunrise[i]).getTime() / 1000)
         .clockTime,
       sunset: unixConv.timeStamp(new Date(daily?.sunset[i]).getTime() / 1000)

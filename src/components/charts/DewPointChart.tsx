@@ -6,10 +6,12 @@ import { unixConv } from "../../utils/math";
 
 const DewPointChart = () => {
   let theme = useColorScheme();
-  const { weather } = weatherStore();
+
   const [parentWidth, setParentWidth] = useState(
     Dimensions.get("window").width
   );
+
+  const { weather } = weatherStore();
 
   const dewPointData = Array.from({ length: 24 }, (_, i) => {
     return {
@@ -23,7 +25,6 @@ const DewPointChart = () => {
     };
   });
 
-  // Handle layout changes to update container width
   const handleLayout = (event: { nativeEvent: { layout: { width: any } } }) => {
     const { width } = event.nativeEvent.layout;
     setParentWidth(width);
@@ -40,17 +41,16 @@ const DewPointChart = () => {
 
       <View onLayout={handleLayout}>
         <BarChart
-          data={dewPointData}
-          barWidth={35}
-          cappedBars
-          capColor={theme === "dark" ? "rgb(178,65,105)" : "rgb(78, 0, 142)"}
-          capThickness={4}
-          showGradient
-          gradientColor={"rgba(200, 100, 244,0.8)"}
-          frontColor={"rgba(219, 182, 249,0.2)"}
           hideRules
           isAnimated
           adjustToWidth
+          cappedBars
+          data={dewPointData}
+          barWidth={35}
+          capColor={theme === "dark" ? "rgb(178,65,105)" : "rgb(78, 0, 142)"}
+          capThickness={4}
+          // frontColor={"rgba(219, 182, 249,0.2)"}
+          // gradientColor={"rgba(200, 100, 244,0.8)"}
           width={parentWidth * 0.9}
           noOfSections={5}
           yAxisColor={theme === "dark" ? "gray" : "black"}

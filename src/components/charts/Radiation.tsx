@@ -7,10 +7,12 @@ import { unixConv } from "../../utils/math";
 
 const Radiation = () => {
   let theme = useColorScheme();
-  const { weather } = weatherStore();
+
   const [parentWidth, setParentWidth] = useState(
     Dimensions.get("window").width
   );
+
+  const { weather } = weatherStore();
 
   const radiationData = Array.from({ length: 24 }, (_, i) => {
     return {
@@ -24,7 +26,6 @@ const Radiation = () => {
     };
   });
 
-  // Handle layout changes to update container width
   const handleLayout = (event: { nativeEvent: { layout: { width: any } } }) => {
     const { width } = event.nativeEvent.layout;
     setParentWidth(width);

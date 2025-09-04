@@ -428,6 +428,7 @@ export const wingSpeed = (value: number): number => {
   }
 };
 
+//showing alert icon or sending alert notification in-app
 export const alertIcon = (code: number): string => {
   switch (code) {
     case 65:

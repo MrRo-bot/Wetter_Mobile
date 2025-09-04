@@ -7,6 +7,7 @@ import HourlyAQI from "./charts/HourlyAQI";
 
 const HourlyAqiCharts = () => {
   let theme = useColorScheme();
+
   const { aqi } = aqiStore();
 
   const currentTimeIndex = aqi?.hourly?.time.indexOf(

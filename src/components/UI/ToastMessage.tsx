@@ -8,6 +8,7 @@ import Animated, { FadeInDown, FadeOutUp } from "react-native-reanimated";
 
 const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
   let theme = useColorScheme();
+
   const [toasts, setToasts] = useState<ToastConfig[]>([]);
 
   useImperativeHandle(ref, () => ({

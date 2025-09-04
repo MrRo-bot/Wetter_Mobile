@@ -5,7 +5,6 @@ import type { AppStateStatus } from "react-native";
 import { AppState, Platform } from "react-native";
 import { WeatherDataType } from "../types/types";
 
-//check its usage how it works
 onlineManager.setEventListener((setOnline) => {
   return NetInfo.addEventListener((state) => {
     setOnline(!!state.isConnected);
@@ -16,14 +15,12 @@ const useWeatherData = (coordinates: {
   latitude: number;
   longitude: number;
 }) => {
-  //check its usage how it works
   function onAppStateChange(status: AppStateStatus) {
     if (Platform.OS !== "web") {
       focusManager.setFocused(status === "active");
     }
   }
 
-  //check its usage how it works
   useEffect(() => {
     const subscription = AppState.addEventListener("change", onAppStateChange);
 

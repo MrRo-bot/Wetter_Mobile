@@ -1,20 +1,21 @@
-import { Image } from "expo-image";
-
-import React, { useEffect, useRef } from "react";
-import { Pressable, Text, useColorScheme, View } from "react-native";
-
-import images from "@/src/constants/images";
-
 import Loader from "@/src/components/UI/Loader";
 import ToastMessage from "@/src/components/UI/ToastMessage";
 import Components from "@/src/constants/components";
+import images from "@/src/constants/images";
 import useLocation from "@/src/hooks/useLocation";
 import { locationStore } from "@/src/store/locationStore";
 import { ToastRef } from "@/src/types/types";
+import { Image } from "expo-image";
+import { router } from "expo-router";
+import React, { useEffect, useRef } from "react";
+import { Pressable, Text, useColorScheme, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Location() {
   let theme = useColorScheme();
+
+  const toastRef = useRef<ToastRef>(null);
+
   const {
     isLoading,
     getLocation,
@@ -22,8 +23,6 @@ export default function Location() {
     errorMsg,
   } = useLocation();
   const location = locationStore();
-
-  const toastRef = useRef<ToastRef>(null);
 
   useEffect(() => {
     errorMsg &&
@@ -85,9 +84,7 @@ export default function Location() {
         </View>
 
         <View className="mx-auto mt-3">
-          <Pressable
-          // onPress={()=>'add location to search route'}
-          >
+          <Pressable onPress={() => router.replace("/(home)/searchLocation")}>
             <Text
               className={`font-genos-light underline underline-offset-2 text-xl ${theme === "dark" ? "text-mustardLight" : "text-mustardDark font-genos-regular"}`}
             >

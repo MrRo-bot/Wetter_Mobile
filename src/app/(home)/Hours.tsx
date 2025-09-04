@@ -16,6 +16,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const Hours = () => {
   const theme = useColorScheme();
+
   const { weather } = weatherStore();
 
   const { hourly, hourly_units: units, current } = weather;
@@ -34,7 +35,6 @@ const Hours = () => {
       precipitation:
         hourly?.precipitation_probability[index] +
         units?.precipitation_probability,
-
       precipitationAmount:
         hourly?.precipitation[index] + " " + units?.precipitation,
       visibility: lenAndSpdConv.km(hourly?.visibility[index]) + " " + "km",
@@ -49,7 +49,6 @@ const Hours = () => {
       radiation:
         valRound(hourly?.direct_normal_irradiance[index]) +
         units?.direct_normal_irradiance,
-
       weatherIcon: weatherIconFind(weatherCode),
       weatherCode,
       weatherMain: weatherCodeConv(weatherCode),
@@ -60,7 +59,6 @@ const Hours = () => {
       hourStamp: unixConv?.timeStamp(
         new Date(hourly?.time[index]).getTime() / 1000
       ).hour2,
-
       feels_like: `${valRound(
         hourly?.temperature_2m[index]
       )}° - Feels Like: ${valRound(hourly?.apparent_temperature[index])}°`,
@@ -79,8 +77,6 @@ const Hours = () => {
       edges={["bottom"]}
     >
       <FlatList
-        contentContainerClassName="pt-4 pb-8"
-        ItemSeparatorComponent={() => <View className="p-3" />}
         data={hourlyDataFull}
         renderItem={({ item }: { item: HourlyWeatherObjectType }) => {
           let iconKey;
@@ -327,6 +323,10 @@ const Hours = () => {
             </View>
           );
         }}
+        maxToRenderPerBatch={3}
+        windowSize={5}
+        contentContainerClassName="pt-4 pb-8"
+        ItemSeparatorComponent={() => <View className="p-3" />}
       />
     </SafeAreaView>
   );

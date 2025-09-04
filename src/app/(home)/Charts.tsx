@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const Charts = () => {
   let theme = useColorScheme();
+
   return (
     <SafeAreaView
       className={`${theme === "dark" ? "bg-black" : "bg-light"}`}

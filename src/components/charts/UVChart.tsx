@@ -6,10 +6,12 @@ import { unixConv } from "../../utils/math";
 
 const UVChart = () => {
   let theme = useColorScheme();
-  const { weather } = weatherStore();
+
   const [parentWidth, setParentWidth] = useState(
     Dimensions.get("window").width
   );
+
+  const { weather } = weatherStore();
 
   const windData = Array.from({ length: 24 }, (_, i) => {
     return {
@@ -23,7 +25,6 @@ const UVChart = () => {
     };
   });
 
-  // Handle layout changes to update container width
   const handleLayout = (event: { nativeEvent: { layout: { width: any } } }) => {
     const { width } = event.nativeEvent.layout;
     setParentWidth(width);
@@ -40,7 +41,6 @@ const UVChart = () => {
 
       <View onLayout={handleLayout}>
         <BarChart
-          showGradient
           hideRules
           isAnimated
           adjustToWidth
@@ -49,8 +49,8 @@ const UVChart = () => {
           width={parentWidth * 0.9}
           noOfSections={5}
           data={windData}
-          gradientColor={"#1B6BB0"}
-          frontColor={"#d559a220"}
+          // frontColor={"#d559a220"}
+          // gradientColor={"#1B6BB0"}
           yAxisColor={theme === "dark" ? "gray" : "black"}
           yAxisLabelWidth={parentWidth * 0.09}
           yAxisTextStyle={{

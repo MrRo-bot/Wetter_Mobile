@@ -5,7 +5,6 @@ import { AppState, AppStateStatus, Platform } from "react-native";
 import ImageColors, { ImageColorsResult } from "react-native-image-colors";
 import { UnsplashType } from "../types/types";
 
-//check its usage how it works
 onlineManager.setEventListener((setOnline) => {
   return NetInfo.addEventListener((state) => {
     setOnline(!!state.isConnected);
@@ -14,15 +13,11 @@ onlineManager.setEventListener((setOnline) => {
 
 const useUnsplashImage = (weatherType: string) => {
   const unsplashKey = process.env.EXPO_PUBLIC_UNSPLASH_KEY;
-
-  //check its usage how it works
   function onAppStateChange(status: AppStateStatus) {
     if (Platform.OS !== "web") {
       focusManager.setFocused(status === "active");
     }
   }
-
-  //check its usage how it works
   useEffect(() => {
     const subscription = AppState.addEventListener("change", onAppStateChange);
 
@@ -45,14 +40,16 @@ const useUnsplashImage = (weatherType: string) => {
 
   const finalUrl = `https://api.unsplash.com/search/photos?${queryString}`;
 
+  //function for getting image from unsplash
   const fetchUnsplashImage = async (): Promise<UnsplashType> => {
     const response = await fetch(finalUrl);
     if (!response.ok) {
-      throw new Error("Failed to fetch Unsplash image");
+      throw new Error("Failed to fetch image");
     }
     return response.json();
   };
 
+  //function for getting image colors
   const getUnsplashImageColors = async (
     imageData: {
       imageIndex: number;
