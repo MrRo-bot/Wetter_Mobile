@@ -79,7 +79,7 @@ const useUnsplashImage = (weatherType: string) => {
     error: unsplashError,
     data: unsplashData,
   } = useQuery<UnsplashType>({
-    queryKey: ["unsplash", weatherType],
+    queryKey: ["unsplash_image", weatherType],
     queryFn: () => fetchUnsplashImage(),
     enabled: !!weatherType,
     staleTime: 15 * 60 * 1000,

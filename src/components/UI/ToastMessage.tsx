@@ -68,7 +68,7 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
                 {toast.text && (
                   <Text
                     className={`text-lg font-orbitron-bold ${
-                      theme === "dark" ? "text-white" : "text-black"
+                      theme === "dark" ? "text-light" : "text-dark"
                     }`}
                   >
                     {toast.text}
@@ -77,7 +77,7 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
                 {toast.description && (
                   <Text
                     className={`font-orbitron-semiBold tracking-wide ${
-                      theme === "dark" ? "text-white" : "text-black"
+                      theme === "dark" ? "text-light" : "text-dark"
                     }`}
                   >
                     {toast.description}

@@ -1,14 +1,45 @@
-import { ScrollView, useColorScheme } from "react-native";
+import { ScrollView, Text, useColorScheme } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Settings = () => {
   let theme = useColorScheme();
   return (
     <SafeAreaView
-      className={`${theme === "dark" ? "bg-black" : "bg-light"}`}
+      className={`h-full ${theme === "dark" ? "bg-dark" : "bg-light"}`}
       edges={["bottom"]}
     >
-      <ScrollView contentContainerClassName="gap-y-12 px-3"></ScrollView>
+      <ScrollView>
+        <Text
+          className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
+        >
+          Weather Alerts
+        </Text>
+        <Text
+          className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
+        >
+          Daily notification
+        </Text>
+        <Text
+          className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
+        >
+          Time
+        </Text>
+        <Text
+          className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
+        >
+          Units
+        </Text>
+        <Text
+          className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
+        >
+          Update Frequency
+        </Text>
+        <Text
+          className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
+        >
+          About
+        </Text>
+      </ScrollView>
     </SafeAreaView>
   );
 };

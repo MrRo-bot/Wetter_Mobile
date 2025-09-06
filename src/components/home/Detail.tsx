@@ -78,7 +78,7 @@ const Detail = () => {
       className={`relative overflow-hidden p-4 pt-10 mx-3 rounded-2xl ${theme === "dark" ? "bg-tealDark" : "bg-tealLight"}`}
     >
       <Text
-        className={`absolute h-10 inset-x-0 pl-4 align-middle font-orbitron-semiBold leading-none text-lg  ${theme === "dark" ? "text-light bg-dark/50" : "text-dark bg-white/50"}`}
+        className={`absolute h-10 inset-x-0 pl-4 align-middle font-orbitron-semiBold leading-none text-lg  ${theme === "dark" ? "text-light bg-dark/50" : "text-dark bg-light/50"}`}
       >
         DETAIL
       </Text>

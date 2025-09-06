@@ -7,7 +7,7 @@ const Aqi = () => {
 
   return (
     <SafeAreaView
-      className={`${theme === "dark" ? "bg-black" : "bg-light"}`}
+      className={`${theme === "dark" ? "bg-dark" : "bg-light"}`}
       edges={["bottom"]}
     >
       <ScrollView contentContainerClassName="px-3">

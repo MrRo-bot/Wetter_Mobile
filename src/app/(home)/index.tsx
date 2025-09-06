@@ -9,12 +9,16 @@ import { locationStore } from "@/src/store/locationStore";
 import { weatherStore } from "@/src/store/weatherStore";
 import { ToastRef } from "@/src/types/types";
 import { weatherCodeConv } from "@/src/utils/math";
+import { MaterialIcons } from "@expo/vector-icons";
+import { BlurView } from "expo-blur";
+import { useRouter } from "expo-router";
 import { useEffect, useRef } from "react";
-import { ScrollView, useColorScheme, View } from "react-native";
+import { Pressable, ScrollView, useColorScheme, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
   let theme = useColorScheme();
+  let router = useRouter();
 
   const toastRef = useRef<ToastRef>(null);
 
@@ -98,7 +102,7 @@ export default function Home() {
   return (
     <SafeAreaView
       edges={["right", "left", "bottom"]}
-      className={`h-full ${theme === "dark" ? "bg-black" : "bg-light"}`}
+      className={`relative h-full ${theme === "dark" ? "bg-dark" : "bg-light"}`}
     >
       {weatherLoading && aqiLoading ? (
         <View className="justify-center w-full h-full">
@@ -125,6 +129,22 @@ export default function Home() {
           <components.Footer />
         </ScrollView>
       )}
+
+      <BlurView
+        experimentalBlurMethod="dimezisBlurView"
+        intensity={theme === "dark" ? 20 : 50}
+        tint={theme === "dark" ? "dark" : "light"}
+        className={`absolute bottom-16 right-10 shadow-2xl w-16 h-16 rounded-full items-center overflow-hidden bg-clip-padding justify-center border-[1px] border-dashed ${theme === "dark" ? "bg-light border-light/30" : "bg-dark border-dark/30"}`}
+      >
+        <Pressable onPress={() => router.navigate("/(home)/locations")}>
+          <MaterialIcons
+            color={theme === "dark" ? "white" : "black"}
+            name="reorder"
+            size={28}
+          />
+        </Pressable>
+      </BlurView>
+
       <ToastMessage ref={toastRef} />
     </SafeAreaView>
   );

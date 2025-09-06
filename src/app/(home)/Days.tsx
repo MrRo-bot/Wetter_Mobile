@@ -70,7 +70,7 @@ const Days = () => {
 
   return (
     <SafeAreaView
-      className={`${theme === "dark" ? "bg-black" : "bg-light"}`}
+      className={`${theme === "dark" ? "bg-dark" : "bg-light"}`}
       edges={["bottom"]}
     >
       <FlatList
@@ -179,7 +179,7 @@ const Days = () => {
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
-                      className={`font-genos-semiBold ${theme === "dark" ? "text-white" : "text-pink-600"}`}
+                      className={`font-genos-semiBold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
                       {item?.sunrise ?? "..."}
                     </Text>
@@ -196,7 +196,7 @@ const Days = () => {
                         textShadowOffset: { width: 0, height: 2 },
                         textShadowRadius: 6,
                       }}
-                      className={`font-genos-semiBold ${theme === "dark" ? "text-white" : "text-pink-600"}`}
+                      className={`font-genos-semiBold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
                       {item?.sunset ?? "..."}
                     </Text>

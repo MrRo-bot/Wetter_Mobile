@@ -64,7 +64,7 @@ const Wind = () => {
       className={`px-4 mx-3 overflow-hidden rounded-2xl ${theme === "dark" ? "bg-mustardDark" : "bg-mustardLight"}`}
     >
       <Text
-        className={`absolute h-10 inset-x-0 pl-4 align-middle font-orbitron-semiBold leading-none text-lg  ${theme === "dark" ? "text-light bg-dark/50" : "text-dark bg-white/50"}`}
+        className={`absolute h-10 inset-x-0 pl-4 align-middle font-orbitron-semiBold leading-none text-lg  ${theme === "dark" ? "text-light bg-dark/50" : "text-dark bg-light/50"}`}
       >
         WIND
       </Text>

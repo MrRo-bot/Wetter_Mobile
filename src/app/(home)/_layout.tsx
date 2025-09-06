@@ -53,6 +53,7 @@ export default function HomeLayout() {
         <Stack.Screen name="index" />
         <Stack.Screen name="searchLocation" />
         <Stack.Screen name="settings" />
+        <Stack.Screen name="locations" />
       </Stack>
     </>
   );

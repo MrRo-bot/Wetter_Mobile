@@ -88,7 +88,7 @@ const AirQuality = () => {
     >
       <Pressable
         onPress={() => router.navigate("/(home)/Aqi")}
-        className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-slate-600/50" : "bg-white/50"}`}
+        className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-slate-600/50" : "bg-light/50"}`}
       >
         <Text
           className={`font-orbitron-bold -translate-y-1/2 top-1/2 leading-none text-lg ${theme === "dark" ? "text-light" : "text-dark"}`}
@@ -203,7 +203,7 @@ const AirQuality = () => {
           />
           <View
             style={{ left: `${aqiData?.seekBar}%` }}
-            className={`absolute w-2.5 h-2.5 rounded-full ${theme === "dark" ? "bg-white" : "bg-black"}`}
+            className={`absolute w-2.5 h-2.5 rounded-full ${theme === "dark" ? "bg-light" : "bg-dark"}`}
           ></View>
         </View>
         <View className="flex-row justify-between">

@@ -108,7 +108,6 @@ const Brief = ({
     queryStatus === "idle" &&
       toast.current?.show({
         type: "success",
-        timeout: 8000,
         description: "success...",
       });
 
@@ -139,13 +138,13 @@ const Brief = ({
                 experimentalBlurMethod="dimezisBlurView"
                 intensity={20}
                 tint={theme === "dark" ? "dark" : "light"}
-                className="absolute flex-row items-center justify-center gap-4 px-4 py-2 overflow-hidden rounded-tr-full rounded-br-full shadow-sm top-12 bg-clip-padding bg-black/10"
+                className="absolute flex-row items-center justify-center gap-4 px-4 py-2 overflow-hidden rounded-tr-full rounded-br-full shadow-sm top-12 bg-clip-padding bg-dark/10"
               >
                 <View className="pr-4 border-r-2 w-60 border-r-solid border-r-light/10">
-                  <Text className="text-lg text-white font-orbitron-regular">
+                  <Text className="text-lg text-light font-orbitron-regular">
                     OFFLINE MODE
                   </Text>
-                  <Text className="text-base text-white font-genos-light">
+                  <Text className="text-base text-light font-genos-light">
                     Last updated{" "}
                     {Math.round((Date.now() - lastUpdated) / 1000 / 60)}{" "}
                     minute&apos;s ago
