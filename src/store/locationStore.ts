@@ -25,9 +25,6 @@ export const locationStore = create<
       addLocationToShow: (locationId) =>
         set((state) => ({ ...state, locationToShow: locationId })),
 
-      removeLocationToShow: () =>
-        set((state) => ({ ...state, locationToShow: "" })),
-
       removeLocation: (locationId: string) =>
         set((state) => ({
           locations: state.locations.filter((loc) => loc.id !== locationId),

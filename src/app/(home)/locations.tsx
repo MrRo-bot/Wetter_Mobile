@@ -1,75 +1,111 @@
 import Loader from "@/src/components/UI/Loader";
+import useCustomLocation from "@/src/hooks/useCustomLocation";
 import useUnsplashImage from "@/src/hooks/useUnsplashImage";
-import { weatherStore } from "@/src/store/weatherStore";
-import { weatherCodeConv } from "@/src/utils/math";
+import { locationStore } from "@/src/store/locationStore";
+import { LocationDataType } from "@/src/types/types";
 import { MaterialIcons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import {
-  Pressable,
-  ScrollView,
-  Text,
-  useColorScheme,
-  View,
-} from "react-native";
+import { useEffect } from "react";
+import { FlatList, Pressable, Text, useColorScheme, View } from "react-native";
+
+const LocationCard = ({
+  theme,
+  location,
+}: {
+  theme: string | null | undefined;
+  location: LocationDataType;
+}) => {
+  const { unsplashLoading, imageColorsData } = useUnsplashImage(
+    location?.geoAddress[0]?.city
+  );
+  const locations = locationStore();
+
+  const {
+    isLoading: locationLoading,
+    getLocation,
+    location: fetchedLocation,
+  } = useCustomLocation();
+
+  useEffect(() => {
+    if (!locationLoading && fetchedLocation) {
+      locations?.addLocationToShow(fetchedLocation?.id);
+    }
+  }, [locationLoading, fetchedLocation]);
+
+  return (
+    <View className="relative h-48 w-[calc(100vw-28px)] overflow-hidden rounded-lg border-1 border-solid border-gray-500/10">
+      <Pressable
+        onPress={() =>
+          getLocation(
+            location.locationCoords.coords.latitude,
+            location.locationCoords.coords.longitude
+          )
+        }
+      >
+        {unsplashLoading ? (
+          <Loader />
+        ) : (
+          <Image
+            contentFit="cover"
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+            source={{ uri: imageColorsData?.url }}
+          />
+        )}
+
+        <BlurView
+          experimentalBlurMethod="dimezisBlurView"
+          intensity={20}
+          tint={theme === "dark" ? "dark" : "light"}
+          className="absolute items-center justify-center p-2 overflow-hidden -translate-y-1/2 rounded-full shadow-sm top-1/2 left-5 bg-clip-padding bg-dark/10"
+        >
+          <View className="items-center justify-center w-full p-1 border-2 border-solid rounded-full border-light/10">
+            <Text className="text-lg text-light font-orbitron-bold">
+              {location?.geoAddress[0]?.city}
+            </Text>
+          </View>
+        </BlurView>
+
+        <BlurView
+          experimentalBlurMethod="dimezisBlurView"
+          intensity={20}
+          tint={theme === "dark" ? "dark" : "light"}
+          className="absolute items-center justify-center p-2 overflow-hidden -translate-y-1/2 rounded-full shadow-sm top-1/2 right-5 bg-clip-padding bg-dark/10"
+        >
+          <View className="items-center justify-center w-full p-1 border-2 border-solid rounded-full border-light/10">
+            <Text className="text-lg text-light font-orbitron-bold">
+              {location?.geoAddress[0]?.country}
+            </Text>
+          </View>
+        </BlurView>
+      </Pressable>
+    </View>
+  );
+};
 
 const Locations = () => {
   const router = useRouter();
   let theme = useColorScheme();
-
-  const { weather } = weatherStore();
-  const weatherCode = weatherCodeConv(weather?.daily?.weather_code[0]);
-
-  const { unsplashLoading, imageColorsData } = useUnsplashImage(weatherCode);
+  let { locations } = locationStore();
 
   return (
     <View
       className={`px-4 relative h-full ${theme === "dark" ? "bg-dark" : "bg-light"}`}
     >
-      {/* FlatList */}
-      <ScrollView>
-        <View className="relative h-48 w-[calc(100vw-28px)] overflow-hidden rounded-lg border-1 border-solid border-gray-500/10">
-          {unsplashLoading && !imageColorsData?.url ? (
-            <Loader />
-          ) : (
-            <Image
-              contentFit="cover"
-              style={{
-                width: "100%",
-                height: "100%",
-              }}
-              source={{ uri: imageColorsData?.url }}
-            />
-          )}
-
-          <BlurView
-            experimentalBlurMethod="dimezisBlurView"
-            intensity={20}
-            tint={theme === "dark" ? "dark" : "light"}
-            className="absolute items-center justify-center p-2 overflow-hidden -translate-y-1/2 rounded-full shadow-sm top-1/2 left-5 bg-clip-padding bg-dark/10"
-          >
-            <View className="items-center justify-center w-24 h-24 border-2 border-solid rounded-full border-light/10">
-              <Text className="text-lg text-light font-orbitron-bold">
-                24৹c
-              </Text>
-            </View>
-          </BlurView>
-
-          <BlurView
-            experimentalBlurMethod="dimezisBlurView"
-            intensity={20}
-            tint={theme === "dark" ? "dark" : "light"}
-            className="absolute items-center justify-center p-2 overflow-hidden -translate-y-1/2 rounded-full shadow-sm top-1/2 right-5 bg-clip-padding bg-dark/10"
-          >
-            <View className="items-center justify-center w-full p-2 border-2 border-solid rounded-full border-light/10">
-              <Text className="text-lg text-light font-orbitron-bold">
-                Jabalpur
-              </Text>
-            </View>
-          </BlurView>
-        </View>
-      </ScrollView>
+      <FlatList
+        data={locations}
+        renderItem={({ item }: { item: LocationDataType }) => (
+          <LocationCard theme={theme} location={item} />
+        )}
+        maxToRenderPerBatch={8}
+        windowSize={5}
+        contentContainerClassName="pt-4 pb-8"
+        ItemSeparatorComponent={() => <View className="p-3" />}
+      />
 
       <BlurView
         experimentalBlurMethod="dimezisBlurView"

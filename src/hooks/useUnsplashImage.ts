@@ -11,7 +11,9 @@ onlineManager.setEventListener((setOnline) => {
   });
 });
 
-const useUnsplashImage = (weatherType: string) => {
+const useUnsplashImage = (imgSearchString: string | null) => {
+  //imgSearchString can be place,weather type or anything else
+
   const unsplashKey = process.env.EXPO_PUBLIC_UNSPLASH_KEY;
   function onAppStateChange(status: AppStateStatus) {
     if (Platform.OS !== "web") {
@@ -29,8 +31,8 @@ const useUnsplashImage = (weatherType: string) => {
     query: "",
     orientation: "squarish",
   };
-  if (weatherType && unsplashKey) {
-    paramsObj.query = weatherType;
+  if (imgSearchString && unsplashKey) {
+    paramsObj.query = imgSearchString;
     paramsObj.client_id = unsplashKey;
   }
 
@@ -79,9 +81,9 @@ const useUnsplashImage = (weatherType: string) => {
     error: unsplashError,
     data: unsplashData,
   } = useQuery<UnsplashType>({
-    queryKey: ["unsplash_image", weatherType],
+    queryKey: ["unsplash_image", imgSearchString],
     queryFn: () => fetchUnsplashImage(),
-    enabled: !!weatherType,
+    enabled: !!imgSearchString,
     staleTime: 15 * 60 * 1000,
   });
 

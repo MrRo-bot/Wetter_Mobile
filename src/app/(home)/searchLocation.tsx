@@ -35,7 +35,7 @@ const SearchLocation = () => {
     errorMsg,
   } = useCustomLocation();
 
-  const location = locationStore();
+  const locations = locationStore();
 
   useEffect(() => {
     errorMsg &&
@@ -47,12 +47,10 @@ const SearchLocation = () => {
 
   useEffect(() => {
     if (!locationLoading && fetchedLocation) {
-      location?.addLocation(fetchedLocation);
-      location?.addLocationToShow(fetchedLocation?.id);
+      locations?.addLocation(fetchedLocation);
+      locations?.addLocationToShow(fetchedLocation?.id);
     }
   }, [locationLoading, fetchedLocation]);
-
-  console.log(JSON.stringify(location.locations, null, 2));
 
   return (
     <SafeAreaView
