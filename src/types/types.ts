@@ -16,7 +16,13 @@ export interface LocationDataType {
 
 export interface LocationStoreType {
   locations: LocationDataType[];
+  locationToShow: string;
   addLocation: (location: LocationDataType) => void;
+  removeLocation: (locationId: string) => void;
+  addLocationToShow: (locationId: string) => void;
+  removeLocationToShow: () => void;
+  updateLocationName: (locationId: string, name: any) => void;
+  getLocationById: (locationId: string) => LocationDataType | undefined;
 }
 
 export interface LocationSearchType {

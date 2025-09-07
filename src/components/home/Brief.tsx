@@ -33,7 +33,7 @@ const Brief = ({
   const [showOffline, setShowOffline] = useState(false);
 
   const { weather } = weatherStore();
-  const { locations } = locationStore();
+  const locations = locationStore();
 
   const { daily, current, daily_units, current_units } = weather;
 
@@ -222,9 +222,17 @@ const Brief = ({
             <Text
               className={`text-4xl leading-none tracking-wider font-genos-medium ${theme === "dark" ? "text-outlineDark" : "text-outlineLight"}`}
             >
-              {locations[0]?.geoAddress[0].street ??
+              {/* {locations[0]?.geoAddress[0].street ??
                 locations[0]?.geoAddress[0].city ??
                 locations[0]?.geoAddress[0].district ??
+                "..."} */}
+
+              {locations?.getLocationById(locations?.locationToShow)
+                ?.geoAddress[0]?.street ??
+                locations?.getLocationById(locations?.locationToShow)
+                  ?.geoAddress[0]?.city ??
+                locations?.getLocationById(locations?.locationToShow)
+                  ?.geoAddress[0]?.district ??
                 "..."}
             </Text>
             {alertIcon(current?.weather_code) === "alert" && (

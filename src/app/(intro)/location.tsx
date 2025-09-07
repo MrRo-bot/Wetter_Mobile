@@ -33,7 +33,10 @@ export default function Location() {
   }, [errorMsg]);
 
   useEffect(() => {
-    if (!isLoading && fetchedLocation) location?.addLocation(fetchedLocation);
+    if (!isLoading && fetchedLocation) {
+      location?.addLocation(fetchedLocation);
+      location?.addLocationToShow(fetchedLocation?.id);
+    }
   }, [isLoading, fetchedLocation]);
 
   return (
@@ -74,7 +77,7 @@ export default function Location() {
         <View className="mx-auto">
           <Components.MainButton
             theme={theme}
-            onPressFunc={getLocation}
+            onPressFunc={() => getLocation()}
             buttonText="Allow"
             darkBgColor="bg-mustardLight"
             lightBgColor="bg-mustardDark"

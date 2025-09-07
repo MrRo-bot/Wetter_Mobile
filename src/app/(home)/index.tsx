@@ -22,7 +22,7 @@ export default function Home() {
 
   const toastRef = useRef<ToastRef>(null);
 
-  const { locations } = locationStore();
+  const locations = locationStore();
   const { weather, addWeather } = weatherStore();
   const { addAQI } = aqiStore();
 
@@ -35,8 +35,14 @@ export default function Home() {
     fetchStatus,
     refetch,
   } = useWeatherData({
-    latitude: locations[0]?.locationCoords?.coords?.latitude,
-    longitude: locations[0]?.locationCoords?.coords?.longitude,
+    latitude:
+      locations?.getLocationById(locations?.locationToShow)?.locationCoords
+        ?.coords?.latitude ??
+      locations?.locations[0]?.locationCoords?.coords?.latitude,
+    longitude:
+      locations?.getLocationById(locations?.locationToShow)?.locationCoords
+        ?.coords?.longitude ??
+      locations?.locations[0]?.locationCoords?.coords?.longitude,
   });
 
   const {
@@ -45,8 +51,14 @@ export default function Home() {
     isError: imageIsError,
     error: imageError,
   } = useAqiData({
-    latitude: locations[0]?.locationCoords?.coords?.latitude,
-    longitude: locations[0]?.locationCoords?.coords?.longitude,
+    latitude:
+      locations?.getLocationById(locations?.locationToShow)?.locationCoords
+        ?.coords?.latitude ??
+      locations?.locations[0]?.locationCoords?.coords?.latitude,
+    longitude:
+      locations?.getLocationById(locations?.locationToShow)?.locationCoords
+        ?.coords?.longitude ??
+      locations?.locations[0]?.locationCoords?.coords?.longitude,
   });
 
   const weatherCode = weatherCodeConv(weather?.daily?.weather_code[0]);
@@ -104,6 +116,41 @@ export default function Home() {
       edges={["right", "left", "bottom"]}
       className={`relative h-full ${theme === "dark" ? "bg-dark" : "bg-light"}`}
     >
+      {/* <MeshGradientView
+        style={{ flex: 1 }}
+        columns={3}
+        rows={3}
+        // colors={['red', 'purple', 'indigo', 'orange', 'white', 'blue', 'yellow', 'green', 'cyan']}
+        colors={[
+          "tealDark",
+          "greenDark",
+          "purpleDark",
+          "mustardDark",
+          "slateDark",
+          "redDark",
+          "tealLight",
+          "greenLight",
+          "purpleLight",
+          "mustardLight",
+          "slateLight",
+          "redLight",
+        ]}
+        points={[
+          [0.0, 0.0],
+          [0.5, 0.0],
+          [1.0, 0.0],
+          [0.0, 0.5],
+          [0.5, 0.5],
+          [1.0, 0.0],
+          [1.0, 0.5],
+          [0.0, 1.0],
+          [0.5, 0.5],
+          [0.5, 1.0],
+          [1.0, 1.0],
+          [0.0, 1.0],
+        ]}
+      /> */}
+
       {weatherLoading && aqiLoading ? (
         <View className="justify-center w-full h-full">
           <Loader />

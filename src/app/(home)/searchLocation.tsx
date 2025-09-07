@@ -1,11 +1,15 @@
 import Loader from "@/src/components/UI/Loader";
 import images from "@/src/constants/images";
+import useCustomLocation from "@/src/hooks/useCustomLocation";
 import useDebounce from "@/src/hooks/useDebounce";
 import useLocationSearch from "@/src/hooks/useLocationSearch";
+import { locationStore } from "@/src/store/locationStore";
+import { ToastRef } from "@/src/types/types";
 import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
+  Pressable,
   ScrollView,
   Text,
   TextInput,
@@ -17,9 +21,38 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const SearchLocation = () => {
   let theme = useColorScheme();
+
+  const toastRef = useRef<ToastRef>(null);
   const [searchStr, setSearchStr] = useState("");
+
   const debouncedSearchStr = useDebounce(searchStr, 500);
   const { data, isLoading, error } = useLocationSearch(debouncedSearchStr);
+
+  const {
+    isLoading: locationLoading,
+    getLocation,
+    location: fetchedLocation,
+    errorMsg,
+  } = useCustomLocation();
+
+  const location = locationStore();
+
+  useEffect(() => {
+    errorMsg &&
+      toastRef?.current?.show({
+        type: "error",
+        description: `${errorMsg} 😭`,
+      });
+  }, [errorMsg]);
+
+  useEffect(() => {
+    if (!locationLoading && fetchedLocation) {
+      location?.addLocation(fetchedLocation);
+      location?.addLocationToShow(fetchedLocation?.id);
+    }
+  }, [locationLoading, fetchedLocation]);
+
+  console.log(JSON.stringify(location.locations, null, 2));
 
   return (
     <SafeAreaView
@@ -58,64 +91,72 @@ const SearchLocation = () => {
         </View>
       ) : (
         <ScrollView>
-          {data?.results?.map((location, index) => (
+          {data?.results?.map((location) => (
             <Animated.View
               key={location.id}
               entering={FadeInUp.duration(300).delay(500)}
               className="w-[90%] mx-auto my-2"
             >
-              <View
-                className={`border-[1px] border-dashed rounded-xl overflow-hidden ${theme === "dark" ? "border-light/70" : "border-dark/30"}`}
+              <Pressable
+                onPress={() =>
+                  getLocation(location.latitude, location.longitude)
+                }
               >
-                <BlurView
-                  experimentalBlurMethod="dimezisBlurView"
-                  intensity={theme === "dark" ? 20 : 50}
-                  tint={theme === "dark" ? "dark" : "light"}
-                  className="flex-row items-center justify-start gap-2 p-3 bg-clip-padding"
+                <View
+                  className={`border-[1px] border-dashed rounded-xl overflow-hidden ${theme === "dark" ? "border-light/70" : "border-dark/30"}`}
                 >
-                  <View>
-                    <Text
-                      className={`text-lg font-orbitron-bold ${
-                        theme === "dark" ? "text-light" : "text-blue-950"
-                      }`}
-                    >
-                      {location.name}
-                    </Text>
+                  <BlurView
+                    experimentalBlurMethod="dimezisBlurView"
+                    intensity={theme === "dark" ? 20 : 50}
+                    tint={theme === "dark" ? "dark" : "light"}
+                    className="flex-row items-center justify-start gap-2 p-3 bg-clip-padding"
+                  >
+                    <View>
+                      <Text
+                        className={`text-lg font-orbitron-bold ${
+                          theme === "dark" ? "text-light" : "text-blue-950"
+                        }`}
+                      >
+                        {location.name}
+                      </Text>
 
-                    <Text
-                      className={`font-genos-regular text-lg leading-none ${
-                        theme === "dark" ? "text-light/70" : "text-dark/70"
-                      }`}
-                    >
-                      {`${location.admin1 ? location.admin1 + ", " : ""}${location.admin2 ? location.admin2 + ", " : ""}${location.admin3 ? location.admin3 + ", " : ""}${location.country ? location.country + "." : ""}`}
-                    </Text>
+                      <Text
+                        className={`font-genos-regular text-lg leading-none ${
+                          theme === "dark" ? "text-light/70" : "text-dark/70"
+                        }`}
+                      >
+                        {`${location.admin1 ? location.admin1 + ", " : ""}${location.admin2 ? location.admin2 + ", " : ""}${location.admin3 ? location.admin3 + ", " : ""}${location.country ? location.country + "." : ""}`}
+                      </Text>
 
-                    {location.population && (
-                      <View className="flex-row gap-2">
-                        <Text
-                          className={`font-genos-medium text-lg ${
-                            theme === "dark" ? "text-light" : "text-dark"
-                          }`}
-                        >
-                          Population:{" "}
-                        </Text>
+                      {location.population && (
+                        <View className="flex-row gap-2">
+                          <Text
+                            className={`font-genos-medium text-lg ${
+                              theme === "dark" ? "text-light" : "text-dark"
+                            }`}
+                          >
+                            Population:{" "}
+                          </Text>
 
-                        <Text
-                          className={`font-genos-regular text-lg ${
-                            theme === "dark" ? "text-light/80" : "text-dark/80"
-                          }`}
-                        >
-                          {location.population
-                            ? new Intl.NumberFormat().format(
-                                location.population
-                              )
-                            : ""}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                </BlurView>
-              </View>
+                          <Text
+                            className={`font-genos-regular text-lg ${
+                              theme === "dark"
+                                ? "text-light/80"
+                                : "text-dark/80"
+                            }`}
+                          >
+                            {location.population
+                              ? new Intl.NumberFormat().format(
+                                  location.population
+                                )
+                              : ""}
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                  </BlurView>
+                </View>
+              </Pressable>
             </Animated.View>
           ))}
         </ScrollView>

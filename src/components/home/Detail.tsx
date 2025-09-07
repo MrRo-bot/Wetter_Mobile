@@ -9,7 +9,7 @@ const Detail = () => {
 
   const { weather } = weatherStore();
 
-  const { daily, hourly, current, current_units, daily_units } = weather;
+  const { daily, hourly, current, current_units } = weather;
 
   const currentTimeIndex = hourly?.time.indexOf(
     current?.time && closestTimestamp(current?.time, hourly?.time)
