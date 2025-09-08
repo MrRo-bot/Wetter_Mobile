@@ -14,31 +14,6 @@ const Settings = () => {
         >
           Weather Alerts
         </Text>
-        <Text
-          className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
-        >
-          Daily notification
-        </Text>
-        <Text
-          className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
-        >
-          Time
-        </Text>
-        <Text
-          className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
-        >
-          Units
-        </Text>
-        <Text
-          className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
-        >
-          Update Frequency
-        </Text>
-        <Text
-          className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
-        >
-          About
-        </Text>
       </ScrollView>
     </SafeAreaView>
   );

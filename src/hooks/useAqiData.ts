@@ -80,6 +80,9 @@ const useAqiData = (coordinates: { latitude: number; longitude: number }) => {
     queryFn: () => fetchAQI(),
     enabled: !!coordinates,
     staleTime: 15 * 60 * 1000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: true,
   });
 };
 
