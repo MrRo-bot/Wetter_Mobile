@@ -32,9 +32,12 @@ const useLocationSearch = (search: string) => {
   return useQuery<LocationSearchType>({
     queryKey: ["openMeteo_geocoding", search],
     queryFn: fetchLocationResults,
+    placeholderData: (previousData) => previousData,
     enabled: !!search && search.length > 3,
     staleTime: 15 * 60 * 1000,
-    placeholderData: (previousData) => previousData,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: true,
   });
 };
 

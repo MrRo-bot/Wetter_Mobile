@@ -114,6 +114,9 @@ const useWeatherData = (coordinates: {
     queryFn: () => fetchWeather(),
     enabled: !!coordinates,
     staleTime: 15 * 60 * 1000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: true,
   });
 };
 export default useWeatherData;

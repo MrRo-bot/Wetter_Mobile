@@ -85,6 +85,9 @@ const useUnsplashImage = (imgSearchString: string | null) => {
     queryFn: () => fetchUnsplashImage(),
     enabled: !!imgSearchString,
     staleTime: 15 * 60 * 1000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: true,
   });
 
   //choosing random url
@@ -111,6 +114,9 @@ const useUnsplashImage = (imgSearchString: string | null) => {
     queryFn: () => getUnsplashImageColors(imageData),
     enabled: !!imageData,
     staleTime: 15 * 60 * 1000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: true,
   });
 
   return {
