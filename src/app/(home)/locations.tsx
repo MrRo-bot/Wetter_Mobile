@@ -6,74 +6,131 @@ import { LocationDataType } from "@/src/types/types";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FlatList, Pressable, Text, useColorScheme, View } from "react-native";
 
-const LocationCard = ({ location }: { location: LocationDataType }) => {
+const LocationCard = ({
+  location,
+  theme,
+}: {
+  location: LocationDataType;
+  theme: string | null | undefined;
+}) => {
+  const [isLocationToShow, setIsLocationToShow] = useState(false);
+
+  const router = useRouter();
+
+  const locationStoreObj = locationStore();
+
   const { unsplashLoading, imageColorsData } = useUnsplashImage(
     location?.geoAddress[0]?.city ??
-      location?.geoAddress[0]?.district ??
-      location?.geoAddress[0]?.name
+      location?.geoAddress[0]?.street ??
+      location?.geoAddress[0]?.district
   );
-  const locations = locationStore();
 
-  const { isLoading: locationLoading, getLocation } = useCustomLocation();
+  const { getLocation } = useCustomLocation();
 
   useEffect(() => {
-    if (!locationLoading) {
-      locations?.addLocationToShow(location?.id);
+    if (isLocationToShow) {
+      locationStoreObj?.addLocationToShow(location?.id);
     }
-  }, [locationLoading]);
+  }, [isLocationToShow]);
+
+  const imageColor =
+    imageColorsData?.imageColors?.platform === "android" ||
+    imageColorsData?.imageColors?.platform === "web"
+      ? theme === "dark"
+        ? imageColorsData?.imageColors?.vibrant
+        : imageColorsData?.imageColors?.muted
+      : theme === "dark"
+        ? imageColorsData?.imageColors?.quality
+        : imageColorsData?.imageColors?.primary;
 
   return (
-    <View className="relative h-48 w-[calc(100vw-28px)] overflow-hidden rounded-lg border-1 border-solid border-gray-500/10">
+    <View className="relative z-0 h-48 w-[calc(100vw-28px)] overflow-hidden rounded-lg border-[2px] border-solid border-gray-500/40">
       <Pressable
-        onPress={() =>
+        onPress={() => {
           getLocation(
             location.locationCoords.coords.latitude,
             location.locationCoords.coords.longitude
-          )
-        }
+          );
+          setIsLocationToShow(true);
+          router.dismissTo("/(home)");
+        }}
       >
         {unsplashLoading ? (
-          <View className="absolute w-full top-24">
+          <View className="absolute items-center justify-center w-full h-48">
             <Loader />
           </View>
         ) : (
-          <Image
-            contentFit="cover"
-            className="bg-black bg-blend-darken"
-            style={{
-              width: "100%",
-              height: "100%",
-            }}
-            source={{ uri: imageColorsData?.url }}
-          />
+          <>
+            <View
+              className={`absolute z-20 items-center justify-center w-full h-48 ${theme === "dark" ? "bg-dark/30" : "bg-dark/10"}`}
+            ></View>
+            <Image
+              contentFit="cover"
+              className="z-10"
+              style={{
+                width: "100%",
+                height: "100%",
+              }}
+              source={{ uri: imageColorsData?.url }}
+            />
+          </>
         )}
 
-        <View className="absolute items-center justify-center p-1 overflow-hidden rounded-lg shadow-sm top-2 left-2 bg-dark/10">
-          <View className="items-center justify-center w-max p-0.5 border-2 border-solid rounded-lg border-light/10">
-            <Text
-              className="text-center text-light font-orbitron-bold"
-              numberOfLines={1}
+        {!unsplashLoading && (
+          <>
+            <View
+              style={{ backgroundColor: imageColor }}
+              className={`absolute z-50 items-center justify-center p-0.5 overflow-hidden rounded-lg shadow-sm top-2 left-2`}
             >
-              {location?.geoAddress[0]?.city ??
-                location?.geoAddress[0]?.district ??
-                location?.geoAddress[0]?.name}
-            </Text>
-          </View>
-        </View>
+              <View className="items-center justify-center p-1 border-2 border-solid rounded-lg w-max border-dark/50">
+                <Text
+                  className="text-center text-light font-orbitron-bold"
+                  numberOfLines={1}
+                >
+                  {location?.geoAddress[0]?.city ??
+                    location?.geoAddress[0]?.street ??
+                    location?.geoAddress[0]?.district}
+                </Text>
+              </View>
+            </View>
 
-        <View className="absolute items-center justify-center p-1 overflow-hidden rounded-lg shadow-sm bottom-2 right-2 bg-dark/10">
-          <View className="items-center justify-center w-max p-0.5 border-2 border-solid rounded-lg border-light/10">
-            <Text
-              className="text-center text-light font-orbitron-bold"
-              numberOfLines={1}
+            <View
+              style={{ backgroundColor: imageColor }}
+              className={`absolute z-50 items-center justify-center p-0.5 overflow-hidden rounded-lg shadow-sm top-14 left-2`}
             >
-              {location?.geoAddress[0]?.country}
-            </Text>
-          </View>
-        </View>
+              <View className="items-center justify-center p-1 border-2 border-solid rounded-lg w-max border-dark/50">
+                <Text
+                  className="text-sm text-center text-light font-orbitron-medium"
+                  numberOfLines={1}
+                >
+                  {location?.geoAddress[0]?.country}
+                </Text>
+              </View>
+            </View>
+
+            {locationStoreObj.locations.length > 1 && (
+              <Pressable
+                onPress={(e) => {
+                  e.stopPropagation();
+                  locationStoreObj.removeLocation(location?.id);
+                }}
+                className={`absolute z-50 items-center justify-center p-0.5 overflow-hidden rounded-full shadow-sm top-2 right-2 bg-light/80`}
+              >
+                <View className="items-center justify-center p-1 border-2 border-solid rounded-full w-max border-dark/50">
+                  <MaterialIcons
+                    name="delete-outline"
+                    className="shadow-2xl"
+                    size={24}
+                    color={imageColor}
+                  />
+                </View>
+              </Pressable>
+            )}
+          </>
+        )}
       </Pressable>
     </View>
   );
@@ -89,34 +146,39 @@ const Locations = () => {
       className={`px-4 pb-10 relative h-full ${theme === "dark" ? "bg-dark" : "bg-light"}`}
     >
       <View className="flex-row items-center justify-between py-2">
-        <Pressable
-          className={`shadow-2xl w-10 h-10 rounded-full items-center overflow-hidden justify-center`}
-          onPress={() => router.navigate("/(home)/settings")}
+        <Text
+          className={`font-orbitron-bold leading-none ${theme === "dark" ? "text-light" : "text-dark"}`}
         >
-          <MaterialIcons
-            color={theme === "dark" ? "white" : "black"}
-            name="settings"
-            size={24}
-          />
-        </Pressable>
+          SAVED LOCATIONS
+        </Text>
+        <View className="flex-row items-center justify-center gap-2">
+          <Pressable
+            className={`shadow-2xl w-10 h-10 rounded-full items-center overflow-hidden justify-center ${theme === "dark" ? "bg-slate-400/10" : "bg-slate-100/80"}`}
+            onPress={() => router.navigate("/(home)/settings")}
+          >
+            <MaterialIcons
+              color={theme === "dark" ? "white" : "black"}
+              name="settings"
+              size={24}
+            />
+          </Pressable>
 
-        <Text className="text-2xl font-genos-light">Saved Locations</Text>
-
-        <Pressable
-          className={`shadow-2xl w-10 h-10 rounded-full items-center overflow-hidden justify-center`}
-          onPress={() => router.navigate("/(home)/searchLocation")}
-        >
-          <MaterialIcons
-            color={theme === "dark" ? "white" : "black"}
-            name="search"
-            size={24}
-          />
-        </Pressable>
+          <Pressable
+            className={`shadow-2xl w-10 h-10 rounded-full items-center overflow-hidden justify-center ${theme === "dark" ? "bg-slate-400/10" : "bg-slate-100/80"}`}
+            onPress={() => router.navigate("/(home)/searchLocation")}
+          >
+            <MaterialIcons
+              color={theme === "dark" ? "white" : "black"}
+              name="search"
+              size={24}
+            />
+          </Pressable>
+        </View>
       </View>
       <FlatList
         data={locations}
         renderItem={({ item }: { item: LocationDataType }) => (
-          <LocationCard location={item} />
+          <LocationCard location={item} theme={theme} />
         )}
         maxToRenderPerBatch={8}
         windowSize={5}

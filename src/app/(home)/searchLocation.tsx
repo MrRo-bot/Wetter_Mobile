@@ -65,11 +65,18 @@ const SearchLocation = () => {
 
       {!data && !isLoading && (
         <View className="items-center justify-center w-full h-full">
-          <Image
-            style={{ width: 250, height: 250 }}
-            contentFit="contain"
-            source={images.search}
-          />
+          <View>
+            <Image
+              style={{ width: 250, height: 250 }}
+              contentFit="contain"
+              source={images.search}
+            />
+            <Text
+              className={`mt-10 py-1 font-orbitron-bold leading-none ${theme === "dark" ? "text-light" : "text-dark"}`}
+            >
+              Search for city, country or a place
+            </Text>
+          </View>
         </View>
       )}
 

@@ -108,7 +108,7 @@ const Brief = ({
     queryStatus === "idle" &&
       toast.current?.show({
         type: "success",
-        description: "success...",
+        description: "success",
       });
 
     error !== null &&
@@ -223,9 +223,9 @@ const Brief = ({
               className={`text-4xl leading-none tracking-wider font-genos-medium ${theme === "dark" ? "text-outlineDark" : "text-outlineLight"}`}
             >
               {locations?.getLocationById(locations?.locationToShow)
-                ?.geoAddress[0]?.street ??
+                ?.geoAddress[0]?.city ??
                 locations?.getLocationById(locations?.locationToShow)
-                  ?.geoAddress[0]?.city ??
+                  ?.geoAddress[0]?.street ??
                 locations?.getLocationById(locations?.locationToShow)
                   ?.geoAddress[0]?.district ??
                 "..."}

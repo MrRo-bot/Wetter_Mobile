@@ -31,7 +31,7 @@ export default function useLocation(autoFetch: boolean = false) {
 
       if (geoAddress.length > 0) {
         const newLocation: LocationDataType = {
-          id: `${geoAddress[0].city || "unknown"}-${locationCoords?.coords?.latitude}-${locationCoords?.coords?.longitude}`,
+          id: `${geoAddress[0].city}_${geoAddress[0].district ?? geoAddress[0].region ?? geoAddress[0].street}-${locationCoords?.coords?.latitude}-${locationCoords?.coords?.longitude}`,
           locationCoords: locationCoords,
           geoAddress: geoAddress,
         };

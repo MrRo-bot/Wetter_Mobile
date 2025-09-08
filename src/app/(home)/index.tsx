@@ -13,7 +13,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useEffect, useRef } from "react";
 import { Pressable, ScrollView, useColorScheme, View } from "react-native";
-import Animated, { FadeInUp } from "react-native-reanimated";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
@@ -129,7 +129,7 @@ export default function Home() {
 
       {!weatherLoading && (
         <AnimatedPressable
-          entering={FadeInUp.duration(600)}
+          entering={FadeInDown.duration(600)}
           className={`absolute bottom-16 right-10 shadow-2xl w-16 h-16 rounded-full items-center overflow-hidden justify-center border-2 border-solid ${theme === "dark" ? "bg-light/90 border-dark/20" : "bg-dark/75 border-light/40"}`}
           onPress={() => router.navigate("/(home)/locations")}
         >

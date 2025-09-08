@@ -40,7 +40,9 @@ export default function useCustomLocation(autoFetch: boolean = false) {
 
         if (geoAddress.length > 0) {
           const newLocation: LocationDataType = {
-            id: `${geoAddress[0].name ?? geoAddress[0].city ?? geoAddress[0].district}-${latitude}-${longitude}`,
+            id: `${geoAddress[0].city ?? geoAddress[0].street ?? geoAddress[0].district}-${latitude}-${longitude}`
+              .split(" ")
+              .join("_"),
             locationCoords: locationCoords,
             geoAddress: geoAddress,
           };
