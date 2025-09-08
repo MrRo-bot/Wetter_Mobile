@@ -10,10 +10,10 @@ import { weatherStore } from "@/src/store/weatherStore";
 import { ToastRef } from "@/src/types/types";
 import { weatherCodeConv } from "@/src/utils/math";
 import { MaterialIcons } from "@expo/vector-icons";
-import { BlurView } from "expo-blur";
 import { useRouter } from "expo-router";
 import { useEffect, useRef } from "react";
 import { Pressable, ScrollView, useColorScheme, View } from "react-native";
+import Animated, { FadeInUp } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
@@ -22,9 +22,17 @@ export default function Home() {
 
   const toastRef = useRef<ToastRef>(null);
 
-  const locations = locationStore();
+  const locationStoreObj = locationStore();
   const { weather, addWeather } = weatherStore();
   const { addAQI } = aqiStore();
+
+  const currentLocObj = locationStoreObj?.getLocationById(
+    locationStoreObj?.locationToShow
+  )?.locationCoords.coords ??
+    locationStoreObj?.locations[0]?.locationCoords.coords ?? {
+      latitude: 0,
+      longitude: 0,
+    };
 
   const {
     isLoading: weatherLoading,
@@ -34,34 +42,18 @@ export default function Home() {
     dataUpdatedAt: weatherLastUpdated,
     fetchStatus,
     refetch,
-  } = useWeatherData({
-    latitude:
-      locations?.getLocationById(locations?.locationToShow)?.locationCoords
-        ?.coords?.latitude ??
-      locations?.locations[0]?.locationCoords?.coords?.latitude,
-    longitude:
-      locations?.getLocationById(locations?.locationToShow)?.locationCoords
-        ?.coords?.longitude ??
-      locations?.locations[0]?.locationCoords?.coords?.longitude,
-  });
+  } = useWeatherData(currentLocObj);
 
   const {
     isLoading: aqiLoading,
     data: aqiData,
     isError: imageIsError,
     error: imageError,
-  } = useAqiData({
-    latitude:
-      locations?.getLocationById(locations?.locationToShow)?.locationCoords
-        ?.coords?.latitude ??
-      locations?.locations[0]?.locationCoords?.coords?.latitude,
-    longitude:
-      locations?.getLocationById(locations?.locationToShow)?.locationCoords
-        ?.coords?.longitude ??
-      locations?.locations[0]?.locationCoords?.coords?.longitude,
-  });
+  } = useAqiData(currentLocObj);
 
-  const weatherCode = weatherCodeConv(weather?.daily?.weather_code[0]);
+  const weatherCode = weather?.daily?.weather_code?.[0]
+    ? weatherCodeConv(weather.daily.weather_code[0])
+    : "unknown";
 
   const {
     imageColorsLoading,
@@ -80,78 +72,36 @@ export default function Home() {
   }, [addAQI, aqiData]);
 
   useEffect(() => {
-    weatherIsError &&
-      toastRef.current?.show({
-        type: "error",
-        description: `${weatherError} 😭`,
-      });
-  }, [weatherError, weatherIsError]);
+    const errors = [
+      { isError: weatherIsError, message: weatherError },
+      { isError: unsplashError, message: unsplashError },
+      { isError: imageColorsError, message: imageColorsError },
+      { isError: imageIsError, message: imageError },
+    ].filter((err) => err.isError && err.message);
 
-  useEffect(() => {
-    unsplashError &&
+    errors.forEach((err) =>
       toastRef.current?.show({
         type: "error",
-        description: `${unsplashError} 😭`,
-      });
-  }, [unsplashError]);
+        description: `${err.message} 😭`,
+      })
+    );
+  }, [
+    weatherIsError,
+    weatherError,
+    unsplashError,
+    imageColorsError,
+    imageIsError,
+    imageError,
+  ]);
 
-  useEffect(() => {
-    imageColorsError &&
-      toastRef.current?.show({
-        type: "error",
-        description: `${imageColorsError} 😭`,
-      });
-  }, [imageColorsError]);
-
-  useEffect(() => {
-    imageIsError &&
-      toastRef.current?.show({
-        type: "error",
-        description: `${imageError} 😭`,
-      });
-  }, [imageError, imageIsError]);
+  const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
   return (
     <SafeAreaView
       edges={["right", "left", "bottom"]}
       className={`relative h-full ${theme === "dark" ? "bg-dark" : "bg-light"}`}
     >
-      {/* <MeshGradientView
-        style={{ flex: 1 }}
-        columns={3}
-        rows={3}
-        // colors={['red', 'purple', 'indigo', 'orange', 'white', 'blue', 'yellow', 'green', 'cyan']}
-        colors={[
-          "tealDark",
-          "greenDark",
-          "purpleDark",
-          "mustardDark",
-          "slateDark",
-          "redDark",
-          "tealLight",
-          "greenLight",
-          "purpleLight",
-          "mustardLight",
-          "slateLight",
-          "redLight",
-        ]}
-        points={[
-          [0.0, 0.0],
-          [0.5, 0.0],
-          [1.0, 0.0],
-          [0.0, 0.5],
-          [0.5, 0.5],
-          [1.0, 0.0],
-          [1.0, 0.5],
-          [0.0, 1.0],
-          [0.5, 0.5],
-          [0.5, 1.0],
-          [1.0, 1.0],
-          [0.0, 1.0],
-        ]}
-      /> */}
-
-      {weatherLoading && aqiLoading ? (
+      {weatherLoading || aqiLoading ? (
         <View className="justify-center w-full h-full">
           <Loader />
         </View>
@@ -177,20 +127,19 @@ export default function Home() {
         </ScrollView>
       )}
 
-      <BlurView
-        experimentalBlurMethod="dimezisBlurView"
-        intensity={theme === "dark" ? 20 : 50}
-        tint={theme === "dark" ? "dark" : "light"}
-        className={`absolute bottom-16 right-10 shadow-2xl w-16 h-16 rounded-full items-center overflow-hidden bg-clip-padding justify-center border-[1px] border-dashed ${theme === "dark" ? "bg-light border-light/30" : "bg-dark border-dark/30"}`}
-      >
-        <Pressable onPress={() => router.navigate("/(home)/locations")}>
+      {!weatherLoading && (
+        <AnimatedPressable
+          entering={FadeInUp.duration(600)}
+          className={`absolute bottom-16 right-10 shadow-2xl w-16 h-16 rounded-full items-center overflow-hidden justify-center border-2 border-solid ${theme === "dark" ? "bg-light/90 border-dark/20" : "bg-dark/75 border-light/40"}`}
+          onPress={() => router.navigate("/(home)/locations")}
+        >
           <MaterialIcons
-            color={theme === "dark" ? "white" : "black"}
+            color={theme === "dark" ? "black" : "white"}
             name="reorder"
             size={28}
           />
-        </Pressable>
-      </BlurView>
+        </AnimatedPressable>
+      )}
 
       <ToastMessage ref={toastRef} />
     </SafeAreaView>
