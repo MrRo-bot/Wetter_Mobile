@@ -1,3 +1,4 @@
+import { weatherStore } from "@/src/store/weatherStore";
 import { Stack } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
@@ -5,13 +6,9 @@ import { useColorScheme } from "react-native";
 export default function HomeLayout() {
   let theme = useColorScheme();
 
-  const [clock, setClock] = useState(
-    new Date().toLocaleString("en-US", {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    })
-  );
+  const { weather } = weatherStore();
+
+  const [clock, setClock] = useState<string>("");
 
   useEffect(() => {
     const clockInterval = setInterval(
@@ -21,13 +18,14 @@ export default function HomeLayout() {
             hour: "numeric",
             minute: "numeric",
             hour12: true,
+            timeZone: weather?.timezone,
           })
         ),
       1000
     );
 
     return () => clearInterval(clockInterval);
-  }, []);
+  }, [clock, weather?.timezone]);
 
   const themeBackground =
     theme === "dark" ? "rgb(17, 15, 20)" : "rgb(247, 243, 251)";
