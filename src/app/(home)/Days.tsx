@@ -75,16 +75,19 @@ const Days = () => {
     >
       <FlatList
         data={dailyDataFull}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }: { item: DailyWeatherObjectType }) => {
-          let iconKey;
-          iconKey =
-            !item?.weatherIcon || item?.weatherIcon === "default"
-              ? (iconKey = "default")
-              : Array.isArray(item?.weatherIcon)
-                ? item?.weatherCode === 0
-                  ? item?.weatherIcon[0]
-                  : item?.weatherIcon[1]
-                : item?.weatherIcon;
+          const getIconKey = (
+            weatherIcon: string | string[],
+            weatherCode: number
+          ) => {
+            if (!weatherIcon || weatherIcon === "default") return "default";
+            return Array.isArray(weatherIcon)
+              ? weatherIcon[weatherCode === 0 ? 0 : 1]
+              : weatherIcon;
+          };
+
+          const iconKey = getIconKey(item.weatherIcon, item.weatherCode);
 
           let icon =
             images[iconKey as keyof WeatherIconsType] || images.default;
@@ -93,7 +96,6 @@ const Days = () => {
 
           return (
             <View
-              key={item?.id}
               className={`mx-4 p-2 justify-start rounded-2xl gap-3 ${theme === "dark" ? "bg-redDark" : "bg-redLight/20"}`}
             >
               <View className="flex-row items-center justify-start gap-4">

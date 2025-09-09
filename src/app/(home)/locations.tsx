@@ -7,7 +7,14 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, Pressable, Text, useColorScheme, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  Pressable,
+  Text,
+  useColorScheme,
+  View,
+} from "react-native";
 
 const LocationCard = ({
   location,
@@ -115,7 +122,23 @@ const LocationCard = ({
               <Pressable
                 onPress={(e) => {
                   e.stopPropagation();
-                  locationStoreObj.removeLocation(location?.id);
+                  Alert.alert(
+                    "Delete Location",
+                    "Are you sure you want to delete this location?",
+                    [
+                      { text: "Cancel", style: "cancel" },
+                      {
+                        text: "Delete",
+                        style: "destructive",
+                        onPress: () => {
+                          locationStoreObj.removeLocation(location?.id);
+                          locationStoreObj.addLocationToShow(
+                            locationStoreObj.locations[0].id
+                          );
+                        },
+                      },
+                    ]
+                  );
                 }}
                 className={`absolute z-50 items-center justify-center p-0.5 overflow-hidden rounded-full shadow-sm top-2 right-2 bg-light/80`}
               >

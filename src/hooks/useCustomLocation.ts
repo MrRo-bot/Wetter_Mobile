@@ -2,16 +2,16 @@ import { LocationObjectCoords, reverseGeocodeAsync } from "expo-location";
 import { useCallback, useEffect, useState } from "react";
 import { LocationDataType } from "../types/types";
 
+interface LocationObject {
+  coords: LocationObjectCoords;
+  mocked: boolean;
+  timestamp: number;
+}
+
 export default function useCustomLocation(autoFetch: boolean = false) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [location, setLocation] = useState<LocationDataType | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  interface LocationObject {
-    coords: LocationObjectCoords;
-    mocked: boolean;
-    timestamp: number;
-  }
 
   const getLocation = useCallback(
     async (latitude: number = 0, longitude: number = 0) => {
@@ -41,8 +41,8 @@ export default function useCustomLocation(autoFetch: boolean = false) {
         if (geoAddress.length > 0) {
           const newLocation: LocationDataType = {
             id: `${geoAddress[0].city ?? geoAddress[0].street ?? geoAddress[0].district}-${latitude}-${longitude}`
-              .split(" ")
-              .join("_"),
+              .replace(/\s+/g, "_")
+              .toLowerCase(),
             locationCoords: locationCoords,
             geoAddress: geoAddress,
           };
@@ -52,7 +52,7 @@ export default function useCustomLocation(autoFetch: boolean = false) {
           throw new Error("Unable to retrieve address");
         }
       } catch (error: any) {
-        setErrorMsg(error.message || "Failed to retrieve location");
+        setErrorMsg(error.message ?? "Failed to retrieve location");
       } finally {
         setIsLoading(false);
       }

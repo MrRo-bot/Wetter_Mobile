@@ -61,9 +61,11 @@ export default function Layout() {
   const themeStyle = theme === "dark" ? "light-content" : "dark-content";
   const themeScheme = theme === "dark" ? "light" : "dark";
 
-  if (Platform.OS === "android") {
-    NavigationBar.setStyle(themeScheme);
-  }
+  useEffect(() => {
+    if (Platform.OS === "android") {
+      NavigationBar.setStyle(themeScheme);
+    }
+  }, [themeScheme]);
 
   useEffect(() => {
     const prepareApp = async () => {
@@ -92,35 +94,53 @@ export default function Layout() {
     };
 
     prepareApp();
-  }, []);
+  }, [locations]);
 
   useEffect(() => {
-    if (!isReady || !fontsLoaded || hasLaunched === null) {
-      return;
-    }
+    if (!isReady || !fontsLoaded || hasLaunched === null) return;
+
+    let navigated = false;
+
     if (hasLaunched && (!locations || locations?.length === 0)) {
+      navigated = true;
       router.replace("/(intro)");
     } else if (hasLaunched && locations && locations?.length > 0) {
+      navigated = true;
       router.replace("/(home)");
     }
-    SplashScreen.hideAsync();
+
+    if (navigated) SplashScreen.hideAsync();
   }, [isReady, fontsLoaded, hasLaunched, locations]);
 
-  const scale = useSharedValue(1);
   useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (isReady && fontsLoaded && hasLaunched !== null) {
+        SplashScreen.hideAsync();
+      }
+    }, 5000); // 5-second timeout
+    return () => clearTimeout(timeout);
+  }, [isReady, fontsLoaded, hasLaunched]);
+
+  const scale = useSharedValue(1);
+
+  useEffect(() => {
+    if (isReady && fontsLoaded && hasLaunched !== null) {
+      cancelAnimation(scale);
+      return;
+    }
     const animation = withRepeat(
       withSequence(
         withTiming(1.5, { duration: 800, easing: Easing.inOut(Easing.ease) }),
         withTiming(1, { duration: 800, easing: Easing.inOut(Easing.ease) })
       ),
-      -1
+      3
     );
     scale.value = animation;
 
     return () => {
       cancelAnimation(scale);
     };
-  }, [scale]);
+  }, [scale, isReady, fontsLoaded, hasLaunched]);
 
   const animatedPulse = useAnimatedStyle(() => {
     return {

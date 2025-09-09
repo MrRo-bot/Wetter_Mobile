@@ -13,6 +13,7 @@ const AirQuality = () => {
 
   const aqiIndex = aqi?.current?.us_aqi;
   const aqiObject = aqiDesc(aqiIndex);
+
   const aqiDetail = [
     { title: "PM2.5", value: aqi?.current?.pm2_5 },
     { title: "PM10", value: aqi?.current?.pm10 },
@@ -21,6 +22,7 @@ const AirQuality = () => {
     { title: "SO2", value: aqi?.current?.sulphur_dioxide },
     { title: "NO2", value: aqi?.current?.nitrogen_dioxide },
   ];
+
   const aqiData = {
     level: aqiObject?.level,
     desc: aqiObject?.desc,
@@ -42,20 +44,25 @@ const AirQuality = () => {
                     : 96,
     color: aqiObject?.color,
   };
-  const aqiLevelColor =
-    aqiData?.color === "green"
-      ? "text-green"
-      : aqiData?.color === "yellow"
-        ? "text-yellow"
-        : aqiData?.color === "orange"
-          ? "text-orange"
-          : aqiData?.color === "red"
-            ? "text-red"
-            : aqiData?.color === "purple"
-              ? "text-purple"
-              : aqiData?.color === "maroon"
-                ? "text-maroon"
-                : "text-dark/50";
+
+  const AQI_COLORS: {
+    green: string;
+    yellow: string;
+    orange: string;
+    red: string;
+    purple: string;
+    maroon: string;
+    default: string;
+    [key: string]: string;
+  } = {
+    green: "text-green",
+    yellow: "text-yellow",
+    orange: "text-orange",
+    red: "text-red",
+    purple: "text-purple",
+    maroon: "text-maroon",
+    default: "text-dark/50",
+  };
 
   return (
     <View
@@ -84,11 +91,11 @@ const AirQuality = () => {
               elevation: 5,
             }
       }
-      className={`relative overflow-hidden py-4 pt-10 px-2 mx-3 rounded-2xl ${theme === "dark" ? "bg-slateDark" : "bg-slateLight"}`}
+      className={`relative overflow-hidden py-4 pt-10 px-2 mx-3 rounded-2xl ${theme === "dark" ? "bg-blueDark" : "bg-blueLight"}`}
     >
       <Pressable
         onPress={() => router.navigate("/(home)/Aqi")}
-        className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-slate-600/50" : "bg-light/50"}`}
+        className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-slate-600/50" : "bg-light/70"}`}
       >
         <Text
           className={`font-orbitron-bold -translate-y-1/2 top-1/2 leading-none text-lg ${theme === "dark" ? "text-light" : "text-dark"}`}
@@ -112,13 +119,12 @@ const AirQuality = () => {
               key={detail.title}
               style={{
                 backgroundColor: colorObj.bgColor,
-                opacity: theme === "dark" ? 0.9 : 0.7,
               }}
               className={`w-[32%] items-center justify-center p-2 rounded-md`}
             >
               <Text
                 style={{ color: colorObj.textColor }}
-                className={`mt-1 leading-none font-orbitron-bold `}
+                className={`mt-1 leading-none font-orbitron-bold`}
               >
                 {detail.title ?? "..."}
               </Text>
@@ -134,22 +140,22 @@ const AirQuality = () => {
       </View>
       <View className="flex-row items-center justify-start gap-4 mt-4">
         <View
-          className={`p-1 rounded-lg ${theme === "dark" ? "bg-slate-700" : "bg-slate-900"}`}
+          className={`p-1 rounded-lg ${theme === "dark" ? "bg-slate-800" : "bg-slate-900"}`}
         >
           <Text
-            className={`${aqiIndex >= 200 ? "text-3xl" : "text-5xl"} leading-none font-orbitron-medium ${aqiLevelColor}`}
+            className={`${aqiIndex >= 200 ? "text-3xl" : "text-5xl"} leading-none font-orbitron-medium ${AQI_COLORS[aqiData.color as string]}`}
           >
             {aqiIndex ?? "..."}
           </Text>
         </View>
         <View className="w-9/12">
           <Text
-            className={`text-lg font-orbitron-bold ${theme === "dark" ? "text-slate-200" : "text-dark"}`}
+            className={`text-lg font-orbitron-bold ${theme === "dark" ? "text-slate-500" : "text-dark"}`}
           >
             {aqiData?.level ?? "..."}
           </Text>
           <Text
-            className={`text-lg tracking-tighter leading-none mt-2 font-genos-medium ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
+            className={`text-lg tracking-tighter leading-none mt-2 font-genos-medium ${theme === "dark" ? "text-slate-500" : "text-slate-700"}`}
           >
             {aqiData?.desc ?? "..."}
           </Text>
@@ -158,37 +164,37 @@ const AirQuality = () => {
       <View className="gap-1 mt-2">
         <View className="flex-row mx-auto">
           <Text
-            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
+            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-500" : "text-slate-700"}`}
           >
             0
           </Text>
           <Text
-            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
+            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-500" : "text-slate-700"}`}
           >
             50
           </Text>
           <Text
-            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
+            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-500" : "text-slate-700"}`}
           >
             100
           </Text>
           <Text
-            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
+            className={`text-xs w-[10%] font-genos-semiBold ${theme === "dark" ? "text-slate-500" : "text-slate-700"}`}
           >
             150
           </Text>
           <Text
-            className={`text-xs w-[20%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
+            className={`text-xs w-[20%] font-genos-semiBold ${theme === "dark" ? "text-slate-500" : "text-slate-700"}`}
           >
             200
           </Text>
           <Text
-            className={`text-xs w-[30%] font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
+            className={`text-xs w-[30%] font-genos-semiBold ${theme === "dark" ? "text-slate-500" : "text-slate-700"}`}
           >
             300
           </Text>
           <Text
-            className={`text-xs font-genos-semiBold ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
+            className={`text-xs font-genos-semiBold ${theme === "dark" ? "text-slate-500" : "text-slate-700"}`}
           >
             500
           </Text>
@@ -208,12 +214,12 @@ const AirQuality = () => {
         </View>
         <View className="flex-row justify-between">
           <Text
-            className={`font-genos-medium ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
+            className={`font-genos-medium ${theme === "dark" ? "text-slate-500" : "text-slate-700"}`}
           >
             Good
           </Text>
           <Text
-            className={`font-genos-medium ${theme === "dark" ? "text-slate-200" : "text-slate-700"}`}
+            className={`font-genos-medium ${theme === "dark" ? "text-slate-500" : "text-slate-700"}`}
           >
             Hazardous
           </Text>

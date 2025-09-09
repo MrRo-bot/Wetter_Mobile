@@ -5,7 +5,6 @@ import useDebounce from "@/src/hooks/useDebounce";
 import useLocationSearch from "@/src/hooks/useLocationSearch";
 import { locationStore } from "@/src/store/locationStore";
 import { ToastRef } from "@/src/types/types";
-import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -85,7 +84,7 @@ const SearchLocation = () => {
           <Text
             className={`border-1 text-center border-dotted ${theme === "dark" ? "border-light bg-dark text-light" : "border-dark bg-light text-dark"}`}
           >
-            Error
+            {JSON.stringify(error)}
           </Text>
         </View>
       )}
@@ -99,7 +98,7 @@ const SearchLocation = () => {
           {data?.results?.map((location) => (
             <Animated.View
               key={location.id}
-              entering={FadeInUp.duration(300).delay(500)}
+              entering={FadeInUp.duration(300).delay(200)}
               className="w-[90%] mx-auto my-2"
             >
               <Pressable
@@ -110,22 +109,27 @@ const SearchLocation = () => {
                 <View
                   className={`border-[1px] border-dashed rounded-xl overflow-hidden ${theme === "dark" ? "border-light/70" : "border-dark/30"}`}
                 >
-                  <BlurView
-                    experimentalBlurMethod="dimezisBlurView"
-                    intensity={theme === "dark" ? 20 : 50}
-                    tint={theme === "dark" ? "dark" : "light"}
-                    className="flex-row items-center justify-start gap-2 p-3 bg-clip-padding"
-                  >
+                  <View className="flex-row items-center justify-start gap-2 p-3 bg-clip-padding">
                     <View>
                       <Text
+                        style={{
+                          textShadowColor: theme === "dark" ? "white" : "dark",
+                          textShadowOffset: { width: 0, height: 0 },
+                          textShadowRadius: 6,
+                        }}
                         className={`text-lg font-orbitron-bold ${
-                          theme === "dark" ? "text-light" : "text-blue-950"
+                          theme === "dark" ? "text-light" : "text-blue-900"
                         }`}
                       >
                         {location.name}
                       </Text>
 
                       <Text
+                        style={{
+                          textShadowColor: theme === "dark" ? "white" : "dark",
+                          textShadowOffset: { width: 0, height: 0 },
+                          textShadowRadius: 2,
+                        }}
                         className={`font-genos-regular text-lg leading-none ${
                           theme === "dark" ? "text-light/70" : "text-dark/70"
                         }`}
@@ -144,6 +148,12 @@ const SearchLocation = () => {
                           </Text>
 
                           <Text
+                            style={{
+                              textShadowColor:
+                                theme === "dark" ? "white" : "dark",
+                              textShadowOffset: { width: 0, height: 0 },
+                              textShadowRadius: 3,
+                            }}
                             className={`font-genos-regular text-lg ${
                               theme === "dark"
                                 ? "text-light/80"
@@ -159,7 +169,7 @@ const SearchLocation = () => {
                         </View>
                       )}
                     </View>
-                  </BlurView>
+                  </View>
                 </View>
               </Pressable>
             </Animated.View>

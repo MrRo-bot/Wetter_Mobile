@@ -6,26 +6,41 @@ import { AppState, Platform } from "react-native";
 import { WeatherDataType } from "../types/types";
 
 onlineManager.setEventListener((setOnline) => {
-  return NetInfo.addEventListener((state) => {
-    setOnline(!!state.isConnected);
+  const subscription = NetInfo.addEventListener((state) => {
+    setOnline(state.isConnected ?? false);
   });
+  return () => subscription();
 });
 
 const useWeatherData = (coordinates: {
   latitude: number;
   longitude: number;
 }) => {
-  function onAppStateChange(status: AppStateStatus) {
-    if (Platform.OS !== "web") {
-      focusManager.setFocused(status === "active");
-    }
-  }
-
   useEffect(() => {
-    const subscription = AppState.addEventListener("change", onAppStateChange);
-
+    const subscription = AppState.addEventListener(
+      "change",
+      (status: AppStateStatus) => {
+        if (Platform.OS !== "web") {
+          focusManager.setFocused(status === "active");
+        }
+      }
+    );
     return () => subscription.remove();
   }, []);
+
+  const isValidCoordinates = (coords: {
+    latitude: number;
+    longitude: number;
+  }) => {
+    return (
+      typeof coords.latitude === "number" &&
+      typeof coords.longitude === "number" &&
+      coords.latitude >= -90 &&
+      coords.latitude <= 90 &&
+      coords.longitude >= -180 &&
+      coords.longitude <= 180
+    );
+  };
 
   const paramsObj = {
     latitude: "",
@@ -86,37 +101,32 @@ const useWeatherData = (coordinates: {
     ].join(","),
   };
 
-  if (
-    coordinates &&
-    typeof coordinates.latitude === "number" &&
-    typeof coordinates.longitude === "number"
-  ) {
-    paramsObj.latitude = String(coordinates?.latitude);
-    paramsObj.longitude = String(coordinates?.longitude);
+  if (coordinates && isValidCoordinates(coordinates)) {
+    paramsObj.latitude = coordinates.latitude.toString();
+    paramsObj.longitude = coordinates.longitude.toString();
   }
 
   const queryString = new URLSearchParams(paramsObj).toString();
 
   const finalUrl = `https://api.open-meteo.com/v1/forecast?${queryString}`;
 
-  const fetchWeather = async () => {
-    try {
-      const response = await fetch(finalUrl);
-      if (!response.ok) throw new Error("Failed to fetch weather data");
-      return response.json();
-    } catch (error) {
-      return error;
-    }
+  const fetchWeather = async (): Promise<WeatherDataType> => {
+    const response = await fetch(finalUrl);
+    if (!response.ok)
+      throw new Error("Failed to fetch weather data: " + response.statusText);
+    return response.json();
   };
 
-  return useQuery<WeatherDataType>({
+  return useQuery<WeatherDataType, Error>({
     queryKey: ["openMeteo_weather", coordinates],
-    queryFn: () => fetchWeather(),
-    enabled: !!coordinates,
+    queryFn: fetchWeather,
+    enabled: !!coordinates && isValidCoordinates(coordinates),
     staleTime: 15 * 60 * 1000,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
+    gcTime: 30 * 60 * 1000,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
     refetchOnReconnect: true,
+    retry: 2,
   });
 };
 export default useWeatherData;

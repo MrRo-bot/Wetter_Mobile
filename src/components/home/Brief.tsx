@@ -15,7 +15,13 @@ import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { Pressable, Text, useColorScheme, View } from "react-native";
+import {
+  Dimensions,
+  Pressable,
+  Text,
+  useColorScheme,
+  View,
+} from "react-native";
 
 const Brief = ({
   weatherRefetch,
@@ -60,13 +66,13 @@ const Brief = ({
   const precipitationSum = daily?.precipitation_sum[0];
   const precipitationText =
     precipitationProbability && precipitationProbability > 0
-      ? `. Chance of precipitation ${precipitationProbability}${daily_units?.precipitation_probability_max}`
+      ? `, Chance of precipitation ${precipitationProbability}${daily_units?.precipitation_probability_max}`
       : "";
   const precipitationAmount =
     precipitationSum > 0
       ? ` around ${precipitationSum} ${daily_units?.precipitation_sum}`
       : "";
-  const weatherSummary = `${isDay ? "Today" : "Tonight"} - ${weatherCode}. Wind ${windDirection?.cardinal} at ${windSpeed}. Gusts ${gustDirection?.cardinal} at ${gustSpeed}${precipitationText}${precipitationAmount}.`;
+  const weatherSummary = `${isDay ? "Today" : "Tonight"} - ${weatherCode}, Wind ${windDirection?.cardinal} at ${windSpeed}, Gusts ${gustDirection?.cardinal} at ${gustSpeed}${precipitationText}${precipitationAmount}.`;
 
   useEffect(() => {
     NetInfo.fetch().then((state) => {
@@ -99,28 +105,32 @@ const Brief = ({
   };
 
   useEffect(() => {
-    queryStatus === "fetching" &&
+    if (queryStatus === "fetching") {
       toast.current?.show({
         type: "pending",
-        description: "connecting...",
+        description: "Connecting to weather service...",
       });
-
-    queryStatus === "idle" &&
+    } else if (queryStatus === "idle") {
       toast.current?.show({
         type: "success",
-        description: "success",
+        description: "Weather data updated",
       });
-
-    error !== null &&
+    } else if (error) {
       toast.current?.show({
         type: "error",
-        description: "Error or Data not found!!!",
+        description: error.message || "Failed to fetch weather data",
       });
+    }
   }, [error, queryStatus, toast]);
+
+  const windowWidth = Dimensions.get("window").width;
 
   return (
     <View className="gap-2 mx-3 mt-2">
-      <View className="relative w-[calc(100vw-24px)] overflow-hidden h-96 rounded-2xl">
+      <View
+        style={{ width: windowWidth - 24 }}
+        className="relative overflow-hidden h-96 rounded-2xl"
+      >
         {imageColorsLoading || unsplashLoading ? (
           <View className={`w-full h-full bg-[#44444450]`} />
         ) : (
@@ -218,17 +228,17 @@ const Brief = ({
             {`${timestring?.day?.substring(0, 3) ?? "..."}, ${timestring.month ?? "..."} ${timestring.date ?? "..."}`}
           </Text>
 
-          <View className="flex-row items-end justify-between">
+          <View className="flex-row items-end justify-between w-max">
             <Text
-              className={`text-4xl leading-none tracking-wider font-genos-medium ${theme === "dark" ? "text-outlineDark" : "text-outlineLight"}`}
+              numberOfLines={2}
+              className={`text-4xl flex-wrap tracking-wider leading-none font-genos-medium ${theme === "dark" ? "text-outlineDark" : "text-outlineLight"}`}
             >
               {locations?.getLocationById(locations?.locationToShow)
                 ?.geoAddress[0]?.city ??
                 locations?.getLocationById(locations?.locationToShow)
                   ?.geoAddress[0]?.street ??
                 locations?.getLocationById(locations?.locationToShow)
-                  ?.geoAddress[0]?.district ??
-                "..."}
+                  ?.geoAddress[0]?.district}
             </Text>
             {alertIcon(current?.weather_code) === "alert" && (
               <View

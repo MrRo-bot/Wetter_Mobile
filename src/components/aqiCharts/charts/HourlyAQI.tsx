@@ -3,19 +3,21 @@ import React, { useState } from "react";
 import { Dimensions, Text, useColorScheme, View } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
 
+interface HourlyAQIType {
+  aqiForecast: number[];
+  timestamp: string[];
+  name: string;
+  isCurved?: boolean;
+  color: string;
+}
+
 const HourlyAQI = ({
   aqiForecast,
   timestamp,
   name,
   isCurved,
   color,
-}: {
-  aqiForecast: number[];
-  timestamp: string[];
-  name: string;
-  isCurved?: boolean;
-  color: string;
-}) => {
+}: HourlyAQIType) => {
   let theme = useColorScheme();
 
   const [parentWidth, setParentWidth] = useState(

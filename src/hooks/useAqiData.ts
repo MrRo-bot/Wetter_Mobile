@@ -7,29 +7,54 @@ import { AQIType } from "../types/types";
 
 //react query sets whether status is online or offline
 onlineManager.setEventListener((setOnline) => {
-  return NetInfo.addEventListener((state) => {
-    setOnline(!!state.isConnected);
+  const subscription = NetInfo.addEventListener((state) => {
+    setOnline(state.isConnected ?? false);
   });
+  return () => subscription();
 });
 
+const isValidCoordinates = (
+  coords: {
+    latitude: number;
+    longitude: number;
+  } | null
+): coords is { latitude: number; longitude: number } => {
+  if (!coords) return false;
+  const { latitude, longitude } = coords;
+  return (
+    typeof latitude === "number" &&
+    typeof longitude === "number" &&
+    latitude >= -90 &&
+    latitude <= 90 &&
+    longitude >= -180 &&
+    longitude <= 180
+  );
+};
+
 //check if focus is in background or foreground
-const useAqiData = (coordinates: { latitude: number; longitude: number }) => {
-  function onAppStateChange(status: AppStateStatus) {
-    if (Platform.OS !== "web") {
-      focusManager.setFocused(status === "active");
-    }
-  }
-
-  //effect for subscribing to change in app state
+const useAqiData = (
+  coordinates: { latitude: number; longitude: number } | null
+) => {
   useEffect(() => {
-    const subscription = AppState.addEventListener("change", onAppStateChange);
-
+    if (Platform.OS === "web") return;
+    const subscription = AppState.addEventListener(
+      "change",
+      (status: AppStateStatus) => {
+        focusManager.setFocused(status === "active");
+      }
+    );
     return () => subscription.remove();
   }, []);
 
   const paramsObj = {
-    latitude: "",
-    longitude: "",
+    latitude:
+      coordinates && isValidCoordinates(coordinates)
+        ? String(coordinates.latitude)
+        : "",
+    longitude:
+      coordinates && isValidCoordinates(coordinates)
+        ? String(coordinates.longitude)
+        : "",
     timezone: "auto",
     forecast_days: "5",
     hourly: [
@@ -52,37 +77,26 @@ const useAqiData = (coordinates: { latitude: number; longitude: number }) => {
     domains: "cams_global",
   };
 
-  if (
-    coordinates &&
-    typeof coordinates.latitude === "number" &&
-    typeof coordinates.longitude === "number"
-  ) {
-    paramsObj.latitude = String(coordinates?.latitude);
-    paramsObj.longitude = String(coordinates?.longitude);
-  }
-
   const queryString = new URLSearchParams(paramsObj).toString();
 
   const finalUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?${queryString}`;
 
-  const fetchAQI = async () => {
-    try {
-      const response = await fetch(finalUrl);
-      if (!response.ok) throw new Error("Failed to fetch AQI data");
-      return response.json();
-    } catch (error) {
-      return error;
-    }
+  const fetchAQI = async (): Promise<AQIType> => {
+    const response = await fetch(finalUrl);
+    if (!response.ok) throw new Error("Failed to fetch AQI data");
+    return response.json();
   };
 
   return useQuery<AQIType>({
     queryKey: ["openMeteo_AQI", coordinates],
-    queryFn: () => fetchAQI(),
-    enabled: !!coordinates,
+    queryFn: fetchAQI,
+    enabled: isValidCoordinates(coordinates),
     staleTime: 15 * 60 * 1000,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
+    gcTime: 30 * 60 * 1000,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
     refetchOnReconnect: true,
+    retry: 2,
   });
 };
 

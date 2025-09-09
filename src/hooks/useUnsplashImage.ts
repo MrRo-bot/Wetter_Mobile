@@ -6,23 +6,26 @@ import ImageColors, { ImageColorsResult } from "react-native-image-colors";
 import { UnsplashType } from "../types/types";
 
 onlineManager.setEventListener((setOnline) => {
-  return NetInfo.addEventListener((state) => {
-    setOnline(!!state.isConnected);
+  const subscription = NetInfo.addEventListener((state) => {
+    setOnline(state.isConnected ?? false);
   });
+  return () => subscription();
 });
 
 const useUnsplashImage = (imgSearchString: string | null) => {
   //imgSearchString can be place,weather type or anything else
 
   const unsplashKey = process.env.EXPO_PUBLIC_UNSPLASH_KEY;
-  function onAppStateChange(status: AppStateStatus) {
-    if (Platform.OS !== "web") {
-      focusManager.setFocused(status === "active");
-    }
-  }
-  useEffect(() => {
-    const subscription = AppState.addEventListener("change", onAppStateChange);
 
+  useEffect(() => {
+    const subscription = AppState.addEventListener(
+      "change",
+      (status: AppStateStatus) => {
+        if (Platform.OS !== "web") {
+          focusManager.setFocused(status === "active");
+        }
+      }
+    );
     return () => subscription.remove();
   }, []);
 
@@ -44,9 +47,11 @@ const useUnsplashImage = (imgSearchString: string | null) => {
   const fetchUnsplashImage = async (): Promise<UnsplashType> => {
     const response = await fetch(finalUrl);
     if (!response.ok) {
-      throw new Error("Failed to fetch image");
+      throw new Error("Failed to fetch image: " + response.statusText);
     }
-    return response.json();
+    const data = response.json();
+    if (!data) throw new Error("Unexpected API response format");
+    return data;
   };
 
   //function for getting image colors
@@ -63,16 +68,21 @@ const useUnsplashImage = (imgSearchString: string | null) => {
     if (!imageData?.url) {
       throw new Error("No image URL provided");
     }
-    const result = await ImageColors.getColors(imageData?.url, {
-      fallback: "#444444",
-      quality: "high",
-      pixelSpacing: 5,
-    });
-    return {
-      imageIndex: imageData.imageIndex,
-      url: imageData.url,
-      imageColors: result,
-    };
+
+    try {
+      const result = await ImageColors.getColors(imageData?.url, {
+        fallback: "#444444",
+        quality: "high",
+        pixelSpacing: 5,
+      });
+      return {
+        imageIndex: imageData.imageIndex,
+        url: imageData.url,
+        imageColors: result,
+      };
+    } catch (error) {
+      throw new Error("Failed to extract image colors: " + error);
+    }
   };
 
   //getting image
@@ -82,11 +92,11 @@ const useUnsplashImage = (imgSearchString: string | null) => {
     data: unsplashData,
   } = useQuery<UnsplashType>({
     queryKey: ["unsplash_image", imgSearchString],
-    queryFn: () => fetchUnsplashImage(),
+    queryFn: fetchUnsplashImage,
     enabled: !!imgSearchString,
     staleTime: 15 * 60 * 1000,
     refetchOnMount: false,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
     refetchOnReconnect: true,
   });
 
@@ -110,13 +120,13 @@ const useUnsplashImage = (imgSearchString: string | null) => {
     url: string;
     imageColors: ImageColorsResult;
   }>({
-    queryKey: ["react_native_image_colors", imageData],
+    queryKey: ["react_native_image_colors", imageData?.url],
     queryFn: () => getUnsplashImageColors(imageData),
-    enabled: !!imageData,
-    staleTime: 15 * 60 * 1000,
+    enabled: !!imageData?.url,
+    staleTime: Infinity,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    refetchOnReconnect: true,
+    refetchOnReconnect: false,
   });
 
   return {

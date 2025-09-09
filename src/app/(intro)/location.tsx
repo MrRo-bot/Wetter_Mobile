@@ -59,12 +59,12 @@ export default function Location() {
         <Text
           className={`font-genos-regular tracking-wide text-xl leading-none mt-4 w-3/4 mx-auto text-center ${theme === "dark" ? "text-light" : "text-dark"}`}
         >
-          Wetter needs to access your device location to provide your
+          Wetter needs your device location to provide accurate
         </Text>
         <Text
           className={`font-genos-bold tracking-wider text-xl text-center ${theme === "dark" ? "text-redLight" : "text-redDark"}`}
         >
-          local forecast
+          local weather forecasts
         </Text>
       </View>
 

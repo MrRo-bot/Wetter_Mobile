@@ -4,15 +4,13 @@ import React, { useState } from "react";
 import { Dimensions, Text, useColorScheme, View } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
 
-const DailyAQI = ({
-  aqiForecast,
-  aqiParameter,
-  name,
-}: {
+interface DailyAQIProps {
   aqiForecast: AQIHourlyType[];
   aqiParameter: string;
   name: string;
-}) => {
+}
+
+const DailyAQI = ({ aqiForecast, aqiParameter, name }: DailyAQIProps) => {
   let theme = useColorScheme();
 
   const [parentWidth, setParentWidth] = useState(
