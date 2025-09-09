@@ -18,7 +18,7 @@ export default function HomeLayout() {
             hour: "numeric",
             minute: "numeric",
             hour12: true,
-            timeZone: weather?.timezone,
+            timeZone: weather?.timezone ? weather?.timezone : "Asia/Kolkata",
           })
         ),
       1000

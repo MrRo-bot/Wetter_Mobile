@@ -1,6 +1,6 @@
 import NetInfo from "@react-native-community/netinfo";
 import { focusManager, onlineManager, useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { AppState, AppStateStatus, Platform } from "react-native";
 import ImageColors, { ImageColorsResult } from "react-native-image-colors";
 import { UnsplashType } from "../types/types";
@@ -81,7 +81,7 @@ const useUnsplashImage = (imgSearchString: string | null) => {
         imageColors: result,
       };
     } catch (error) {
-      throw new Error("Failed to extract image colors: " + error);
+      throw new Error("Failed to extract colors: " + error);
     }
   };
 
@@ -101,14 +101,14 @@ const useUnsplashImage = (imgSearchString: string | null) => {
   });
 
   //choosing random url
-  const imageData = useMemo(() => {
-    if (!unsplashData?.results?.length) return null;
-    const randomIndex = Math.floor(Math.random() * unsplashData.results.length);
-    return {
-      imageIndex: randomIndex,
-      url: unsplashData.results[randomIndex].urls.regular,
-    };
-  }, [unsplashData]);
+  const imageData = !unsplashData?.results?.length
+    ? null
+    : {
+        imageIndex: Math.floor(Math.random() * unsplashData.results.length),
+        url: unsplashData.results[
+          Math.floor(Math.random() * unsplashData.results.length)
+        ].urls.regular,
+      };
 
   //getting colors from image
   const {
@@ -123,10 +123,10 @@ const useUnsplashImage = (imgSearchString: string | null) => {
     queryKey: ["react_native_image_colors", imageData?.url],
     queryFn: () => getUnsplashImageColors(imageData),
     enabled: !!imageData?.url,
-    staleTime: Infinity,
+    staleTime: 15 * 60 * 1000,
     refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 
   return {

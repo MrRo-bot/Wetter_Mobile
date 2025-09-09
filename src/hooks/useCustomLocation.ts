@@ -1,5 +1,5 @@
 import { LocationObjectCoords, reverseGeocodeAsync } from "expo-location";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { LocationDataType } from "../types/types";
 
 interface LocationObject {
@@ -13,56 +13,53 @@ export default function useCustomLocation(autoFetch: boolean = false) {
   const [location, setLocation] = useState<LocationDataType | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const getLocation = useCallback(
-    async (latitude: number = 0, longitude: number = 0) => {
-      setIsLoading(true);
-      setErrorMsg(null);
+  async function getLocation(latitude: number = 0, longitude: number = 0) {
+    setIsLoading(true);
+    setErrorMsg(null);
 
-      try {
-        const geoAddress = await reverseGeocodeAsync({
+    try {
+      const geoAddress = await reverseGeocodeAsync({
+        latitude: latitude,
+        longitude: longitude,
+      });
+
+      const locationCoords: LocationObject = {
+        coords: {
           latitude: latitude,
           longitude: longitude,
-        });
+          altitude: null,
+          accuracy: null,
+          altitudeAccuracy: null,
+          heading: null,
+          speed: null,
+        },
+        mocked: true,
+        timestamp: Date.now(),
+      };
 
-        const locationCoords: LocationObject = {
-          coords: {
-            latitude: latitude,
-            longitude: longitude,
-            altitude: null,
-            accuracy: null,
-            altitudeAccuracy: null,
-            heading: null,
-            speed: null,
-          },
-          mocked: true,
-          timestamp: Date.now(),
+      if (geoAddress.length > 0) {
+        const newLocation: LocationDataType = {
+          id: `${geoAddress[0].city ?? geoAddress[0].street ?? geoAddress[0].district}-${latitude}-${longitude}`
+            .replace(/\s+/g, "_")
+            .toLowerCase(),
+          locationCoords: locationCoords,
+          geoAddress: geoAddress,
         };
-
-        if (geoAddress.length > 0) {
-          const newLocation: LocationDataType = {
-            id: `${geoAddress[0].city ?? geoAddress[0].street ?? geoAddress[0].district}-${latitude}-${longitude}`
-              .replace(/\s+/g, "_")
-              .toLowerCase(),
-            locationCoords: locationCoords,
-            geoAddress: geoAddress,
-          };
-          setLocation(newLocation);
-          return newLocation;
-        } else {
-          throw new Error("Unable to retrieve address");
-        }
-      } catch (error: any) {
-        setErrorMsg(error.message ?? "Failed to retrieve location");
-      } finally {
-        setIsLoading(false);
+        setLocation(newLocation);
+        return newLocation;
+      } else {
+        throw new Error("Unable to retrieve address");
       }
-    },
-    []
-  );
+    } catch (error: any) {
+      setErrorMsg(error.message ?? "Failed to retrieve location");
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   useEffect(() => {
     if (autoFetch) getLocation();
-  }, [autoFetch, getLocation]);
+  }, [autoFetch]);
 
   return { location, isLoading, getLocation, errorMsg };
 }

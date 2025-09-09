@@ -44,29 +44,30 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
           className="absolute z-50 items-center justify-center w-full"
         >
           <View
-            className={`border-2 border-solid w-max max-w-[90%] rounded-full overflow-hidden ${theme === "dark" ? "border-light/70" : "border-dark/30"}`}
+            className={`border-2 border-solid max-w-[90%] rounded-full overflow-hidden`}
           >
             <BlurView
               experimentalBlurMethod="dimezisBlurView"
               intensity={theme === "dark" ? 20 : 50}
-              className="flex-row items-center justify-center gap-2 p-3 bg-clip-padding"
+              tint={theme === "dark" ? "dark" : "light"}
+              className={`flex-row items-center justify-between gap-2 p-2 bg-clip-padding ${theme === "dark" ? "bg-light" : "bg-dark"}`}
             >
               <View
-                className={`rounded-full shadow-sm p-1 ${theme === "dark" ? "bg-dark" : "bg-light"}`}
+                className={`rounded-full shadow-sm p-1 ${theme === "dark" ? "bg-light" : "bg-dark"}`}
               >
                 <Image
-                  style={{ width: 28, height: 28 }}
+                  style={{ width: 20, height: 20 }}
                   source={
                     theme === "dark"
-                      ? images.toast_icon_light
-                      : images.toast_icon_dark
+                      ? images.toast_icon_dark
+                      : images.toast_icon_light
                   }
                 />
               </View>
               <View>
                 {toast.text && (
                   <Text
-                    className={`text-lg font-orbitron-bold ${
+                    className={`font-orbitron-bold ${
                       theme === "dark" ? "text-light" : "text-dark"
                     }`}
                   >
@@ -75,7 +76,7 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
                 )}
                 {toast.description && (
                   <Text
-                    className={`font-orbitron-semiBold tracking-wide ${
+                    className={`text-sm font-orbitron-semiBold tracking-wide ${
                       theme === "dark" ? "text-light" : "text-dark"
                     }`}
                   >

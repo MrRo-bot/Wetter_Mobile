@@ -2,11 +2,11 @@ import Loader from "@/src/components/UI/Loader";
 import useCustomLocation from "@/src/hooks/useCustomLocation";
 import useUnsplashImage from "@/src/hooks/useUnsplashImage";
 import { locationStore } from "@/src/store/locationStore";
-import { LocationDataType } from "@/src/types/types";
+import { LocationDataType, ToastRef } from "@/src/types/types";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Alert,
   FlatList,
@@ -25,6 +25,8 @@ const LocationCard = ({
 }) => {
   const [isLocationToShow, setIsLocationToShow] = useState(false);
 
+  const toastRef = useRef<ToastRef>(null);
+
   const router = useRouter();
 
   const locationStoreObj = locationStore();
@@ -35,7 +37,15 @@ const LocationCard = ({
       location?.geoAddress[0]?.district
   );
 
-  const { getLocation } = useCustomLocation();
+  const { getLocation, errorMsg } = useCustomLocation();
+
+  useEffect(() => {
+    errorMsg &&
+      toastRef?.current?.show({
+        type: "error",
+        description: `${errorMsg} 😭`,
+      });
+  }, [errorMsg]);
 
   useEffect(() => {
     if (isLocationToShow) {

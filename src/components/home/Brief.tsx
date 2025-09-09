@@ -105,22 +105,21 @@ const Brief = ({
   };
 
   useEffect(() => {
-    if (queryStatus === "fetching") {
+    queryStatus === "fetching" &&
       toast.current?.show({
         type: "pending",
         description: "Connecting to weather service...",
       });
-    } else if (queryStatus === "idle") {
+    queryStatus === "idle" &&
       toast.current?.show({
         type: "success",
         description: "Weather data updated",
       });
-    } else if (error) {
+    error &&
       toast.current?.show({
         type: "error",
         description: error.message || "Failed to fetch weather data",
       });
-    }
   }, [error, queryStatus, toast]);
 
   const windowWidth = Dimensions.get("window").width;
