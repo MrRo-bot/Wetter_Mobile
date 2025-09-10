@@ -124,6 +124,13 @@ const Brief = ({
 
   const windowWidth = Dimensions.get("window").width;
 
+  const TEXT_SHADOW = {
+    color: imageColorsLoading ? "#44444450" : imageColor,
+    textShadowColor: imageColor,
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 8,
+  };
+
   return (
     <View className="gap-2 mx-3 mt-2">
       <View
@@ -177,12 +184,7 @@ const Brief = ({
       <View>
         <View className="flex-row flex-wrap items-center my-4">
           <Text
-            style={{
-              color: imageColorsLoading ? "#44444450" : imageColor,
-              textShadowColor: imageColor,
-              textShadowOffset: { width: 0, height: 2 },
-              textShadowRadius: 8,
-            }}
+            style={TEXT_SHADOW}
             className={`font-orbitron-regular mr-4 text-5xl leading-none`}
           >
             {valRound(current?.temperature_2m) ?? "..."}{" "}
@@ -190,35 +192,20 @@ const Brief = ({
           </Text>
 
           <Text
-            style={{
-              color: imageColorsLoading ? "#44444450" : imageColor,
-              textShadowColor: imageColor,
-              textShadowOffset: { width: 0, height: 2 },
-              textShadowRadius: 8,
-            }}
+            style={TEXT_SHADOW}
             className={`font-orbitron-semiBold self-start text-lg leading-none`}
           >
             {valRound(daily?.temperature_2m_max[0]) ?? "..."}{" "}
             {daily_units?.temperature_2m_max ?? "..."}
           </Text>
           <Text
-            style={{
-              color: imageColorsLoading ? "#44444450" : imageColor,
-              textShadowColor: imageColor,
-              textShadowOffset: { width: 0, height: 2 },
-              textShadowRadius: 8,
-            }}
+            style={TEXT_SHADOW}
             className={`font-orbitron-semiBold text-lg leading-none`}
           >
             /{" "}
           </Text>
           <Text
-            style={{
-              color: imageColorsLoading ? "#44444450" : imageColor,
-              textShadowColor: imageColor,
-              textShadowOffset: { width: 0, height: 2 },
-              textShadowRadius: 8,
-            }}
+            style={TEXT_SHADOW}
             className={`font-orbitron-semiBold self-end text-lg leading-none`}
           >
             {valRound(daily?.temperature_2m_min[0] ?? "...")}{" "}

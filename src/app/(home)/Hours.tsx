@@ -84,6 +84,16 @@ const Hours = () => {
 
           let altText = item?.weatherMain;
 
+          const TEXT_SHADOW_DARK_ONLY = {
+            textShadowOffset: { width: 0, height: 2 },
+            textShadowRadius: 6,
+          };
+          const TEXT_SHADOW = {
+            textShadowColor: theme === "dark" ? "white" : "dark",
+            textShadowOffset: { width: 0, height: 1 },
+            textShadowRadius: 8,
+          };
+
           return (
             <View
               className={`mx-4 p-2 justify-start rounded-2xl gap-6 ${theme === "dark" ? "bg-purpleDark" : "bg-purpleLight/20"}`}
@@ -106,19 +116,13 @@ const Hours = () => {
                   className={`relative w-9/12 font-orbitron-bold ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                 >
                   <Text
-                    style={{
-                      textShadowOffset: { width: 0, height: 2 },
-                      textShadowRadius: 6,
-                    }}
+                    style={TEXT_SHADOW_DARK_ONLY}
                     className={`font-orbitron-medium ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                   >
                     {item?.hourStamp ?? "..."}
                   </Text>
                   <Text
-                    style={{
-                      textShadowOffset: { width: 0, height: 2 },
-                      textShadowRadius: 6,
-                    }}
+                    style={TEXT_SHADOW_DARK_ONLY}
                     className={`font-orbitron-medium ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                   >
                     {item?.feels_like ?? "..."}
@@ -133,10 +137,7 @@ const Hours = () => {
 
               <View className="flex-row items-start justify-start gap-4">
                 <Text
-                  style={{
-                    textShadowOffset: { width: 0, height: 2 },
-                    textShadowRadius: 6,
-                  }}
+                  style={TEXT_SHADOW_DARK_ONLY}
                   className={`w-2/12 text-sm text-center font-orbitron-semiBold ${theme === "dark" ? "text-blue-200" : "text-blue-600"}`}
                 >
                   {item?.precipitation ?? "..."}
@@ -148,11 +149,7 @@ const Hours = () => {
                   >
                     Wind -{" "}
                     <Text
-                      style={{
-                        textShadowColor: theme === "dark" ? "white" : "dark",
-                        textShadowOffset: { width: 0, height: 1 },
-                        textShadowRadius: 8,
-                      }}
+                      style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item?.windSpeed ?? "..."}
@@ -164,11 +161,7 @@ const Hours = () => {
                   >
                     Gust -{" "}
                     <Text
-                      style={{
-                        textShadowColor: theme === "dark" ? "white" : "dark",
-                        textShadowOffset: { width: 0, height: 1 },
-                        textShadowRadius: 8,
-                      }}
+                      style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item?.gust ?? "..."}
@@ -179,11 +172,7 @@ const Hours = () => {
                   >
                     Clouds -{" "}
                     <Text
-                      style={{
-                        textShadowColor: theme === "dark" ? "white" : "dark",
-                        textShadowOffset: { width: 0, height: 1 },
-                        textShadowRadius: 8,
-                      }}
+                      style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item?.clouds ?? "..."}
@@ -194,11 +183,7 @@ const Hours = () => {
                   >
                     Humidity -{" "}
                     <Text
-                      style={{
-                        textShadowColor: theme === "dark" ? "white" : "dark",
-                        textShadowOffset: { width: 0, height: 1 },
-                        textShadowRadius: 8,
-                      }}
+                      style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item?.humidity ?? "..."}
@@ -209,11 +194,7 @@ const Hours = () => {
                   >
                     Rain -{" "}
                     <Text
-                      style={{
-                        textShadowColor: theme === "dark" ? "white" : "dark",
-                        textShadowOffset: { width: 0, height: 1 },
-                        textShadowRadius: 8,
-                      }}
+                      style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item?.precipitationAmount ?? "..."}
@@ -224,11 +205,7 @@ const Hours = () => {
                   >
                     Visibility -{" "}
                     <Text
-                      style={{
-                        textShadowColor: theme === "dark" ? "white" : "dark",
-                        textShadowOffset: { width: 0, height: 1 },
-                        textShadowRadius: 8,
-                      }}
+                      style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item?.visibility ?? "..."}
@@ -239,11 +216,7 @@ const Hours = () => {
                   >
                     Uv index -{" "}
                     <Text
-                      style={{
-                        textShadowColor: theme === "dark" ? "white" : "dark",
-                        textShadowOffset: { width: 0, height: 1 },
-                        textShadowRadius: 8,
-                      }}
+                      style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item?.uvIndex ?? "..."}
@@ -254,11 +227,7 @@ const Hours = () => {
                   >
                     Pressure -{" "}
                     <Text
-                      style={{
-                        textShadowColor: theme === "dark" ? "white" : "dark",
-                        textShadowOffset: { width: 0, height: 1 },
-                        textShadowRadius: 8,
-                      }}
+                      style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item?.pressure ?? "..."}
@@ -269,11 +238,7 @@ const Hours = () => {
                   >
                     Ground temp -{" "}
                     <Text
-                      style={{
-                        textShadowColor: theme === "dark" ? "white" : "dark",
-                        textShadowOffset: { width: 0, height: 1 },
-                        textShadowRadius: 8,
-                      }}
+                      style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item?.soilTemp ?? "..."}
@@ -284,11 +249,7 @@ const Hours = () => {
                   >
                     Radiation -{" "}
                     <Text
-                      style={{
-                        textShadowColor: theme === "dark" ? "white" : "dark",
-                        textShadowOffset: { width: 0, height: 1 },
-                        textShadowRadius: 8,
-                      }}
+                      style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
                       {item?.radiation ?? "..."}
@@ -299,11 +260,7 @@ const Hours = () => {
                   >
                     Dew point -{" "}
                     <Text
-                      style={{
-                        textShadowColor: theme === "dark" ? "white" : "dark",
-                        textShadowOffset: { width: 0, height: 1 },
-                        textShadowRadius: 8,
-                      }}
+                      style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                     >
                       {item?.dewPoint ?? "..."}

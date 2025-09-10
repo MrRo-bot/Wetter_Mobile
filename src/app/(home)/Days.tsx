@@ -94,6 +94,18 @@ const Days = () => {
 
           let altText = item?.weatherMain;
 
+          const TEXT_SHADOW_DARK_ONLY = {
+            textShadowColor: "dark",
+            textShadowOffset: { width: 0, height: 2 },
+            textShadowRadius: 6,
+          };
+
+          const TEXT_SHADOW = {
+            textShadowColor: theme === "dark" ? "white" : "dark",
+            textShadowOffset: { width: 0, height: 2 },
+            textShadowRadius: 6,
+          };
+
           return (
             <View
               className={`mx-4 p-2 justify-start rounded-2xl gap-3 ${theme === "dark" ? "bg-redDark" : "bg-redLight/20"}`}
@@ -114,43 +126,27 @@ const Days = () => {
 
                 <View className="justify-center w-10/12 gap-1">
                   <Text
-                    style={{
-                      textShadowColor: "dark",
-                      textShadowOffset: { width: 0, height: 2 },
-                      textShadowRadius: 6,
-                    }}
+                    style={TEXT_SHADOW_DARK_ONLY}
                     className={`font-orbitron-medium tracking-tighter ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                   >
                     {item?.dateStamp ?? "..."}
                   </Text>
                   <View className="flex-row gap-1">
                     <Text
-                      style={{
-                        textShadowColor: "dark",
-                        textShadowOffset: { width: 0, height: 2 },
-                        textShadowRadius: 6,
-                      }}
+                      style={TEXT_SHADOW_DARK_ONLY}
                       className={`font-orbitron-bold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
                       {item?.maxTemp ?? "..."}
                     </Text>
                     <Text
-                      style={{
-                        textShadowColor: "dark",
-                        textShadowOffset: { width: 0, height: 2 },
-                        textShadowRadius: 6,
-                      }}
+                      style={TEXT_SHADOW_DARK_ONLY}
                       className={`font-orbitron-bold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
                       {" "}
                       /{" "}
                     </Text>
                     <Text
-                      style={{
-                        textShadowColor: "dark",
-                        textShadowOffset: { width: 0, height: 2 },
-                        textShadowRadius: 6,
-                      }}
+                      style={TEXT_SHADOW_DARK_ONLY}
                       className={`font-orbitron-bold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
                       {item?.minTemp ?? "..."}
@@ -162,11 +158,7 @@ const Days = () => {
               <View className="flex-row items-start justify-start gap-4">
                 <View className="w-2/12">
                   <Text
-                    style={{
-                      textShadowColor: "dark",
-                      textShadowOffset: { width: 0, height: 2 },
-                      textShadowRadius: 6,
-                    }}
+                    style={TEXT_SHADOW_DARK_ONLY}
                     className={`text-sm text-center font-orbitron-semiBold ${theme === "dark" ? "text-blue-200" : "text-blue-600"}`}
                   >
                     {item?.precipitation ?? "..."}
@@ -180,11 +172,7 @@ const Days = () => {
                       alt={altText}
                     />
                     <Text
-                      style={{
-                        textShadowColor: "dark",
-                        textShadowOffset: { width: 0, height: 2 },
-                        textShadowRadius: 6,
-                      }}
+                      style={TEXT_SHADOW_DARK_ONLY}
                       className={`font-genos-semiBold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
                       {item?.sunrise ?? "..."}
@@ -199,11 +187,7 @@ const Days = () => {
                       alt={altText}
                     />
                     <Text
-                      style={{
-                        textShadowColor: "dark",
-                        textShadowOffset: { width: 0, height: 2 },
-                        textShadowRadius: 6,
-                      }}
+                      style={TEXT_SHADOW_DARK_ONLY}
                       className={`font-genos-semiBold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
                       {item?.sunset ?? "..."}
@@ -221,11 +205,7 @@ const Days = () => {
                   >
                     Daylight :{" "}
                     <Text
-                      style={{
-                        textShadowColor: theme === "dark" ? "white" : "dark",
-                        textShadowOffset: { width: 0, height: 2 },
-                        textShadowRadius: 6,
-                      }}
+                      style={TEXT_SHADOW}
                       className="text-sm font-orbitron-regular"
                     >
                       {item?.daylightDuration ?? "..."}
@@ -236,11 +216,7 @@ const Days = () => {
                   >
                     Radiation :{" "}
                     <Text
-                      style={{
-                        textShadowColor: theme === "dark" ? "white" : "dark",
-                        textShadowOffset: { width: 0, height: 2 },
-                        textShadowRadius: 6,
-                      }}
+                      style={TEXT_SHADOW}
                       className="text-sm font-orbitron-regular"
                     >
                       {item?.shortwaveRadiation ?? "..."}
@@ -251,11 +227,7 @@ const Days = () => {
                   >
                     UV Index :{" "}
                     <Text
-                      style={{
-                        textShadowColor: theme === "dark" ? "white" : "dark",
-                        textShadowOffset: { width: 0, height: 2 },
-                        textShadowRadius: 6,
-                      }}
+                      style={TEXT_SHADOW}
                       className="text-sm font-orbitron-regular"
                     >
                       {item?.uvIndex ?? "..."}
@@ -266,11 +238,7 @@ const Days = () => {
                   >
                     Pressure :{" "}
                     <Text
-                      style={{
-                        textShadowColor: theme === "dark" ? "white" : "dark",
-                        textShadowOffset: { width: 0, height: 2 },
-                        textShadowRadius: 6,
-                      }}
+                      style={TEXT_SHADOW}
                       className="text-sm font-orbitron-regular"
                     >
                       {item?.surfacePressure ?? "..."}

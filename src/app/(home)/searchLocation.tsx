@@ -51,6 +51,12 @@ const SearchLocation = () => {
     }
   }, [locationLoading, fetchedLocation]);
 
+  const TEXT_SHADOW = {
+    textShadowColor: theme === "dark" ? "white" : "dark",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 6,
+  };
+
   return (
     <SafeAreaView
       className={`h-full ${theme === "dark" ? "bg-dark" : "bg-light"}`}
@@ -114,11 +120,7 @@ const SearchLocation = () => {
                   <View className="flex-row items-center justify-start gap-2 p-3 bg-clip-padding">
                     <View>
                       <Text
-                        style={{
-                          textShadowColor: theme === "dark" ? "white" : "dark",
-                          textShadowOffset: { width: 0, height: 0 },
-                          textShadowRadius: 6,
-                        }}
+                        style={TEXT_SHADOW}
                         className={`text-lg font-orbitron-bold ${
                           theme === "dark" ? "text-light" : "text-blue-900"
                         }`}
@@ -127,11 +129,7 @@ const SearchLocation = () => {
                       </Text>
 
                       <Text
-                        style={{
-                          textShadowColor: theme === "dark" ? "white" : "dark",
-                          textShadowOffset: { width: 0, height: 0 },
-                          textShadowRadius: 2,
-                        }}
+                        style={TEXT_SHADOW}
                         className={`font-genos-regular text-lg leading-none ${
                           theme === "dark" ? "text-light/70" : "text-dark/70"
                         }`}
@@ -150,12 +148,7 @@ const SearchLocation = () => {
                           </Text>
 
                           <Text
-                            style={{
-                              textShadowColor:
-                                theme === "dark" ? "white" : "dark",
-                              textShadowOffset: { width: 0, height: 0 },
-                              textShadowRadius: 3,
-                            }}
+                            style={TEXT_SHADOW}
                             className={`font-genos-regular text-lg ${
                               theme === "dark"
                                 ? "text-light/80"
