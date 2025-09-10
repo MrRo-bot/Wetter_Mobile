@@ -56,16 +56,16 @@ export default function Layout() {
 
   let theme = useColorScheme();
 
-  const themeBackground =
+  const THEME_BACKGROUND =
     theme === "dark" ? "hsl(264, 14%, 7%)" : "hsl(266, 54%, 97%)";
-  const themeStyle = theme === "dark" ? "light-content" : "dark-content";
-  const themeScheme = theme === "dark" ? "light" : "dark";
+  const THEME_STYLE = theme === "dark" ? "light-content" : "dark-content";
+  const THEME_SCHEME = theme === "dark" ? "light" : "dark";
 
   useEffect(() => {
     if (Platform.OS === "android") {
-      NavigationBar.setStyle(themeScheme);
+      NavigationBar.setStyle(THEME_SCHEME);
     }
-  }, [themeScheme]);
+  }, [THEME_SCHEME]);
 
   useEffect(() => {
     const prepareApp = async () => {
@@ -151,7 +151,7 @@ export default function Layout() {
   if (!isReady || !fontsLoaded || hasLaunched === null) {
     return (
       <View
-        style={{ flex: 1, backgroundColor: themeBackground }}
+        style={{ flex: 1, backgroundColor: THEME_BACKGROUND }}
         className="items-center justify-center w-full h-full"
       >
         <Animated.View style={[animatedPulse]}>
@@ -177,11 +177,11 @@ export default function Layout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <StatusBar barStyle={themeStyle} backgroundColor={themeBackground} />
+      <StatusBar barStyle={THEME_STYLE} backgroundColor={THEME_BACKGROUND} />
       <Stack
         screenOptions={{
           headerShown: false,
-          contentStyle: { backgroundColor: themeBackground },
+          contentStyle: { backgroundColor: THEME_BACKGROUND },
         }}
       />
     </QueryClientProvider>
