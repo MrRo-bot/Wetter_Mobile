@@ -121,7 +121,7 @@ const useWeatherData = (coordinates: {
     queryKey: ["openMeteo_weather", coordinates],
     queryFn: fetchWeather,
     enabled: !!coordinates && isValidCoordinates(coordinates),
-    staleTime: 1000 * 60 * 15,
+    staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 15,
     refetchOnMount: false,
     refetchOnReconnect: true,

@@ -123,7 +123,7 @@ const useUnsplashImage = (imgSearchString: string | null) => {
     queryKey: ["react_native_image_colors", imageData?.url],
     queryFn: () => getUnsplashImageColors(imageData),
     enabled: !!imageData?.url,
-    staleTime: 1000 * 60 * 15,
+    staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 15,
     refetchOnMount: false,
     refetchOnReconnect: true,
