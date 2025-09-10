@@ -12,12 +12,16 @@ export default function RouteError() {
       <Stack.Screen options={{ title: "Oops! This screen doesn't exist." }} />
       <View className="items-center justify-center w-full h-full bg-white">
         <Image
+          cachePolicy={"memory-disk"}
+          transition={1000}
           style={{ width: width * 0.6, height: width * 0.6 }}
           source={images.location}
           accessibilityLabel="Location error image"
         />
         <View className="flex-row items-center justify-between gap-2 mt-4">
           <Image
+            cachePolicy={"memory-disk"}
+            transition={1000}
             style={{ width: 24, height: 24 }}
             source={images.alert}
             accessibilityLabel="Alert icon"
@@ -32,6 +36,8 @@ export default function RouteError() {
             </Text>
           </Link>
           <Image
+            cachePolicy={"memory-disk"}
+            transition={1000}
             style={{ width: 24, height: 24 }}
             source={images.alert}
             accessibilityLabel="Alert icon"

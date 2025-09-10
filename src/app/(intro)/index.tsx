@@ -16,6 +16,8 @@ export default function Intro() {
     >
       <View className="w-full">
         <Image
+          cachePolicy={"memory-disk"}
+          transition={1000}
           contentFit="cover"
           source={{ uri: "introduction" }}
           style={{

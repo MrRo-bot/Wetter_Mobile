@@ -46,6 +46,8 @@ export default function Location() {
     >
       <View className="w-full">
         <Image
+          cachePolicy={"memory-disk"}
+          transition={1000}
           source={images.location}
           style={{ width: 300, height: 300, marginInline: "auto" }}
           contentFit="contain"

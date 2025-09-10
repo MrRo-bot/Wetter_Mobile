@@ -156,6 +156,8 @@ export default function Layout() {
       >
         <Animated.View style={[animatedPulse]}>
           <Image
+            cachePolicy={"memory-disk"}
+            transition={1000}
             style={{ width: 150, height: 150 }}
             source={
               theme === "dark"

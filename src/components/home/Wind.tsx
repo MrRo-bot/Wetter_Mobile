@@ -87,6 +87,8 @@ const Wind = () => {
           />
 
           <Image
+            cachePolicy={"memory-disk"}
+            transition={1000}
             style={{
               position: "absolute",
               zIndex: 0,

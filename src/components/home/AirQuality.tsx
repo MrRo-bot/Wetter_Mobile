@@ -201,6 +201,8 @@ const AirQuality = () => {
         </View>
         <View className="relative w-full h-2 rounded-md">
           <Image
+            cachePolicy={"memory-disk"}
+            transition={1000}
             style={{
               width: "100%",
               height: "100%",

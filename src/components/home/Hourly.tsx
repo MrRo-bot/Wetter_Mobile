@@ -127,6 +127,8 @@ const Hourly = () => {
                   {item?.precipitation ?? "..."}
                 </Text>
                 <Image
+                  cachePolicy={"memory-disk"}
+                  transition={1000}
                   contentFit="cover"
                   style={{ width: 48, height: 48, marginBlock: 7 }}
                   source={icon}
@@ -136,6 +138,8 @@ const Hourly = () => {
                   {item?.windSpeed ?? "..."}
                 </Text>
                 <Image
+                  cachePolicy={"memory-disk"}
+                  transition={1000}
                   contentFit="cover"
                   style={{
                     transform: `rotate(${item?.windDirection ?? 0}deg)`,

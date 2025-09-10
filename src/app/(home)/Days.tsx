@@ -102,6 +102,8 @@ const Days = () => {
                 <View className="w-2/12">
                   <View className="p-2 mx-auto rounded-2xl max-w-max max-h-max bg-dark/10">
                     <Image
+                      cachePolicy={"memory-disk"}
+                      transition={1000}
                       contentFit="cover"
                       style={{ width: 40, height: 40 }}
                       source={icon}
@@ -171,6 +173,8 @@ const Days = () => {
                   </Text>
                   <View className="mx-auto mt-1">
                     <Image
+                      cachePolicy={"memory-disk"}
+                      transition={1000}
                       style={{ marginInline: "auto", width: 32, height: 32 }}
                       source={images.sunrise}
                       alt={altText}
@@ -188,6 +192,8 @@ const Days = () => {
                   </View>
                   <View className="mx-auto mt-1">
                     <Image
+                      cachePolicy={"memory-disk"}
+                      transition={1000}
                       style={{ marginInline: "auto", width: 32, height: 32 }}
                       source={images.sunset}
                       alt={altText}

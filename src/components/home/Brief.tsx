@@ -135,6 +135,12 @@ const Brief = ({
         ) : (
           <>
             <Image
+              cachePolicy={"memory-disk"}
+              transition={{
+                effect: "flip-from-top",
+                timing: "ease-in-out",
+                duration: 1000,
+              }}
               contentFit="cover"
               style={{
                 width: "100%",
@@ -244,6 +250,8 @@ const Brief = ({
                 className={`items-center justify-center p-1 mr-4 rounded-full ${theme === "dark" ? "bg-gray-500/30" : "bg-gray-500/10"}`}
               >
                 <Image
+                  cachePolicy={"memory-disk"}
+                  transition={1000}
                   style={{ marginInline: "auto", width: 18, height: 18 }}
                   source={images.alert}
                   alt={"alert"}

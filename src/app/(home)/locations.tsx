@@ -85,6 +85,8 @@ const LocationCard = ({
               className={`absolute z-20 items-center justify-center w-full h-48 ${theme === "dark" ? "bg-dark/30" : "bg-dark/10"}`}
             ></View>
             <Image
+              cachePolicy={"memory-disk"}
+              transition={1000}
               contentFit="cover"
               className="z-10"
               style={{

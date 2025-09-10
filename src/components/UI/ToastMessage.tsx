@@ -56,6 +56,8 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
                 className={`rounded-full shadow-sm p-1 ${theme === "dark" ? "bg-light" : "bg-dark"}`}
               >
                 <Image
+                  cachePolicy={"memory-disk"}
+                  transition={1000}
                   style={{ width: 20, height: 20 }}
                   source={
                     theme === "dark"
@@ -68,7 +70,7 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
                 {toast.text && (
                   <Text
                     className={`font-orbitron-bold ${
-                      theme === "dark" ? "text-light" : "text-dark"
+                      theme === "dark" ? "text-blue-950" : "text-dark"
                     }`}
                   >
                     {toast.text}
@@ -77,7 +79,7 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
                 {toast.description && (
                   <Text
                     className={`text-sm font-orbitron-semiBold tracking-wide ${
-                      theme === "dark" ? "text-light" : "text-dark"
+                      theme === "dark" ? "text-blue-950" : "text-dark"
                     }`}
                   >
                     {toast.description}

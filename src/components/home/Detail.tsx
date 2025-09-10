@@ -89,6 +89,8 @@ const Detail = () => {
             className={`w-[32%] items-center justify-center p-2 rounded-2xl ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
           >
             <Image
+              cachePolicy={"memory-disk"}
+              transition={1000}
               contentFit="cover"
               style={{ width: 48, height: 48 }}
               source={detail?.icon}

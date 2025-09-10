@@ -66,6 +66,8 @@ const SearchLocation = () => {
         <View className="items-center justify-center w-full h-full">
           <View>
             <Image
+              cachePolicy={"memory-disk"}
+              transition={1000}
               style={{ width: 250, height: 250 }}
               contentFit="contain"
               source={images.search}
