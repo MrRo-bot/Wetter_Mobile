@@ -45,11 +45,10 @@ const useLocationSearch = (search: string) => {
     queryKey: ["openMeteo_geocoding", search],
     queryFn: fetchLocationResults,
     enabled: !!search && paramsObj.name.length > 3,
+    placeholderData: (previousData) => previousData,
     staleTime: 5 * 60 * 1000,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    refetchOnReconnect: true,
-    placeholderData: (previousData) => previousData,
   });
 };
 
