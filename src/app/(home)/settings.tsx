@@ -1,4 +1,4 @@
-import { ScrollView, Text, useColorScheme } from "react-native";
+import { Pressable, ScrollView, Text, useColorScheme } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Settings = () => {
@@ -9,11 +9,13 @@ const Settings = () => {
       edges={["bottom"]}
     >
       <ScrollView>
-        <Text
-          className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
-        >
-          Weather Alerts
-        </Text>
+        <Pressable>
+          <Text
+            className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
+          >
+            Weather Alerts
+          </Text>
+        </Pressable>
       </ScrollView>
     </SafeAreaView>
   );

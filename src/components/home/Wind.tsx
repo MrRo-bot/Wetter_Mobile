@@ -114,7 +114,9 @@ const Wind = () => {
               degConv(weather?.current?.wind_direction_10m).cardinal ?? "..."
             }
             className={`mt-1 leading-0 font-genos-bold text-dark/60`}
-          ></Text>
+          >
+            {degConv(weather?.current?.wind_direction_10m).cardinal ?? "..."}
+          </Text>
         </View>
       </View>
     </View>

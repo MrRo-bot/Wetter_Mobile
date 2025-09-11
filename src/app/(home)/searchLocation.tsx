@@ -8,7 +8,6 @@ import { ToastRef } from "@/src/types/types";
 import { Image } from "expo-image";
 import { useEffect, useRef, useState } from "react";
 import {
-  AccessibilityInfo,
   Pressable,
   ScrollView,
   Text,
@@ -24,7 +23,6 @@ const SearchLocation = () => {
 
   const toastRef = useRef<ToastRef>(null);
   const [searchStr, setSearchStr] = useState("");
-  const [reducedMotion, setReducedMotion] = useState(false);
 
   const debouncedSearchStr = useDebounce(searchStr, 500);
   const { data, isLoading, error } = useLocationSearch(debouncedSearchStr);
@@ -59,11 +57,6 @@ const SearchLocation = () => {
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 6,
   };
-  useEffect(() => {
-    AccessibilityInfo.isReduceMotionEnabled().then((enabled) => {
-      setReducedMotion(enabled);
-    });
-  }, []);
 
   return (
     <SafeAreaView
@@ -120,9 +113,7 @@ const SearchLocation = () => {
           {data?.results?.map((location) => (
             <Animated.View
               key={location.id}
-              entering={
-                reducedMotion ? undefined : FadeInUp.duration(300).delay(200)
-              }
+              entering={FadeInUp.duration(300).delay(200)}
               className="w-[90%] mx-auto my-2"
             >
               <Pressable

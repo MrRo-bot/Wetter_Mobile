@@ -31,6 +31,7 @@ export default function Layout() {
   const [isReady, setIsReady] = useState(false);
 
   const [hasLaunched, setHasLaunched] = useState<boolean | null>(null);
+
   const toastRef = useRef<ToastRef>(null);
 
   const { locations } = locationStore();
