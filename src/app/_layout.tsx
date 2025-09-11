@@ -87,6 +87,7 @@ export default function Layout() {
         toastRef.current?.show({
           type: "error",
           description: `Error with AsyncStorage: ${error} 😭`,
+          accessibilityLiveRegion: "assertive",
         });
         setHasLaunched(false);
         setIsReady(true);
@@ -156,6 +157,8 @@ export default function Layout() {
       >
         <Animated.View style={[animatedPulse]}>
           <Image
+            accessibilityRole="image"
+            accessibilityLabel="app logo as toast icon"
             cachePolicy={"memory-disk"}
             transition={1000}
             style={{ width: 150, height: 150 }}
@@ -167,6 +170,7 @@ export default function Layout() {
           />
         </Animated.View>
         <Text
+          accessibilityLabel="App name i.e. Wetter"
           className={`font-orbitron-semiBold mt-12 w-full tracking-widest text-4xl text-center ${theme === "dark" ? "text-redLight" : "text-redDark"}`}
         >
           WETTER

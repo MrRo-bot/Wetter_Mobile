@@ -94,6 +94,9 @@ const AirQuality = () => {
       className={`relative overflow-hidden py-4 pt-10 px-2 mx-3 rounded-2xl ${theme === "dark" ? "bg-blueDark" : "bg-blueLight"}`}
     >
       <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="View aqi charts"
+        accessibilityHint="Navigates to charts page for visualisation of aqi data"
         onPress={() => router.navigate("/(home)/Aqi")}
         className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-slate-600/50" : "bg-light/70"}`}
       >
@@ -104,6 +107,8 @@ const AirQuality = () => {
         </Text>
         <View className="absolute -translate-y-1/2 right-5 top-1/2">
           <Entypo
+            accessibilityLabel="Arrow indicating navigation"
+            accessibilityRole="image"
             className="rotate-45"
             name="direction"
             size={16}
@@ -111,11 +116,16 @@ const AirQuality = () => {
           />
         </View>
       </Pressable>
-      <View className="flex-row flex-wrap items-center justify-between mt-4 gap-y-2">
+      <View
+        accessibilityRole="list"
+        accessibilityLabel="Air quality pollutant details"
+        className="flex-row flex-wrap items-center justify-between mt-4 gap-y-2"
+      >
         {aqiDetail.map((detail) => {
           const colorObj = aqiDetailColors(detail);
           return (
             <View
+              accessibilityLabel={`${detail.title}: ${detail.value ?? "unknown"}`}
               key={detail.title}
               style={{
                 backgroundColor: colorObj.bgColor,
@@ -125,12 +135,14 @@ const AirQuality = () => {
               <Text
                 style={{ color: colorObj.textColor }}
                 className={`mt-1 leading-none font-orbitron-bold`}
+                accessibilityLabel={`${detail.title ?? "N/A"}`}
               >
                 {detail.title ?? "..."}
               </Text>
               <Text
                 style={{ color: colorObj.textColor }}
                 className={`mt-2 text-2xl leading-none font-genos-regular `}
+                accessibilityLabel={`${detail.value ?? "N/A"}`}
               >
                 {detail.value ?? "..."}
               </Text>
@@ -150,6 +162,11 @@ const AirQuality = () => {
         </View>
         <View className="w-9/12">
           <Text
+            accessibilityLabel={
+              aqiData?.level
+                ? `AQI level: ${aqiData.level}`
+                : "AQI level: data unavailable"
+            }
             className={`text-lg font-orbitron-bold ${theme === "dark" ? "text-slate-500" : "text-dark"}`}
           >
             {aqiData?.level ?? "..."}
@@ -201,6 +218,7 @@ const AirQuality = () => {
         </View>
         <View className="relative w-full h-2 rounded-md">
           <Image
+            accessibilityLabel={`Air Quality Index meter showing ${aqiIndex ?? "unknown"}`}
             cachePolicy={"memory-disk"}
             transition={1000}
             style={{
@@ -209,6 +227,13 @@ const AirQuality = () => {
             }}
             source={images.aqi_meter}
           />
+          <Text
+            accessibilityLabel={`AQI meter position: ${aqiData?.seekBar ? Math.round(aqiData.seekBar) : "unknown"} percent`}
+            className="sr-only"
+          >
+            AQI meter position:{" "}
+            {aqiData?.seekBar ? Math.round(aqiData.seekBar) : "unknown"}%
+          </Text>
           <View
             style={{ left: `${aqiData?.seekBar}%` }}
             className={`absolute w-2.5 h-2.5 rounded-full ${theme === "dark" ? "bg-light" : "bg-dark"}`}

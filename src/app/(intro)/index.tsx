@@ -16,6 +16,8 @@ export default function Intro() {
     >
       <View className="w-full">
         <Image
+          accessibilityRole="image"
+          accessibilityLabel="App Hero Image"
           cachePolicy={"memory-disk"}
           transition={1000}
           contentFit="cover"
@@ -39,6 +41,7 @@ export default function Intro() {
           }}
         >
           <Text
+            accessibilityLabel="App name i.e. Wetter"
             className={`font-orbitron-black tracking-widest text-5xl text-center ${theme === "dark" ? "text-redLight" : "text-redDark"}`}
           >
             Wetter
@@ -52,6 +55,8 @@ export default function Intro() {
       </View>
 
       <components.MainButton
+        accessibilityLabel="Next"
+        accessibilityHint="moves to page for finding location data"
         theme={theme}
         onPressFunc={() => router.navigate("/(intro)/location")}
         buttonText="Next"

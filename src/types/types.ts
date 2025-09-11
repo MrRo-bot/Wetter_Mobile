@@ -68,6 +68,8 @@ export interface MainButtonType {
   theme: ColorSchemeName;
   darkBgColor: string;
   lightBgColor: string;
+  accessibilityLabel: string;
+  accessibilityHint: string;
 }
 
 export interface WeatherDataType {
@@ -389,6 +391,7 @@ export interface WeatherIconsType {
 export type ToastType = "success" | "error" | "pending";
 
 export interface ToastConfig {
+  accessibilityLiveRegion?: "none" | "polite" | "assertive" | undefined;
   id: string;
   isVisible: boolean;
   type: ToastType;
@@ -402,6 +405,7 @@ export interface ShowToastParams {
   text?: string;
   description?: string;
   timeout?: number | 4000;
+  accessibilityLiveRegion?: "none" | "polite" | "assertive" | undefined;
 }
 
 export interface ToastRef {

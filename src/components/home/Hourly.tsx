@@ -75,6 +75,9 @@ const Hourly = () => {
       className={`relative overflow-hidden py-4 pt-10 mx-3 rounded-2xl ${theme === "dark" ? "bg-purpleDark" : "bg-purpleLight"}`}
     >
       <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="View hourly weather details"
+        accessibilityHint="Navigates to weather forecast for next 48 hours"
         onPress={() => router.navigate("/(home)/Hours")}
         className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-dark/50" : "bg-light/50"}`}
       >
@@ -85,6 +88,8 @@ const Hourly = () => {
         </Text>
         <View className="absolute -translate-y-1/2 right-5 top-1/2">
           <Entypo
+            accessibilityLabel="Arrow indicating navigation"
+            accessibilityRole="image"
             className="rotate-45"
             name="direction"
             size={16}
@@ -94,6 +99,9 @@ const Hourly = () => {
       </Pressable>
       <View className="px-1 mt-6">
         <FlatList
+          accessibilityLabel="Hourly weather forecast for the next 24 hours"
+          accessibilityHint="Scroll horizontally to view weather for each hour"
+          accessibilityRole="list"
           ItemSeparatorComponent={() => <View className="p-1" />}
           data={hourlyData?.slice(0, 24)}
           horizontal={true}
@@ -115,6 +123,8 @@ const Hourly = () => {
 
             return (
               <View
+                accessibilityRole="list"
+                accessibilityLabel={`Weather at ${item?.hourStamp?.toLowerCase()}: ${item?.currentTemp}, ${item?.weatherMain}, ${item?.precipitation} precipitation, wind ${item?.windSpeed} from ${item?.wind}`}
                 key={item?.id}
                 className={` items-center rounded-2xl justify-between py-1 px-3 ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
               >
@@ -127,6 +137,8 @@ const Hourly = () => {
                   {item?.precipitation ?? "..."}
                 </Text>
                 <Image
+                  accessibilityLabel={item?.weatherMain ?? "Weather icon"}
+                  accessibilityRole="image"
                   cachePolicy={"memory-disk"}
                   transition={1000}
                   contentFit="cover"
@@ -138,6 +150,8 @@ const Hourly = () => {
                   {item?.windSpeed ?? "..."}
                 </Text>
                 <Image
+                  accessibilityLabel={`Wind direction: ${item?.wind}`}
+                  accessibilityRole="image"
                   cachePolicy={"memory-disk"}
                   transition={1000}
                   contentFit="cover"

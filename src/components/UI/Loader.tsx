@@ -29,6 +29,9 @@ const Loader = () => {
 
   return (
     <Animated.View
+      accessibilityRole="progressbar"
+      accessibilityLabel="Loading animation component"
+      accessibilityState={{ busy: true }}
       style={[infiniteRotation]}
       className="relative mx-auto rounded-full w-14 h-14 bg-redDark"
     >

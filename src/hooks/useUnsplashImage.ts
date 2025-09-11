@@ -96,7 +96,7 @@ const useUnsplashImage = (imgSearchString: string | null) => {
     enabled: !!imgSearchString,
     staleTime: 15 * 60 * 1000,
     refetchOnMount: false,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchOnReconnect: true,
   });
 

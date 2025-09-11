@@ -92,6 +92,9 @@ const Daily = () => {
       className={`relative overflow-hidden py-4 pt-10 mx-3 rounded-2xl ${theme === "dark" ? "bg-redDark" : "bg-redLight"}`}
     >
       <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="View daily weather details"
+        accessibilityHint="Navigates to weather forecast for next 16 days"
         onPress={() => router.navigate("/(home)/Days")}
         className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-dark/50" : "bg-light/50"}`}
       >
@@ -102,6 +105,8 @@ const Daily = () => {
         </Text>
         <View className="absolute -translate-y-1/2 right-5 top-1/2">
           <Entypo
+            accessibilityLabel="Arrow indicating navigation"
+            accessibilityRole="image"
             className="rotate-45"
             name="direction"
             size={16}
@@ -112,6 +117,9 @@ const Daily = () => {
 
       <View className="px-1 mt-6">
         <FlatList
+          accessibilityLabel="Daily weather forecast for the next 8 days"
+          accessibilityHint="Scroll horizontally to view weather every day"
+          accessibilityRole="list"
           ItemSeparatorComponent={() => <View className="p-1" />}
           data={dailyData.slice(0, 8)}
           horizontal={true}
@@ -133,6 +141,8 @@ const Daily = () => {
 
             return (
               <View
+                accessibilityRole="list"
+                accessibilityLabel={`Weather at ${item?.dateStamp}: ${item?.maxTemp}, ${item?.minTemp}, ${item?.precipitation} precipitation, ${item.weatherMain}, wind ${item?.windSpeed}`}
                 key={item?.id}
                 className={`items-center rounded-2xl py-1 px-3 ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
               >
@@ -149,6 +159,8 @@ const Daily = () => {
                   {item?.precipitation ?? "..."}
                 </Text>
                 <Image
+                  accessibilityLabel={item?.weatherMain ?? "Weather icon"}
+                  accessibilityRole="image"
                   cachePolicy={"memory-disk"}
                   transition={1000}
                   contentFit="cover"
@@ -160,6 +172,8 @@ const Daily = () => {
                   {item?.windSpeed}
                 </Text>
                 <Image
+                  accessibilityLabel={`Wind direction: ${item?.windDirection}`}
+                  accessibilityRole="image"
                   cachePolicy={"memory-disk"}
                   transition={1000}
                   contentFit="cover"

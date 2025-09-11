@@ -82,13 +82,18 @@ const Detail = () => {
       >
         DETAIL
       </Text>
-      <View className="flex-row flex-wrap items-center justify-between mt-4 gap-y-2">
+      <View
+        accessibilityRole="list"
+        className="flex-row flex-wrap items-center justify-between mt-4 gap-y-2"
+      >
         {detailObj.map((detail) => (
           <View
+            accessibilityLabel={`Weather detail: ${detail?.heading}, ${detail?.data}`}
             key={detail?.heading}
             className={`w-[32%] items-center justify-center p-2 rounded-2xl ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
           >
             <Image
+              accessibilityElementsHidden={true}
               cachePolicy={"memory-disk"}
               transition={1000}
               contentFit="cover"
@@ -100,7 +105,7 @@ const Detail = () => {
               {detail?.heading ?? "..."}
             </Text>
             <Text className={`text-2xl mt-2 font-genos-regular text-dark`}>
-              {detail?.data ?? "..."}
+              {detail?.data ?? "N/A"}
             </Text>
           </View>
         ))}

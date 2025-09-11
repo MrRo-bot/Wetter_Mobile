@@ -39,7 +39,12 @@ const HumidityChart = () => {
         </Text>
       </View>
 
-      <View onLayout={handleLayout}>
+      <View
+        accessible={true}
+        accessibilityLabel="Hourly humidity chart"
+        accessibilityRole="image"
+        onLayout={handleLayout}
+      >
         <BarChart
           hideRules
           isAnimated

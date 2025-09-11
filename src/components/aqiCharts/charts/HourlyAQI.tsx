@@ -39,7 +39,13 @@ const HourlyAQI = ({
 
   return (
     <>
-      <View className="p-2" onLayout={handleLayout}>
+      <View
+        accessible={true}
+        accessibilityLabel={`Hourly ${name} chart`}
+        accessibilityRole="image"
+        className="p-2"
+        onLayout={handleLayout}
+      >
         <LineChart
           areaChart
           curved={isCurved}

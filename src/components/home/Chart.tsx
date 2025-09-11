@@ -51,6 +51,9 @@ const Chart = () => {
       className={`relative overflow-hidden py-4 pt-10 px-1 mx-3 rounded-2xl ${theme === "dark" ? "bg-greenDark" : "bg-greenLight"}`}
     >
       <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="View weather charts"
+        accessibilityHint="Navigates to charts page for visualisation of weather data"
         onPress={() => router.navigate("/(home)/Charts")}
         className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-dark/50" : "bg-light/50"}`}
       >
@@ -61,6 +64,8 @@ const Chart = () => {
         </Text>
         <View className="absolute -translate-y-1/2 right-5 top-1/2">
           <Entypo
+            accessibilityLabel="Arrow indicating navigation"
+            accessibilityRole="image"
             className="rotate-45"
             name="direction"
             size={16}

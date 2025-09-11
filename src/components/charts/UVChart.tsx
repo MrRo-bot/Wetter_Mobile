@@ -39,7 +39,12 @@ const UVChart = () => {
         </Text>
       </View>
 
-      <View onLayout={handleLayout}>
+      <View
+        accessible={true}
+        accessibilityLabel="Hourly UV index chart"
+        accessibilityRole="image"
+        onLayout={handleLayout}
+      >
         <BarChart
           hideRules
           isAnimated

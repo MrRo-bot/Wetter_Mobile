@@ -50,7 +50,13 @@ const DailyAQI = ({ aqiForecast, aqiParameter, name }: DailyAQIProps) => {
 
   return (
     <>
-      <View className="p-2" onLayout={handleLayout}>
+      <View
+        accessible={true}
+        accessibilityLabel={`Daily ${name} chart`}
+        accessibilityRole="image"
+        className="p-2"
+        onLayout={handleLayout}
+      >
         <BarChart
           hideRules
           isAnimated

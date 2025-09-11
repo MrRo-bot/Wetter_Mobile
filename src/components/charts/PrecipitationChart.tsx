@@ -22,7 +22,13 @@ const PrecipitationChart = ({
   };
 
   return (
-    <View className="justify-center p-1" onLayout={handleLayout}>
+    <View
+      accessible={true}
+      accessibilityLabel="Hourly precipitation probability chart"
+      accessibilityRole="image"
+      className="justify-center p-1"
+      onLayout={handleLayout}
+    >
       <LineChart
         areaChart
         curved

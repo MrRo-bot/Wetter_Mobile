@@ -25,7 +25,7 @@ const Hours = () => {
     current?.time && closestTimestamp(current?.time, hourly?.time)
   );
 
-  const hourlyDataFull = Array.from({ length: 47 }, (_, i) => {
+  const hourlyDataFull = Array.from({ length: 48 }, (_, i) => {
     const index = currentTimeIndex + i;
     const weatherCode = hourly?.weather_code[index];
 
@@ -62,8 +62,11 @@ const Hours = () => {
     <SafeAreaView
       className={`${theme === "dark" ? "bg-dark" : "bg-light"}`}
       edges={["bottom"]}
+      accessibilityLiveRegion="polite"
     >
       <FlatList
+        accessibilityRole="list"
+        accessibilityLabel="Weather forecast for the next 48 hours"
         data={hourlyDataFull}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }: { item: HourlyWeatherObjectType }) => {
@@ -102,10 +105,12 @@ const Hours = () => {
                 <View className="w-2/12">
                   <View className="p-2 mx-auto rounded-2xl max-w-max max-h-max bg-dark/10">
                     <Image
+                      accessibilityLabel={`Weather icon for ${item.weatherMain} at ${item.hourStamp}`}
+                      accessible={true}
                       cachePolicy={"memory-disk"}
                       transition={1000}
                       contentFit="cover"
-                      style={{ width: 40, height: 40 }}
+                      style={{ width: 44, height: 44 }}
                       source={icon}
                       alt={altText}
                     />
@@ -116,18 +121,24 @@ const Hours = () => {
                   className={`relative w-9/12 font-orbitron-bold ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                 >
                   <Text
+                    accessibilityRole="text"
+                    accessibilityLabel={`Time: ${item?.hourStamp ?? "unknown"}`}
                     style={TEXT_SHADOW_DARK_ONLY}
                     className={`font-orbitron-medium ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                   >
                     {item?.hourStamp ?? "..."}
                   </Text>
                   <Text
+                    accessibilityRole="text"
+                    accessibilityLabel={`Temperature: ${item?.feels_like ?? "unknown"}`}
                     style={TEXT_SHADOW_DARK_ONLY}
                     className={`font-orbitron-medium ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                   >
                     {item?.feels_like ?? "..."}
                   </Text>
                   <Text
+                    accessibilityRole="text"
+                    accessibilityLabel={`Weather: ${item?.weatherMain ?? "unknown"}`}
                     className={`absolute -bottom-[26px] text-lg font-genos-medium ${theme === "dark" ? "text-light/90" : "text-dark/50"}`}
                   >
                     {item?.weatherMain ?? "..."}
@@ -137,6 +148,8 @@ const Hours = () => {
 
               <View className="flex-row items-start justify-start gap-4">
                 <Text
+                  accessibilityRole="text"
+                  accessibilityLabel={`Precipitation: ${item?.precipitation ?? "unknown"}`}
                   style={TEXT_SHADOW_DARK_ONLY}
                   className={`w-2/12 text-sm text-center font-orbitron-semiBold ${theme === "dark" ? "text-blue-200" : "text-blue-600"}`}
                 >
@@ -149,6 +162,8 @@ const Hours = () => {
                   >
                     Wind -{" "}
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Wind: ${item?.windSpeed ?? "unknown"}`}
                       style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
@@ -161,6 +176,8 @@ const Hours = () => {
                   >
                     Gust -{" "}
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Gust: ${item?.gust ?? "unknown"}`}
                       style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
@@ -172,6 +189,8 @@ const Hours = () => {
                   >
                     Clouds -{" "}
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Clouds: ${item?.clouds ?? "unknown"}`}
                       style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
@@ -183,6 +202,8 @@ const Hours = () => {
                   >
                     Humidity -{" "}
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Humidity: ${item?.humidity ?? "unknown"}`}
                       style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
@@ -194,6 +215,8 @@ const Hours = () => {
                   >
                     Rain -{" "}
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`PrecipitationAmount: ${item?.precipitationAmount ?? "unknown"}`}
                       style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
@@ -205,6 +228,8 @@ const Hours = () => {
                   >
                     Visibility -{" "}
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Visibility: ${item?.visibility ?? "unknown"}`}
                       style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
@@ -216,6 +241,8 @@ const Hours = () => {
                   >
                     Uv index -{" "}
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`UV Index: ${item?.uvIndex ?? "unknown"}`}
                       style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
@@ -227,6 +254,8 @@ const Hours = () => {
                   >
                     Pressure -{" "}
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Pressure: ${item?.pressure ?? "unknown"}`}
                       style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
@@ -238,6 +267,8 @@ const Hours = () => {
                   >
                     Ground temp -{" "}
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Soil Temp.: ${item?.soilTemp ?? "unknown"}`}
                       style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
@@ -249,6 +280,8 @@ const Hours = () => {
                   >
                     Radiation -{" "}
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Radiation: ${item?.radiation ?? "unknown"}`}
                       style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800 "}`}
                     >
@@ -260,6 +293,8 @@ const Hours = () => {
                   >
                     Dew point -{" "}
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Dew Point: ${item?.dewPoint ?? "unknown"}`}
                       style={TEXT_SHADOW}
                       className={`text-sm font-orbitron-regular ${theme === "dark" ? "text-light" : "text-violet-800"}`}
                     >

@@ -10,10 +10,16 @@ const MainButton = ({
   buttonText,
   darkColor,
   lightColor,
+  accessibilityLabel,
+  accessibilityHint,
 }: MainButtonType) => {
   return (
     <View className={`overflow-hidden rounded-full max-w-max`}>
       <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={accessibilityLabel || buttonText}
+        accessibilityHint={accessibilityHint}
+        accessibilityState={{ disabled: !onPressFunc }}
         onPress={onPressFunc}
         className={`px-10 py-2.5 ${theme === "dark" ? darkBgColor : lightBgColor}`}
         android_ripple={{

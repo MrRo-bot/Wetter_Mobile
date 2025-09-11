@@ -40,7 +40,12 @@ const Radiation = () => {
         </Text>
       </View>
 
-      <View onLayout={handleLayout}>
+      <View
+        accessible={true}
+        accessibilityLabel="Hourly direct normal irradiance chart"
+        accessibilityRole="image"
+        onLayout={handleLayout}
+      >
         <LineChart
           data={radiationData}
           areaChart

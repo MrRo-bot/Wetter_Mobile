@@ -44,6 +44,7 @@ const Footer = () => {
       toastRef.current?.show({
         type: "error",
         description: `Error opening URL: ${error} 😭`,
+        accessibilityLiveRegion: "assertive",
       });
 
       try {
@@ -52,6 +53,7 @@ const Footer = () => {
         toastRef.current?.show({
           type: "error",
           description: `Error opening webURL: ${webError} 😭`,
+          accessibilityLiveRegion: "assertive",
         });
       }
     }
@@ -60,6 +62,8 @@ const Footer = () => {
   return (
     <View className="pt-8 pb-3">
       <Text
+        accessibilityRole="text"
+        accessibilityLabel="Social media links section"
         className={`text-lg leading-none mb-2 tracking-wider text-center font-genos-regular ${theme === "dark" ? "text-light" : "text-dark"}`}
       >
         My socials 😘
@@ -71,8 +75,10 @@ const Footer = () => {
             onPress={() => openLink(appUrl, webUrl)}
             accessibilityLabel={`Open ${linkName} profile`}
             accessibilityHint={`Navigates to my ${linkName} profile`}
+            accessibilityRole="button"
           >
             <Icon
+              accesssible={false}
               name={iconName}
               size={24}
               color={theme === "dark" ? "white" : "black"}
@@ -82,12 +88,14 @@ const Footer = () => {
       </View>
       <View className="mx-auto">
         <Text
+          accessibilityRole="text"
           className={`text-center text-sm ${theme === "dark" ? "text-light/50" : "text-dark/50"}`}
         >
           Weather data by open-meteo.com
         </Text>
 
         <Text
+          accessibilityRole="text"
           className={`text-center text-sm ${theme === "dark" ? "text-light/50" : "text-dark/50"}`}
         >
           Inspired by Today Weather

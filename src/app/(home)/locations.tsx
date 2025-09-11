@@ -44,6 +44,7 @@ const LocationCard = ({
       toastRef?.current?.show({
         type: "error",
         description: `${errorMsg} 😭`,
+        accessibilityLiveRegion: "assertive",
       });
   }, [errorMsg]);
 
@@ -85,6 +86,7 @@ const LocationCard = ({
               className={`absolute z-20 items-center justify-center w-full h-48 ${theme === "dark" ? "bg-dark/30" : "bg-dark/10"}`}
             ></View>
             <Image
+              accessibilityLabel={`Image of ${location?.geoAddress[0]?.city ?? "location"}`}
               cachePolicy={"memory-disk"}
               transition={1000}
               contentFit="cover"
@@ -188,7 +190,11 @@ const Locations = () => {
         </Text>
         <View className="flex-row items-center justify-center gap-2">
           <Pressable
-            className={`shadow-2xl w-10 h-10 rounded-full items-center overflow-hidden justify-center ${theme === "dark" ? "bg-slate-400/10" : "bg-slate-100/80"}`}
+            accessibilityLabel="Open settings"
+            accessibilityHint="Navigates to the settings screen"
+            accessible={true}
+            accessibilityRole="button"
+            className={`shadow-2xl w-12 h-12 rounded-full items-center overflow-hidden justify-center ${theme === "dark" ? "bg-slate-400/10" : "bg-slate-100/80"}`}
             onPress={() => router.navigate("/(home)/settings")}
           >
             <MaterialIcons
@@ -199,7 +205,11 @@ const Locations = () => {
           </Pressable>
 
           <Pressable
-            className={`shadow-2xl w-10 h-10 rounded-full items-center overflow-hidden justify-center ${theme === "dark" ? "bg-slate-400/10" : "bg-slate-100/80"}`}
+            accessibilityLabel="Open location search"
+            accessibilityHint="Navigates to the location search screen"
+            accessible={true}
+            accessibilityRole="button"
+            className={`shadow-2xl w-12 h-12 rounded-full items-center overflow-hidden justify-center ${theme === "dark" ? "bg-slate-400/10" : "bg-slate-100/80"}`}
             onPress={() => router.navigate("/(home)/searchLocation")}
           >
             <MaterialIcons
@@ -211,6 +221,8 @@ const Locations = () => {
         </View>
       </View>
       <FlatList
+        accessibilityRole="list"
+        accessibilityLabel="List of saved locations"
         data={locations}
         renderItem={({ item }: { item: LocationDataType }) => (
           <LocationCard location={item} theme={theme} />

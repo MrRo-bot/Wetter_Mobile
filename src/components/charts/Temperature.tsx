@@ -40,7 +40,12 @@ const Temperature = () => {
         </Text>
       </View>
 
-      <View onLayout={handleLayout}>
+      <View
+        accessible={true}
+        accessibilityLabel="Hourly temperature chart"
+        accessibilityRole="image"
+        onLayout={handleLayout}
+      >
         <LineChart
           curved
           isAnimated

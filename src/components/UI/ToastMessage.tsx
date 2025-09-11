@@ -17,11 +17,20 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
       text,
       description,
       timeout = 4000,
+      accessibilityLiveRegion = "polite",
     }: ShowToastParams) => {
       const id = Date.now().toString();
       setToasts((prev) => [
         ...prev,
-        { id, isVisible: true, type, text, description, timeout },
+        {
+          id,
+          isVisible: true,
+          type,
+          text,
+          description,
+          timeout,
+          accessibilityLiveRegion,
+        },
       ]);
 
       setTimeout(() => {
@@ -34,6 +43,8 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
     <>
       {toasts.map((toast, index) => (
         <Animated.View
+          accessibilityLiveRegion={toast.accessibilityLiveRegion}
+          accessibilityRole="alert"
           key={toast.id}
           style={{
             bottom: 70 + index * 5,
@@ -56,6 +67,7 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
                 className={`rounded-full shadow-sm p-1 ${theme === "dark" ? "bg-light" : "bg-dark"}`}
               >
                 <Image
+                  accessibilityLabel={`${toast.type} icon`}
                   cachePolicy={"memory-disk"}
                   transition={1000}
                   style={{ width: 20, height: 20 }}
@@ -86,6 +98,13 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
                   </Text>
                 )}
               </View>
+              {/* <Pressable
+    onPress={() => setToasts((prev) => prev.filter((t) => t.id !== toast.id))}
+    accessibilityRole="button"
+    accessibilityLabel="Dismiss toast"
+  >
+    <Text className="text-sm">Close</Text>
+  </Pressable> */}
             </BlurView>
           </View>
         </Animated.View>

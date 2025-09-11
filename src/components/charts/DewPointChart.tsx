@@ -39,7 +39,12 @@ const DewPointChart = () => {
         </Text>
       </View>
 
-      <View onLayout={handleLayout}>
+      <View
+        accessible={true}
+        accessibilityLabel="Hourly dew point chart"
+        accessibilityRole="image"
+        onLayout={handleLayout}
+      >
         <BarChart
           hideRules
           isAnimated

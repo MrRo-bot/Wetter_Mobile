@@ -40,7 +40,12 @@ const WindChart = () => {
         </Text>
       </View>
 
-      <View onLayout={handleLayout}>
+      <View
+        accessible={true}
+        accessibilityLabel="Hourly windspeed chart"
+        accessibilityRole="image"
+        onLayout={handleLayout}
+      >
         <LineChart
           areaChart
           curved

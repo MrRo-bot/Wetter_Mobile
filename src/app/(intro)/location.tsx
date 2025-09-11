@@ -29,6 +29,7 @@ export default function Location() {
       toastRef?.current?.show({
         type: "error",
         description: `${errorMsg} 😭`,
+        accessibilityLiveRegion: "assertive",
       });
   }, [errorMsg]);
 
@@ -46,6 +47,8 @@ export default function Location() {
     >
       <View className="w-full">
         <Image
+          accessibilityRole="image"
+          accessibilityLabel={`Image showing a globe and location pin`}
           cachePolicy={"memory-disk"}
           transition={1000}
           source={images.location}
@@ -53,17 +56,29 @@ export default function Location() {
           contentFit="contain"
         />
         <Text
+          accessibilityLabel="
+          
+          Allow Permissions
+          "
           className={`font-orbitron-black tracking-wide uppercase text-2xl mt-4 text-center mx-auto ${theme === "dark" ? "text-mustardLight" : "text-mustardDark"}`}
         >
           Allow Permissions
         </Text>
 
         <Text
+          accessibilityLabel="
+          
+          Wetter needs your device location to provide accurate
+          "
           className={`font-genos-regular tracking-wide text-xl leading-none mt-4 w-3/4 mx-auto text-center ${theme === "dark" ? "text-light" : "text-dark"}`}
         >
           Wetter needs your device location to provide accurate
         </Text>
         <Text
+          accessibilityLabel="
+          
+          local weather forecasts
+          "
           className={`font-genos-bold tracking-wider text-xl text-center ${theme === "dark" ? "text-redLight" : "text-redDark"}`}
         >
           local weather forecasts
@@ -78,6 +93,8 @@ export default function Location() {
         )}
         <View className="mx-auto">
           <Components.MainButton
+            accessibilityLabel="Allow"
+            accessibilityHint="Button to enable location service to get location data"
             theme={theme}
             onPressFunc={() => getLocation()}
             buttonText="Allow"
@@ -89,7 +106,12 @@ export default function Location() {
         </View>
 
         <View className="mx-auto mt-3">
-          <Pressable onPress={() => router.replace("/(home)/searchLocation")}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Go to location search"
+            onFocus={() => console.log("Focused on location search button")}
+            onPress={() => router.replace("/(home)/searchLocation")}
+          >
             <Text
               className={`font-genos-light underline underline-offset-2 text-xl ${theme === "dark" ? "text-mustardLight" : "text-mustardDark font-genos-regular"}`}
             >

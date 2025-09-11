@@ -8,6 +8,7 @@ import { ToastRef } from "@/src/types/types";
 import { Image } from "expo-image";
 import { useEffect, useRef, useState } from "react";
 import {
+  AccessibilityInfo,
   Pressable,
   ScrollView,
   Text,
@@ -23,6 +24,7 @@ const SearchLocation = () => {
 
   const toastRef = useRef<ToastRef>(null);
   const [searchStr, setSearchStr] = useState("");
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   const debouncedSearchStr = useDebounce(searchStr, 500);
   const { data, isLoading, error } = useLocationSearch(debouncedSearchStr);
@@ -41,6 +43,7 @@ const SearchLocation = () => {
       toastRef?.current?.show({
         type: "error",
         description: `${errorMsg} 😭`,
+        accessibilityLiveRegion: "assertive",
       });
   }, [errorMsg]);
 
@@ -56,6 +59,11 @@ const SearchLocation = () => {
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 6,
   };
+  useEffect(() => {
+    AccessibilityInfo.isReduceMotionEnabled().then((enabled) => {
+      setReducedMotion(enabled);
+    });
+  }, []);
 
   return (
     <SafeAreaView
@@ -63,6 +71,8 @@ const SearchLocation = () => {
       edges={["bottom"]}
     >
       <TextInput
+        accessibilityLabel="Search for a city, country, or place"
+        accessibilityHint="Enter a location name to find it"
         className={`h-10 p-2 m-3 w-[90%] mx-auto rounded-lg border-[1px] border-dotted ${theme === "dark" ? "border-light bg-dark text-light" : "border-dark bg-light text-dark"} placeholder:text-gray-400`}
         placeholder="Search any location"
         onChangeText={(str) => setSearchStr(str)}
@@ -72,6 +82,7 @@ const SearchLocation = () => {
         <View className="items-center justify-center w-full h-full">
           <View>
             <Image
+              accessibilityLabel="Illustration of a magnifying glass for location search"
               cachePolicy={"memory-disk"}
               transition={1000}
               style={{ width: 250, height: 250 }}
@@ -91,8 +102,11 @@ const SearchLocation = () => {
         <View className="items-center justify-center w-full h-full">
           <Text
             className={`border-1 text-center border-dotted ${theme === "dark" ? "border-light bg-dark text-light" : "border-dark bg-light text-dark"}`}
+            accessibilityLabel={`Error: ${error.message || "Failed to load search results"}`}
+            accessibilityRole="alert"
           >
-            {JSON.stringify(error)}
+            {error.message ||
+              "Failed to load search results. Please try again."}
           </Text>
         </View>
       )}
@@ -102,14 +116,20 @@ const SearchLocation = () => {
           <Loader />
         </View>
       ) : (
-        <ScrollView>
+        <ScrollView accessibilityLiveRegion="polite">
           {data?.results?.map((location) => (
             <Animated.View
               key={location.id}
-              entering={FadeInUp.duration(300).delay(200)}
+              entering={
+                reducedMotion ? undefined : FadeInUp.duration(300).delay(200)
+              }
               className="w-[90%] mx-auto my-2"
             >
               <Pressable
+                accessibilityRole="button"
+                accessibilityLabel={`Select ${location.name}, ${location.country}`}
+                accessibilityHint="Tap to fetch weather data for this location"
+                accessible={true}
                 onPress={() =>
                   getLocation(location.latitude, location.longitude)
                 }
@@ -148,6 +168,7 @@ const SearchLocation = () => {
                           </Text>
 
                           <Text
+                            accessibilityLabel={`Population: ${location.population} people`}
                             style={TEXT_SHADOW}
                             className={`font-genos-regular text-lg ${
                               theme === "dark"

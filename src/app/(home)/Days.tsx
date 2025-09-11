@@ -72,8 +72,11 @@ const Days = () => {
     <SafeAreaView
       className={`${theme === "dark" ? "bg-dark" : "bg-light"}`}
       edges={["bottom"]}
+      accessibilityLiveRegion="polite"
     >
       <FlatList
+        accessibilityRole="list"
+        accessibilityLabel="Weather forecast for the next 16 days"
         data={dailyDataFull}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }: { item: DailyWeatherObjectType }) => {
@@ -114,6 +117,8 @@ const Days = () => {
                 <View className="w-2/12">
                   <View className="p-2 mx-auto rounded-2xl max-w-max max-h-max bg-dark/10">
                     <Image
+                      accessibilityLabel={`Weather icon for ${item.weatherMain} at ${item.dateStamp}`}
+                      accessible={true}
                       cachePolicy={"memory-disk"}
                       transition={1000}
                       contentFit="cover"
@@ -126,6 +131,8 @@ const Days = () => {
 
                 <View className="justify-center w-10/12 gap-1">
                   <Text
+                    accessibilityRole="text"
+                    accessibilityLabel={`Time: ${item?.dateStamp ?? "unknown"}`}
                     style={TEXT_SHADOW_DARK_ONLY}
                     className={`font-orbitron-medium tracking-tighter ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                   >
@@ -133,6 +140,8 @@ const Days = () => {
                   </Text>
                   <View className="flex-row gap-1">
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Max temp.: ${item?.maxTemp ?? "unknown"}`}
                       style={TEXT_SHADOW_DARK_ONLY}
                       className={`font-orbitron-bold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
@@ -146,6 +155,8 @@ const Days = () => {
                       /{" "}
                     </Text>
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Min temp.: ${item?.minTemp ?? "unknown"}`}
                       style={TEXT_SHADOW_DARK_ONLY}
                       className={`font-orbitron-bold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
@@ -158,6 +169,8 @@ const Days = () => {
               <View className="flex-row items-start justify-start gap-4">
                 <View className="w-2/12">
                   <Text
+                    accessibilityRole="text"
+                    accessibilityLabel={`Precipitation: ${item?.precipitation ?? "unknown"}`}
                     style={TEXT_SHADOW_DARK_ONLY}
                     className={`text-sm text-center font-orbitron-semiBold ${theme === "dark" ? "text-blue-200" : "text-blue-600"}`}
                   >
@@ -172,6 +185,8 @@ const Days = () => {
                       alt={altText}
                     />
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Sunrise: ${item?.sunrise ?? "unknown"}`}
                       style={TEXT_SHADOW_DARK_ONLY}
                       className={`font-genos-semiBold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
@@ -187,6 +202,8 @@ const Days = () => {
                       alt={altText}
                     />
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Sunset: ${item?.sunset ?? "unknown"}`}
                       style={TEXT_SHADOW_DARK_ONLY}
                       className={`font-genos-semiBold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
@@ -196,6 +213,8 @@ const Days = () => {
                 </View>
                 <View className="w-10/12 max-w-72">
                   <Text
+                    accessibilityRole="text"
+                    accessibilityLabel={`Summary: ${item?.summary ?? "unknown"}`}
                     className={`text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     {item?.summary ?? "..."}
@@ -205,6 +224,8 @@ const Days = () => {
                   >
                     Daylight :{" "}
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Daylight: ${item?.daylightDuration ?? "unknown"}`}
                       style={TEXT_SHADOW}
                       className="text-sm font-orbitron-regular"
                     >
@@ -216,6 +237,8 @@ const Days = () => {
                   >
                     Radiation :{" "}
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Radiation: ${item?.shortwaveRadiation ?? "unknown"}`}
                       style={TEXT_SHADOW}
                       className="text-sm font-orbitron-regular"
                     >
@@ -227,6 +250,8 @@ const Days = () => {
                   >
                     UV Index :{" "}
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`UV Index: ${item?.uvIndex ?? "unknown"}`}
                       style={TEXT_SHADOW}
                       className="text-sm font-orbitron-regular"
                     >
@@ -238,6 +263,8 @@ const Days = () => {
                   >
                     Pressure :{" "}
                     <Text
+                      accessibilityRole="text"
+                      accessibilityLabel={`Pressure: ${item?.surfacePressure ?? "unknown"}`}
                       style={TEXT_SHADOW}
                       className="text-sm font-orbitron-regular"
                     >

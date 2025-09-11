@@ -16,6 +16,7 @@ import { Image } from "expo-image";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import {
+  AccessibilityInfo,
   Dimensions,
   Pressable,
   Text,
@@ -37,6 +38,7 @@ const Brief = ({
 
   const [isConnected, setIsConnected] = useState<boolean | null>(true);
   const [showOffline, setShowOffline] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   const { weather } = weatherStore();
   const locations = locationStore();
@@ -100,6 +102,7 @@ const Brief = ({
       toast.current?.show({
         type: "error",
         description: "Check your internet 🛜",
+        accessibilityLiveRegion: "assertive",
       });
     }
   };
@@ -119,6 +122,7 @@ const Brief = ({
       toast.current?.show({
         type: "error",
         description: error.message || "Failed to fetch weather data",
+        accessibilityLiveRegion: "assertive",
       });
   }, [error, queryStatus, toast]);
 
@@ -131,6 +135,12 @@ const Brief = ({
     textShadowRadius: 8,
   };
 
+  useEffect(() => {
+    AccessibilityInfo.isReduceMotionEnabled().then((enabled) => {
+      setReducedMotion(enabled);
+    });
+  }, []);
+
   return (
     <View className="gap-2 mx-3 mt-2">
       <View
@@ -142,12 +152,18 @@ const Brief = ({
         ) : (
           <>
             <Image
+              accessibilityRole="image"
+              accessibilityLabel={`Image based on weather condition ${weatherCode}`}
               cachePolicy={"memory-disk"}
-              transition={{
-                effect: "flip-from-top",
-                timing: "ease-in-out",
-                duration: 1000,
-              }}
+              transition={
+                reducedMotion
+                  ? undefined
+                  : {
+                      effect: "flip-from-top",
+                      timing: "ease-in-out",
+                      duration: 1000,
+                    }
+              }
               contentFit="cover"
               style={{
                 width: "100%",
@@ -157,6 +173,9 @@ const Brief = ({
             />
             {showOffline && (
               <BlurView
+                accessibilityRole="alert"
+                accessibilityLabel={`Offline mode. Last updated ${Math.round((Date.now() - lastUpdated) / 1000 / 60)} ${Math.round((Date.now() - lastUpdated) / 1000 / 60) <= 1 ? "minute" : "minutes"} ago`}
+                accessibilityLiveRegion="assertive"
                 experimentalBlurMethod="dimezisBlurView"
                 intensity={20}
                 tint={theme === "dark" ? "dark" : "light"}
@@ -169,10 +188,18 @@ const Brief = ({
                   <Text className="text-base text-light font-genos-light">
                     Last updated{" "}
                     {Math.round((Date.now() - lastUpdated) / 1000 / 60)}{" "}
-                    minute&apos;s ago
+                    {Math.round((Date.now() - lastUpdated) / 1000 / 60) <= 1
+                      ? "minute"
+                      : "minutes"}{" "}
+                    ago
                   </Text>
                 </View>
-                <Pressable onPress={() => handleRefetch()}>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel="Refresh weather data when internet is turned on"
+                  onPress={() => handleRefetch()}
+                  onFocus={() => console.log("Focused on refresh button")}
+                >
                   <Entypo name="cycle" size={20} color="white" />
                 </Pressable>
               </BlurView>
@@ -208,7 +235,7 @@ const Brief = ({
             style={TEXT_SHADOW}
             className={`font-orbitron-semiBold self-end text-lg leading-none`}
           >
-            {valRound(daily?.temperature_2m_min[0] ?? "...")}{" "}
+            {valRound(daily?.temperature_2m_min[0]) ?? "..."}{" "}
             {daily_units?.temperature_2m_min ?? "..."}
           </Text>
         </View>
@@ -237,6 +264,8 @@ const Brief = ({
                 className={`items-center justify-center p-1 mr-4 rounded-full ${theme === "dark" ? "bg-gray-500/30" : "bg-gray-500/10"}`}
               >
                 <Image
+                  accessibilityRole="image"
+                  accessibilityLabel="Weather alert icon"
                   cachePolicy={"memory-disk"}
                   transition={1000}
                   style={{ marginInline: "auto", width: 18, height: 18 }}
@@ -254,16 +283,23 @@ const Brief = ({
           </Text>
 
           <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="View daily weather forecast"
+            accessibilityHint="Navigates to daily weather forecast"
             onPress={() => router.navigate("/(home)/Days")}
+            onFocus={() => console.log("Focused on daily forecast button")}
             className="relative mt-1"
           >
             <Text
+              accessibilityLabel={`Weather summary: ${weatherSummary ?? "No weather data"}`}
               className={`pr-8 text-lg leading-none font-genos-medium ${theme === "dark" ? "text-outlineDark/70" : "text-outlineLight/70"}`}
             >
               {weatherSummary ?? "..."}
             </Text>
             <View className="absolute right-0 -translate-y-1/2 top-1/2">
               <Entypo
+                accessibilityLabel="Arrow indicating navigation"
+                accessibilityRole="image"
                 className="rotate-45"
                 name="direction"
                 size={20}
