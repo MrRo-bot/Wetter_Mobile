@@ -77,7 +77,11 @@ const Days = () => {
       <FlatList
         accessibilityRole="list"
         accessibilityLabel="Weather forecast for the next 15 days"
+        maxToRenderPerBatch={3}
+        windowSize={5}
         data={dailyDataFull}
+        contentContainerClassName="pt-4 pb-8"
+        ItemSeparatorComponent={() => <View className="p-3" />}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }: { item: DailyWeatherObjectType }) => {
           const getIconKey = (
@@ -276,10 +280,6 @@ const Days = () => {
             </View>
           );
         }}
-        maxToRenderPerBatch={3}
-        windowSize={5}
-        contentContainerClassName="pt-4 pb-8"
-        ItemSeparatorComponent={() => <View className="p-3" />}
       />
     </SafeAreaView>
   );

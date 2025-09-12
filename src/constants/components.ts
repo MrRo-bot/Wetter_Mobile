@@ -20,6 +20,8 @@ import MainButton from "@/src/components/UI/MainButton";
 import DailyAqiCharts from "../components/aqiCharts/DailyAqiCharts";
 import HourlyAqiCharts from "../components/aqiCharts/HourlyAqiCharts";
 
+import LocationSearchCard from "../components/locationSearch/LocationSearchCard";
+
 export default {
   AirQuality,
   Brief,
@@ -42,4 +44,6 @@ export default {
 
   DailyAqiCharts,
   HourlyAqiCharts,
+
+  LocationSearchCard,
 };

@@ -67,7 +67,11 @@ const Hours = () => {
       <FlatList
         accessibilityRole="list"
         accessibilityLabel="Weather forecast for the next 48 hours"
+        maxToRenderPerBatch={3}
+        windowSize={5}
         data={hourlyDataFull}
+        contentContainerClassName="pt-4 pb-8"
+        ItemSeparatorComponent={() => <View className="p-3" />}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }: { item: HourlyWeatherObjectType }) => {
           const getIconKey = (
@@ -306,10 +310,6 @@ const Hours = () => {
             </View>
           );
         }}
-        maxToRenderPerBatch={3}
-        windowSize={5}
-        contentContainerClassName="pt-4 pb-8"
-        ItemSeparatorComponent={() => <View className="p-3" />}
       />
     </SafeAreaView>
   );
