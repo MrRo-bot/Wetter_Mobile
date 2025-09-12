@@ -46,7 +46,7 @@ const useWeatherData = (coordinates: {
     latitude: "",
     longitude: "",
     timezone: "auto",
-    forecast_days: "16",
+    forecast_days: "15",
     forecast_hours: "48",
     current: [
       "temperature_2m",
@@ -110,6 +110,8 @@ const useWeatherData = (coordinates: {
 
   const finalUrl = `https://api.open-meteo.com/v1/forecast?${queryString}`;
 
+  console.log(finalUrl);
+
   const fetchWeather = async (): Promise<WeatherDataType> => {
     const response = await fetch(finalUrl);
     if (!response.ok)
@@ -124,8 +126,8 @@ const useWeatherData = (coordinates: {
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 15,
     refetchOnMount: false,
-    refetchOnReconnect: true,
     refetchOnWindowFocus: false,
+    refetchOnReconnect: true,
   });
 };
 export default useWeatherData;

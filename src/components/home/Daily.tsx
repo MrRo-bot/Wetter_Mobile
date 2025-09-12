@@ -20,7 +20,7 @@ const Daily = () => {
 
   const { daily, daily_units: units } = weather;
 
-  const dailyData = Array.from({ length: 16 }, (_, i) => {
+  const dailyData = Array.from({ length: 8 }, (_, i) => {
     const weatherCode = daily?.weather_code[i];
 
     return {
@@ -94,7 +94,7 @@ const Daily = () => {
       <Pressable
         accessibilityRole="button"
         accessibilityLabel="View daily weather details"
-        accessibilityHint="Navigates to weather forecast for next 16 days"
+        accessibilityHint="Navigates to weather forecast for next 8 days"
         onPress={() => router.navigate("/(home)/Days")}
         className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-dark/50" : "bg-light/50"}`}
       >
@@ -121,7 +121,7 @@ const Daily = () => {
           accessibilityHint="Scroll horizontally to view weather every day"
           accessibilityRole="list"
           ItemSeparatorComponent={() => <View className="p-1" />}
-          data={dailyData.slice(0, 8)}
+          data={dailyData}
           horizontal={true}
           renderItem={({ item }: { item: DailyWeatherObjectType }) => {
             let iconKey;

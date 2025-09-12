@@ -15,7 +15,7 @@ import {
   useColorScheme,
   View,
 } from "react-native";
-import Animated, { FadeInUp } from "react-native-reanimated";
+import Animated, { FlipInXDown, ReduceMotion } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SearchLocation = () => {
@@ -113,7 +113,9 @@ const SearchLocation = () => {
           {data?.results?.map((location) => (
             <Animated.View
               key={location.id}
-              entering={FadeInUp.duration(300).delay(200)}
+              entering={FlipInXDown.duration(300)
+                .delay(200)
+                .reduceMotion(ReduceMotion.System)}
               className="w-[90%] mx-auto my-2"
             >
               <Pressable

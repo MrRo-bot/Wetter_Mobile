@@ -126,8 +126,8 @@ const useUnsplashImage = (imgSearchString: string | null) => {
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 15,
     refetchOnMount: false,
-    refetchOnReconnect: true,
     refetchOnWindowFocus: false,
+    refetchOnReconnect: true,
   });
 
   return {

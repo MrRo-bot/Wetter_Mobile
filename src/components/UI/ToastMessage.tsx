@@ -4,7 +4,11 @@ import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import React, { Ref, useImperativeHandle, useState } from "react";
 import { Text, useColorScheme, View } from "react-native";
-import Animated, { FadeInDown, FadeOutUp } from "react-native-reanimated";
+import Animated, {
+  FadeInDown,
+  FadeOutUp,
+  ReduceMotion,
+} from "react-native-reanimated";
 
 const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
   let theme = useColorScheme();
@@ -50,8 +54,8 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
             bottom: 70 + index * 5,
             marginInline: "auto",
           }}
-          entering={FadeInDown.duration(300)}
-          exiting={FadeOutUp.duration(300)}
+          entering={FadeInDown.duration(300).reduceMotion(ReduceMotion.System)}
+          exiting={FadeOutUp.duration(300).reduceMotion(ReduceMotion.System)}
           className="absolute z-50 items-center justify-center w-full"
         >
           <View

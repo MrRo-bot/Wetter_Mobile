@@ -37,7 +37,7 @@ export default function HomeLayout() {
 
   const HEADER_TITLE =
     path === "/Days"
-      ? "Next 16 Days"
+      ? "Next 15 Days"
       : path === "/Hours"
         ? "Next 48 Hours"
         : path === "/Charts"

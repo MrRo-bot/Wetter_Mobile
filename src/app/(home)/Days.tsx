@@ -18,7 +18,7 @@ const Days = () => {
 
   const { daily, daily_units: units } = weather;
 
-  const dailyDataFull = Array.from({ length: 16 }, (_, i) => {
+  const dailyDataFull = Array.from({ length: 15 }, (_, i) => {
     const weatherCode = daily?.weather_code[i];
 
     return {
@@ -76,7 +76,7 @@ const Days = () => {
     >
       <FlatList
         accessibilityRole="list"
-        accessibilityLabel="Weather forecast for the next 16 days"
+        accessibilityLabel="Weather forecast for the next 15 days"
         data={dailyDataFull}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }: { item: DailyWeatherObjectType }) => {
