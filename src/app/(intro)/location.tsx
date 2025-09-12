@@ -49,7 +49,6 @@ export default function Location() {
         <Image
           accessibilityRole="image"
           accessibilityLabel={`Image showing a globe and location pin`}
-          cachePolicy={"memory-disk"}
           source={images.location}
           style={{ width: 300, height: 300, marginInline: "auto" }}
           contentFit="contain"

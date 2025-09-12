@@ -219,7 +219,6 @@ const AirQuality = () => {
         <View className="relative w-full h-2 rounded-md">
           <Image
             accessibilityLabel={`Air Quality Index meter showing ${aqiIndex ?? "unknown"}`}
-            cachePolicy={"memory-disk"}
             style={{
               width: "100%",
               height: "100%",

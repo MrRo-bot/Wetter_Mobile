@@ -160,7 +160,6 @@ export default function Layout() {
           <Image
             accessibilityRole="image"
             accessibilityLabel="app logo as toast icon"
-            cachePolicy={"memory-disk"}
             style={{ width: 150, height: 150 }}
             source={
               theme === "dark"

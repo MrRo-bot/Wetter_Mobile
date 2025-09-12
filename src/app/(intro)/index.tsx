@@ -28,7 +28,6 @@ export default function Intro() {
         <Image
           accessibilityRole="image"
           accessibilityLabel="App Hero Image"
-          cachePolicy={"memory-disk"}
           contentFit="cover"
           source={{ uri: "introduction" }}
           style={{

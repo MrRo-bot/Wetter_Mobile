@@ -76,7 +76,6 @@ const SearchLocation = () => {
           <View>
             <Image
               accessibilityLabel="Illustration of a magnifying glass for location search"
-              cachePolicy={"memory-disk"}
               style={{ width: 250, height: 250 }}
               contentFit="contain"
               source={images.search}
@@ -188,7 +187,6 @@ const SearchLocation = () => {
           <View>
             <Image
               accessibilityLabel="Illustration of a magnifying glass for location search"
-              cachePolicy={"memory-disk"}
               style={{ width: 250, height: 250 }}
               contentFit="contain"
               source={images.search}

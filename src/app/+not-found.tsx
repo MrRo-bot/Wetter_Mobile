@@ -21,14 +21,12 @@ export default function RouteError() {
         accessibilityLabel="Error: This screen doesn't exist. Navigate to the home screen."
       >
         <Image
-          cachePolicy={"memory-disk"}
           style={{ width: width * 0.6, height: width * 0.6 }}
           source={images.location}
           accessibilityLabel="Illustration indicating a page not found error"
         />
         <View className="flex-row items-center justify-between gap-2 mt-4">
           <Image
-            cachePolicy={"memory-disk"}
             style={{ width: 24, height: 24 }}
             source={images.alert}
             accessibilityElementsHidden={true}
@@ -45,7 +43,6 @@ export default function RouteError() {
             </Text>
           </Link>
           <Image
-            cachePolicy={"memory-disk"}
             style={{ width: 24, height: 24 }}
             source={images.alert}
             accessibilityElementsHidden={true}

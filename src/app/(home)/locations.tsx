@@ -3,7 +3,8 @@ import { locationStore } from "@/src/store/locationStore";
 import { LocationDataType } from "@/src/types/types";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { FlatList, Pressable, Text, useColorScheme, View } from "react-native";
+import { Pressable, Text, useColorScheme, View } from "react-native";
+import Animated from "react-native-reanimated";
 
 const Locations = () => {
   const router = useRouter();
@@ -52,7 +53,7 @@ const Locations = () => {
           </Pressable>
         </View>
       </View>
-      <FlatList
+      <Animated.FlatList
         accessibilityRole="list"
         accessibilityLabel="List of saved locations"
         maxToRenderPerBatch={8}
@@ -61,8 +62,18 @@ const Locations = () => {
         contentContainerClassName="pt-4 pb-8"
         ItemSeparatorComponent={() => <View className="p-3" />}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }: { item: LocationDataType }) => (
-          <components.LocationSearchCard location={item} theme={theme} />
+        renderItem={({
+          item,
+          index,
+        }: {
+          item: LocationDataType;
+          index: number;
+        }) => (
+          <components.LocationSearchCard
+            index={index}
+            location={item}
+            theme={theme}
+          />
         )}
       />
     </View>

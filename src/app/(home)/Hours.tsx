@@ -111,7 +111,6 @@ const Hours = () => {
                     <Image
                       accessibilityLabel={`Weather icon for ${item.weatherMain} at ${item.hourStamp}`}
                       accessible={true}
-                      cachePolicy={"memory-disk"}
                       contentFit="cover"
                       style={{ width: 44, height: 44 }}
                       source={icon}
