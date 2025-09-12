@@ -161,7 +161,6 @@ export default function Layout() {
             accessibilityRole="image"
             accessibilityLabel="app logo as toast icon"
             cachePolicy={"memory-disk"}
-            transition={1000}
             style={{ width: 150, height: 150 }}
             source={
               theme === "dark"

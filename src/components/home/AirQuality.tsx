@@ -220,7 +220,6 @@ const AirQuality = () => {
           <Image
             accessibilityLabel={`Air Quality Index meter showing ${aqiIndex ?? "unknown"}`}
             cachePolicy={"memory-disk"}
-            transition={1000}
             style={{
               width: "100%",
               height: "100%",

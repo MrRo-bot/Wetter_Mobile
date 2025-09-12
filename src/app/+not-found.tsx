@@ -22,7 +22,6 @@ export default function RouteError() {
       >
         <Image
           cachePolicy={"memory-disk"}
-          transition={1000}
           style={{ width: width * 0.6, height: width * 0.6 }}
           source={images.location}
           accessibilityLabel="Illustration indicating a page not found error"
@@ -30,7 +29,6 @@ export default function RouteError() {
         <View className="flex-row items-center justify-between gap-2 mt-4">
           <Image
             cachePolicy={"memory-disk"}
-            transition={1000}
             style={{ width: 24, height: 24 }}
             source={images.alert}
             accessibilityElementsHidden={true}
@@ -48,7 +46,6 @@ export default function RouteError() {
           </Link>
           <Image
             cachePolicy={"memory-disk"}
-            transition={1000}
             style={{ width: 24, height: 24 }}
             source={images.alert}
             accessibilityElementsHidden={true}

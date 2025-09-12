@@ -162,7 +162,6 @@ const Daily = () => {
                   accessibilityLabel={item?.weatherMain ?? "Weather icon"}
                   accessibilityRole="image"
                   cachePolicy={"memory-disk"}
-                  transition={1000}
                   contentFit="cover"
                   style={{ width: 48, height: 48, marginBlock: 7 }}
                   source={icon}
@@ -175,7 +174,6 @@ const Daily = () => {
                   accessibilityLabel={`Wind direction: ${item?.windDirection}`}
                   accessibilityRole="image"
                   cachePolicy={"memory-disk"}
-                  transition={1000}
                   contentFit="cover"
                   style={{
                     transform: `rotate(${item?.windDirection ?? 0}deg)`,

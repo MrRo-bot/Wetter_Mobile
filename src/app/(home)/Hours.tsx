@@ -112,7 +112,6 @@ const Hours = () => {
                       accessibilityLabel={`Weather icon for ${item.weatherMain} at ${item.hourStamp}`}
                       accessible={true}
                       cachePolicy={"memory-disk"}
-                      transition={1000}
                       contentFit="cover"
                       style={{ width: 44, height: 44 }}
                       source={icon}

@@ -73,7 +73,6 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
                 <Image
                   accessibilityLabel={`${toast.type} icon`}
                   cachePolicy={"memory-disk"}
-                  transition={1000}
                   style={{ width: 20, height: 20 }}
                   source={
                     theme === "dark"

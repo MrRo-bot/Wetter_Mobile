@@ -81,7 +81,6 @@ const LocationSearchCard = ({
             <Image
               accessibilityLabel={`Image of ${location?.geoAddress[0]?.city ?? "location"}`}
               cachePolicy={"memory-disk"}
-              transition={1000}
               contentFit="cover"
               className="z-10"
               style={{

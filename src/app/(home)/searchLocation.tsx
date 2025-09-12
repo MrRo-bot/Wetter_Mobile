@@ -77,7 +77,6 @@ const SearchLocation = () => {
             <Image
               accessibilityLabel="Illustration of a magnifying glass for location search"
               cachePolicy={"memory-disk"}
-              transition={1000}
               style={{ width: 250, height: 250 }}
               contentFit="contain"
               source={images.search}
@@ -108,13 +107,13 @@ const SearchLocation = () => {
         <View className="items-center justify-center w-full h-full">
           <Loader />
         </View>
-      ) : (
+      ) : data && data?.results?.length > 0 ? (
         <ScrollView accessibilityLiveRegion="polite">
-          {data?.results?.map((location) => (
+          {data?.results?.map((location, index) => (
             <Animated.View
               key={location.id}
               entering={FlipInXDown.duration(300)
-                .delay(200)
+                .delay(index * 100)
                 .reduceMotion(ReduceMotion.System)}
               className="w-[90%] mx-auto my-2"
             >
@@ -184,6 +183,23 @@ const SearchLocation = () => {
             </Animated.View>
           ))}
         </ScrollView>
+      ) : (
+        <View className="items-center justify-center w-full h-full">
+          <View>
+            <Image
+              accessibilityLabel="Illustration of a magnifying glass for location search"
+              cachePolicy={"memory-disk"}
+              style={{ width: 250, height: 250 }}
+              contentFit="contain"
+              source={images.search}
+            />
+            <Text
+              className={`mt-10 py-1 text-center font-orbitron-bold leading-none ${theme === "dark" ? "text-light" : "text-dark"}`}
+            >
+              No results found
+            </Text>
+          </View>
+        </View>
       )}
     </SafeAreaView>
   );

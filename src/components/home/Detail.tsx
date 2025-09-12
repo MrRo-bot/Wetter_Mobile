@@ -95,7 +95,6 @@ const Detail = () => {
             <Image
               accessibilityElementsHidden={true}
               cachePolicy={"memory-disk"}
-              transition={1000}
               contentFit="cover"
               style={{ width: 48, height: 48 }}
               source={detail?.icon}

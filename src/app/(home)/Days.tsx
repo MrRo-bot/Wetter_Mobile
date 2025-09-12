@@ -124,7 +124,6 @@ const Days = () => {
                       accessibilityLabel={`Weather icon for ${item.weatherMain} at ${item.dateStamp}`}
                       accessible={true}
                       cachePolicy={"memory-disk"}
-                      transition={1000}
                       contentFit="cover"
                       style={{ width: 40, height: 40 }}
                       source={icon}
@@ -183,7 +182,6 @@ const Days = () => {
                   <View className="mx-auto mt-1">
                     <Image
                       cachePolicy={"memory-disk"}
-                      transition={1000}
                       style={{ marginInline: "auto", width: 32, height: 32 }}
                       source={images.sunrise}
                       alt={altText}
@@ -200,7 +198,6 @@ const Days = () => {
                   <View className="mx-auto mt-1">
                     <Image
                       cachePolicy={"memory-disk"}
-                      transition={1000}
                       style={{ marginInline: "auto", width: 32, height: 32 }}
                       source={images.sunset}
                       alt={altText}

@@ -16,7 +16,6 @@ import { Image } from "expo-image";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import {
-  AccessibilityInfo,
   Dimensions,
   Pressable,
   Text,
@@ -38,7 +37,6 @@ const Brief = ({
 
   const [isConnected, setIsConnected] = useState<boolean | null>(true);
   const [showOffline, setShowOffline] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
 
   const { weather } = weatherStore();
   const locations = locationStore();
@@ -135,77 +133,62 @@ const Brief = ({
     textShadowRadius: 8,
   };
 
-  useEffect(() => {
-    AccessibilityInfo.isReduceMotionEnabled().then((enabled) => {
-      setReducedMotion(enabled);
-    });
-  }, []);
-
   return (
     <View className="gap-2 mx-3 mt-2">
       <View
         style={{ width: windowWidth - 24 }}
         className="relative overflow-hidden h-96 rounded-2xl"
       >
-        {imageColorsLoading || unsplashLoading ? (
+        {/* {imageColorsLoading || unsplashLoading ? (
           <View className={`w-full h-full bg-[#44444450]`} />
-        ) : (
-          <>
-            <Image
-              accessibilityRole="image"
-              accessibilityLabel={`Image based on weather condition ${weatherCode}`}
-              cachePolicy={"memory-disk"}
-              transition={
-                reducedMotion
-                  ? undefined
-                  : {
-                      effect: "flip-from-top",
-                      timing: "ease-in-out",
-                      duration: 1000,
-                    }
-              }
-              contentFit="cover"
-              style={{
-                width: "100%",
-                height: "100%",
-              }}
-              source={{ uri: imageColorsData?.url }}
-            />
-            {showOffline && (
-              <BlurView
-                accessibilityRole="alert"
-                accessibilityLabel={`Offline mode. Last updated ${Math.round((Date.now() - lastUpdated) / 1000 / 60)} ${Math.round((Date.now() - lastUpdated) / 1000 / 60) <= 1 ? "minute" : "minutes"} ago`}
-                accessibilityLiveRegion="assertive"
-                experimentalBlurMethod="dimezisBlurView"
-                intensity={20}
-                tint={theme === "dark" ? "dark" : "light"}
-                className="absolute flex-row items-center justify-center gap-4 px-4 py-2 overflow-hidden rounded-tr-full rounded-br-full shadow-sm top-12 bg-clip-padding bg-dark/10"
+        ) : ( */}
+        <>
+          <Image
+            accessibilityRole="image"
+            accessibilityLabel={`Image based on weather condition ${weatherCode}`}
+            cachePolicy={"memory-disk"}
+            contentFit="cover"
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+            source={{ uri: imageColorsData?.url }}
+          />
+          {showOffline && (
+            <BlurView
+              accessibilityRole="alert"
+              accessibilityLabel={`Offline mode. Last updated ${Math.round((Date.now() - lastUpdated) / 1000 / 60)} ${Math.round((Date.now() - lastUpdated) / 1000 / 60) <= 1 ? "minute" : "minutes"} ago`}
+              accessibilityLiveRegion="assertive"
+              experimentalBlurMethod="dimezisBlurView"
+              intensity={20}
+              tint={theme === "dark" ? "dark" : "light"}
+              className="absolute flex-row items-center justify-center gap-4 px-4 py-2 overflow-hidden rounded-tr-full rounded-br-full shadow-sm top-12 bg-clip-padding bg-dark/10"
+            >
+              <View className="pr-4 border-r-2 w-60 border-r-solid border-r-light/10">
+                <Text className="text-lg text-light font-orbitron-regular">
+                  OFFLINE MODE
+                </Text>
+                <Text className="text-base text-light font-genos-light">
+                  Last updated{" "}
+                  {Math.round((Date.now() - lastUpdated) / 1000 / 60)}{" "}
+                  {Math.round((Date.now() - lastUpdated) / 1000 / 60) <= 1
+                    ? "minute"
+                    : "minutes"}{" "}
+                  ago
+                </Text>
+              </View>
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="Refresh weather data when internet is turned on"
+                onPress={() => handleRefetch()}
+                onFocus={() => console.log("Focused on refresh button")}
               >
-                <View className="pr-4 border-r-2 w-60 border-r-solid border-r-light/10">
-                  <Text className="text-lg text-light font-orbitron-regular">
-                    OFFLINE MODE
-                  </Text>
-                  <Text className="text-base text-light font-genos-light">
-                    Last updated{" "}
-                    {Math.round((Date.now() - lastUpdated) / 1000 / 60)}{" "}
-                    {Math.round((Date.now() - lastUpdated) / 1000 / 60) <= 1
-                      ? "minute"
-                      : "minutes"}{" "}
-                    ago
-                  </Text>
-                </View>
-                <Pressable
-                  accessibilityRole="button"
-                  accessibilityLabel="Refresh weather data when internet is turned on"
-                  onPress={() => handleRefetch()}
-                  onFocus={() => console.log("Focused on refresh button")}
-                >
-                  <Entypo name="cycle" size={20} color="white" />
-                </Pressable>
-              </BlurView>
-            )}
-          </>
-        )}
+                <Entypo name="cycle" size={20} color="white" />
+              </Pressable>
+            </BlurView>
+          )}
+        </>
+        {/* )} */}
       </View>
 
       <View>
@@ -267,7 +250,6 @@ const Brief = ({
                   accessibilityRole="image"
                   accessibilityLabel="Weather alert icon"
                   cachePolicy={"memory-disk"}
-                  transition={1000}
                   style={{ marginInline: "auto", width: 18, height: 18 }}
                   source={images.alert}
                   alt={"alert"}
