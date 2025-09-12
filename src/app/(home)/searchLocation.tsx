@@ -1,21 +1,15 @@
 import Loader from "@/src/components/UI/Loader";
+import components from "@/src/constants/components";
 import images from "@/src/constants/images";
 import useCustomLocation from "@/src/hooks/useCustomLocation";
 import useDebounce from "@/src/hooks/useDebounce";
 import useLocationSearch from "@/src/hooks/useLocationSearch";
 import { locationStore } from "@/src/store/locationStore";
-import { ToastRef } from "@/src/types/types";
+import { LocationSearchItemType, ToastRef } from "@/src/types/types";
 import { Image } from "expo-image";
 import { useEffect, useRef, useState } from "react";
-import {
-  Pressable,
-  ScrollView,
-  Text,
-  TextInput,
-  useColorScheme,
-  View,
-} from "react-native";
-import Animated, { FlipInXDown, ReduceMotion } from "react-native-reanimated";
+import { FlatList, Text, TextInput, useColorScheme, View } from "react-native";
+import Animated, { ReduceMotion, SlideInDown } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SearchLocation = () => {
@@ -24,7 +18,7 @@ const SearchLocation = () => {
   const toastRef = useRef<ToastRef>(null);
   const [searchStr, setSearchStr] = useState("");
 
-  const debouncedSearchStr = useDebounce(searchStr, 500);
+  const debouncedSearchStr = useDebounce(searchStr, 1000);
   const { data, isLoading, error } = useLocationSearch(debouncedSearchStr);
 
   const {
@@ -51,12 +45,6 @@ const SearchLocation = () => {
       locations?.addLocationToShow(fetchedLocation?.id);
     }
   }, [locationLoading, fetchedLocation]);
-
-  const TEXT_SHADOW = {
-    textShadowColor: theme === "dark" ? "white" : "dark",
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 6,
-  };
 
   return (
     <SafeAreaView
@@ -106,84 +94,38 @@ const SearchLocation = () => {
         <View className="items-center justify-center w-full h-full">
           <Loader />
         </View>
-      ) : data && data?.results?.length > 0 ? (
-        <ScrollView accessibilityLiveRegion="polite">
-          {data?.results?.map((location, index) => (
-            <Animated.View
-              key={location.id}
-              entering={FlipInXDown.duration(300)
-                .delay(index * 100)
-                .reduceMotion(ReduceMotion.System)}
-              className="w-[90%] mx-auto my-2"
-            >
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel={`Select ${location.name}, ${location.country}`}
-                accessibilityHint="Tap to fetch weather data for this location"
-                accessible={true}
-                onPress={() =>
-                  getLocation(location.latitude, location.longitude)
-                }
-              >
-                <View
-                  className={`border-[1px] border-dashed rounded-xl overflow-hidden ${theme === "dark" ? "border-light/70" : "border-dark/30"}`}
-                >
-                  <View className="flex-row items-center justify-start gap-2 p-3 bg-clip-padding">
-                    <View>
-                      <Text
-                        style={TEXT_SHADOW}
-                        className={`text-lg font-orbitron-bold ${
-                          theme === "dark" ? "text-light" : "text-blue-900"
-                        }`}
-                      >
-                        {location.name}
-                      </Text>
-
-                      <Text
-                        style={TEXT_SHADOW}
-                        className={`font-genos-regular text-lg leading-none ${
-                          theme === "dark" ? "text-light/70" : "text-dark/70"
-                        }`}
-                      >
-                        {`${location.admin1 ? location.admin1 + ", " : ""}${location.admin2 ? location.admin2 + ", " : ""}${location.admin3 ? location.admin3 + ", " : ""}${location.country ? location.country + "." : ""}`}
-                      </Text>
-
-                      {location.population && (
-                        <View className="flex-row gap-2">
-                          <Text
-                            className={`font-genos-medium text-lg ${
-                              theme === "dark" ? "text-light" : "text-dark"
-                            }`}
-                          >
-                            Population:{" "}
-                          </Text>
-
-                          <Text
-                            accessibilityLabel={`Population: ${location.population} people`}
-                            style={TEXT_SHADOW}
-                            className={`font-genos-regular text-lg ${
-                              theme === "dark"
-                                ? "text-light/80"
-                                : "text-dark/80"
-                            }`}
-                          >
-                            {location.population
-                              ? new Intl.NumberFormat().format(
-                                  location.population
-                                )
-                              : ""}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
-                  </View>
-                </View>
-              </Pressable>
-            </Animated.View>
-          ))}
-        </ScrollView>
+      ) : data?.results ? (
+        <FlatList
+          accessibilityRole="list"
+          accessibilityLabel="Location Search results"
+          maxToRenderPerBatch={8}
+          windowSize={5}
+          data={data?.results}
+          contentContainerClassName="pt-4 pb-8"
+          ItemSeparatorComponent={() => <View className="p-2" />}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({
+            item,
+            index,
+          }: {
+            item: LocationSearchItemType;
+            index: number;
+          }) => (
+            <components.LocationSearchItem
+              index={index}
+              theme={theme}
+              location={item}
+              getLocation={getLocation}
+            />
+          )}
+        />
       ) : (
-        <View className="items-center justify-center w-full h-full">
+        <Animated.View
+          entering={SlideInDown.duration(300)
+            .delay(200)
+            .reduceMotion(ReduceMotion.System)}
+          className="items-center justify-center w-full h-full"
+        >
           <View>
             <Image
               accessibilityLabel="Illustration of a magnifying glass for location search"
@@ -192,12 +134,12 @@ const SearchLocation = () => {
               source={images.search}
             />
             <Text
-              className={`mt-10 py-1 text-center font-orbitron-bold leading-none ${theme === "dark" ? "text-light" : "text-dark"}`}
+              className={`mt-10 py-1 text-xl text-center font-orbitron-bold leading-none ${theme === "dark" ? "text-light" : "text-dark"}`}
             >
               No results found
             </Text>
           </View>
-        </View>
+        </Animated.View>
       )}
     </SafeAreaView>
   );

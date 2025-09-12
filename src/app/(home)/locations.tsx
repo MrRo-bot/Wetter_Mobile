@@ -3,8 +3,7 @@ import { locationStore } from "@/src/store/locationStore";
 import { LocationDataType } from "@/src/types/types";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { Pressable, Text, useColorScheme, View } from "react-native";
-import Animated from "react-native-reanimated";
+import { FlatList, Pressable, Text, useColorScheme, View } from "react-native";
 
 const Locations = () => {
   const router = useRouter();
@@ -53,7 +52,7 @@ const Locations = () => {
           </Pressable>
         </View>
       </View>
-      <Animated.FlatList
+      <FlatList
         accessibilityRole="list"
         accessibilityLabel="List of saved locations"
         maxToRenderPerBatch={8}
@@ -69,7 +68,7 @@ const Locations = () => {
           item: LocationDataType;
           index: number;
         }) => (
-          <components.LocationSearchCard
+          <components.SavedLocationCard
             index={index}
             location={item}
             theme={theme}

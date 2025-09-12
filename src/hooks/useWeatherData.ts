@@ -110,8 +110,6 @@ const useWeatherData = (coordinates: {
 
   const finalUrl = `https://api.open-meteo.com/v1/forecast?${queryString}`;
 
-  console.log(finalUrl);
-
   const fetchWeather = async (): Promise<WeatherDataType> => {
     const response = await fetch(finalUrl);
     if (!response.ok)

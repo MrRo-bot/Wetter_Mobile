@@ -51,7 +51,7 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
           accessibilityRole="alert"
           key={toast.id}
           style={{
-            bottom: 70 + index * 5,
+            bottom: 100 + index * 5,
             marginInline: "auto",
           }}
           entering={FadeInDown.duration(300).reduceMotion(ReduceMotion.System)}
@@ -84,7 +84,7 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
                 {toast.text && (
                   <Text
                     className={`font-orbitron-bold ${
-                      theme === "dark" ? "text-blue-950" : "text-dark"
+                      theme === "dark" ? "text-light" : "text-dark"
                     }`}
                   >
                     {toast.text}
@@ -93,7 +93,7 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
                 {toast.description && (
                   <Text
                     className={`text-sm font-orbitron-semiBold tracking-wide ${
-                      theme === "dark" ? "text-blue-950" : "text-dark"
+                      theme === "dark" ? "text-light" : "text-dark"
                     }`}
                   >
                     {toast.description}

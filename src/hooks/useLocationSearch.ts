@@ -10,7 +10,7 @@ const useLocationSearch = (search: string) => {
     // countryCode:string;
   } = {
     name: "",
-    count: "10",
+    count: "50",
     language: "en",
     format: "json",
     // countryCode:''

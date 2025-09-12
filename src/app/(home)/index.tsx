@@ -108,39 +108,42 @@ export default function Home() {
           <Loader />
         </View>
       ) : (
-        <ScrollView contentContainerClassName="gap-y-8">
-          <components.Brief
-            weatherRefetch={refetch}
-            lastUpdated={weatherLastUpdated}
-            toast={toastRef}
-            queryStatus={fetchStatus}
-            error={weatherError}
-            imageColorsLoading={imageColorsLoading}
-            imageColorsData={imageColorsData}
-            unsplashLoading={unsplashLoading}
-          />
-          <components.Detail />
-          <components.Hourly />
-          <components.Daily />
-          <components.Chart />
-          <components.AirQuality />
-          <components.Wind />
-          <components.Footer />
-        </ScrollView>
-      )}
-
-      {!weatherLoading && (
-        <AnimatedPressable
-          entering={FadeInDown.duration(600).reduceMotion(ReduceMotion.System)}
-          className={`absolute bottom-16 right-10 shadow-2xl w-16 h-16 rounded-full items-center overflow-hidden justify-center border-2 border-solid ${theme === "dark" ? "bg-light/90 border-dark/20" : "bg-dark/75 border-light/40"}`}
-          onPress={() => router.navigate("/(home)/locations")}
-        >
-          <MaterialIcons
-            color={theme === "dark" ? "black" : "white"}
-            name="reorder"
-            size={28}
-          />
-        </AnimatedPressable>
+        <>
+          <ScrollView contentContainerClassName="gap-y-8">
+            <components.Brief
+              weatherRefetch={refetch}
+              lastUpdated={weatherLastUpdated}
+              toast={toastRef}
+              queryStatus={fetchStatus}
+              error={weatherError}
+              imageColorsLoading={imageColorsLoading}
+              imageColorsData={imageColorsData}
+              unsplashLoading={unsplashLoading}
+            />
+            <components.Detail />
+            <components.Hourly />
+            <components.Daily />
+            <components.Chart />
+            <components.AirQuality />
+            <components.Wind />
+            <components.Footer />
+          </ScrollView>
+          {!weatherLoading && (
+            <AnimatedPressable
+              entering={FadeInDown.duration(600).reduceMotion(
+                ReduceMotion.System
+              )}
+              className={`absolute bottom-16 right-10 shadow-2xl w-16 h-16 rounded-full items-center overflow-hidden justify-center border-2 border-solid ${theme === "dark" ? "bg-light/90 border-dark/20" : "bg-dark/75 border-light/40"}`}
+              onPress={() => router.navigate("/(home)/locations")}
+            >
+              <MaterialIcons
+                color={theme === "dark" ? "black" : "white"}
+                name="reorder"
+                size={28}
+              />
+            </AnimatedPressable>
+          )}
+        </>
       )}
 
       <ToastMessage ref={toastRef} />

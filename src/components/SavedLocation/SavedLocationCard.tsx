@@ -7,10 +7,9 @@ import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { Alert, Pressable, Text, View } from "react-native";
-import Animated, { ReduceMotion, SlideInDown } from "react-native-reanimated";
 import Loader from "../UI/Loader";
 
-const LocationSearchCard = ({
+const SavedLocationCard = ({
   location,
   theme,
   index,
@@ -61,12 +60,7 @@ const LocationSearchCard = ({
         : imageColorsData?.imageColors?.primary;
 
   return (
-    <Animated.View
-      entering={SlideInDown.duration(300)
-        .delay(index * 100)
-        .reduceMotion(ReduceMotion.System)}
-      className="relative z-0 h-48 w-[calc(100vw-28px)] overflow-hidden rounded-lg border-[2px] border-solid border-gray-500/40"
-    >
+    <View className="relative z-0 h-48 w-[calc(100vw-28px)] overflow-hidden rounded-lg border-[2px] border-solid border-gray-500/40">
       <Pressable
         onPress={() => {
           getLocation(
@@ -89,7 +83,6 @@ const LocationSearchCard = ({
             <Image
               accessibilityLabel={`Image of ${location?.geoAddress[0]?.city ?? "location"}`}
               contentFit="cover"
-              cachePolicy={"memory"}
               transition={unsplashLoading ? 0 : 1000}
               className="z-10"
               style={{
@@ -170,8 +163,8 @@ const LocationSearchCard = ({
           </>
         )}
       </Pressable>
-    </Animated.View>
+    </View>
   );
 };
 
-export default LocationSearchCard;
+export default SavedLocationCard;
