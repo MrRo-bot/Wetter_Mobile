@@ -1,6 +1,12 @@
 import { useSettingsStore } from "@/src/store/settingsStore";
 import React from "react";
-import { Pressable, ScrollView, Text, useColorScheme } from "react-native";
+import {
+  Pressable,
+  ScrollView,
+  Text,
+  useColorScheme,
+  View,
+} from "react-native";
 import Animated, { BounceInUp, ReduceMotion } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -16,8 +22,6 @@ const Units = () => {
     { Speed: ["kph", "mph", "km/h", "m/s", "beaufort", "knots"] },
     { Pressure: ["mBar", "inHg", "hPa", "bar", "mmHg", "psi"] },
   ];
-
-  console.log(units);
 
   return (
     <SafeAreaView
@@ -46,28 +50,32 @@ const Units = () => {
             >
               {Object.entries(unitSetting)[0][1].map((val: string) => {
                 return (
-                  <Pressable
+                  <View
                     key={val}
-                    className={`transition-colors duration-400 ${theme === "dark" ? "bg-light/10" : "bg-dark/5"} ${
-                      units[Object.keys(unitSetting)[0].toLowerCase()] ===
-                        val && "bg-amber-600"
-                    }`}
-                    onPress={() =>
-                      setUnits({
-                        ...units,
-                        [Object.keys(unitSetting)[0].toLowerCase()]: val,
-                      })
-                    }
+                    className={`${theme === "dark" ? "bg-light/10" : "bg-dark/5"}`}
                   >
-                    <Text
-                      className={`px-5 py-3 text-lg font-genos-medium leading-none ${theme === "dark" ? "text-light" : "text-dark"}`}
+                    <Pressable
+                      className={`transition-colors duration-500 ${
+                        units[Object.keys(unitSetting)[0].toLowerCase()] ===
+                          val && "bg-amber-600"
+                      }`}
+                      onPress={() =>
+                        setUnits({
+                          ...units,
+                          [Object.keys(unitSetting)[0].toLowerCase()]: val,
+                        })
+                      }
                     >
-                      {Object.keys(unitSetting)[0].toLowerCase() ===
-                      "temperature"
-                        ? "৹" + val
-                        : val}
-                    </Text>
-                  </Pressable>
+                      <Text
+                        className={`px-5 py-3 text-lg font-genos-medium leading-none ${theme === "dark" ? "text-light" : "text-dark"}`}
+                      >
+                        {Object.keys(unitSetting)[0].toLowerCase() ===
+                        "temperature"
+                          ? "৹" + val
+                          : val}
+                      </Text>
+                    </Pressable>
+                  </View>
                 );
               })}
             </ScrollView>
