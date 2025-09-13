@@ -17,12 +17,14 @@ import Footer from "@/src/components/UI/Footer";
 import Loader from "@/src/components/UI/Loader";
 import MainButton from "@/src/components/UI/MainButton";
 
-import DailyAqiCharts from "../components/aqiCharts/DailyAqiCharts";
-import HourlyAqiCharts from "../components/aqiCharts/HourlyAqiCharts";
+import DailyAqiCharts from "@/src/components/aqiCharts/DailyAqiCharts";
+import HourlyAqiCharts from "@/src/components/aqiCharts/HourlyAqiCharts";
 
-import SavedLocationCard from "../components/SavedLocation/SavedLocationCard";
+import SavedLocationCard from "@/src/components/SavedLocation/SavedLocationCard";
 
-import LocationSearchItem from "../components/locationSearch/LocationSearchItem";
+import LocationSearchItem from "@/src/components/locationSearch/LocationSearchItem";
+
+import Units from "@/src/app/(home)/settings/Units";
 
 export default {
   AirQuality,
@@ -49,4 +51,6 @@ export default {
 
   SavedLocationCard,
   LocationSearchItem,
+
+  Units,
 };

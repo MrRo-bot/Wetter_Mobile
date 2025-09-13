@@ -431,3 +431,18 @@ export interface BriefType {
     | undefined;
   unsplashLoading: boolean;
 }
+
+export interface SettingUnitType {
+  time: "12-hour" | "24-hour";
+  temperature: "F" | "C";
+  distance: "km" | "mi";
+  speed: "kph" | "mph" | "km/h" | "m/s" | "beaufort" | "knots";
+  pressure: "mBar" | "inHg" | "hPa" | "bar" | "mmHg" | "psi";
+  precipitation: "mm" | "in";
+  [key: string]: string;
+}
+
+export interface SettingsStateType {
+  units: SettingUnitType;
+  setUnits: (units: SettingUnitType) => void;
+}
