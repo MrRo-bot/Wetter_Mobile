@@ -22,7 +22,7 @@ const Settings = () => {
             onPress={() => router.navigate("/(home)/settings/WeatherAlerts")}
           >
             <Text
-              className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
+              className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark/80"}`}
             >
               Weather Alerts
             </Text>
@@ -35,7 +35,7 @@ const Settings = () => {
         >
           <Pressable onPress={() => router.navigate("/(home)/settings/Units")}>
             <Text
-              className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
+              className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark/80"}`}
             >
               Units
             </Text>
@@ -50,24 +50,9 @@ const Settings = () => {
             onPress={() => router.navigate("/(home)/settings/UpdateFrequency")}
           >
             <Text
-              className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
+              className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark/80"}`}
             >
               Update Frequency
-            </Text>
-          </Pressable>
-        </Animated.View>
-        <Animated.View
-          entering={FlipInEasyX.duration(500)
-            .delay(100)
-            .reduceMotion(ReduceMotion.System)}
-        >
-          <Pressable
-            onPress={() => router.navigate("/(home)/settings/LanguageSupport")}
-          >
-            <Text
-              className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
-            >
-              Language Support
             </Text>
           </Pressable>
         </Animated.View>
@@ -80,7 +65,7 @@ const Settings = () => {
             onPress={() => router.navigate("/(home)/settings/Troubleshooting")}
           >
             <Text
-              className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
+              className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark/80"}`}
             >
               Troubleshooting
             </Text>
@@ -93,7 +78,7 @@ const Settings = () => {
         >
           <Pressable onPress={() => router.navigate("/(home)/settings/About")}>
             <Text
-              className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark"}`}
+              className={`border-b-[1px] border-solid px-8 py-6 font-orbitron-bold text-xl ${theme === "dark" ? "border-b-light/5 text-light" : "border-b-dark/5 text-dark/80"}`}
             >
               About
             </Text>

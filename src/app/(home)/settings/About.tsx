@@ -27,12 +27,12 @@ const About = () => {
 
   return (
     <SafeAreaView
-      className={`h-full px-3 pt-6 ${theme === "dark" ? "bg-dark" : "bg-light"}`}
+      className={`h-full px-3 ${theme === "dark" ? "bg-dark" : "bg-light"}`}
       edges={["bottom"]}
     >
       <ScrollView>
         <Animated.View
-          className="items-center justify-center w-full"
+          className="items-center justify-center w-full pt-6"
           entering={BounceInUp.duration(1000)
             .delay(100)
             .reduceMotion(ReduceMotion.System)}
@@ -77,16 +77,8 @@ const About = () => {
           Device: {Device?.deviceName}
         </Animated.Text>
         <Animated.Text
-          entering={BounceInRight.duration(1000)
-            .delay(1200)
-            .reduceMotion(ReduceMotion.System)}
-          className={`mt-1 text-xl text-center w-full font-genos-regular leading-none text-maroon`}
-        >
-          Application ID: {Application?.applicationId}
-        </Animated.Text>
-        <Animated.Text
           entering={BounceInLeft.duration(1000)
-            .delay(1500)
+            .delay(1200)
             .reduceMotion(ReduceMotion.System)}
           className={`mt-1 text-xl text-center w-full font-genos-regular leading-none text-maroon`}
         >
@@ -95,7 +87,7 @@ const About = () => {
 
         <Animated.View
           entering={BounceInDown.duration(1000)
-            .delay(1800)
+            .delay(1500)
             .reduceMotion(ReduceMotion.System)}
           className={`mx-6 my-10 gap-y-8 px-6 py-4 rounded-2xl border-2 border-dashed border-tealDark`}
         >
@@ -149,6 +141,15 @@ const About = () => {
             </Text>
           </View>
         </Animated.View>
+
+        <Animated.Text
+          entering={BounceInDown.duration(1000)
+            .delay(1800)
+            .reduceMotion(ReduceMotion.System)}
+          className={`my-4 text-xl text-center w-full font-genos-regular leading-none ${theme === "dark" ? "text-light/40" : "text-dark/40"}`}
+        >
+          {Application?.applicationId}
+        </Animated.Text>
       </ScrollView>
     </SafeAreaView>
   );
