@@ -44,7 +44,7 @@ const Detail = () => {
     {
       icon: images.dew_point,
       heading: "Dew Point",
-      data: `${valRound(daily?.dew_point_2m_mean[0])}৹`,
+      data: `${valRound(daily?.dew_point_2m_mean[0])}°`,
     },
   ];
 

@@ -297,7 +297,6 @@ export interface UnsplashType {
       html: string;
       download: string;
     };
-    [key: string]: any;
   }[];
 }
 
@@ -432,19 +431,61 @@ export interface BriefType {
   unsplashLoading: boolean;
 }
 
-export interface SettingUnitType {
+export interface UnitOptionsType {
+  name: string;
+  key: keyof UnitSettingType;
+  options: {
+    label: string;
+    value: string;
+  }[];
+}
+
+export interface UnitSettingType {
   time: "12-hour" | "24-hour";
   temperature: "F" | "C";
   distance: "km" | "mi";
-  speed: "kph" | "mph" | "km/h" | "m/s" | "beaufort" | "knots";
+  speed: "km/h" | "mph" | "m/s" | "beaufort" | "knots";
   pressure: "mBar" | "inHg" | "hPa" | "bar" | "mmHg" | "psi";
   precipitation: "mm" | "in";
-  [key: string]: string;
 }
 
 export interface SettingsStateType {
-  units: SettingUnitType;
+  units: UnitSettingType;
   updateFreq: string;
-  setUnits: (units: SettingUnitType) => void;
+  setUnits: (units: UnitSettingType) => void;
   setUpdateFreq: (updateFreq: string) => void;
+}
+
+export interface AqiColorsType {
+  green: string;
+  yellow: string;
+  orange: string;
+  red: string;
+  purple: string;
+  maroon: string;
+  default: string;
+  [key: string]: string;
+}
+
+export interface LocationParamsType {
+  name: string;
+  count: string;
+  language: "en" | "de" | "fr" | "es" | "it" | "pt" | "ru" | "tr" | "hi";
+  format: "json" | "photobuf";
+  // countryCode:string;
+  [key: string]: string;
+}
+
+export interface DailyAQIProps {
+  aqiForecast: AQIHourlyType[];
+  aqiParameter: string;
+  name: string;
+}
+
+export interface HourlyAQIType {
+  aqiForecast: number[];
+  timestamp: string[];
+  name: string;
+  isCurved?: boolean;
+  color: string;
 }

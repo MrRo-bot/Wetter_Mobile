@@ -198,7 +198,9 @@ const Brief = ({
             style={TEXT_SHADOW}
             className={`font-orbitron-regular mr-4 text-5xl leading-none`}
           >
-            {valRound(current?.temperature_2m) ?? "..."}{" "}
+            {current?.temperature_2m
+              ? valRound(current?.temperature_2m)
+              : "..."}{" "}
             {current_units?.temperature_2m ?? "..."}
           </Text>
 
@@ -206,7 +208,9 @@ const Brief = ({
             style={TEXT_SHADOW}
             className={`font-orbitron-semiBold self-start text-lg leading-none`}
           >
-            {valRound(daily?.temperature_2m_max[0]) ?? "..."}{" "}
+            {daily?.temperature_2m_max[0]
+              ? valRound(daily?.temperature_2m_max[0])
+              : "..."}{" "}
             {daily_units?.temperature_2m_max ?? "..."}
           </Text>
           <Text
@@ -219,7 +223,9 @@ const Brief = ({
             style={TEXT_SHADOW}
             className={`font-orbitron-semiBold self-end text-lg leading-none`}
           >
-            {valRound(daily?.temperature_2m_min[0]) ?? "..."}{" "}
+            {daily?.temperature_2m_min[0]
+              ? valRound(daily?.temperature_2m_min[0])
+              : "..."}{" "}
             {daily_units?.temperature_2m_min ?? "..."}
           </Text>
         </View>
@@ -241,7 +247,11 @@ const Brief = ({
                 locations?.getLocationById(locations?.locationToShow)
                   ?.geoAddress[0]?.street ??
                 locations?.getLocationById(locations?.locationToShow)
-                  ?.geoAddress[0]?.district}
+                  ?.geoAddress[0]?.district ??
+                locations?.getLocationById(locations?.locationToShow)
+                  ?.geoAddress[0]?.name ??
+                locations?.getLocationById(locations?.locationToShow)
+                  ?.geoAddress[0]?.subregion}
             </Text>
             {alertIcon(current?.weather_code) === "alert" && (
               <View

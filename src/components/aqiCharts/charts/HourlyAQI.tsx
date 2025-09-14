@@ -1,15 +1,8 @@
+import { HourlyAQIType } from "@/src/types/types";
 import { unixConv } from "@/src/utils/math";
 import React, { useState } from "react";
 import { Dimensions, Text, useColorScheme, View } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
-
-interface HourlyAQIType {
-  aqiForecast: number[];
-  timestamp: string[];
-  name: string;
-  isCurved?: boolean;
-  color: string;
-}
 
 const HourlyAQI = ({
   aqiForecast,

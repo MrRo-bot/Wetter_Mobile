@@ -104,7 +104,7 @@ const Hourly = () => {
           accessibilityRole="list"
           ItemSeparatorComponent={() => <View className="p-1" />}
           data={hourlyData?.slice(0, 24)}
-          horizontal={true}
+          horizontal
           renderItem={({ item }: { item: HourlyWeatherObjectType }) => {
             let iconKey;
             iconKey =

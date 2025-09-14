@@ -1,14 +1,8 @@
-import { AQIHourlyType } from "@/src/types/types";
+import { AQIHourlyType, DailyAQIProps } from "@/src/types/types";
 import { aqiDetailColors, unixConv } from "@/src/utils/math";
 import React, { useState } from "react";
 import { Dimensions, Text, useColorScheme, View } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
-
-interface DailyAQIProps {
-  aqiForecast: AQIHourlyType[];
-  aqiParameter: string;
-  name: string;
-}
 
 const DailyAQI = ({ aqiForecast, aqiParameter, name }: DailyAQIProps) => {
   let theme = useColorScheme();
@@ -17,8 +11,8 @@ const DailyAQI = ({ aqiForecast, aqiParameter, name }: DailyAQIProps) => {
     Dimensions.get("window").width
   );
 
-  const aqiChartData = Array.from({ length: 5 }, (_, i) => {
-    const aqiDay = aqiForecast[i];
+  const aqiChartData = Array.from({ length: 5 }, (_, index) => {
+    const aqiDay = aqiForecast[index];
     const aqiDayObj = (
       aqiDay[aqiParameter as keyof AQIHourlyType] as number[]
     ).filter((x: null | number) => x !== null);
@@ -38,7 +32,7 @@ const DailyAQI = ({ aqiForecast, aqiParameter, name }: DailyAQIProps) => {
         },
       ],
       label: unixConv
-        ?.timeStamp(new Date(aqiDay?.time[i]).getTime() / 1000)
+        ?.timeStamp(new Date(aqiDay?.time[index]).getTime() / 1000)
         .day.slice(0, 3),
     };
   });

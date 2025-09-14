@@ -1,14 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { LocationSearchType } from "../types/types";
+import { LocationParamsType, LocationSearchType } from "../types/types";
 
 const useLocationSearch = (search: string) => {
-  const paramsObj: {
-    name: string;
-    count: string;
-    language: "en" | "de" | "fr" | "es" | "it" | "pt" | "ru" | "tr" | "hi";
-    format: "json" | "photobuf";
-    // countryCode:string;
-  } = {
+  const paramsObj: LocationParamsType = {
     name: "",
     count: "50",
     language: "en",

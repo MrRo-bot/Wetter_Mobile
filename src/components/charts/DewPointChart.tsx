@@ -13,13 +13,13 @@ const DewPointChart = () => {
 
   const { weather } = weatherStore();
 
-  const dewPointData = Array.from({ length: 24 }, (_, i) => {
+  const dewPointData = Array.from({ length: 24 }, (_, index) => {
     return {
-      value: weather?.hourly?.dew_point_2m[i],
+      value: weather?.hourly?.dew_point_2m[index],
       label:
-        (i + 1) % 4 === 0
+        (index + 1) % 4 === 0
           ? unixConv?.timeStamp(
-              new Date(weather?.hourly?.time[i]).getTime() / 1000
+              new Date(weather?.hourly?.time[index]).getTime() / 1000
             ).hour2
           : "",
     };
@@ -35,7 +35,7 @@ const DewPointChart = () => {
         <Text
           className={`font-orbitron-bold  leading-none text-lg ${theme === "dark" ? "text-light" : "text-dark"}`}
         >
-          DEW POINT (৹)
+          DEW POINT (°)
         </Text>
       </View>
 

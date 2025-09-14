@@ -31,7 +31,9 @@ const SavedLocationCard = ({
   const { unsplashLoading, imageColorsData } = useUnsplashImage(
     location?.geoAddress[0]?.city ??
       location?.geoAddress[0]?.street ??
-      location?.geoAddress[0]?.district
+      location?.geoAddress[0]?.district ??
+      location?.geoAddress[0]?.name ??
+      location?.geoAddress[0]?.subregion
   );
 
   const { getLocation, errorMsg } = useCustomLocation();
@@ -109,7 +111,9 @@ const SavedLocationCard = ({
                 >
                   {location?.geoAddress[0]?.city ??
                     location?.geoAddress[0]?.street ??
-                    location?.geoAddress[0]?.district}
+                    location?.geoAddress[0]?.district ??
+                    location?.geoAddress[0]?.name ??
+                    location?.geoAddress[0]?.subregion}
                 </Text>
               </View>
             </View>

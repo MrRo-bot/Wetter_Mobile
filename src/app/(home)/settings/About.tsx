@@ -2,8 +2,17 @@ import images from "@/src/constants/images";
 import * as Application from "expo-application";
 import * as Device from "expo-device";
 import { Image } from "expo-image";
+import * as IntentLauncher from "expo-intent-launcher";
 import { useEffect, useState } from "react";
-import { ScrollView, Text, useColorScheme, View } from "react-native";
+import {
+  Linking,
+  Platform,
+  Pressable,
+  ScrollView,
+  Text,
+  useColorScheme,
+  View,
+} from "react-native";
 import Animated, {
   BounceInDown,
   BounceInLeft,
@@ -25,6 +34,17 @@ const About = () => {
     })();
   }, []);
 
+  const openLocationAccuracySettings = async () => {
+    if (Platform.OS === "android") {
+      await IntentLauncher.startActivityAsync(
+        IntentLauncher.ActivityAction.LOCATION_SOURCE_SETTINGS
+      );
+    }
+    if (Platform.OS === "ios") {
+      await Linking.openURL("App-Prefs:Privacy&path=LOCATION");
+    }
+  };
+
   return (
     <SafeAreaView
       className={`h-full px-3 ${theme === "dark" ? "bg-dark" : "bg-light"}`}
@@ -39,6 +59,7 @@ const About = () => {
         >
           <Image
             accessibilityLabel="Illustration of a magnifying glass for location search"
+            accessibilityRole="image"
             style={{ width: 200, height: 200 }}
             contentFit="contain"
             source={
@@ -49,6 +70,8 @@ const About = () => {
           />
         </Animated.View>
         <Animated.Text
+          accessibilityRole="header"
+          accessibilityLabel="Wetter App Name"
           entering={BounceInLeft.duration(1000)
             .delay(300)
             .reduceMotion(ReduceMotion.System)}
@@ -61,6 +84,8 @@ const About = () => {
           Wetter
         </Animated.Text>
         <Animated.Text
+          accessibilityRole="text"
+          accessibilityLabel={`App Version: ${Application?.nativeApplicationVersion}`}
           entering={BounceInRight.duration(1000)
             .delay(600)
             .reduceMotion(ReduceMotion.System)}
@@ -69,6 +94,8 @@ const About = () => {
           Version: {Application?.nativeApplicationVersion}
         </Animated.Text>
         <Animated.Text
+          accessibilityRole="text"
+          accessibilityLabel={`Device: ${Device?.deviceName}`}
           entering={BounceInLeft.duration(1000)
             .delay(900)
             .reduceMotion(ReduceMotion.System)}
@@ -77,6 +104,8 @@ const About = () => {
           Device: {Device?.deviceName}
         </Animated.Text>
         <Animated.Text
+          accessibilityRole="text"
+          accessibilityLabel={`Installed: ${installed}`}
           entering={BounceInLeft.duration(1000)
             .delay(1200)
             .reduceMotion(ReduceMotion.System)}
@@ -93,6 +122,7 @@ const About = () => {
         >
           <View>
             <Text
+              accessibilityRole="header"
               style={{
                 textShadowOffset: { width: 0, height: 0 },
                 textShadowRadius: 3,
@@ -110,6 +140,7 @@ const About = () => {
           </View>
           <View>
             <Text
+              accessibilityRole="header"
               style={{
                 textShadowOffset: { width: 0, height: 0 },
                 textShadowRadius: 3,
@@ -126,6 +157,7 @@ const About = () => {
           </View>
           <View>
             <Text
+              accessibilityRole="header"
               style={{
                 textShadowOffset: { width: 0, height: 0 },
                 textShadowRadius: 3,
@@ -140,9 +172,35 @@ const About = () => {
               Share with friends and family!.
             </Text>
           </View>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Location"
+            accessibilityHint="Opens the settings for fixing location based issues"
+            onPress={() => openLocationAccuracySettings()}
+          >
+            <Text
+              accessibilityRole="header"
+              style={{
+                textShadowOffset: { width: 0, height: 0 },
+                textShadowRadius: 3,
+              }}
+              className={`pb-2 text-xl font-orbitron-semiBold ${theme === "dark" ? "text-redLight" : "text-redDark"}`}
+            >
+              Location
+            </Text>
+            <Text
+              className={`text-xl leading-none font-genos-regular ${theme === "dark" ? "text-purpleLight" : "text-purpleDark"}`}
+            >
+              If the location is not updating automatically, Please ensure that
+              you have set the location permission to &quot;Allow all the
+              time&quot;.
+            </Text>
+          </Pressable>
         </Animated.View>
 
         <Animated.Text
+          accessibilityRole="text"
+          accessibilityLabel={`App ID: ${Application?.applicationId}`}
           entering={BounceInDown.duration(1000)
             .delay(1800)
             .reduceMotion(ReduceMotion.System)}

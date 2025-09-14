@@ -14,13 +14,13 @@ const Radiation = () => {
 
   const { weather } = weatherStore();
 
-  const radiationData = Array.from({ length: 24 }, (_, i) => {
+  const radiationData = Array.from({ length: 24 }, (_, index) => {
     return {
-      value: weather?.hourly?.direct_normal_irradiance[i],
+      value: weather?.hourly?.direct_normal_irradiance[index],
       label:
-        (i + 1) % 4 === 0
+        (index + 1) % 4 === 0
           ? unixConv?.timeStamp(
-              new Date(weather?.hourly?.time[i]).getTime() / 1000
+              new Date(weather?.hourly?.time[index]).getTime() / 1000
             ).hour2
           : "",
     };

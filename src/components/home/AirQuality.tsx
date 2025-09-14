@@ -1,5 +1,6 @@
 import images from "@/src/constants/images";
 import { aqiStore } from "@/src/store/aqiStore";
+import { AqiColorsType } from "@/src/types/types";
 import { aqiDesc, aqiDetailColors } from "@/src/utils/math";
 import Entypo from "@expo/vector-icons/Entypo";
 import { Image } from "expo-image";
@@ -45,16 +46,7 @@ const AirQuality = () => {
     color: aqiObject?.color,
   };
 
-  const AQI_COLORS: {
-    green: string;
-    yellow: string;
-    orange: string;
-    red: string;
-    purple: string;
-    maroon: string;
-    default: string;
-    [key: string]: string;
-  } = {
+  const AQI_COLORS: AqiColorsType = {
     green: "text-green",
     yellow: "text-yellow",
     orange: "text-orange",

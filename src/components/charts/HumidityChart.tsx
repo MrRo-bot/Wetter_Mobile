@@ -13,13 +13,13 @@ const HumidityChart = () => {
 
   const { weather } = weatherStore();
 
-  const humidityData = Array.from({ length: 24 }, (_, i) => {
+  const humidityData = Array.from({ length: 24 }, (_, index) => {
     return {
-      value: weather?.hourly?.relative_humidity_2m[i],
+      value: weather?.hourly?.relative_humidity_2m[index],
       label:
-        (i + 1) % 4 === 0
+        (index + 1) % 4 === 0
           ? unixConv?.timeStamp(
-              new Date(weather?.hourly?.time[i]).getTime() / 1000
+              new Date(weather?.hourly?.time[index]).getTime() / 1000
             ).hour2
           : "",
     };

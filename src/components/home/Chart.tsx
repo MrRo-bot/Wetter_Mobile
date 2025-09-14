@@ -10,8 +10,8 @@ const Chart = () => {
 
   const { weather } = weatherStore();
 
-  const chanceOfPrecipitationData = Array.from({ length: 7 }, (_, i) => {
-    const indexToShow = (i + 1) * 4;
+  const chanceOfPrecipitationData = Array.from({ length: 7 }, (_, index) => {
+    const indexToShow = (index + 1) * 4;
 
     return {
       value: weather?.hourly?.precipitation_probability[indexToShow],
