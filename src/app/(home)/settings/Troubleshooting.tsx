@@ -1,4 +1,3 @@
-import * as Application from "expo-application";
 import * as IntentLauncher from "expo-intent-launcher";
 import React from "react";
 import {
@@ -11,21 +10,8 @@ import {
 import Animated, { BounceInDown, ReduceMotion } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const Troubleshooting = () => {
+const TroubleShooting = () => {
   let theme = useColorScheme();
-
-  const openBatterySettings = async () => {
-    if (Platform.OS === "android") {
-      const packageName = Application.applicationId;
-      await IntentLauncher.startActivityAsync(
-        IntentLauncher.ActivityAction.IGNORE_BATTERY_OPTIMIZATION_SETTINGS,
-        { data: `package:${packageName}` }
-      );
-    }
-    if (Platform.OS === "ios") {
-      await Linking.openSettings();
-    }
-  };
 
   const openLocationAccuracySettings = async () => {
     if (Platform.OS === "android") {
@@ -35,6 +21,23 @@ const Troubleshooting = () => {
     }
     if (Platform.OS === "ios") {
       await Linking.openURL("App-Prefs:Privacy&path=LOCATION");
+    }
+  };
+
+  const openBatterySettings = async () => {
+    if (Platform.OS === "android") {
+      await IntentLauncher.startActivityAsync(
+        IntentLauncher.ActivityAction.IGNORE_BATTERY_OPTIMIZATION_SETTINGS
+      );
+    }
+    if (Platform.OS === "ios") {
+      const url = "app-settings:";
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      } else {
+        await Linking.openURL("App-Prefs:Privacy&path=BATTERY");
+      }
     }
   };
 
@@ -67,6 +70,7 @@ const Troubleshooting = () => {
             time&quot;.
           </Text>
         </Pressable>
+
         <Pressable onPress={() => openBatterySettings()}>
           <Text
             style={{
@@ -91,4 +95,4 @@ const Troubleshooting = () => {
   );
 };
 
-export default Troubleshooting;
+export default TroubleShooting;

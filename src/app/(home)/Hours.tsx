@@ -2,7 +2,6 @@ import images from "@/src/constants/images";
 import { weatherStore } from "@/src/store/weatherStore";
 import { HourlyWeatherObjectType, WeatherIconsType } from "@/src/types/types";
 import {
-  closestTimestamp,
   degConv,
   lenAndSpdConv,
   unixConv,
@@ -19,18 +18,13 @@ const Hours = () => {
 
   const { weather } = weatherStore();
 
-  const { hourly, hourly_units: units, current } = weather;
+  const { hourly, hourly_units: units } = weather;
 
-  const currentTimeIndex = hourly?.time.indexOf(
-    current?.time && closestTimestamp(current?.time, hourly?.time)
-  );
-
-  const hourlyDataFull = Array.from({ length: 48 }, (_, i) => {
-    const index = currentTimeIndex + i;
+  const hourlyDataFull = Array.from({ length: 48 }, (_, index) => {
     const weatherCode = hourly?.weather_code[index];
 
     return {
-      id: i,
+      id: index,
       currentTemp: `${valRound(hourly?.temperature_2m[index])}°c`,
       precipitation: `${hourly?.precipitation_probability[index]}${units?.precipitation_probability}`,
       precipitationAmount: `${hourly?.precipitation[index]} ${units?.precipitation}`,
@@ -58,6 +52,7 @@ const Hours = () => {
       is_day: hourly?.is_day[index],
     };
   });
+
   return (
     <SafeAreaView
       className={`${theme === "dark" ? "bg-dark" : "bg-light"}`}
