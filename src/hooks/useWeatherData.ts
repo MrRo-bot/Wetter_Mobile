@@ -3,7 +3,9 @@ import { focusManager, onlineManager, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import type { AppStateStatus } from "react-native";
 import { AppState, Platform } from "react-native";
+import { useSettingsStore } from "../store/settingsStore";
 import { WeatherDataType } from "../types/types";
+import { updateFreqFunction } from "../utils/math";
 
 onlineManager.setEventListener((setOnline) => {
   const subscription = NetInfo.addEventListener((state) => {
@@ -16,6 +18,8 @@ const useWeatherData = (coordinates: {
   latitude: number;
   longitude: number;
 }) => {
+  const { updateFreq } = useSettingsStore();
+
   useEffect(() => {
     const subscription = AppState.addEventListener(
       "change",
@@ -123,6 +127,7 @@ const useWeatherData = (coordinates: {
     enabled: !!coordinates && isValidCoordinates(coordinates),
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 15,
+    refetchInterval: updateFreqFunction(updateFreq),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: true,

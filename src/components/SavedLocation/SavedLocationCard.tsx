@@ -3,10 +3,11 @@ import useUnsplashImage from "@/src/hooks/useUnsplashImage";
 import { locationStore } from "@/src/store/locationStore";
 import { LocationDataType, ToastRef } from "@/src/types/types";
 import { MaterialIcons } from "@expo/vector-icons";
+import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { Alert, Pressable, Text, View } from "react-native";
+import { Modal, Pressable, Text, View } from "react-native";
 import Loader from "../UI/Loader";
 
 const SavedLocationCard = ({
@@ -19,6 +20,7 @@ const SavedLocationCard = ({
   index: number;
 }) => {
   const [isLocationToShow, setIsLocationToShow] = useState(false);
+  const [removeLocation, setRemoveLocation] = useState(false);
 
   const toastRef = useRef<ToastRef>(null);
 
@@ -127,38 +129,89 @@ const SavedLocationCard = ({
             </View>
 
             {locationStoreObj.locations.length > 1 && (
-              <Pressable
-                onPress={(e) => {
-                  e.stopPropagation();
-                  Alert.alert(
-                    "Delete Location",
-                    "Are you sure you want to delete this location?",
-                    [
-                      { text: "Cancel", style: "cancel" },
-                      {
-                        text: "Delete",
-                        style: "destructive",
-                        onPress: () => {
-                          locationStoreObj.removeLocation(location?.id);
-                          locationStoreObj.addLocationToShow(
-                            locationStoreObj.locations[0].id
-                          );
-                        },
-                      },
-                    ]
-                  );
-                }}
-                className={`absolute z-50 items-center justify-center p-0.5 overflow-hidden rounded-full shadow-sm top-2 right-2 bg-light/80`}
-              >
-                <View className="items-center justify-center p-1 border-2 border-solid rounded-full w-max border-dark/50">
-                  <MaterialIcons
-                    name="delete-outline"
-                    className="shadow-2xl"
-                    size={24}
-                    color={imageColor}
-                  />
-                </View>
-              </Pressable>
+              <>
+                <Pressable
+                  onPress={(e) => {
+                    e.stopPropagation();
+                    setRemoveLocation(!removeLocation);
+                  }}
+                  className={`absolute z-50 items-center justify-center p-0.5 overflow-hidden rounded-full shadow-sm top-2 right-2 bg-light/80`}
+                >
+                  <View className="items-center justify-center p-1 border-2 border-solid rounded-full w-max border-dark/50">
+                    <MaterialIcons
+                      name="delete-outline"
+                      className="shadow-2xl"
+                      size={24}
+                      color={imageColor}
+                    />
+                  </View>
+                </Pressable>
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  accessible={true}
+                  visible={removeLocation}
+                  statusBarTranslucent={true}
+                  navigationBarTranslucent={true}
+                  hardwareAccelerated={true}
+                  onRequestClose={() => {
+                    setRemoveLocation(!removeLocation);
+                  }}
+                >
+                  <BlurView
+                    experimentalBlurMethod="dimezisBlurView"
+                    intensity={20}
+                    tint={theme === "dark" ? "dark" : "light"}
+                    className={`flex-row items-center justify-center gap-2 p-2 bg-clip-padding w-full h-full ${theme === "dark" ? "bg-light" : "bg-dark"}`}
+                  >
+                    <BlurView
+                      experimentalBlurMethod="dimezisBlurView"
+                      intensity={80}
+                      tint={theme === "dark" ? "dark" : "light"}
+                      className="items-center justify-center w-9/12 p-6 overflow-hidden rounded-2xl h-3/12 gap-y-6 bg-light"
+                    >
+                      <Text
+                        className={`text-center font-orbitron-bold ${theme === "dark" ? "text-light" : "text-dark"}`}
+                      >
+                        Do you want to remove this location?
+                      </Text>
+
+                      <View className="flex-row items-center justify-center gap-2 mx-auto">
+                        <Pressable
+                          className={`items-center justify-center py-1.5 px-2 border-2 border-solid rounded-2xl w-max ${theme === "dark" ? "border-light/50 bg-sky-400" : "border-dark/50 bg-sky-900"}`}
+                          onPress={(e) => {
+                            e.stopPropagation();
+                            locationStoreObj.removeLocation(location?.id);
+                            locationStoreObj.addLocationToShow(
+                              locationStoreObj.locations[0].id
+                            );
+                            setRemoveLocation(!removeLocation);
+                          }}
+                        >
+                          <Text
+                            className={`text-center font-orbitron-bold ${theme === "dark" ? "text-dark" : "text-light"}`}
+                            numberOfLines={1}
+                          >
+                            Delete
+                          </Text>
+                        </Pressable>
+
+                        <Pressable
+                          className={`items-center justify-center py-1.5 px-2 border-2 border-solid rounded-2xl w-max ${theme === "dark" ? "border-light/50 bg-sky-400" : "border-dark/50 bg-sky-900"}`}
+                          onPress={() => setRemoveLocation(!removeLocation)}
+                        >
+                          <Text
+                            className={`text-center font-orbitron-bold ${theme === "dark" ? "text-dark" : "text-light"}`}
+                            numberOfLines={1}
+                          >
+                            Cancel
+                          </Text>
+                        </Pressable>
+                      </View>
+                    </BlurView>
+                  </BlurView>
+                </Modal>
+              </>
             )}
           </>
         )}

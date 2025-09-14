@@ -444,5 +444,7 @@ export interface SettingUnitType {
 
 export interface SettingsStateType {
   units: SettingUnitType;
+  updateFreq: string;
   setUnits: (units: SettingUnitType) => void;
+  setUpdateFreq: (updateFreq: string) => void;
 }

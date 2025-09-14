@@ -14,7 +14,9 @@ export const useSettingsStore = create<SettingsStateType>()(
         pressure: "hPa",
         precipitation: "mm",
       },
+      updateFreq: "15 Minutes",
       setUnits: (units) => set({ units }),
+      setUpdateFreq: (updateFreq) => set({ updateFreq }),
     }),
     {
       name: "settings-storage",

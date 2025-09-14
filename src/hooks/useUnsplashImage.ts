@@ -3,7 +3,9 @@ import { focusManager, onlineManager, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { AppState, AppStateStatus, Platform } from "react-native";
 import ImageColors, { ImageColorsResult } from "react-native-image-colors";
+import { useSettingsStore } from "../store/settingsStore";
 import { UnsplashType } from "../types/types";
+import { updateFreqFunction } from "../utils/math";
 
 onlineManager.setEventListener((setOnline) => {
   const subscription = NetInfo.addEventListener((state) => {
@@ -16,6 +18,8 @@ const useUnsplashImage = (imgSearchString: string | null) => {
   //imgSearchString can be place,weather type or anything else
 
   const unsplashKey = process.env.EXPO_PUBLIC_UNSPLASH_KEY;
+
+  const { updateFreq } = useSettingsStore();
 
   useEffect(() => {
     const subscription = AppState.addEventListener(
@@ -95,6 +99,7 @@ const useUnsplashImage = (imgSearchString: string | null) => {
     queryFn: fetchUnsplashImage,
     enabled: !!imgSearchString,
     staleTime: 15 * 60 * 1000,
+    refetchInterval: updateFreqFunction(updateFreq),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: true,

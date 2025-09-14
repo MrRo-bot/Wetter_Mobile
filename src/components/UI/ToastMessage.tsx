@@ -68,7 +68,9 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
               className={`flex-row items-center justify-between gap-2 p-2 bg-clip-padding ${theme === "dark" ? "bg-light" : "bg-dark"}`}
             >
               <View
-                className={`rounded-full shadow-sm p-1 ${theme === "dark" ? "bg-light" : "bg-dark"}`}
+                className={`rounded-full shadow-sm p-1 items-center justify-center 
+                  ${theme === "dark" ? "bg-light" : "bg-dark"}
+                  `}
               >
                 <Image
                   accessibilityLabel={`${toast.type} icon`}

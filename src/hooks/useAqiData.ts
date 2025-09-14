@@ -3,7 +3,9 @@ import { focusManager, onlineManager, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import type { AppStateStatus } from "react-native";
 import { AppState, Platform } from "react-native";
+import { useSettingsStore } from "../store/settingsStore";
 import { AQIType } from "../types/types";
+import { updateFreqFunction } from "../utils/math";
 
 //react query sets whether status is online or offline
 onlineManager.setEventListener((setOnline) => {
@@ -35,6 +37,8 @@ const isValidCoordinates = (
 const useAqiData = (
   coordinates: { latitude: number; longitude: number } | null
 ) => {
+  const { updateFreq } = useSettingsStore();
+
   useEffect(() => {
     if (Platform.OS === "web") return;
     const subscription = AppState.addEventListener(
@@ -93,6 +97,8 @@ const useAqiData = (
     enabled: isValidCoordinates(coordinates),
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 15,
+    refetchInterval: updateFreqFunction(updateFreq),
+    refetchIntervalInBackground: true,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: true,

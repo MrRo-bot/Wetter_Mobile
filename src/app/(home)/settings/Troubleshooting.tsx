@@ -1,5 +1,6 @@
 import * as Application from "expo-application";
 import * as IntentLauncher from "expo-intent-launcher";
+import React from "react";
 import {
   Linking,
   Platform,
@@ -36,6 +37,7 @@ const Troubleshooting = () => {
       await Linking.openURL("App-Prefs:Privacy&path=LOCATION");
     }
   };
+
   return (
     <SafeAreaView
       className={`h-full w-full px-3 ${theme === "dark" ? "bg-dark" : "bg-light"}`}

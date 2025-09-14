@@ -24,8 +24,6 @@ import SavedLocationCard from "@/src/components/SavedLocation/SavedLocationCard"
 
 import LocationSearchItem from "@/src/components/locationSearch/LocationSearchItem";
 
-import Units from "@/src/app/(home)/settings/Units";
-
 export default {
   AirQuality,
   Brief,
@@ -51,6 +49,4 @@ export default {
 
   SavedLocationCard,
   LocationSearchItem,
-
-  Units,
 };

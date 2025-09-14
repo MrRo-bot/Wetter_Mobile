@@ -444,3 +444,20 @@ export const alertIcon = (code: number): string => {
       return "";
   }
 };
+
+export const updateFreqFunction = (str?: string): number => {
+  switch (str) {
+    case "15 Minutes":
+      return 900000;
+    case "30 Minutes":
+      return 1800000;
+    case "1 Hour":
+      return 3600000;
+    case "2 Hours":
+      return 7200000;
+    case "3 Hours":
+      return 10800000;
+    default:
+      return 900000;
+  }
+};
