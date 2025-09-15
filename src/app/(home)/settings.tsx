@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 import { RadioButton } from "react-native-paper";
-import Animated, { FlipInEasyX, ReduceMotion } from "react-native-reanimated";
+import Animated, { FlipInXDown, ReduceMotion } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Settings = () => {
@@ -37,24 +37,24 @@ const Settings = () => {
         <AnimatedPressable
           accessibilityLabel="Navigate to Weather Alerts settings"
           accessibilityHint="Opens the weather alerts configuration screen"
-          onPress={() => router.navigate("/(home)/settings/WeatherAlerts")}
-          className={`py-4 border-b-[1px] border-solid ${theme === "dark" ? "border-b-light/5" : "border-b-dark/5"}`}
-          entering={FlipInEasyX.duration(500)
+          onPress={() => router.navigate("/(home)/settings/Notification")}
+          className={`py-6 border-b-[1px] border-solid ${theme === "dark" ? "border-b-light/5" : "border-b-dark/5"}`}
+          entering={FlipInXDown.duration(500)
             .delay(100)
             .reduceMotion(ReduceMotion.System)}
         >
           <Text
             className={`font-orbitron-bold text-lg ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
           >
-            Weather Alerts
+            Notification
           </Text>
         </AnimatedPressable>
         <AnimatedPressable
           accessibilityLabel="Navigate to Units"
           accessibilityHint="Opens the measurement units configuration screen"
           onPress={() => router.navigate("/(home)/settings/Units")}
-          className={`py-4 border-b-[1px] border-solid ${theme === "dark" ? "border-b-light/5" : "border-b-dark/5"}`}
-          entering={FlipInEasyX.duration(500)
+          className={`py-6 border-b-[1px] border-solid ${theme === "dark" ? "border-b-light/5" : "border-b-dark/5"}`}
+          entering={FlipInXDown.duration(500)
             .delay(100)
             .reduceMotion(ReduceMotion.System)}
         >
@@ -65,14 +65,24 @@ const Settings = () => {
           </Text>
         </AnimatedPressable>
         <AnimatedPressable
+          entering={FlipInXDown.duration(500)
+            .delay(100)
+            .reduceMotion(ReduceMotion.System)}
           accessibilityRole="button"
           accessibilityLabel="Open update frequency modal"
           onPress={() => setUpdateFreqModal(!updateFreqModal)}
-          className={`py-4 border-b-[1px] border-solid ${theme === "dark" ? "border-b-light/5" : "border-b-dark/5"}`}
-          entering={FlipInEasyX.duration(500)
-            .delay(100)
-            .reduceMotion(ReduceMotion.System)}
+          className={`py-6 border-b-[1px] border-solid ${theme === "dark" ? "border-b-light/5" : "border-b-dark/5"}`}
         >
+          <Text
+            className={`font-orbitron-bold text-lg ${theme === "dark" ? " text-light/80" : "text-dark/70"}`}
+          >
+            Update Frequency
+          </Text>
+          <Text
+            className={`font-genos-regular text-xl leading-none mt-1 ${theme === "dark" ? " text-light/30" : "text-dark/30"}`}
+          >
+            {updateFreq}
+          </Text>
           <Modal
             animationType="slide"
             transparent={true}
@@ -96,10 +106,10 @@ const Settings = () => {
                 experimentalBlurMethod="dimezisBlurView"
                 intensity={40}
                 tint={theme === "dark" ? "dark" : "light"}
-                className={`items-start border-[1px] border-solid justify-center w-9/12 p-6 overflow-hidden rounded-2xl h-3/12 gap-y-6 ${theme === "dark" ? "border-light/30" : "border-dark/30"}`}
+                className={`items-start border-[1px] border-solid justify-center w-10/12 p-6 overflow-hidden rounded-2xl h-3/12 gap-y-6 ${theme === "dark" ? "border-light/30" : "border-dark/30"}`}
               >
                 <Text
-                  className={`text-left text-lg font-orbitron-bold ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
+                  className={`text-left text-xl font-orbitron-bold ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
                 >
                   Update Frequency
                 </Text>
@@ -214,23 +224,13 @@ const Settings = () => {
               </BlurView>
             </BlurView>
           </Modal>
-          <Text
-            className={`font-orbitron-bold text-lg ${theme === "dark" ? " text-light/80" : "text-dark/70"}`}
-          >
-            Update Frequency
-          </Text>
-          <Text
-            className={`font-orbitron-regular mt-1 ${theme === "dark" ? " text-light/30" : "text-dark/30"}`}
-          >
-            {updateFreq}
-          </Text>
         </AnimatedPressable>
         <AnimatedPressable
           accessibilityLabel="Navigate to About page"
           accessibilityHint="Opens the description about the app"
           onPress={() => router.navigate("/(home)/settings/About")}
-          className={`py-4 border-b-[1px] border-solid ${theme === "dark" ? "border-b-light/5" : "border-b-dark/5"}`}
-          entering={FlipInEasyX.duration(500)
+          className={`py-6 border-b-[1px] border-solid ${theme === "dark" ? "border-b-light/5" : "border-b-dark/5"}`}
+          entering={FlipInXDown.duration(500)
             .delay(300)
             .reduceMotion(ReduceMotion.System)}
         >

@@ -449,10 +449,24 @@ export interface UnitSettingType {
   precipitation: "mm" | "in";
 }
 
+export interface AlertsType {
+  weatherAlerts: {
+    severe: boolean;
+    advisory: boolean;
+  };
+  rainAndSnow: boolean;
+  chanceOfPrecipitation: string;
+  aqi: string;
+  dailyNotification: boolean;
+  time: string;
+}
+
 export interface SettingsStateType {
   units: UnitSettingType;
+  alerts: AlertsType;
   updateFreq: string;
   setUnits: (units: UnitSettingType) => void;
+  setAlerts: (units: AlertsType) => void;
   setUpdateFreq: (updateFreq: string) => void;
 }
 

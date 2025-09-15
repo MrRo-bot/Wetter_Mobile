@@ -14,8 +14,20 @@ export const useSettingsStore = create<SettingsStateType>()(
         pressure: "hPa",
         precipitation: "mm",
       },
+      alerts: {
+        weatherAlerts: {
+          severe: true,
+          advisory: true,
+        },
+        rainAndSnow: false,
+        chanceOfPrecipitation: "60",
+        aqi: "0",
+        dailyNotification: true,
+        time: "",
+      },
       updateFreq: "15",
       setUnits: (units) => set({ units }),
+      setAlerts: (alerts) => set({ alerts }),
       setUpdateFreq: (updateFreq) => set({ updateFreq }),
     }),
     {
@@ -23,6 +35,7 @@ export const useSettingsStore = create<SettingsStateType>()(
       storage: createJSONStorage(() => AsyncStorage),
       partialize: (state) => ({
         units: state.units,
+        alerts: state.alerts,
         updateFreq: state.updateFreq,
       }),
     }
