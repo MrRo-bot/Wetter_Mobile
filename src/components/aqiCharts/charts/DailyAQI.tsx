@@ -1,3 +1,4 @@
+import { useSettingsStore } from "@/src/store/settingsStore";
 import { AQIHourlyType, DailyAQIProps } from "@/src/types/types";
 import { aqiDetailColors, unixConv } from "@/src/utils/math";
 import React, { useState } from "react";
@@ -6,6 +7,8 @@ import { BarChart } from "react-native-gifted-charts";
 
 const DailyAQI = ({ aqiForecast, aqiParameter, name }: DailyAQIProps) => {
   let theme = useColorScheme();
+
+  const { units: unitSettings } = useSettingsStore();
 
   const [parentWidth, setParentWidth] = useState(
     Dimensions.get("window").width
@@ -32,7 +35,10 @@ const DailyAQI = ({ aqiForecast, aqiParameter, name }: DailyAQIProps) => {
         },
       ],
       label: unixConv
-        ?.timeStamp(new Date(aqiDay?.time[index]).getTime() / 1000)
+        ?.timeStamp(
+          new Date(aqiDay?.time[index]).getTime() / 1000,
+          unitSettings.time
+        )
         .day.slice(0, 3),
     };
   });

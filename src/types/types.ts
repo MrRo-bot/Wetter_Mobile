@@ -94,8 +94,8 @@ export interface WeatherDataType {
     rain: "mm" | "" | "inch";
     showers: "mm" | "" | "inch";
     snowfall: "cm" | "" | "inch";
-    wind_speed_10m: "km/h" | "" | "knots" | "" | "mph" | "" | "m/s";
-    wind_gusts_10m: "km/h" | "" | "knots" | "" | "mph" | "" | "m/s";
+    wind_speed_10m: "km/h" | "" | "kn" | "" | "mp/h" | "" | "m/s";
+    wind_gusts_10m: "km/h" | "" | "kn" | "" | "mp/h" | "" | "m/s";
     wind_direction_10m: "°";
   };
   current: {
@@ -126,9 +126,9 @@ export interface WeatherDataType {
     weather_code: "wmo code";
     surface_pressure: "hPa";
     cloud_cover: "%";
-    wind_speed_10m: "km/h" | "" | "knots" | "" | "mph" | "" | "m/s";
+    wind_speed_10m: "km/h" | "" | "kn" | "" | "mp/h" | "" | "m/s";
     wind_direction_10m: "°";
-    wind_gusts_10m: "km/h" | "" | "knots" | "" | "mph" | "" | "m/s";
+    wind_gusts_10m: "km/h" | "" | "kn" | "" | "mp/h" | "" | "m/s";
     soil_temperature_0cm: "°C" | "" | "°F";
     sunshine_duration: "s";
     direct_normal_irradiance: "W/m²";
@@ -168,8 +168,8 @@ export interface WeatherDataType {
     daylight_duration: "s";
     uv_index_max: "";
     winddirection_10m_dominant: "°";
-    wind_speed_10m_max: "km/h" | "" | "mph" | "" | "knots" | "" | "ms";
-    wind_gusts_10m_max: "km/h" | "" | "mph" | "" | "knots" | "" | "ms";
+    wind_speed_10m_max: "km/h" | "" | "mp/h" | "" | "kn" | "" | "m/s";
+    wind_gusts_10m_max: "km/h" | "" | "mp/h" | "" | "kn" | "" | "m/s";
     shortwave_radiation_sum: "MJ/m²";
     dew_point_2m_mean: "°C" | "" | "°F";
     surface_pressure_mean: "hPa";
@@ -442,9 +442,9 @@ export interface UnitOptionsType {
 
 export interface UnitSettingType {
   time: "12-hour" | "24-hour";
-  temperature: "F" | "C";
+  temperature: "fahrenheit" | "celsius";
   distance: "km" | "mi";
-  speed: "km/h" | "mph" | "m/s" | "beaufort" | "knots";
+  speed: "kmh" | "mph" | "ms" | "kn";
   pressure: "mBar" | "inHg" | "hPa" | "bar" | "mmHg" | "psi";
   precipitation: "mm" | "in";
 }

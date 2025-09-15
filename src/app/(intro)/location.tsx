@@ -107,7 +107,6 @@ export default function Location() {
           <Pressable
             accessibilityRole="button"
             accessibilityLabel="Go to location search"
-            onFocus={() => console.log("Focused on location search button")}
             onPress={() => router.replace("/(home)/searchLocation")}
           >
             <Text

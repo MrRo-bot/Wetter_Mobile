@@ -1,3 +1,4 @@
+import { useSettingsStore } from "@/src/store/settingsStore";
 import React, { useState } from "react";
 import { Dimensions, Text, useColorScheme, View } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
@@ -13,6 +14,7 @@ const Temperature = () => {
   );
 
   const { weather } = weatherStore();
+  const { units: unitSettings } = useSettingsStore();
 
   const windData = Array.from({ length: 24 }, (_, index) => {
     return {
@@ -20,7 +22,8 @@ const Temperature = () => {
       label:
         (index + 1) % 4 === 0
           ? unixConv?.timeStamp(
-              new Date(weather?.hourly?.time[index]).getTime() / 1000
+              new Date(weather?.hourly?.time[index]).getTime() / 1000,
+              unitSettings.time
             ).hour2
           : "",
     };
@@ -36,7 +39,7 @@ const Temperature = () => {
         <Text
           className={`font-orbitron-bold  leading-none text-lg ${theme === "dark" ? "text-light" : "text-dark"}`}
         >
-          TEMPERATURE (C)
+          TEMPERATURE ({weather.hourly_units.temperature_2m.toUpperCase()})
         </Text>
       </View>
 

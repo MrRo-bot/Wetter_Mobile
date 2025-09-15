@@ -35,24 +35,14 @@ export const degConv = (deg: number) => {
 };
 
 //Rounding figures
-export const valRound = (value: number): number => Math.round(value);
-
-//KELVIN CONVERSION
-export const tempConv: object = {
-  c: (value: number) => Math.round(value - 273.15),
-  f: (value: number) => Math.round((value * 9) / 5 - 459.67),
-};
+export const valRound = (value: number): number => Math.floor(+value);
 
 //METER DISTANCE AND SPEED CONVERSION
 export const lenAndSpdConv = {
   mi: (value: number) => Math.round(value / 1609.344),
   km: (value: number) => Math.round(value / 1000),
   mph: (value: number) => Math.round(value * 2.237),
-  kmh: (value: number) => Math.round(value * 3.6),
 };
-
-//PRECIPITATION SCALE TO PERCENTAGE
-export const precConv = (value: number): number => Math.round(value * 100);
 
 //EPOCH TIME TO READABLE FORMAT
 export const unixConv = {
@@ -79,7 +69,7 @@ export const unixConv = {
     "November",
     "December",
   ],
-  timeStamp: (value: number) => {
+  timeStamp: (value: number, time: string) => {
     const epoch = new Date(value * 1000);
     let year = epoch.getFullYear();
     let month = unixConv.months[epoch.getMonth()];
@@ -88,12 +78,12 @@ export const unixConv = {
     let hour = epoch.getHours();
     let hour2 = epoch.toLocaleString("en-US", {
       hour: "numeric",
-      hour12: true,
+      hour12: time === "12-hour" ? true : false,
     });
     let clockTime = epoch.toLocaleString("en-US", {
       hour: "numeric",
       minute: "numeric",
-      hour12: true,
+      hour12: time === "12-hour" ? true : false,
     });
     return { year, month, day, date, hour, hour2, clockTime };
   },
@@ -445,6 +435,7 @@ export const alertIcon = (code: number): string => {
   }
 };
 
+//Converts update frequency label to milliseconds
 export const updateFreqFunction = (str?: string): number => {
   switch (str) {
     case "15 Minutes":
@@ -460,4 +451,14 @@ export const updateFreqFunction = (str?: string): number => {
     default:
       return 900000;
   }
+};
+
+//changing pressure level units
+export const pressureConverter = {
+  mBar: (value: number) => Math.round(value),
+  inHg: (value: number) => Math.round(value * 0.0295300586),
+  hPa: (value: number) => Math.round(value),
+  bar: (value: number) => Math.round(value * 0.001),
+  mmHg: (value: number) => Math.round(value * 0.0750063755),
+  psi: (value: number) => Math.round(value * 0.0145037738),
 };

@@ -1,3 +1,4 @@
+import { useSettingsStore } from "@/src/store/settingsStore";
 import { weatherStore } from "@/src/store/weatherStore";
 import { Stack, usePathname } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -9,6 +10,7 @@ export default function HomeLayout() {
   const path = usePathname();
 
   const { weather } = weatherStore();
+  const { units } = useSettingsStore();
 
   const [clock, setClock] = useState<string>("");
 
@@ -19,7 +21,7 @@ export default function HomeLayout() {
           new Date().toLocaleString("en-US", {
             hour: "numeric",
             minute: "numeric",
-            hour12: true,
+            hour12: units.time === "12-hour" ? true : false,
             timeZone: weather?.timezone ? weather?.timezone : "Asia/Kolkata",
           })
         ),

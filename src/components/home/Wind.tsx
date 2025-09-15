@@ -101,10 +101,10 @@ const Wind = () => {
         <View className="mb-2">
           <Text
             accessibilityRole="text"
-            accessibilityLabel={`${weather?.current?.wind_speed_10m ?? "..."} ${weather?.current_units?.wind_speed_10m ?? "..."}`}
+            accessibilityLabel={`${weather?.current?.wind_speed_10m ?? "..."} ${weather?.current_units?.wind_speed_10m === "kn" ? "knots" : (weather?.current_units?.wind_speed_10m ?? "...")}`}
             className="text-2xl font-orbitron-regular text-dark/90"
           >
-            {`${weather?.current?.wind_speed_10m ?? "..."} ${weather?.current_units?.wind_speed_10m ?? "..."}`}
+            {`${weather?.current?.wind_speed_10m ?? "..."} ${weather?.current_units?.wind_speed_10m === "kn" ? "knots" : (weather?.current_units?.wind_speed_10m ?? "...")}`}
           </Text>
           <Text
             accessibilityRole="text"

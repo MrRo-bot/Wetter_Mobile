@@ -1,5 +1,6 @@
 import images from "@/src/constants/images";
 import { locationStore } from "@/src/store/locationStore";
+import { useSettingsStore } from "@/src/store/settingsStore";
 import { weatherStore } from "@/src/store/weatherStore";
 import { BriefType } from "@/src/types/types";
 import {
@@ -40,6 +41,7 @@ const Brief = ({
 
   const { weather } = weatherStore();
   const locations = locationStore();
+  const { units: unitSettings } = useSettingsStore();
 
   const { daily, current, daily_units, current_units } = weather;
 
@@ -56,12 +58,13 @@ const Brief = ({
   const weatherCode = weatherCodeConv(daily?.weather_code[0]);
   const isDay = current?.is_day;
   const timestring = unixConv.timeStamp(
-    new Date(current?.time).getTime() / 1000
+    new Date(current?.time).getTime() / 1000,
+    unitSettings.time
   );
   const windDirection = degConv(current?.wind_direction_10m);
-  const windSpeed = `${valRound(daily?.wind_speed_10m_max[0])} ${daily_units?.wind_speed_10m_max}`;
+  const windSpeed = `${daily?.wind_speed_10m_max[0]} ${daily_units?.wind_speed_10m_max === "kn" ? "knots" : daily_units?.wind_speed_10m_max}`;
   const gustDirection = degConv(current?.wind_gusts_10m);
-  const gustSpeed = `${valRound(daily?.wind_gusts_10m_max[0])} ${daily_units?.wind_gusts_10m_max}`;
+  const gustSpeed = `${daily?.wind_gusts_10m_max[0]} ${daily_units?.wind_gusts_10m_max === "kn" ? "knots" : daily_units?.wind_gusts_10m_max}`;
   const precipitationProbability = daily?.precipitation_probability_max[0];
   const precipitationSum = daily?.precipitation_sum[0];
   const precipitationText =
@@ -70,7 +73,7 @@ const Brief = ({
       : "";
   const precipitationAmount =
     precipitationSum > 0
-      ? ` around ${precipitationSum} ${daily_units?.precipitation_sum}`
+      ? ` around ${precipitationSum.toFixed(2)} ${daily_units?.precipitation_sum}`
       : "";
   const weatherSummary = `${isDay ? "Today" : "Tonight"} - ${weatherCode}, Wind ${windDirection?.cardinal} at ${windSpeed}, Gusts ${gustDirection?.cardinal} at ${gustSpeed}${precipitationText}${precipitationAmount}.`;
 
@@ -182,7 +185,6 @@ const Brief = ({
                   accessibilityRole="button"
                   accessibilityLabel="Refresh weather data when internet is turned on"
                   onPress={() => handleRefetch()}
-                  onFocus={() => console.log("Focused on refresh button")}
                 >
                   <Entypo name="cycle" size={20} color="white" />
                 </Pressable>
@@ -279,7 +281,6 @@ const Brief = ({
             accessibilityLabel="View daily weather forecast"
             accessibilityHint="Navigates to daily weather forecast"
             onPress={() => router.navigate("/(home)/Days")}
-            onFocus={() => console.log("Focused on daily forecast button")}
             className="relative mt-1"
           >
             <Text

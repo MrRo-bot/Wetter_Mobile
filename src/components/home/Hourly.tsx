@@ -1,4 +1,5 @@
 import images from "@/src/constants/images";
+import { useSettingsStore } from "@/src/store/settingsStore";
 import { weatherStore } from "@/src/store/weatherStore";
 import { HourlyWeatherObjectType, WeatherIconsType } from "@/src/types/types";
 import {
@@ -18,6 +19,7 @@ const Hourly = () => {
   let theme = useColorScheme();
 
   const { weather } = weatherStore();
+  const { units: unitSettings } = useSettingsStore();
 
   const { hourly, hourly_units: units, current } = weather;
 
@@ -31,16 +33,17 @@ const Hourly = () => {
 
     return {
       id: i,
-      currentTemp: `${valRound(hourly?.temperature_2m[index])}°c`,
+      currentTemp: `${valRound(hourly?.temperature_2m[index])}${units?.temperature_2m}`,
       precipitation: `${hourly?.precipitation_probability[index]}${units?.precipitation_probability}`,
       weatherIcon: weatherIconFind(weatherCode),
       weatherCode,
       weatherMain: weatherCodeConv(weatherCode),
-      windSpeed: `${valRound(hourly?.wind_speed_10m[index])} ${units?.wind_speed_10m}`,
+      windSpeed: `${valRound(hourly?.wind_speed_10m[index])} ${units?.wind_speed_10m === "kn" ? "knots" : units?.wind_speed_10m}`,
       wind: degConv(hourly?.wind_direction_10m[index]).cardinal,
       windDirection: degConv(hourly?.wind_direction_10m[index]).rotationDeg,
       hourStamp: unixConv?.timeStamp(
-        new Date(hourly?.time[index]).getTime() / 1000
+        new Date(hourly?.time[index]).getTime() / 1000,
+        unitSettings.time
       ).hour2,
     };
   });

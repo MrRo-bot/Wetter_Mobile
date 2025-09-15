@@ -1,8 +1,10 @@
 import images from "@/src/constants/images";
+import { useSettingsStore } from "@/src/store/settingsStore";
 import { weatherStore } from "@/src/store/weatherStore";
 import { DailyWeatherObjectType, WeatherIconsType } from "@/src/types/types";
 import {
   degConv,
+  pressureConverter,
   unixConv,
   valRound,
   weatherCodeConv,
@@ -14,7 +16,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const Days = () => {
   let theme = useColorScheme();
+
   let { weather } = weatherStore();
+  const { units: unitSettings } = useSettingsStore();
 
   const { daily, daily_units: units } = weather;
 
@@ -23,46 +27,51 @@ const Days = () => {
 
     return {
       id: index,
-      maxTemp: `${valRound(daily?.temperature_2m_max[index])}°c`,
-      minTemp: `${valRound(daily?.temperature_2m_min[index])}°c`,
+      maxTemp: `${valRound(daily?.temperature_2m_max[index])}${units?.temperature_2m_max}`,
+      minTemp: `${valRound(daily?.temperature_2m_min[index])}${units?.temperature_2m_min}`,
       weatherCode,
       weatherIcon: weatherIconFind(weatherCode),
       precipitation:
         daily?.precipitation_probability_max[index] === null
           ? "0%"
           : `${daily?.precipitation_probability_max[index]}${units?.precipitation_probability_max}`,
-      windSpeed: `${valRound(daily?.wind_speed_10m_max[index])} ${units?.wind_speed_10m_max}`,
+      windSpeed: `${daily?.wind_speed_10m_max[index]} ${units?.wind_speed_10m_max}`,
       windDirection: degConv(daily?.winddirection_10m_dominant[index])
         .rotationDeg,
       dateStamp: `${
-        unixConv.timeStamp(new Date(daily?.time[index]).getTime() / 1000).day
-      }, ${unixConv.timeStamp(new Date(daily?.time[index]).getTime() / 1000).month} ${
-        unixConv.timeStamp(new Date(daily?.time[index]).getTime() / 1000).date
+        unixConv.timeStamp(
+          new Date(daily?.time[index]).getTime() / 1000,
+          unitSettings.time
+        ).day
+      }, ${unixConv.timeStamp(new Date(daily?.time[index]).getTime() / 1000, unitSettings.time).month} ${
+        unixConv.timeStamp(
+          new Date(daily?.time[index]).getTime() / 1000,
+          unitSettings.time
+        ).date
       }`.toUpperCase(),
       weatherMain: weatherCodeConv(weatherCode),
       hourStamp: unixConv.timeStamp(
-        new Date(daily?.time[index]).getTime() / 1000
+        new Date(daily?.time[index]).getTime() / 1000,
+        unitSettings.time
       ).hour2,
       sunrise: unixConv.timeStamp(
-        new Date(daily?.sunrise[index]).getTime() / 1000
+        new Date(daily?.sunrise[index]).getTime() / 1000,
+        unitSettings.time
       ).clockTime,
       sunset: unixConv.timeStamp(
-        new Date(daily?.sunset[index]).getTime() / 1000
+        new Date(daily?.sunset[index]).getTime() / 1000,
+        unitSettings.time
       ).clockTime,
       daylightDuration: `${valRound(daily?.daylight_duration[index] / 60 / 60)} hours`,
-      surfacePressure: `${valRound(daily?.surface_pressure_mean[index])} ${units?.surface_pressure_mean}`,
+      surfacePressure: `${pressureConverter[unitSettings?.pressure](daily?.surface_pressure_mean[index]).toFixed(2)} ${unitSettings?.pressure}`,
       shortwaveRadiation: `${valRound(daily?.shortwave_radiation_sum[index])} ${units?.shortwave_radiation_sum}`,
       uvIndex: `${valRound(daily?.uv_index_max[index])} ${units?.uv_index_max}`,
       summary: `${weatherCodeConv(weatherCode)}. Wind ${degConv(
         daily?.winddirection_10m_dominant[index]
-      ).cardinal?.toLowerCase()} at ${
-        valRound(daily?.wind_speed_10m_max[index]) +
-        " " +
-        units?.wind_speed_10m_max
-      }. Gusts around ${
-        valRound(daily?.wind_gusts_10m_max[index]) +
-        " " +
-        units?.wind_gusts_10m_max
+      ).cardinal?.toLowerCase()} at ${daily?.wind_speed_10m_max[index]} ${
+        units?.wind_speed_10m_max === "kn" ? "knots" : units?.wind_speed_10m_max
+      }. Gusts around ${daily?.wind_gusts_10m_max[index]} ${
+        units?.wind_gusts_10m_max === "kn" ? "knots" : units?.wind_gusts_10m_max
       }. ${
         daily?.precipitation_probability_max[index] === null ||
         daily?.precipitation_probability_max[index] === 0
@@ -70,7 +79,9 @@ const Days = () => {
           : `Chance of precipitation ${daily?.precipitation_probability_max[index]}${units?.precipitation_probability_max}`
       } around ${
         daily?.precipitation_sum[index] > 0
-          ? daily?.precipitation_sum[index] + " " + units?.precipitation_sum
+          ? daily?.precipitation_sum[index].toFixed(2) +
+            " " +
+            units?.precipitation_sum
           : ""
       }.`,
     };

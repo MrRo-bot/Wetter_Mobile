@@ -1,3 +1,4 @@
+import { useSettingsStore } from "@/src/store/settingsStore";
 import { HourlyAQIType } from "@/src/types/types";
 import { unixConv } from "@/src/utils/math";
 import React, { useState } from "react";
@@ -12,6 +13,7 @@ const HourlyAQI = ({
   color,
 }: HourlyAQIType) => {
   let theme = useColorScheme();
+  const { units: unitSettings } = useSettingsStore();
 
   const [parentWidth, setParentWidth] = useState(
     Dimensions.get("window").width
@@ -21,7 +23,10 @@ const HourlyAQI = ({
     value: dataPoint,
     label:
       (index + 1) % 2 === 0
-        ? unixConv?.timeStamp(new Date(timestamp[index]).getTime() / 1000).hour2
+        ? unixConv?.timeStamp(
+            new Date(timestamp[index]).getTime() / 1000,
+            unitSettings.time
+          ).hour2
         : "",
   }));
 

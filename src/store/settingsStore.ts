@@ -8,9 +8,9 @@ export const useSettingsStore = create<SettingsStateType>()(
     (set) => ({
       units: {
         time: "12-hour",
-        temperature: "C",
+        temperature: "celsius",
         distance: "km",
-        speed: "km/h",
+        speed: "kmh",
         pressure: "hPa",
         precipitation: "mm",
       },

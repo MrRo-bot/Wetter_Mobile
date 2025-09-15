@@ -1,9 +1,11 @@
 import images from "@/src/constants/images";
+import { useSettingsStore } from "@/src/store/settingsStore";
 import { weatherStore } from "@/src/store/weatherStore";
 import { HourlyWeatherObjectType, WeatherIconsType } from "@/src/types/types";
 import {
   degConv,
   lenAndSpdConv,
+  pressureConverter,
   unixConv,
   valRound,
   weatherCodeConv,
@@ -17,6 +19,7 @@ const Hours = () => {
   const theme = useColorScheme();
 
   const { weather } = weatherStore();
+  const { units: unitSettings } = useSettingsStore();
 
   const { hourly, hourly_units: units } = weather;
 
@@ -25,27 +28,28 @@ const Hours = () => {
 
     return {
       id: index,
-      currentTemp: `${valRound(hourly?.temperature_2m[index])}°c`,
+      currentTemp: `${valRound(hourly?.temperature_2m[index])}${units?.temperature_2m}`,
       precipitation: `${hourly?.precipitation_probability[index]}${units?.precipitation_probability}`,
-      precipitationAmount: `${hourly?.precipitation[index]} ${units?.precipitation}`,
-      visibility: `${lenAndSpdConv.km(hourly?.visibility[index])} km`,
+      precipitationAmount: `${hourly?.precipitation[index].toFixed(2)} ${units?.precipitation}`,
+      visibility: `${lenAndSpdConv[unitSettings.distance](hourly?.visibility[index])} ${unitSettings.distance}`,
       uvIndex: `${valRound(hourly?.uv_index[index])}`,
-      pressure: `${valRound(hourly?.surface_pressure[index])} ${units?.surface_pressure}`,
+      pressure: `${pressureConverter[unitSettings?.pressure](hourly?.surface_pressure[index]).toFixed(2)} ${unitSettings?.pressure}`,
       soilTemp: `${valRound(hourly?.soil_temperature_0cm[index])}${units?.soil_temperature_0cm}`,
       radiation: `${valRound(hourly?.direct_normal_irradiance[index])} ${units?.direct_normal_irradiance}`,
       weatherIcon: weatherIconFind(weatherCode),
       weatherCode,
       weatherMain: weatherCodeConv(weatherCode),
-      windSpeed: `${valRound(hourly?.wind_speed_10m[index])} ${units?.wind_speed_10m}`,
+      windSpeed: `${hourly?.wind_speed_10m[index]} ${units?.wind_speed_10m === "kn" ? "knots" : units?.wind_speed_10m}`,
       wind: degConv(hourly?.wind_direction_10m[index]).cardinal,
       windDirection: degConv(hourly?.wind_direction_10m[index]).rotationDeg,
       hourStamp: unixConv?.timeStamp(
-        new Date(hourly?.time[index]).getTime() / 1000
+        new Date(hourly?.time[index]).getTime() / 1000,
+        unitSettings.time
       ).hour2,
       feels_like: `${valRound(
         hourly?.temperature_2m[index]
-      )}°c - Feels Like: ${valRound(hourly?.apparent_temperature[index])}°c`,
-      gust: `${valRound(hourly?.wind_gusts_10m[index])} ${units?.wind_gusts_10m}`,
+      )}${units?.temperature_2m} - Feels Like: ${valRound(hourly?.apparent_temperature[index])}${units?.temperature_2m}`,
+      gust: `${hourly?.wind_gusts_10m[index]} ${units?.wind_gusts_10m === "kn" ? "knots" : units?.wind_gusts_10m}`,
       clouds: `${hourly?.cloud_cover[index]}${units?.cloud_cover}`,
       humidity: `${hourly?.relative_humidity_2m[index]}${units?.relative_humidity_2m}`,
       dewPoint: `${valRound(hourly?.dew_point_2m[index])}°`,

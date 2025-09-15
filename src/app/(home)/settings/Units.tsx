@@ -23,16 +23,16 @@ const Units = () => {
       name: "Temperature",
       key: "temperature",
       options: [
-        { label: "°F", value: "F" },
-        { label: "°C", value: "C" },
+        { label: "°C", value: "celsius" },
+        { label: "°F", value: "fahrenheit" },
       ],
     },
     {
       name: "Precipitation",
       key: "precipitation",
       options: [
-        { label: "mm", value: "mm" },
         { label: "in", value: "in" },
+        { label: "mm", value: "mm" },
       ],
     },
     {
@@ -48,10 +48,9 @@ const Units = () => {
       key: "speed",
       options: [
         { label: "mph", value: "mph" },
-        { label: "m/s", value: "m/s" },
-        { label: "km/h", value: "km/h" },
-        { label: "beaufort", value: "beaufort" },
-        { label: "knots", value: "knots" },
+        { label: "m/s", value: "ms" },
+        { label: "km/h", value: "kmh" },
+        { label: "knots", value: "kn" },
       ],
     },
     {

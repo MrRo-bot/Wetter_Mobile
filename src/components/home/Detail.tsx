@@ -1,6 +1,12 @@
 import images from "@/src/constants/images";
+import { useSettingsStore } from "@/src/store/settingsStore";
 import { weatherStore } from "@/src/store/weatherStore";
-import { closestTimestamp, lenAndSpdConv, valRound } from "@/src/utils/math";
+import {
+  closestTimestamp,
+  lenAndSpdConv,
+  pressureConverter,
+  valRound,
+} from "@/src/utils/math";
 import { Image } from "expo-image";
 import { Text, useColorScheme, View } from "react-native";
 
@@ -8,6 +14,7 @@ const Detail = () => {
   let theme = useColorScheme();
 
   const { weather } = weatherStore();
+  const { units: unitSettings } = useSettingsStore();
 
   const { daily, hourly, current, current_units } = weather;
 
@@ -34,12 +41,12 @@ const Detail = () => {
     {
       icon: images.visibility,
       heading: "Visibility",
-      data: `${lenAndSpdConv.km(hourly?.visibility[currentTimeIndex])} km`,
+      data: `${lenAndSpdConv[unitSettings?.distance](hourly?.visibility[currentTimeIndex])} ${unitSettings?.distance}`,
     },
     {
       icon: images.pressure,
       heading: "Pressure",
-      data: `${valRound(current?.surface_pressure)} ${current_units?.precipitation}`,
+      data: `${pressureConverter[unitSettings?.pressure](current?.surface_pressure)} ${unitSettings?.pressure}`,
     },
     {
       icon: images.dew_point,
@@ -90,19 +97,23 @@ const Detail = () => {
           <View
             accessibilityLabel={`Weather detail: ${detail?.heading}, ${detail?.data}`}
             key={detail?.heading}
-            className={`w-[32%] items-center justify-center p-2 rounded-2xl ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
+            className={`w-[32%] items-center justify-center p-1 rounded-2xl ${theme === "dark" ? "bg-light/80" : "bg-light/90"}`}
           >
             <Image
               accessibilityElementsHidden={true}
               contentFit="cover"
-              style={{ width: 48, height: 48 }}
+              style={{ width: 44, height: 44 }}
               source={detail?.icon}
               alt={detail?.heading}
             />
-            <Text className={`text-xs mt-1 font-orbitron-bold text-dark`}>
+            <Text
+              className={`text-xs mt-1 font-orbitron-bold text-dark leading-none`}
+            >
               {detail?.heading ?? "..."}
             </Text>
-            <Text className={`text-2xl mt-2 font-genos-regular text-dark`}>
+            <Text
+              className={`text-2xl mt-2 font-genos-regular text-dark leading-none`}
+            >
               {detail?.data ?? "N/A"}
             </Text>
           </View>

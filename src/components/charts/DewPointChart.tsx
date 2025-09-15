@@ -1,3 +1,4 @@
+import { useSettingsStore } from "@/src/store/settingsStore";
 import React, { useState } from "react";
 import { Dimensions, Text, useColorScheme, View } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
@@ -12,6 +13,7 @@ const DewPointChart = () => {
   );
 
   const { weather } = weatherStore();
+  const { units: unitSettings } = useSettingsStore();
 
   const dewPointData = Array.from({ length: 24 }, (_, index) => {
     return {
@@ -19,7 +21,8 @@ const DewPointChart = () => {
       label:
         (index + 1) % 4 === 0
           ? unixConv?.timeStamp(
-              new Date(weather?.hourly?.time[index]).getTime() / 1000
+              new Date(weather?.hourly?.time[index]).getTime() / 1000,
+              unitSettings.time
             ).hour2
           : "",
     };

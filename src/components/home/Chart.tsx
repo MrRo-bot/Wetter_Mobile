@@ -1,3 +1,4 @@
+import { useSettingsStore } from "@/src/store/settingsStore";
 import { weatherStore } from "@/src/store/weatherStore";
 import { unixConv } from "@/src/utils/math";
 import Entypo from "@expo/vector-icons/Entypo";
@@ -9,6 +10,7 @@ const Chart = () => {
   let theme = useColorScheme();
 
   const { weather } = weatherStore();
+  const { units: unitSettings } = useSettingsStore();
 
   const chanceOfPrecipitationData = Array.from({ length: 7 }, (_, index) => {
     const indexToShow = (index + 1) * 4;
@@ -16,7 +18,8 @@ const Chart = () => {
     return {
       value: weather?.hourly?.precipitation_probability[indexToShow],
       label: unixConv?.timeStamp(
-        new Date(weather?.hourly.time[indexToShow]).getTime() / 1000
+        new Date(weather?.hourly.time[indexToShow]).getTime() / 1000,
+        unitSettings.time
       ).hour2,
     };
   });

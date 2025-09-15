@@ -18,7 +18,7 @@ const useWeatherData = (coordinates: {
   latitude: number;
   longitude: number;
 }) => {
-  const { updateFreq } = useSettingsStore();
+  const { units, updateFreq } = useSettingsStore();
 
   useEffect(() => {
     const subscription = AppState.addEventListener(
@@ -52,6 +52,10 @@ const useWeatherData = (coordinates: {
     timezone: "auto",
     forecast_days: "15",
     forecast_hours: "48",
+    wind_speed_unit: units?.speed,
+    precipitation_unit:
+      units?.precipitation === "in" ? "inch" : units?.precipitation,
+    temperature_unit: units?.temperature,
     current: [
       "temperature_2m",
       "relative_humidity_2m",
