@@ -135,7 +135,7 @@ export default function Layout() {
         withTiming(1.5, { duration: 800, easing: Easing.inOut(Easing.ease) }),
         withTiming(1, { duration: 800, easing: Easing.inOut(Easing.ease) })
       ),
-      3
+      -1
     );
     scale.value = animation;
 

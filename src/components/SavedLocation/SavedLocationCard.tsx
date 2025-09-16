@@ -84,17 +84,22 @@ const SavedLocationCard = ({
             <View
               className={`absolute z-20 items-center justify-center w-full h-48 ${theme === "dark" ? "bg-dark/30" : "bg-dark/10"}`}
             ></View>
-            <Image
-              accessibilityLabel={`Image of ${location?.geoAddress[0]?.city ?? "location"}`}
-              contentFit="cover"
-              transition={unsplashLoading ? 0 : 1000}
-              className="z-10"
-              style={{
-                width: "100%",
-                height: "100%",
-              }}
-              source={{ uri: imageColorsData?.url }}
-            />
+            <View
+              style={{ backgroundColor: imageColor }}
+              className="w-full h-full"
+            >
+              <Image
+                accessibilityLabel={`Image of ${location?.geoAddress[0]?.city ?? "location"}`}
+                contentFit="cover"
+                transition={unsplashLoading ? 0 : 1000}
+                className="z-10"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+                source={{ uri: imageColorsData?.url }}
+              />
+            </View>
           </>
         )}
 

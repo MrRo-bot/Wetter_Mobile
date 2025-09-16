@@ -19,7 +19,7 @@ const Notification = () => {
   const [weatherAlertsModal, setWeatherAlertsModal] = useState(false);
   const [chanceOfPrecModal, setChanceOfPrecModal] = useState(false);
   const [aqiModal, setAqiModal] = useState(false);
-  const [timeModal, setTimeModal] = useState(false);
+  // const [timeModal, setTimeModal] = useState(false);
 
   const { alerts, setAlerts } = useSettingsStore();
 
@@ -27,6 +27,9 @@ const Notification = () => {
 
   const PAPER_COMPONENT_COLOR =
     theme === "dark" ? "hsl(353, 80%, 72%)" : "hsl(353, 100%, 72%)";
+
+  const C_O_P_RANGE = ["40", "50", "60", "70", "80", "90"];
+  const AQI_RANGE = ["0", "100", "150", "200", "300"];
 
   return (
     <SafeAreaView
@@ -254,7 +257,7 @@ const Notification = () => {
                   onValueChange={() => setAlerts}
                   value={alerts.chanceOfPrecipitation}
                 >
-                  {["40", "50", "60", "70", "80", "90"].map((cop) => {
+                  {C_O_P_RANGE.map((cop) => {
                     return (
                       <Pressable
                         key={cop}
@@ -354,7 +357,7 @@ const Notification = () => {
                   onValueChange={() => setAlerts}
                   value={alerts.aqi}
                 >
-                  {["0", "100", "150", "200", "300"].map((aqiVal) => {
+                  {AQI_RANGE.map((aqiVal) => {
                     return (
                       <Pressable
                         key={aqiVal}

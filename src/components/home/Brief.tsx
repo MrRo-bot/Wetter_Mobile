@@ -130,7 +130,7 @@ const Brief = ({
   const windowWidth = Dimensions.get("window").width;
 
   const TEXT_SHADOW = {
-    color: !imageColorsLoading ? imageColor : "#44444450",
+    color: imageColor ? imageColor : "#44444450",
     textShadowColor: imageColor,
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 8,
@@ -139,8 +139,8 @@ const Brief = ({
   return (
     <View className="gap-2 mx-3 mt-2">
       <View
-        style={{ width: windowWidth - 24 }}
-        className="relative overflow-hidden h-96 rounded-2xl"
+        style={{ width: windowWidth - 24, backgroundColor: imageColor }}
+        className="relative w-full mx-auto overflow-hidden h-96 rounded-2xl"
       >
         {imageColorsLoading || unsplashLoading ? (
           <View className={`w-full h-full bg-[#44444450]`} />

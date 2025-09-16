@@ -51,7 +51,7 @@ const Chart = () => {
               elevation: 5,
             }
       }
-      className={`relative overflow-hidden py-4 pt-10 px-1 mx-3 rounded-2xl ${theme === "dark" ? "bg-greenDark" : "bg-greenLight"}`}
+      className={`relative overflow-hidden py-4 pt-10 px-2 mx-3 rounded-2xl ${theme === "dark" ? "bg-greenDark" : "bg-greenLight"}`}
     >
       <Pressable
         accessibilityRole="button"
