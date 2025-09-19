@@ -115,7 +115,7 @@ const Settings = () => {
                 </Text>
                 <View>
                   <RadioButton.Group
-                    onValueChange={setUpdateFreq}
+                    onValueChange={() => setUpdateFreq}
                     value={updateFreq}
                   >
                     <Pressable

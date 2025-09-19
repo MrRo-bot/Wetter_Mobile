@@ -8,7 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const Units = () => {
   let theme = useColorScheme();
 
-  const { units, setUnits } = useSettingsStore();
+  const { units: unitSettings, setUnits } = useSettingsStore();
 
   const UNIT_SETTINGS: UnitOptionsType[] = [
     {
@@ -107,11 +107,12 @@ const Units = () => {
                         accessibilityLabel={`Select ${setting.name} unit: ${option.label}`}
                         accessibilityRole="button"
                         className={`transition-colors duration-500 ${
-                          units[setting.key] === option.value && "bg-amber-600"
+                          unitSettings[setting.key] === option.value &&
+                          "bg-amber-600"
                         }`}
                         onPress={() =>
                           setUnits({
-                            ...units,
+                            ...unitSettings,
                             [setting.key]: option.value,
                           })
                         }

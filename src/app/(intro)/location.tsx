@@ -6,9 +6,8 @@ import useLocation from "@/src/hooks/useLocation";
 import { locationStore } from "@/src/store/locationStore";
 import { ToastRef } from "@/src/types/types";
 import { Image } from "expo-image";
-import { router } from "expo-router";
 import React, { useEffect, useRef } from "react";
-import { Pressable, Text, useColorScheme, View } from "react-native";
+import { Text, useColorScheme, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Location() {
@@ -101,20 +100,6 @@ export default function Location() {
             darkColor="text-dark"
             lightColor="text-light"
           />
-        </View>
-
-        <View className="mx-auto mt-3">
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel="Go to location search"
-            onPress={() => router.replace("/(home)/searchLocation")}
-          >
-            <Text
-              className={`font-genos-light underline underline-offset-2 text-xl ${theme === "dark" ? "text-mustardLight" : "text-mustardDark font-genos-regular"}`}
-            >
-              Ignore
-            </Text>
-          </Pressable>
         </View>
       </View>
       <ToastMessage ref={toastRef} />

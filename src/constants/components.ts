@@ -20,7 +20,7 @@ import MainButton from "@/src/components/UI/MainButton";
 import DailyAqiCharts from "@/src/components/aqiCharts/DailyAqiCharts";
 import HourlyAqiCharts from "@/src/components/aqiCharts/HourlyAqiCharts";
 
-import SavedLocationCard from "@/src/components/SavedLocation/SavedLocationCard";
+import SavedLocationCard from "@/src/components/savedLocation/SavedLocationCard";
 
 import LocationSearchItem from "@/src/components/locationSearch/LocationSearchItem";
 

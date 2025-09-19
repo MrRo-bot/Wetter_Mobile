@@ -78,12 +78,12 @@ export const unixConv = {
     let hour = epoch.getHours();
     let hour2 = epoch.toLocaleString("en-US", {
       hour: "numeric",
-      hour12: time === "12-hour" ? true : false,
+      hour12: time === "12-hour",
     });
     let clockTime = epoch.toLocaleString("en-US", {
       hour: "numeric",
       minute: "numeric",
-      hour12: time === "12-hour" ? true : false,
+      hour12: time === "12-hour",
     });
     return { year, month, day, date, hour, hour2, clockTime };
   },

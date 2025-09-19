@@ -10,7 +10,7 @@ export default function HomeLayout() {
   const path = usePathname();
 
   const { weather } = weatherStore();
-  const { units } = useSettingsStore();
+  const { units: unitSettings } = useSettingsStore();
 
   const [clock, setClock] = useState<string>("");
 
@@ -21,7 +21,7 @@ export default function HomeLayout() {
           new Date().toLocaleString("en-US", {
             hour: "numeric",
             minute: "numeric",
-            hour12: units.time === "12-hour" ? true : false,
+            hour12: unitSettings.time === "12-hour",
             timeZone: weather?.timezone ? weather?.timezone : "Asia/Kolkata",
           })
         ),

@@ -9,6 +9,10 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
+      "infoPlist": {
+        "UIBackgroundModes": ["processing"]
+      },
+      "entitlements": { "aps-environment": "development" },
       "supportsTablet": true,
       "icon": {
         "dark": "./src/assets/icons/ios-dark.png",
@@ -23,7 +27,9 @@
         "INTERNET",
         "ACCESS_NETWORK_STATE",
         "ACCESS_WIFI_STATE",
-        "REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+        "REQUEST_IGNORE_BATTERY_OPTIMIZATIONS",
+        "POST_NOTIFICATIONS",
+        "WAKE_LOCK"
       ],
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/icons/adaptive-icon.png",
@@ -40,6 +46,13 @@
     },
     "plugins": [
       "expo-router",
+      "expo-notifications",
+      [
+        "expo-background-task",
+        {
+          "delay": 15000
+        }
+      ],
       [
         "expo-splash-screen",
         {

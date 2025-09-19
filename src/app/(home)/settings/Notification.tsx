@@ -1,8 +1,10 @@
 import { useSettingsStore } from "@/src/store/settingsStore";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { BlurView } from "expo-blur";
 import React, { useState } from "react";
 import {
   Modal,
+  Platform,
   Pressable,
   ScrollView,
   Text,
@@ -19,7 +21,7 @@ const Notification = () => {
   const [weatherAlertsModal, setWeatherAlertsModal] = useState(false);
   const [chanceOfPrecModal, setChanceOfPrecModal] = useState(false);
   const [aqiModal, setAqiModal] = useState(false);
-  // const [timeModal, setTimeModal] = useState(false);
+  const [timeModal, setTimeModal] = useState(false);
 
   const { alerts, setAlerts } = useSettingsStore();
 
@@ -441,7 +443,8 @@ const Notification = () => {
         </AnimatedPressable>
 
         {/* Time */}
-        {/* <AnimatedPressable
+        <AnimatedPressable
+          onPress={() => setTimeModal(!timeModal)}
           entering={FlipInXDown.duration(500)
             .delay(100)
             .reduceMotion(ReduceMotion.System)}
@@ -461,15 +464,26 @@ const Notification = () => {
             </Text>
           </View>
           <View>
-            <DateTimePicker
-              value={new Date()}
-              mode="time"
-              // is24Hour={true}
-              display={Platform.OS === "ios" ? "spinner" : "clock"}
-              onChange={(timeVal) => console.log(timeVal)}
-            />
+            {timeModal && (
+              <DateTimePicker
+                value={new Date()}
+                mode="time"
+                is24Hour={true}
+                display={Platform.OS === "android" ? "clock" : "default"}
+                onChange={(timeVal) => {
+                  const timeValue = new Date(
+                    timeVal.nativeEvent.timestamp
+                  ).toTimeString();
+                  setAlerts({
+                    ...alerts,
+                    time: timeValue.slice(0, 5),
+                  });
+                  setTimeModal(!timeModal);
+                }}
+              />
+            )}
           </View>
-        </AnimatedPressable> */}
+        </AnimatedPressable>
       </ScrollView>
     </SafeAreaView>
   );

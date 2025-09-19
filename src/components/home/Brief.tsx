@@ -236,7 +236,7 @@ const Brief = ({
           <Text
             className={`text-lg leading-none font-genos-regular uppercase ${theme === "dark" ? "text-outlineDark/70" : "text-outlineLight/70"}`}
           >
-            {`${timestring?.day?.substring(0, 3) ?? "..."}, ${timestring.month ?? "..."} ${timestring.date ?? "..."}`}
+            {`${timestring?.day?.substring(0, 3) ?? "..."}, ${timestring?.month ?? "..."} ${timestring?.date ?? "..."}`}
           </Text>
 
           <View className="flex-row items-end justify-between w-max">
