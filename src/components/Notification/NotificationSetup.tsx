@@ -4,7 +4,7 @@ import { aqiStore } from "@/src/store/aqiStore";
 import { locationStore } from "@/src/store/locationStore";
 import { useSettingsStore } from "@/src/store/settingsStore";
 import { weatherStore } from "@/src/store/weatherStore";
-import { ToastRef, WeatherDataType } from "@/src/types/types";
+import { AQIType, ToastRef, WeatherDataType } from "@/src/types/types";
 import {
   alertIcon,
   closestTimestamp,
@@ -72,7 +72,7 @@ const isDataStale = async (timestamp: number): Promise<boolean> => {
 const scheduleStaleDataNotification = async () => {
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: "Weather Data Outdated",
+      title: "Weather and AQI Data Outdated",
       body: "Please open the app to refresh your weather forecast.",
       sound: "default",
     },
@@ -201,6 +201,86 @@ const scheduleSevereWeatherAlerts = async (weather: WeatherDataType) => {
   });
 };
 
+//aqi alert based notification
+const scheduleSevereAqiAlerts = async (aqi: AQIType) => {
+  if (await isDataStale(aqi.generationtime_ms)) {
+    await scheduleStaleDataNotification();
+    return;
+  }
+
+  const todayAlerts = aqi?.hourly?.time
+    .map((timestamp, index) => {
+      const date = timestamp.split("T")[0];
+      const aqiCode = aqi.hourly.us_aqi[index];
+      if (date === new Date().toISOString().split("T")[0] && aqiCode > 100) {
+        return { timestamp, aqiCode, index };
+      }
+      return null;
+    })
+    .filter((item): item is NonNullable<typeof item> => item !== null);
+
+  const limitedAlerts = todayAlerts.slice(0, 50);
+
+  limitedAlerts.map(async (al) => {
+    const aqiDate = new Date(
+      `${al.timestamp.split("T")[0]}T${al.timestamp.split("T")[1]}:00`
+    );
+    if (aqiDate > new Date()) {
+      const locationStoreObj = locationStore();
+      const locationName =
+        locationStoreObj
+          ?.getLocationById(locationStoreObj?.locationToShow)
+          ?.geoAddress[0]?.city?.toUpperCase() ??
+        locationStoreObj
+          ?.getLocationById(locationStoreObj?.locationToShow)
+          ?.geoAddress[0]?.street?.toUpperCase() ??
+        locationStoreObj
+          ?.getLocationById(locationStoreObj?.locationToShow)
+          ?.geoAddress[0]?.district?.toUpperCase() ??
+        locationStoreObj
+          ?.getLocationById(locationStoreObj?.locationToShow)
+          ?.geoAddress[0]?.name?.toUpperCase() ??
+        locationStoreObj
+          ?.getLocationById(locationStoreObj?.locationToShow)
+          ?.geoAddress[0]?.subregion?.toUpperCase() ??
+        "Unknown Location";
+
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title:
+            al.aqiCode >= 100
+              ? `⚠️ Caution for ${locationName}: Sensitive Groups`
+              : al.aqiCode >= 150
+                ? `🚨 Poor Air in ${locationName}: Take Cover`
+                : al.aqiCode >= 200 && al.aqiCode <= 300
+                  ? `🔴 Emergency AQI levels for ${locationName}: Air Alert`
+                  : `🛑 Extreme AQI levels for ${locationName}: Danger`,
+          body:
+            al.aqiCode >= 100
+              ? `AQI ${al.aqiCode} – Unhealthy for kids, elderly, or those with asthma. Stay indoors during peak hours. Use air purifiers.`
+              : al.aqiCode >= 150
+                ? `AQI ${al.aqiCode} - Everyone at risk. Avoid outdoors; wear N95 masks if outside. Check updates hourly`
+                : al.aqiCode >= 200 && al.aqiCode <= 300
+                  ? `AQI ${al.aqiCode} – Severe pollution. Stay inside, seal windows, and use HEPA filters. Seek medical help if symptoms worsen.`
+                  : `AQI ${al.aqiCode} – Life-threatening levels. Evacuate if possible; all should remain indoors. Monitor official warnings.`,
+          sound: "default",
+          priority: Notifications.AndroidNotificationPriority.MAX,
+          data: {
+            screen: "AQIAlertDetails",
+            date: al.timestamp.split("T")[0],
+            condition: al.aqiCode,
+          },
+        },
+        trigger: {
+          type: Notifications.SchedulableTriggerInputTypes.DATE,
+          date: aqiDate,
+          channelId: Platform.OS === "android" ? "weather-alerts" : undefined,
+        },
+      });
+    }
+  });
+};
+
 //notification component
 const NotificationSetup = () => {
   const toastRef = useRef<ToastRef>(null);
@@ -242,6 +322,8 @@ const NotificationSetup = () => {
               weather
             );
           !weatherLoading && weather && scheduleSevereWeatherAlerts(weather);
+
+          !aqiLoading && aqi && scheduleSevereAqiAlerts(aqi);
         }
       })
       .catch((error) => {
@@ -262,6 +344,7 @@ const NotificationSetup = () => {
       Notifications.addNotificationResponseReceivedListener((response) => {
         console.log("Notification tapped:", response);
         weatherRefetch();
+        aqiRefetch();
       });
 
     return () => {
@@ -272,13 +355,7 @@ const NotificationSetup = () => {
         responseListener.current.remove();
       }
     };
-  }, [
-    weather,
-    weatherLoading,
-    weatherRefetch,
-    alerts.dailyNotification,
-    alerts.time,
-  ]);
+  }, [weather, aqi, alerts]);
 
   return null;
 };
