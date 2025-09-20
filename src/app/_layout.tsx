@@ -16,6 +16,7 @@ import Animated, {
   withSequence,
   withTiming,
 } from "react-native-reanimated";
+import components from "../constants/components";
 import images from "../constants/images";
 import "../global.css";
 import { locationStore } from "../store/locationStore";
@@ -189,6 +190,7 @@ export default function Layout() {
           contentStyle: { backgroundColor: THEME_BACKGROUND },
         }}
       />
+      <components.NotificationSetup />
     </QueryClientProvider>
   );
 }

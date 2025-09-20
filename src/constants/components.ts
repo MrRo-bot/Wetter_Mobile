@@ -24,6 +24,8 @@ import SavedLocationCard from "@/src/components/savedLocation/SavedLocationCard"
 
 import LocationSearchItem from "@/src/components/locationSearch/LocationSearchItem";
 
+import NotificationSetup from "@/src/components/Notification/NotificationSetup";
+
 export default {
   AirQuality,
   Brief,
@@ -49,4 +51,6 @@ export default {
 
   SavedLocationCard,
   LocationSearchItem,
+
+  NotificationSetup,
 };
