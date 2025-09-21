@@ -25,6 +25,12 @@ import SavedLocationCard from "@/src/components/savedLocation/SavedLocationCard"
 import LocationSearchItem from "@/src/components/locationSearch/LocationSearchItem";
 
 import NotificationSetup from "@/src/components/Notification/NotificationSetup";
+import AirQualitySection from "../components/Notification/AirQualitySection";
+import ChanceOfPrecipitationSection from "../components/Notification/ChanceOfPrecipitationSection";
+import DailyNotificationSection from "../components/Notification/DailyNotificationSection";
+import RainAndSnowSection from "../components/Notification/RainAndSnowSection";
+import TimeSection from "../components/Notification/TimeSection";
+import WeatherAlertsSection from "../components/Notification/WeatherAlertsSection";
 
 export default {
   AirQuality,
@@ -53,4 +59,11 @@ export default {
   LocationSearchItem,
 
   NotificationSetup,
+
+  AirQualitySection,
+  ChanceOfPrecipitationSection,
+  DailyNotificationSection,
+  RainAndSnowSection,
+  TimeSection,
+  WeatherAlertsSection,
 };

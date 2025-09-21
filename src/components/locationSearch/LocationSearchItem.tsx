@@ -1,7 +1,7 @@
 import { LocationDataType, LocationSearchItemType } from "@/src/types/types";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import Animated, { FlipInXDown, ReduceMotion } from "react-native-reanimated";
+import Animated, { ReduceMotion, SlideInUp } from "react-native-reanimated";
 
 const LocationSearchItem = ({
   index,
@@ -26,7 +26,7 @@ const LocationSearchItem = ({
   return (
     <Animated.View
       key={location.id}
-      entering={FlipInXDown.duration(300)
+      entering={SlideInUp.duration(300)
         .delay(index * 100)
         .reduceMotion(ReduceMotion.System)}
       className="w-[90%] mx-auto"

@@ -466,7 +466,12 @@ export interface SettingsStateType {
   alerts: AlertsType;
   updateFreq: string;
   setUnits: (units: UnitSettingType) => void;
-  setAlerts: (units: AlertsType) => void;
+  setWeatherAlert: (type: "severe" | "advisory") => void;
+  toggleRainAndSnow: () => void;
+  setChanceOfPrecipitation: (value: string) => void;
+  setAQI: (value: string) => void;
+  toggleDailyNotification: () => void;
+  setTime: (value: string) => void;
   setUpdateFreq: (updateFreq: string) => void;
 }
 

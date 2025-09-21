@@ -2,7 +2,7 @@ import { useSettingsStore } from "@/src/store/settingsStore";
 import { UnitOptionsType } from "@/src/types/types";
 import React from "react";
 import { FlatList, Pressable, Text, useColorScheme, View } from "react-native";
-import Animated, { BounceInUp, ReduceMotion } from "react-native-reanimated";
+import Animated, { ReduceMotion, SlideInUp } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Units = () => {
@@ -79,7 +79,7 @@ const Units = () => {
         renderItem={({ item: setting, index }) => {
           return (
             <Animated.View
-              entering={BounceInUp.duration(1000)
+              entering={SlideInUp.duration(500)
                 .delay(index * 100)
                 .reduceMotion(ReduceMotion.System)}
               className={`pb-8 border-b-[1px] border-solid ${theme === "dark" ? "border-b-light/5" : "border-b-dark/5"}`}

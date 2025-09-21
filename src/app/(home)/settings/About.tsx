@@ -53,7 +53,7 @@ const About = () => {
       <ScrollView>
         <Animated.View
           className="items-center justify-center w-full pt-6"
-          entering={BounceInUp.duration(1000)
+          entering={BounceInUp.duration(500)
             .delay(100)
             .reduceMotion(ReduceMotion.System)}
         >
@@ -72,8 +72,8 @@ const About = () => {
         <Animated.Text
           accessibilityRole="header"
           accessibilityLabel="Wetter App Name"
-          entering={BounceInLeft.duration(1000)
-            .delay(300)
+          entering={BounceInLeft.duration(500)
+            .delay(200)
             .reduceMotion(ReduceMotion.System)}
           style={{
             textShadowOffset: { width: 0, height: 0 },
@@ -86,8 +86,8 @@ const About = () => {
         <Animated.Text
           accessibilityRole="text"
           accessibilityLabel={`App Version: ${Application?.nativeApplicationVersion}`}
-          entering={BounceInRight.duration(1000)
-            .delay(600)
+          entering={BounceInRight.duration(500)
+            .delay(300)
             .reduceMotion(ReduceMotion.System)}
           className={`mt-2 py-1 text-3xl text-center font-genos-light leading-none ${theme === "dark" ? "text-purpleLight" : "text-purple"}`}
         >
@@ -96,8 +96,8 @@ const About = () => {
         <Animated.Text
           accessibilityRole="text"
           accessibilityLabel={`Device: ${Device?.deviceName}`}
-          entering={BounceInLeft.duration(1000)
-            .delay(900)
+          entering={BounceInLeft.duration(500)
+            .delay(400)
             .reduceMotion(ReduceMotion.System)}
           className={`mt-1 text-xl text-center w-full font-genos-regular leading-none text-maroon`}
         >
@@ -106,8 +106,8 @@ const About = () => {
         <Animated.Text
           accessibilityRole="text"
           accessibilityLabel={`Installed: ${installed}`}
-          entering={BounceInLeft.duration(1000)
-            .delay(1200)
+          entering={BounceInLeft.duration(500)
+            .delay(500)
             .reduceMotion(ReduceMotion.System)}
           className={`mt-1 text-xl text-center w-full font-genos-regular leading-none text-maroon`}
         >
@@ -115,8 +115,8 @@ const About = () => {
         </Animated.Text>
 
         <Animated.View
-          entering={BounceInDown.duration(1000)
-            .delay(1500)
+          entering={BounceInDown.duration(500)
+            .delay(600)
             .reduceMotion(ReduceMotion.System)}
           className={`mx-6 my-10 gap-y-8 px-6 py-4 rounded-2xl border-2 border-dashed border-tealDark`}
         >
@@ -201,8 +201,8 @@ const About = () => {
         <Animated.Text
           accessibilityRole="text"
           accessibilityLabel={`App ID: ${Application?.applicationId}`}
-          entering={BounceInDown.duration(1000)
-            .delay(1800)
+          entering={BounceInDown.duration(500)
+            .delay(700)
             .reduceMotion(ReduceMotion.System)}
           className={`my-4 text-xl text-center w-full font-genos-regular leading-none ${theme === "dark" ? "text-light/40" : "text-dark/40"}`}
         >

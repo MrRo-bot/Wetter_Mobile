@@ -9,7 +9,7 @@ import { LocationSearchItemType, ToastRef } from "@/src/types/types";
 import { Image } from "expo-image";
 import { useEffect, useRef, useState } from "react";
 import { FlatList, Text, TextInput, useColorScheme, View } from "react-native";
-import Animated, { ReduceMotion, SlideInDown } from "react-native-reanimated";
+import Animated, { ReduceMotion, SlideInUp } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SearchLocation = () => {
@@ -121,7 +121,7 @@ const SearchLocation = () => {
         />
       ) : (
         <Animated.View
-          entering={SlideInDown.duration(300)
+          entering={SlideInUp.duration(300)
             .delay(200)
             .reduceMotion(ReduceMotion.System)}
           className="items-center justify-center w-full h-full"

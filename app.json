@@ -48,12 +48,6 @@
       "expo-router",
       "expo-notifications",
       [
-        "expo-background-task",
-        {
-          "delay": 15000
-        }
-      ],
-      [
         "expo-splash-screen",
         {
           "image": "./src/assets/icons/splash-icon-dark.png",

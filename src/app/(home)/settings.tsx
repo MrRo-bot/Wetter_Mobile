@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 import { RadioButton } from "react-native-paper";
-import Animated, { FlipInXDown, ReduceMotion } from "react-native-reanimated";
+import Animated, { ReduceMotion, SlideInUp } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Settings = () => {
@@ -39,7 +39,7 @@ const Settings = () => {
           accessibilityHint="Opens the weather alerts configuration screen"
           onPress={() => router.navigate("/(home)/settings/Notification")}
           className={`py-6 border-b-[1px] border-solid ${theme === "dark" ? "border-b-light/5" : "border-b-dark/5"}`}
-          entering={FlipInXDown.duration(500)
+          entering={SlideInUp.duration(500)
             .delay(100)
             .reduceMotion(ReduceMotion.System)}
         >
@@ -54,8 +54,8 @@ const Settings = () => {
           accessibilityHint="Opens the measurement units configuration screen"
           onPress={() => router.navigate("/(home)/settings/Units")}
           className={`py-6 border-b-[1px] border-solid ${theme === "dark" ? "border-b-light/5" : "border-b-dark/5"}`}
-          entering={FlipInXDown.duration(500)
-            .delay(100)
+          entering={SlideInUp.duration(500)
+            .delay(200)
             .reduceMotion(ReduceMotion.System)}
         >
           <Text
@@ -65,8 +65,8 @@ const Settings = () => {
           </Text>
         </AnimatedPressable>
         <AnimatedPressable
-          entering={FlipInXDown.duration(500)
-            .delay(100)
+          entering={SlideInUp.duration(500)
+            .delay(300)
             .reduceMotion(ReduceMotion.System)}
           accessibilityRole="button"
           accessibilityLabel="Open update frequency modal"
@@ -230,8 +230,8 @@ const Settings = () => {
           accessibilityHint="Opens the description about the app"
           onPress={() => router.navigate("/(home)/settings/About")}
           className={`py-6 border-b-[1px] border-solid ${theme === "dark" ? "border-b-light/5" : "border-b-dark/5"}`}
-          entering={FlipInXDown.duration(500)
-            .delay(300)
+          entering={SlideInUp.duration(500)
+            .delay(400)
             .reduceMotion(ReduceMotion.System)}
         >
           <Text

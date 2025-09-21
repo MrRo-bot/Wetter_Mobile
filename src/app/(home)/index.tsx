@@ -13,7 +13,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useEffect, useRef } from "react";
 import { Pressable, ScrollView, useColorScheme, View } from "react-native";
-import Animated, { FadeInDown, ReduceMotion } from "react-native-reanimated";
+import Animated, { ReduceMotion, SlideInDown } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
@@ -130,7 +130,7 @@ export default function Home() {
           </ScrollView>
           {!weatherLoading && (
             <AnimatedPressable
-              entering={FadeInDown.duration(600).reduceMotion(
+              entering={SlideInDown.duration(600).reduceMotion(
                 ReduceMotion.System
               )}
               className={`absolute bottom-16 right-10 shadow-2xl w-16 h-16 rounded-full items-center overflow-hidden justify-center border-2 border-solid ${theme === "dark" ? "bg-light/90 border-dark/20" : "bg-dark/75 border-light/40"}`}
