@@ -27,8 +27,13 @@ export const useSettingsStore = create<SettingsStateType>()(
       },
       updateFreq: "15 Minutes",
 
-      setUnits: (units) => set({ units }),
-
+      setUnits: (key: string, value: string) =>
+        set((state) => ({
+          units: {
+            ...state.units,
+            [key]: value,
+          },
+        })),
       setWeatherAlert: (type: "severe" | "advisory") =>
         set((state) => ({
           alerts: {
@@ -80,7 +85,11 @@ export const useSettingsStore = create<SettingsStateType>()(
           },
         })),
 
-      setUpdateFreq: (updateFreq) => set({ updateFreq }),
+      setUpdateFreq: (updateFreq: string) =>
+        set((state) => ({
+          ...state,
+          updateFreq,
+        })),
     }),
     {
       name: "settings-storage",

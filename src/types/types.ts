@@ -465,7 +465,7 @@ export interface SettingsStateType {
   units: UnitSettingType;
   alerts: AlertsType;
   updateFreq: string;
-  setUnits: (units: UnitSettingType) => void;
+  setUnits: (key: string, value: string) => void;
   setWeatherAlert: (type: "severe" | "advisory") => void;
   toggleRainAndSnow: () => void;
   setChanceOfPrecipitation: (value: string) => void;

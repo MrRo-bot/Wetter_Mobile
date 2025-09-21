@@ -98,6 +98,11 @@ const Units = () => {
                 contentContainerClassName={`overflow-hidden rounded-xl w-max`}
                 horizontal
                 renderItem={({ item: option }) => {
+                  const PAPER_COMPONENT_COLOR =
+                    theme === "dark"
+                      ? "hsl(353, 80%, 72%)"
+                      : "hsl(353, 100%, 72%)";
+                  const isSelected = unitSettings[setting.key] === option.value;
                   return (
                     <View
                       key={option.value}
@@ -106,16 +111,12 @@ const Units = () => {
                       <Pressable
                         accessibilityLabel={`Select ${setting.name} unit: ${option.label}`}
                         accessibilityRole="button"
-                        className={`transition-colors duration-500 ${
-                          unitSettings[setting.key] === option.value &&
-                          "bg-amber-600"
-                        }`}
-                        onPress={() =>
-                          setUnits({
-                            ...unitSettings,
-                            [setting.key]: option.value,
-                          })
+                        style={
+                          isSelected && {
+                            backgroundColor: PAPER_COMPONENT_COLOR,
+                          }
                         }
+                        onPress={() => setUnits(setting.key, option.value)}
                       >
                         <Text
                           className={`px-5 py-3 text-lg font-genos-medium leading-none ${theme === "dark" ? "text-light" : "text-dark"}`}
