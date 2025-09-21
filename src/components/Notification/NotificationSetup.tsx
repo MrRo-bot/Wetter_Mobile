@@ -5,18 +5,86 @@ import { locationStore } from "@/src/store/locationStore";
 import { useSettingsStore } from "@/src/store/settingsStore";
 import { weatherStore } from "@/src/store/weatherStore";
 import { AQIType, ToastRef, WeatherDataType } from "@/src/types/types";
-import {
-  alertIcon,
-  closestTimestamp,
-  degConv,
-  weatherCodeConv,
-} from "@/src/utils/math";
+import { closestTimestamp, degConv, weatherCodeConv } from "@/src/utils/math";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
 
-//notification handler
+const getFilteredWeatherCodes = (
+  advisoryToggle: boolean,
+  severityToggle: boolean,
+  rainAndSnow: boolean,
+  chanceOfPrecipitation: number = 0
+): number[] => {
+  const allPrecipCodes = [
+    51, 53, 55, 56, 57,
+
+    61, 63, 65, 66, 67,
+
+    71, 73, 75, 77,
+
+    80, 81, 82,
+
+    85, 86,
+
+    95, 96, 99,
+  ];
+
+  const advisoryCodes = [
+    53, 56, 61, 63, 66,
+
+    73, 77, 85,
+
+    80, 81,
+
+    95,
+  ];
+
+  const severityCodes = [
+    55, 57, 65, 67, 75, 82, 86,
+
+    96, 99,
+  ];
+
+  let filteredCodes: number[] = [];
+
+  if (!rainAndSnow) {
+    return filteredCodes;
+  }
+
+  if (advisoryToggle) {
+    filteredCodes = [...filteredCodes, ...advisoryCodes];
+  }
+
+  if (severityToggle) {
+    filteredCodes = [...filteredCodes, ...severityCodes];
+  }
+
+  if (!advisoryToggle && !severityToggle && rainAndSnow) {
+    filteredCodes = [...allPrecipCodes];
+  }
+
+  filteredCodes = [...new Set(filteredCodes)].sort((a, b) => a - b);
+
+  return filteredCodes;
+};
+
+const shouldTriggerNotification = (
+  weatherCode: number,
+  precipitationProbability: number,
+  allowedCodes: number[],
+  chanceOfPrecipitation: number = 0
+): boolean => {
+  const codeMatch = allowedCodes.includes(weatherCode);
+
+  const probMatch =
+    chanceOfPrecipitation === 0 ||
+    precipitationProbability >= chanceOfPrecipitation;
+
+  return codeMatch && probMatch;
+};
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldPlaySound: true,
@@ -27,7 +95,6 @@ Notifications.setNotificationHandler({
   }),
 });
 
-//notification permissions
 const configureNotifications = async () => {
   Platform.OS === "android" &&
     (await Notifications.setNotificationChannelAsync("weather-alerts", {
@@ -59,7 +126,6 @@ const configureNotifications = async () => {
   }
 };
 
-//check if data is stale beyond 16 days or not
 const isDataStale = async (timestamp: number): Promise<boolean> => {
   const firstDate = new Date(timestamp);
   const now = new Date();
@@ -68,7 +134,6 @@ const isDataStale = async (timestamp: number): Promise<boolean> => {
   return daysDiff > 16;
 };
 
-//notification for stale data
 const scheduleStaleDataNotification = async () => {
   await Notifications.scheduleNotificationAsync({
     content: {
@@ -83,7 +148,6 @@ const scheduleStaleDataNotification = async () => {
   });
 };
 
-//daily forecast alert at particular time
 const scheduleDailyWeatherNotification = async (
   time: string,
   dailyNotification: boolean,
@@ -132,33 +196,74 @@ const scheduleDailyWeatherNotification = async (
   });
 };
 
-//weather alert based notification
-const scheduleSevereWeatherAlerts = async (weather: WeatherDataType) => {
+const scheduleWeatherAlerts = async (
+  weather: WeatherDataType,
+  alerts: {
+    advisoryToggle: boolean;
+    severityToggle: boolean;
+    rainAndSnow: boolean;
+    chanceOfPrecipitation: number;
+  }
+) => {
   if (await isDataStale(weather.generationtime_ms)) {
     await scheduleStaleDataNotification();
     return;
   }
 
+  const allowedWeatherCodes = getFilteredWeatherCodes(
+    alerts.advisoryToggle,
+    alerts.severityToggle,
+    alerts.rainAndSnow,
+    alerts.chanceOfPrecipitation
+  );
+
+  if (allowedWeatherCodes.length === 0) {
+    console.log("No weather codes to monitor based on current settings");
+    return;
+  }
+
+  console.log(
+    `Monitoring weather codes: [${allowedWeatherCodes.join(", ")}] with CoP threshold: ${alerts.chanceOfPrecipitation}%`
+  );
+
   const todayAlerts = weather?.hourly?.time
     .map((timestamp, index) => {
       const date = timestamp.split("T")[0];
       const weatherCode = weather.hourly.weather_code[index];
-      if (
-        date === new Date().toISOString().split("T")[0] &&
-        alertIcon(weatherCode) === "alert"
-      ) {
-        return { timestamp, weatherCode, index };
+      const precipitationProbability =
+        weather.hourly.precipitation_probability[index] || 0;
+
+      const shouldTrigger = shouldTriggerNotification(
+        weatherCode,
+        precipitationProbability,
+        allowedWeatherCodes,
+        alerts.chanceOfPrecipitation
+      );
+
+      if (date === new Date().toISOString().split("T")[0] && shouldTrigger) {
+        return {
+          timestamp,
+          weatherCode,
+          index,
+          precipitationProbability,
+          isAdvisory: alerts.advisoryToggle && !alerts.severityToggle,
+          isSevere: alerts.severityToggle,
+          isMixed: alerts.advisoryToggle && alerts.severityToggle,
+        };
       }
       return null;
     })
     .filter((item): item is NonNullable<typeof item> => item !== null);
 
+  console.log(`Found ${todayAlerts.length} potential weather alerts for today`);
+
   const limitedAlerts = todayAlerts.slice(0, 50);
 
-  limitedAlerts.map(async (al) => {
+  for (const al of limitedAlerts) {
     const weatherDateTime = new Date(
       `${al.timestamp.split("T")[0]}T${al.timestamp.split("T")[1]}:00`
     );
+
     if (weatherDateTime > new Date()) {
       const locationStoreObj = locationStore();
       const locationName =
@@ -179,16 +284,42 @@ const scheduleSevereWeatherAlerts = async (weather: WeatherDataType) => {
           ?.geoAddress[0]?.subregion?.toUpperCase() ??
         "Unknown Location";
 
+      let alertType = "WEATHER ALERT";
+      let emoji = "⚠️";
+
+      if (al.isSevere) {
+        alertType = "SEVERE WEATHER ALERT";
+        emoji = "🚨";
+      } else if (al.isAdvisory) {
+        alertType = "WEATHER ADVISORY";
+        emoji = "ℹ️";
+      } else if (al.isMixed) {
+        const severityCodes = [55, 57, 65, 67, 75, 82, 86, 96, 99];
+        if (severityCodes.includes(al.weatherCode)) {
+          alertType = "SEVERE WEATHER ALERT";
+          emoji = "🚨";
+        }
+      }
+
       await Notifications.scheduleNotificationAsync({
         content: {
-          title: `⚠️ SEVERE ALERTS FOR ${locationName}`,
-          body: `${weatherCodeConv(al.weatherCode)} possible at ${al.timestamp.split("T")[1]}, probability ${weather.hourly.precipitation_probability[al.index]}%`,
+          title: `${emoji} ${alertType} FOR ${locationName}`,
+          body: `${weatherCodeConv(al.weatherCode)} expected at ${al.timestamp.split("T")[1].substring(0, 5)}. Probability: ${al.precipitationProbability}%. ${al.isSevere ? "Take immediate precautions." : "Stay prepared."}`,
           sound: "default",
-          priority: Notifications.AndroidNotificationPriority.MAX,
+          priority: al.isSevere
+            ? Notifications.AndroidNotificationPriority.MAX
+            : Notifications.AndroidNotificationPriority.HIGH,
           data: {
             screen: "WeatherAlertDetails",
             date: al.timestamp.split("T")[0],
             condition: weatherCodeConv(al.weatherCode),
+            weatherCode: al.weatherCode,
+            precipitationProbability: al.precipitationProbability,
+            alertType: al.isSevere
+              ? "severe"
+              : al.isAdvisory
+                ? "advisory"
+                : "mixed",
           },
         },
         trigger: {
@@ -198,10 +329,9 @@ const scheduleSevereWeatherAlerts = async (weather: WeatherDataType) => {
         },
       });
     }
-  });
+  }
 };
 
-//aqi alert based notification
 const scheduleSevereAqiAlerts = async (aqi: AQIType) => {
   if (await isDataStale(aqi.generationtime_ms)) {
     await scheduleStaleDataNotification();
@@ -321,7 +451,15 @@ const NotificationSetup = () => {
               alerts.dailyNotification,
               weather
             );
-          !weatherLoading && weather && scheduleSevereWeatherAlerts(weather);
+
+          !weatherLoading &&
+            weather &&
+            scheduleWeatherAlerts(weather, {
+              advisoryToggle: alerts.weatherAlerts.severe,
+              severityToggle: alerts.weatherAlerts.advisory,
+              rainAndSnow: alerts.rainAndSnow,
+              chanceOfPrecipitation: +alerts.chanceOfPrecipitation,
+            });
 
           !aqiLoading && aqi && scheduleSevereAqiAlerts(aqi);
         }
