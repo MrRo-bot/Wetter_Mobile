@@ -46,7 +46,7 @@ const useWeatherData = (coordinates: {
     );
   };
 
-  const paramsObj = {
+  const WEATHER_PARAMS = {
     latitude: "",
     longitude: "",
     timezone: "auto",
@@ -110,11 +110,11 @@ const useWeatherData = (coordinates: {
   };
 
   if (coordinates && isValidCoordinates(coordinates)) {
-    paramsObj.latitude = coordinates.latitude.toString();
-    paramsObj.longitude = coordinates.longitude.toString();
+    WEATHER_PARAMS.latitude = coordinates.latitude.toString();
+    WEATHER_PARAMS.longitude = coordinates.longitude.toString();
   }
 
-  const queryString = new URLSearchParams(paramsObj).toString();
+  const queryString = new URLSearchParams(WEATHER_PARAMS).toString();
 
   const finalUrl = `https://api.open-meteo.com/v1/forecast?${queryString}`;
 

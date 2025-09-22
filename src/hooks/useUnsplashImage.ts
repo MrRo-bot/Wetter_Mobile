@@ -1,6 +1,11 @@
 import NetInfo from "@react-native-community/netinfo";
-import { focusManager, onlineManager, useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import {
+  focusManager,
+  onlineManager,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { useCallback, useEffect, useMemo } from "react";
 import { AppState, AppStateStatus, Platform } from "react-native";
 import ImageColors, { ImageColorsResult } from "react-native-image-colors";
 import { useSettingsStore } from "../store/settingsStore";
@@ -15,11 +20,9 @@ onlineManager.setEventListener((setOnline) => {
 });
 
 const useUnsplashImage = (imgSearchString: string | null) => {
-  //imgSearchString can be place,weather type or anything else
-
   const unsplashKey = process.env.EXPO_PUBLIC_UNSPLASH_KEY;
-
   const { updateFreq } = useSettingsStore();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const subscription = AppState.addEventListener(
@@ -33,63 +36,59 @@ const useUnsplashImage = (imgSearchString: string | null) => {
     return () => subscription.remove();
   }, []);
 
-  const paramsObj = {
-    client_id: "",
-    query: "",
-    orientation: "squarish",
-  };
-  if (imgSearchString && unsplashKey) {
-    paramsObj.query = imgSearchString;
-    paramsObj.client_id = unsplashKey;
-  }
+  const finalUrl = useMemo(() => {
+    if (!imgSearchString || !unsplashKey) return null;
 
-  const queryString = new URLSearchParams(paramsObj).toString();
+    const UNSPLASH_IMAGE_PARAMS = {
+      client_id: unsplashKey,
+      query: imgSearchString,
+      orientation: "squarish",
+    };
 
-  const finalUrl = `https://api.unsplash.com/search/photos?${queryString}`;
+    const queryString = new URLSearchParams(UNSPLASH_IMAGE_PARAMS).toString();
+    return `https://api.unsplash.com/search/photos?${queryString}`;
+  }, [imgSearchString, unsplashKey]);
 
-  //function for getting image from unsplash
-  const fetchUnsplashImage = async (): Promise<UnsplashType> => {
+  const fetchUnsplashImage = useCallback(async (): Promise<UnsplashType> => {
+    if (!finalUrl) throw new Error("No URL available");
+
     const response = await fetch(finalUrl);
     if (!response.ok) {
       throw new Error("Failed to fetch image: " + response.statusText);
     }
-    const data = response.json();
+    const data = await response.json();
     if (!data) throw new Error("Unexpected API response format");
     return data;
-  };
+  }, [finalUrl]);
 
-  //function for getting image colors
-  const getUnsplashImageColors = async (
-    imageData: {
+  const getUnsplashImageColors = useCallback(
+    async (imageData: {
       imageIndex: number;
       url: string;
-    } | null
-  ): Promise<{
-    imageIndex: number;
-    url: string;
-    imageColors: ImageColorsResult;
-  }> => {
-    if (!imageData?.url) {
-      throw new Error("No image URL provided");
-    }
+    }): Promise<{
+      imageIndex: number;
+      url: string;
+      imageColors: ImageColorsResult;
+    }> => {
+      try {
+        const result = await ImageColors.getColors(imageData.url, {
+          fallback: "#444444",
+          quality: "high",
+          pixelSpacing: 5,
+        });
 
-    try {
-      const result = await ImageColors.getColors(imageData?.url, {
-        fallback: "#444444",
-        quality: "high",
-        pixelSpacing: 5,
-      });
-      return {
-        imageIndex: imageData.imageIndex,
-        url: imageData.url,
-        imageColors: result,
-      };
-    } catch (error) {
-      throw new Error("Failed to extract colors: " + error);
-    }
-  };
+        return {
+          imageIndex: imageData.imageIndex,
+          url: imageData.url,
+          imageColors: result,
+        };
+      } catch (error) {
+        throw new Error("Failed to extract colors: " + error);
+      }
+    },
+    []
+  );
 
-  //getting image
   const {
     isLoading: unsplashLoading,
     error: unsplashError,
@@ -97,7 +96,7 @@ const useUnsplashImage = (imgSearchString: string | null) => {
   } = useQuery<UnsplashType>({
     queryKey: ["unsplash_image", imgSearchString],
     queryFn: fetchUnsplashImage,
-    enabled: !!imgSearchString,
+    enabled: !!finalUrl,
     staleTime: 15 * 60 * 1000,
     refetchInterval: updateFreqFunction(updateFreq),
     refetchOnMount: false,
@@ -105,35 +104,53 @@ const useUnsplashImage = (imgSearchString: string | null) => {
     refetchOnReconnect: true,
   });
 
-  //choosing random url
-  const imageData = !unsplashData?.results?.length
-    ? null
-    : {
-        imageIndex: Math.floor(Math.random() * unsplashData.results.length),
-        url: unsplashData.results[
-          Math.floor(Math.random() * unsplashData.results.length)
-        ].urls.regular,
-      };
+  const selectedImageData = useMemo(() => {
+    if (!unsplashData?.results?.length) return null;
 
-  //getting colors from image
+    const randomIndex = Math.floor(Math.random() * unsplashData.results.length);
+    return {
+      imageIndex: randomIndex,
+      url: unsplashData.results[randomIndex].urls.regular,
+    };
+  }, [unsplashData]);
+
   const {
     isLoading: imageColorsLoading,
     error: imageColorsError,
     data: imageColorsData,
-  } = useQuery<{
-    imageIndex: number;
-    url: string;
-    imageColors: ImageColorsResult;
-  }>({
-    queryKey: ["react_native_image_colors", imageData?.url],
-    queryFn: () => getUnsplashImageColors(imageData),
-    enabled: !!imageData?.url,
+  } = useQuery({
+    queryKey: [
+      "image_colors",
+      selectedImageData?.url,
+      selectedImageData?.imageIndex,
+    ],
+    queryFn: () => getUnsplashImageColors(selectedImageData!),
+    enabled: !!selectedImageData?.url && !unsplashLoading,
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 15,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: true,
   });
+
+  useEffect(() => {
+    if (selectedImageData && unsplashData?.results?.length) {
+      const currentIndex = selectedImageData.imageIndex;
+      let nextIndex;
+      do {
+        nextIndex = Math.floor(Math.random() * unsplashData.results.length);
+      } while (nextIndex === currentIndex && unsplashData.results.length > 1);
+
+      const nextImageUrl = unsplashData.results[nextIndex].urls.regular;
+      const nextImageData = { imageIndex: nextIndex, url: nextImageUrl };
+
+      queryClient.prefetchQuery({
+        queryKey: ["image_colors_prefetch", nextImageUrl, nextIndex],
+        queryFn: () => getUnsplashImageColors(nextImageData),
+        staleTime: 1000 * 60 * 5,
+      });
+    }
+  }, [selectedImageData, unsplashData, queryClient, getUnsplashImageColors]);
 
   return {
     unsplashLoading,
@@ -142,6 +159,7 @@ const useUnsplashImage = (imgSearchString: string | null) => {
     imageColorsLoading,
     imageColorsError,
     imageColorsData,
+    selectedImageUrl: selectedImageData?.url,
   };
 };
 

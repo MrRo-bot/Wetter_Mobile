@@ -50,7 +50,7 @@ const useAqiData = (
     return () => subscription.remove();
   }, []);
 
-  const paramsObj = {
+  const AQI_PARAMS = {
     latitude:
       coordinates && isValidCoordinates(coordinates)
         ? String(coordinates.latitude)
@@ -81,7 +81,7 @@ const useAqiData = (
     domains: "cams_global",
   };
 
-  const queryString = new URLSearchParams(paramsObj).toString();
+  const queryString = new URLSearchParams(AQI_PARAMS).toString();
 
   const finalUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?${queryString}`;
 

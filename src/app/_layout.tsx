@@ -21,6 +21,10 @@ import images from "../constants/images";
 import "../global.css";
 import { locationStore } from "../store/locationStore";
 import { ToastRef } from "../types/types";
+import {
+  backgroundNotificationTask,
+  unregisterBackgroundTask,
+} from "../utils/backgroundNotificationTask";
 
 SplashScreen.setOptions({
   duration: 500,
@@ -36,6 +40,14 @@ export default function Layout() {
   const toastRef = useRef<ToastRef>(null);
 
   const { locations } = locationStore();
+
+  useEffect(() => {
+    backgroundNotificationTask();
+
+    return () => {
+      unregisterBackgroundTask();
+    };
+  }, []);
 
   const [fontsLoaded] = useFonts({
     "genos-thin": require("@/src/assets/fonts/Genos-Thin.otf"),

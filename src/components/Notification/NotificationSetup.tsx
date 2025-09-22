@@ -5,6 +5,10 @@ import { locationStore } from "@/src/store/locationStore";
 import { useSettingsStore } from "@/src/store/settingsStore";
 import { weatherStore } from "@/src/store/weatherStore";
 import { AQIType, ToastRef, WeatherDataType } from "@/src/types/types";
+import {
+  backgroundNotificationTask,
+  unregisterBackgroundTask,
+} from "@/src/utils/backgroundNotificationTask";
 import { closestTimestamp, degConv, weatherCodeConv } from "@/src/utils/math";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
@@ -14,38 +18,16 @@ import { Platform } from "react-native";
 const getFilteredWeatherCodes = (
   advisoryToggle: boolean,
   severityToggle: boolean,
-  rainAndSnow: boolean,
-  chanceOfPrecipitation: number = 0
+  rainAndSnow: boolean
 ): number[] => {
   const allPrecipCodes = [
-    51, 53, 55, 56, 57,
-
-    61, 63, 65, 66, 67,
-
-    71, 73, 75, 77,
-
-    80, 81, 82,
-
-    85, 86,
-
+    51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 71, 73, 75, 77, 80, 81, 82, 85, 86,
     95, 96, 99,
   ];
 
-  const advisoryCodes = [
-    53, 56, 61, 63, 66,
+  const advisoryCodes = [53, 56, 61, 63, 66, 73, 77, 85, 80, 81, 95];
 
-    73, 77, 85,
-
-    80, 81,
-
-    95,
-  ];
-
-  const severityCodes = [
-    55, 57, 65, 67, 75, 82, 86,
-
-    96, 99,
-  ];
+  const severityCodes = [55, 57, 65, 67, 75, 82, 86, 96, 99];
 
   let filteredCodes: number[] = [];
 
@@ -213,8 +195,7 @@ const scheduleWeatherAlerts = async (
   const allowedWeatherCodes = getFilteredWeatherCodes(
     alerts.advisoryToggle,
     alerts.severityToggle,
-    alerts.rainAndSnow,
-    alerts.chanceOfPrecipitation
+    alerts.rainAndSnow
   );
 
   if (allowedWeatherCodes.length === 0) {
@@ -415,10 +396,11 @@ const scheduleSevereAqiAlerts = async (aqi: AQIType) => {
 const NotificationSetup = () => {
   const toastRef = useRef<ToastRef>(null);
 
-  const locationStoreObj = locationStore();
   const { weather } = weatherStore();
   const { aqi } = aqiStore();
   const { alerts } = useSettingsStore();
+
+  const locationStoreObj = locationStore();
 
   const currentLocObj = locationStoreObj?.getLocationById(
     locationStoreObj?.locationToShow
@@ -441,8 +423,10 @@ const NotificationSetup = () => {
 
   useEffect(() => {
     configureNotifications()
-      .then((granted) => {
+      .then(async (granted) => {
         if (granted) {
+          await backgroundNotificationTask();
+
           !weatherLoading &&
             weather &&
             alerts.dailyNotification &&
@@ -493,7 +477,13 @@ const NotificationSetup = () => {
         responseListener.current.remove();
       }
     };
-  }, [weather, aqi, alerts]);
+  }, [alerts]);
+
+  useEffect(() => {
+    return () => {
+      unregisterBackgroundTask();
+    };
+  }, []);
 
   return null;
 };

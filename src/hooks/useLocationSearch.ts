@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { LocationParamsType, LocationSearchType } from "../types/types";
 
 const useLocationSearch = (search: string) => {
-  const paramsObj: LocationParamsType = {
+  const GEOCODING_PARAMS: LocationParamsType = {
     name: "",
     count: "50",
     language: "en",
@@ -11,10 +11,10 @@ const useLocationSearch = (search: string) => {
   };
 
   if (search && typeof search === "string") {
-    paramsObj.name = search?.trim();
+    GEOCODING_PARAMS.name = search?.trim();
   }
 
-  const queryString = new URLSearchParams(paramsObj).toString();
+  const queryString = new URLSearchParams(GEOCODING_PARAMS).toString();
 
   const finalUrl = `https://geocoding-api.open-meteo.com/v1/search?${queryString}`;
 
@@ -38,7 +38,7 @@ const useLocationSearch = (search: string) => {
   return useQuery<LocationSearchType>({
     queryKey: ["openMeteo_geocoding", search],
     queryFn: fetchLocationResults,
-    enabled: !!search && paramsObj.name.length > 3,
+    enabled: !!search && GEOCODING_PARAMS.name.length > 3,
     placeholderData: (previousData) => previousData,
     staleTime: 5 * 60 * 1000,
     refetchOnMount: false,

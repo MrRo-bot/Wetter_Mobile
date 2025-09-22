@@ -10,9 +10,13 @@
     "newArchEnabled": true,
     "ios": {
       "infoPlist": {
-        "UIBackgroundModes": ["processing"]
+        "UIBackgroundModes": [
+          "processing"
+        ]
       },
-      "entitlements": { "aps-environment": "development" },
+      "entitlements": {
+        "aps-environment": "development"
+      },
       "supportsTablet": true,
       "icon": {
         "dark": "./src/assets/icons/ios-dark.png",
@@ -226,7 +230,8 @@
           "locationAlwaysAndWhenInUsePermission": "Allow Wetter to use your location",
           "isAndroidBackgroundLocationEnable": true
         }
-      ]
+      ],
+      "expo-background-task"
     ],
     "experiments": {
       "typedRoutes": true
