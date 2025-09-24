@@ -1,7 +1,14 @@
 import { LocationDataType, LocationSearchItemType } from "@/src/types/types";
-import React from "react";
+import * as Haptics from "expo-haptics";
+import React, { useEffect } from "react";
 import { Pressable, Text, View } from "react-native";
-import Animated, { ReduceMotion, SlideInUp } from "react-native-reanimated";
+import Animated, {
+  ReduceMotion,
+  SlideInUp,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 
 const LocationSearchItem = ({
   index,
@@ -23,6 +30,40 @@ const LocationSearchItem = ({
     textShadowRadius: 6,
   };
 
+  const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+  const scale = useSharedValue(1);
+
+  useEffect(() => {
+    scale.value = 1;
+  }, [scale]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+  const handlePress = () => {
+    scale.value = withSpring(0.95, {
+      stiffness: 900,
+      velocity: 0.2,
+      damping: 120,
+      mass: 4,
+      reduceMotion: ReduceMotion.System,
+    });
+    setTimeout(() => {
+      scale.value = withSpring(1, {
+        stiffness: 100,
+        velocity: 0.2,
+        damping: 10,
+        mass: 4,
+        reduceMotion: ReduceMotion.System,
+      });
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      getLocation(location.latitude, location.longitude);
+    }, 200);
+  };
+
   return (
     <Animated.View
       key={location.id}
@@ -31,12 +72,15 @@ const LocationSearchItem = ({
         .reduceMotion(ReduceMotion.System)}
       className="w-[90%] mx-auto"
     >
-      <Pressable
+      <AnimatedPressable
         accessibilityRole="button"
         accessibilityLabel={`Select ${location.name}, ${location.country}`}
         accessibilityHint="Tap to fetch weather data for this location"
         accessible={true}
-        onPress={() => getLocation(location.latitude, location.longitude)}
+        style={animatedStyle}
+        className="overflow-hidden"
+        onPress={handlePress}
+        android_ripple={{ color: `rgb(255,255,255,0.01)` }}
       >
         <View
           className={`border-[1px] border-dashed rounded-xl overflow-hidden ${theme === "dark" ? "border-light/70" : "border-dark/30"}`}
@@ -87,7 +131,7 @@ const LocationSearchItem = ({
             </View>
           </View>
         </View>
-      </Pressable>
+      </AnimatedPressable>
     </Animated.View>
   );
 };

@@ -36,7 +36,7 @@ const WeatherAlertsSection = ({
       className={`py-6 border-b-[1px] border-solid ${theme === "dark" ? "border-b-light/5" : "border-b-dark/5"}`}
     >
       <Text
-        className={`font-orbitron-bold text-lg ${theme === "dark" ? " text-light/80" : "text-dark/70"}`}
+        className={`font-orbitron-bold text-lg ${theme === "dark" ? " text-light/80" : "text-dark/80"}`}
       >
         Weather Alerts
       </Text>
@@ -73,7 +73,7 @@ const WeatherAlertsSection = ({
             className={`items-start border-[1px] border-solid justify-center w-10/12 p-6 overflow-hidden rounded-2xl gap-y-6 ${theme === "dark" ? "border-light/30" : "border-dark/30"}`}
           >
             <Text
-              className={`text-left text-xl font-orbitron-bold ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
+              className={`text-left text-xl font-orbitron-bold ${theme === "dark" ? "text-light/80" : "text-dark/80"}`}
             >
               Weather Alerts
             </Text>
@@ -119,6 +119,12 @@ const WeatherAlertsSection = ({
               className={`items-center justify-center ml-auto py-2 px-4 border-2 border-solid rounded-2xl w-max ${theme === "dark" ? "border-light/50 bg-sky-400" : "border-dark/50 bg-sky-900"}`}
               onPress={() => {
                 setWeatherAlertsModal(!weatherAlertsModal);
+              }}
+              android_ripple={{
+                color:
+                  theme === "dark"
+                    ? "hsla(200,100%,50%,0.7)"
+                    : "hsla(198,60%,70%,0.8)",
               }}
             >
               <Text

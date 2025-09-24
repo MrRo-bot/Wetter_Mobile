@@ -33,7 +33,7 @@ const DailyNotificationSection = ({
     >
       <View>
         <Text
-          className={`font-orbitron-bold text-lg ${theme === "dark" ? " text-light/80" : "text-dark/70"}`}
+          className={`font-orbitron-bold text-lg ${theme === "dark" ? " text-light/80" : "text-dark/80"}`}
         >
           Daily Notification
         </Text>

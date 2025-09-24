@@ -10,10 +10,17 @@ import { weatherStore } from "@/src/store/weatherStore";
 import { ToastRef } from "@/src/types/types";
 import { weatherCodeConv } from "@/src/utils/math";
 import { MaterialIcons } from "@expo/vector-icons";
+import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
 import { useEffect, useRef } from "react";
 import { Pressable, ScrollView, useColorScheme, View } from "react-native";
-import Animated, { ReduceMotion, SlideInDown } from "react-native-reanimated";
+import Animated, {
+  ReduceMotion,
+  SlideInDown,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
@@ -98,6 +105,39 @@ export default function Home() {
 
   const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
+  const scale = useSharedValue(1);
+
+  useEffect(() => {
+    scale.value = 1;
+  }, [scale]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+  const handlePress = () => {
+    scale.value = withSpring(0.85, {
+      stiffness: 900,
+      velocity: 0.2,
+      damping: 120,
+      mass: 4,
+      reduceMotion: ReduceMotion.System,
+    });
+    setTimeout(() => {
+      scale.value = withSpring(1, {
+        stiffness: 100,
+        velocity: 0.2,
+        damping: 10,
+        mass: 4,
+        reduceMotion: ReduceMotion.System,
+      });
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      router.navigate("/(home)/locations");
+    }, 200);
+  };
+
   return (
     <SafeAreaView
       edges={["right", "left", "bottom"]}
@@ -133,8 +173,9 @@ export default function Home() {
               entering={SlideInDown.duration(600).reduceMotion(
                 ReduceMotion.System
               )}
-              className={`absolute bottom-16 right-10 shadow-2xl w-16 h-16 rounded-full items-center overflow-hidden justify-center border-2 border-solid ${theme === "dark" ? "bg-light/90 border-dark/20" : "bg-dark/75 border-light/40"}`}
-              onPress={() => router.navigate("/(home)/locations")}
+              className={`absolute bottom-16 right-10 rounded-full shadow-2xl w-16 h-16 items-center overflow-hidden justify-center border-2 border-solid ${theme === "dark" ? "bg-light/90 border-dark/20" : "bg-dark/75 border-light/40"}`}
+              style={animatedStyle}
+              onPress={handlePress}
             >
               <MaterialIcons
                 color={theme === "dark" ? "black" : "white"}

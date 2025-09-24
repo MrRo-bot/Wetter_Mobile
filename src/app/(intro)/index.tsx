@@ -1,6 +1,6 @@
 import components from "@/src/constants/components";
 import { Image } from "expo-image";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import React from "react";
 import { useColorScheme, View } from "react-native";
 import Animated, {
@@ -15,6 +15,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Intro() {
   let theme = useColorScheme();
+
+  const router = useRouter();
 
   return (
     <SafeAreaView

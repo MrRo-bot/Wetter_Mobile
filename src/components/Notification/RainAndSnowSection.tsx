@@ -33,7 +33,7 @@ const RainAndSnowSection = ({
     >
       <View className="w-9/12">
         <Text
-          className={`font-orbitron-bold text-lg ${theme === "dark" ? " text-light/80" : "text-dark/70"}`}
+          className={`font-orbitron-bold text-lg ${theme === "dark" ? " text-light/80" : "text-dark/80"}`}
         >
           Rain & Snow Alarm
         </Text>

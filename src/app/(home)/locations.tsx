@@ -25,6 +25,7 @@ const Locations = () => {
             accessibilityLabel="Open settings"
             accessibilityHint="Navigates to the settings screen"
             accessible={true}
+            android_ripple={{ color: `rgb(255,255,255,0.01)` }}
             accessibilityRole="button"
             className={`shadow-2xl w-12 h-12 rounded-full items-center overflow-hidden justify-center ${theme === "dark" ? "bg-slate-400/10" : "bg-slate-100/80"}`}
             onPress={() => router.navigate("/(home)/settings")}
@@ -40,6 +41,7 @@ const Locations = () => {
             accessibilityLabel="Open location search"
             accessibilityHint="Navigates to the location search screen"
             accessible={true}
+            android_ripple={{ color: `rgb(255,255,255,0.01)` }}
             accessibilityRole="button"
             className={`shadow-2xl w-12 h-12 rounded-full items-center overflow-hidden justify-center ${theme === "dark" ? "bg-slate-400/10" : "bg-slate-100/80"}`}
             onPress={() => router.navigate("/(home)/searchLocation")}

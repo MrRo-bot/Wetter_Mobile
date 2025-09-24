@@ -2,12 +2,22 @@ import { useSettingsStore } from "@/src/store/settingsStore";
 import { weatherStore } from "@/src/store/weatherStore";
 import { unixConv } from "@/src/utils/math";
 import Entypo from "@expo/vector-icons/Entypo";
-import { router } from "expo-router";
+import * as Haptics from "expo-haptics";
+import { useRouter } from "expo-router";
+import { useEffect } from "react";
 import { Pressable, Text, useColorScheme, View } from "react-native";
+import Animated, {
+  ReduceMotion,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 import PrecipitationChart from "../charts/PrecipitationChart";
 
 const Chart = () => {
   let theme = useColorScheme();
+
+  const router = useRouter();
 
   const { weather } = weatherStore();
   const { units: unitSettings } = useSettingsStore();
@@ -23,6 +33,39 @@ const Chart = () => {
       ).hour2,
     };
   });
+
+  const scale = useSharedValue(1);
+
+  useEffect(() => {
+    scale.value = 1;
+  }, [scale]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+  const handlePress = () => {
+    scale.value = withSpring(0.95, {
+      stiffness: 900,
+      velocity: 0.2,
+      damping: 120,
+      mass: 4,
+      reduceMotion: ReduceMotion.System,
+    });
+    setTimeout(() => {
+      scale.value = withSpring(1, {
+        stiffness: 100,
+        velocity: 0.2,
+        damping: 10,
+        mass: 4,
+        reduceMotion: ReduceMotion.System,
+      });
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      router.navigate("/(home)/Charts");
+    }, 200);
+  };
 
   return (
     <View
@@ -57,14 +100,16 @@ const Chart = () => {
         accessibilityRole="button"
         accessibilityLabel="View weather charts"
         accessibilityHint="Navigates to charts page for visualisation of weather data"
-        onPress={() => router.navigate("/(home)/Charts")}
+        onPress={handlePress}
+        android_ripple={{ color: `rgb(255,255,255,0.01)` }}
         className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-dark/50" : "bg-light/50"}`}
       >
-        <Text
-          className={`font-orbitron-bold -translate-y-1/2 top-1/2 leading-none text-lg ${theme === "dark" ? "text-light" : "text-dark"}`}
+        <Animated.Text
+          style={animatedStyle}
+          className={`font-orbitron-bold top-2.5 leading-none text-lg ${theme === "dark" ? "text-light" : "text-dark"}`}
         >
           CHART
-        </Text>
+        </Animated.Text>
         <View className="absolute -translate-y-1/2 right-5 top-1/2">
           <Entypo
             accessibilityLabel="Arrow indicating navigation"

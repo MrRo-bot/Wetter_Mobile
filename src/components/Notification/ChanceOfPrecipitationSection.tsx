@@ -39,7 +39,7 @@ const ChanceOfPrecipitationSection = ({
       className={`py-6 border-b-[1px] border-solid ${theme === "dark" ? "border-b-light/5" : "border-b-dark/5"}`}
     >
       <Text
-        className={`font-orbitron-bold text-lg ${!alerts.rainAndSnow && "opacity-50"} ${theme === "dark" ? " text-light/80" : "text-dark/70"}`}
+        className={`font-orbitron-bold text-lg ${!alerts.rainAndSnow && "opacity-50"} ${theme === "dark" ? " text-light/80" : "text-dark/80"}`}
       >
         Chance Of Precipitation
       </Text>
@@ -75,7 +75,7 @@ const ChanceOfPrecipitationSection = ({
             className={`border-[1px] p-6 gap-y-6 w-10/12 border-solid overflow-hidden rounded-2xl ${theme === "dark" ? "border-light/30" : "border-dark/30"}`}
           >
             <Text
-              className={`text-left text-xl font-orbitron-bold ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
+              className={`text-left text-xl font-orbitron-bold ${theme === "dark" ? "text-light/80" : "text-dark/80"}`}
             >
               Chance Of Precipitation
             </Text>
@@ -112,6 +112,12 @@ const ChanceOfPrecipitationSection = ({
               className={`items-center justify-center ml-auto py-1.5 px-2 border-2 border-solid rounded-2xl w-max ${theme === "dark" ? "border-light/50 bg-sky-400" : "border-dark/50 bg-sky-900"}`}
               onPress={() => {
                 setChanceOfPrecModal(!chanceOfPrecModal);
+              }}
+              android_ripple={{
+                color:
+                  theme === "dark"
+                    ? "hsla(200,100%,50%,0.7)"
+                    : "hsla(198,60%,70%,0.8)",
               }}
             >
               <Text

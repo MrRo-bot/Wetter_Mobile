@@ -86,7 +86,7 @@ const Units = () => {
               key={setting.name}
             >
               <Text
-                className={`pt-4 pb-2 font-orbitron-medium text-lg ${theme === "dark" ? "text-slate-400" : "text-dark/70"}`}
+                className={`pt-4 pb-2 font-orbitron-medium text-lg ${theme === "dark" ? "text-slate-400" : "text-dark/80"}`}
               >
                 {setting.name}
               </Text>

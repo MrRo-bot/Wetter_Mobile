@@ -31,7 +31,7 @@ const UpdateFreqComponent = ({
   return (
     <>
       <Text
-        className={`font-orbitron-bold text-lg ${theme === "dark" ? " text-light/80" : "text-dark/70"}`}
+        className={`font-orbitron-bold text-lg ${theme === "dark" ? " text-light/80" : "text-dark/80"}`}
       >
         Update Frequency
       </Text>
@@ -66,7 +66,7 @@ const UpdateFreqComponent = ({
             className={`items-start border-[1px] border-solid justify-center w-10/12 p-6 overflow-hidden rounded-2xl h-3/12 gap-y-6 ${theme === "dark" ? "border-light/30" : "border-dark/30"}`}
           >
             <Text
-              className={`text-left text-xl font-orbitron-bold ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
+              className={`text-left text-xl font-orbitron-bold ${theme === "dark" ? "text-light/80" : "text-dark/80"}`}
             >
               Update Frequency
             </Text>
@@ -170,6 +170,12 @@ const UpdateFreqComponent = ({
               onPress={() => {
                 setUpdateFreqModal(!updateFreqModal);
               }}
+              android_ripple={{
+                color:
+                  theme === "dark"
+                    ? "hsla(200,100%,50%,0.7)"
+                    : "hsla(198,60%,70%,0.8)",
+              }}
             >
               <Text
                 className={`text-center font-orbitron-bold ${theme === "dark" ? "text-dark" : "text-light"}`}
@@ -210,7 +216,7 @@ const Settings = () => {
             .reduceMotion(ReduceMotion.System)}
         >
           <Text
-            className={`font-orbitron-bold text-lg ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
+            className={`font-orbitron-bold text-lg ${theme === "dark" ? "text-light/80" : "text-dark/80"}`}
           >
             Notification
           </Text>
@@ -225,7 +231,7 @@ const Settings = () => {
             .reduceMotion(ReduceMotion.System)}
         >
           <Text
-            className={`font-orbitron-bold text-lg ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
+            className={`font-orbitron-bold text-lg ${theme === "dark" ? "text-light/80" : "text-dark/80"}`}
           >
             Units
           </Text>
@@ -255,7 +261,7 @@ const Settings = () => {
             .reduceMotion(ReduceMotion.System)}
         >
           <Text
-            className={`font-orbitron-bold text-lg ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
+            className={`font-orbitron-bold text-lg ${theme === "dark" ? "text-light/80" : "text-dark/80"}`}
           >
             About
           </Text>

@@ -41,7 +41,7 @@ const TimeSection = ({
     >
       <View>
         <Text
-          className={`font-orbitron-bold text-lg ${theme === "dark" ? " text-light/80" : "text-dark/70"}`}
+          className={`font-orbitron-bold text-lg ${theme === "dark" ? " text-light/80" : "text-dark/80"}`}
         >
           Time
         </Text>
@@ -61,11 +61,12 @@ const TimeSection = ({
             mode="time"
             is24Hour={true}
             display={Platform.OS === "android" ? "clock" : "default"}
-            onChange={(timeVal) => {
-              const timeValue = new Date(
-                timeVal.nativeEvent.timestamp
-              ).toTimeString();
-              setTime(timeValue.slice(0, 5));
+            onChange={(event, selectedDate) => {
+              if (event.type === "set" && selectedDate) {
+                const timeValue = selectedDate.toTimeString().slice(0, 5);
+                setTime(timeValue);
+              }
+
               setTimeModal(!timeModal);
             }}
           />

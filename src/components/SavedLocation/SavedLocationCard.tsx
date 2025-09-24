@@ -4,10 +4,23 @@ import { locationStore } from "@/src/store/locationStore";
 import { LocationDataType, ToastRef } from "@/src/types/types";
 import { MaterialIcons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
+import * as Haptics from "expo-haptics";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { Modal, Pressable, Text, View } from "react-native";
+import {
+  GestureResponderEvent,
+  Modal,
+  Pressable,
+  Text,
+  View,
+} from "react-native";
+import Animated, {
+  ReduceMotion,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 import Loader from "../UI/Loader";
 
 const SavedLocationCard = ({
@@ -63,6 +76,42 @@ const SavedLocationCard = ({
         ? imageColorsData?.imageColors?.quality
         : imageColorsData?.imageColors?.primary;
 
+  const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+  const scale = useSharedValue(1);
+
+  useEffect(() => {
+    scale.value = 1;
+  }, [scale]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+  const handlePress = (e: GestureResponderEvent) => {
+    scale.value = withSpring(0.85, {
+      stiffness: 900,
+      velocity: 0.2,
+      damping: 120,
+      mass: 4,
+      reduceMotion: ReduceMotion.System,
+    });
+    setTimeout(() => {
+      scale.value = withSpring(1, {
+        stiffness: 100,
+        velocity: 0.2,
+        damping: 10,
+        mass: 4,
+        reduceMotion: ReduceMotion.System,
+      });
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      e.stopPropagation();
+      setRemoveLocation(!removeLocation);
+    }, 200);
+  };
+
   return (
     <View className="relative z-0 h-48 w-[calc(100vw-28px)] overflow-hidden rounded-lg border-[2px] border-solid border-gray-500/40">
       <Pressable
@@ -73,6 +122,13 @@ const SavedLocationCard = ({
           );
           setIsLocationToShow(true);
           router.dismissTo("/(home)");
+        }}
+        android_ripple={{
+          color:
+            theme === "dark"
+              ? "hsla(200,100%,50%,0.7)"
+              : "hsla(198,60%,70%,0.8)",
+          foreground: true,
         }}
       >
         {unsplashLoading ? (
@@ -139,11 +195,9 @@ const SavedLocationCard = ({
 
             {locationStoreObj.locations.length > 1 && (
               <>
-                <Pressable
-                  onPress={(e) => {
-                    e.stopPropagation();
-                    setRemoveLocation(!removeLocation);
-                  }}
+                <AnimatedPressable
+                  onPress={(e) => handlePress(e)}
+                  style={animatedStyle}
                   className={`absolute z-50 items-center justify-center p-0.5 overflow-hidden rounded-full shadow-sm top-2 right-2 bg-light/80`}
                 >
                   <View className="items-center justify-center p-1 border-2 border-solid rounded-full w-max border-dark/50">
@@ -154,7 +208,7 @@ const SavedLocationCard = ({
                       color={imageColor}
                     />
                   </View>
-                </Pressable>
+                </AnimatedPressable>
                 <Modal
                   animationType="slide"
                   transparent={true}
@@ -187,6 +241,12 @@ const SavedLocationCard = ({
 
                       <View className="flex-row items-center justify-center gap-2 mx-auto">
                         <Pressable
+                          android_ripple={{
+                            color:
+                              theme === "dark"
+                                ? "hsla(200,100%,50%,0.7)"
+                                : "hsla(198,60%,70%,0.8)",
+                          }}
                           className={`items-center justify-center py-1.5 px-2 border-2 border-solid rounded-2xl w-max ${theme === "dark" ? "border-light/50 bg-sky-400" : "border-dark/50 bg-sky-900"}`}
                           onPress={(e) => {
                             e.stopPropagation();
@@ -206,6 +266,12 @@ const SavedLocationCard = ({
                         </Pressable>
 
                         <Pressable
+                          android_ripple={{
+                            color:
+                              theme === "dark"
+                                ? "hsla(200,100%,50%,0.7)"
+                                : "hsla(198,60%,70%,0.8)",
+                          }}
                           className={`items-center justify-center py-1.5 px-2 border-2 border-solid rounded-2xl w-max ${theme === "dark" ? "border-light/50 bg-sky-400" : "border-dark/50 bg-sky-900"}`}
                           onPress={() => setRemoveLocation(!removeLocation)}
                         >

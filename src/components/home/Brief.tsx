@@ -13,8 +13,9 @@ import {
 import Entypo from "@expo/vector-icons/Entypo";
 import NetInfo from "@react-native-community/netinfo";
 import { BlurView } from "expo-blur";
+import * as Haptics from "expo-haptics";
 import { Image } from "expo-image";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   Dimensions,
@@ -23,6 +24,12 @@ import {
   useColorScheme,
   View,
 } from "react-native";
+import Animated, {
+  ReduceMotion,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 
 const Brief = ({
   weatherRefetch,
@@ -35,6 +42,8 @@ const Brief = ({
   unsplashLoading,
 }: BriefType) => {
   let theme = useColorScheme();
+
+  const router = useRouter();
 
   const [isConnected, setIsConnected] = useState<boolean | null>(true);
   const [showOffline, setShowOffline] = useState(false);
@@ -136,6 +145,41 @@ const Brief = ({
     textShadowRadius: 8,
   };
 
+  const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+  const scale = useSharedValue(1);
+
+  useEffect(() => {
+    scale.value = 1;
+  }, [scale]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+  const handlePress = () => {
+    scale.value = withSpring(0.95, {
+      stiffness: 900,
+      velocity: 0.2,
+      damping: 120,
+      mass: 4,
+      reduceMotion: ReduceMotion.System,
+    });
+    setTimeout(() => {
+      scale.value = withSpring(1, {
+        stiffness: 100,
+        velocity: 0.2,
+        damping: 10,
+        mass: 4,
+        reduceMotion: ReduceMotion.System,
+      });
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      router.navigate("/(home)/Days");
+    }, 200);
+  };
+
   return (
     <View className="gap-2 mx-3 mt-2">
       <View
@@ -184,7 +228,10 @@ const Brief = ({
                 <Pressable
                   accessibilityRole="button"
                   accessibilityLabel="Refresh weather data when internet is turned on"
-                  onPress={() => handleRefetch()}
+                  onPress={() => (
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium),
+                    handleRefetch()
+                  )}
                 >
                   <Entypo name="cycle" size={20} color="white" />
                 </Pressable>
@@ -276,12 +323,16 @@ const Brief = ({
             {weatherCodeConv(current?.weather_code) ?? "..."}
           </Text>
 
-          <Pressable
+          <AnimatedPressable
             accessibilityRole="button"
             accessibilityLabel="View daily weather forecast"
             accessibilityHint="Navigates to daily weather forecast"
-            onPress={() => router.navigate("/(home)/Days")}
-            className="relative mt-1"
+            style={animatedStyle}
+            onPress={handlePress}
+            android_ripple={{
+              color: `rgb(255,255,255,0.01)`,
+            }}
+            className="relative mt-1 transition-colors duration-500"
           >
             <Text
               accessibilityLabel={`Weather summary: ${weatherSummary ?? "No weather data"}`}
@@ -289,7 +340,7 @@ const Brief = ({
             >
               {weatherSummary ?? "..."}
             </Text>
-            <View className="absolute right-0 -translate-y-1/2 top-1/2">
+            <View className="absolute -translate-y-1/2 right-2 top-1/2">
               <Entypo
                 accessibilityLabel="Arrow indicating navigation"
                 accessibilityRole="image"
@@ -299,7 +350,7 @@ const Brief = ({
                 color={theme === "dark" ? "white" : "black"}
               />
             </View>
-          </Pressable>
+          </AnimatedPressable>
         </View>
       </View>
     </View>

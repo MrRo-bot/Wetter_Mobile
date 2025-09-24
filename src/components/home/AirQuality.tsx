@@ -3,14 +3,24 @@ import { aqiStore } from "@/src/store/aqiStore";
 import { AqiColorsType } from "@/src/types/types";
 import { aqiDesc, aqiDetailColors } from "@/src/utils/math";
 import Entypo from "@expo/vector-icons/Entypo";
+import * as Haptics from "expo-haptics";
 import { Image } from "expo-image";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
+import { useEffect } from "react";
 import { Pressable, Text, useColorScheme, View } from "react-native";
+import Animated, {
+  ReduceMotion,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 
 const AirQuality = () => {
   let theme = useColorScheme();
 
   const { aqi } = aqiStore();
+
+  const router = useRouter();
 
   const aqiIndex = aqi?.current?.us_aqi;
   const aqiObject = aqiDesc(aqiIndex);
@@ -56,6 +66,39 @@ const AirQuality = () => {
     default: "text-dark/50",
   };
 
+  const scale = useSharedValue(1);
+
+  useEffect(() => {
+    scale.value = 1;
+  }, [scale]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+  const handlePress = () => {
+    scale.value = withSpring(0.95, {
+      stiffness: 900,
+      velocity: 0.2,
+      damping: 120,
+      mass: 4,
+      reduceMotion: ReduceMotion.System,
+    });
+    setTimeout(() => {
+      scale.value = withSpring(1, {
+        stiffness: 100,
+        velocity: 0.2,
+        damping: 10,
+        mass: 4,
+        reduceMotion: ReduceMotion.System,
+      });
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      router.navigate("/(home)/Aqi");
+    }, 200);
+  };
+
   return (
     <View
       style={
@@ -89,14 +132,16 @@ const AirQuality = () => {
         accessibilityRole="button"
         accessibilityLabel="View aqi charts"
         accessibilityHint="Navigates to charts page for visualisation of aqi data"
-        onPress={() => router.navigate("/(home)/Aqi")}
+        onPress={handlePress}
+        android_ripple={{ color: `rgb(255,255,255,0.01)` }}
         className={`absolute h-10 inset-x-0 pl-4 ${theme === "dark" ? "bg-slate-600/50" : "bg-light/70"}`}
       >
-        <Text
-          className={`font-orbitron-bold -translate-y-1/2 top-1/2 leading-none text-lg ${theme === "dark" ? "text-light" : "text-dark"}`}
+        <Animated.Text
+          style={animatedStyle}
+          className={`font-orbitron-bold top-2.5 leading-none text-lg ${theme === "dark" ? "text-light" : "text-dark"}`}
         >
           AIR QUALITY
-        </Text>
+        </Animated.Text>
         <View className="absolute -translate-y-1/2 right-5 top-1/2">
           <Entypo
             accessibilityLabel="Arrow indicating navigation"

@@ -73,6 +73,7 @@ const Footer = () => {
           <Pressable
             key={linkName}
             onPress={() => openLink(appUrl, webUrl)}
+            android_ripple={{ color: `rgb(255,255,255,0.01)` }}
             accessibilityLabel={`Open ${linkName} profile`}
             accessibilityHint={`Navigates to my ${linkName} profile`}
             accessibilityRole="button"
