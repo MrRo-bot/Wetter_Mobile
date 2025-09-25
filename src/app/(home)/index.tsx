@@ -165,6 +165,7 @@ export default function Home() {
             <components.Daily />
             <components.Chart />
             <components.AirQuality />
+            <components.Daytime />
             <components.Wind />
             <components.Footer />
           </ScrollView>

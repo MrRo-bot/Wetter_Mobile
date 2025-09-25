@@ -2,6 +2,7 @@ import AirQuality from "@/src/components/home/AirQuality";
 import Brief from "@/src/components/home/Brief";
 import Chart from "@/src/components/home/Chart";
 import Daily from "@/src/components/home/Daily";
+import Daytime from "@/src/components/home/Daytime";
 import Detail from "@/src/components/home/Detail";
 import Hourly from "@/src/components/home/Hourly";
 import Wind from "@/src/components/home/Wind";
@@ -39,6 +40,7 @@ export default {
   Daily,
   Detail,
   Hourly,
+  Daytime,
   Wind,
 
   DewPointChart,
