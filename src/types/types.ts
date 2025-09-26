@@ -352,7 +352,6 @@ export interface WeatherIconsType {
   blades: ImageSourcePropType;
   direction: ImageSourcePropType;
   hot_alert: ImageSourcePropType;
-  intro: ImageSourcePropType;
   location: ImageSourcePropType;
   search: ImageSourcePropType;
   wind_mill: ImageSourcePropType;
