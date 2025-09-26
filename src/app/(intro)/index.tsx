@@ -1,5 +1,5 @@
+import IntroSvg from "@/src/components/UI/IntroSvg";
 import components from "@/src/constants/components";
-import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React from "react";
 import { useColorScheme, View } from "react-native";
@@ -27,17 +27,7 @@ export default function Intro() {
         entering={BounceInUp.duration(500).delay(1000).easing(Easing.ease)}
         className="w-full"
       >
-        <Image
-          accessibilityRole="image"
-          accessibilityLabel="App Hero Image"
-          contentFit="cover"
-          source={{ uri: "introduction" }}
-          style={{
-            marginInline: "auto",
-            width: 350,
-            height: 350,
-          }}
-        />
+        <IntroSvg theme={theme} />
       </Animated.View>
       <View className="w-full">
         <Animated.Text
