@@ -54,7 +54,6 @@ const Radiation = () => {
           areaChart
           curved
           hideRules
-          isAnimated
           adjustToWidth
           hideDataPoints
           color="transparent"

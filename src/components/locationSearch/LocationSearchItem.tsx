@@ -3,8 +3,8 @@ import * as Haptics from "expo-haptics";
 import React, { useEffect } from "react";
 import { Pressable, Text, View } from "react-native";
 import Animated, {
+  FadeInUp,
   ReduceMotion,
-  SlideInUp,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -67,7 +67,7 @@ const LocationSearchItem = ({
   return (
     <Animated.View
       key={location.id}
-      entering={SlideInUp.duration(300)
+      entering={FadeInUp.duration(300)
         .delay(index * 100)
         .reduceMotion(ReduceMotion.System)}
       className="w-[90%] mx-auto"

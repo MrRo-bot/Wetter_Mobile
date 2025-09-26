@@ -50,7 +50,6 @@ const HumidityChart = () => {
       >
         <BarChart
           hideRules
-          isAnimated
           adjustToWidth
           width={parentWidth * 0.9}
           noOfSections={5}

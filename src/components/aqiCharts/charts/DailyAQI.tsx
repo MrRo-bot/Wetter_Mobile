@@ -59,7 +59,6 @@ const DailyAQI = ({ aqiForecast, aqiParameter, name }: DailyAQIProps) => {
       >
         <BarChart
           hideRules
-          isAnimated
           adjustToWidth
           height={150}
           barWidth={10}

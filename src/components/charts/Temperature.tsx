@@ -51,7 +51,6 @@ const Temperature = () => {
       >
         <LineChart
           curved
-          isAnimated
           hideDataPoints
           hideRules
           adjustToWidth

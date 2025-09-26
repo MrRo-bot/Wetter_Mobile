@@ -47,7 +47,6 @@ const HourlyAQI = ({
         <LineChart
           areaChart
           curved={isCurved}
-          isAnimated
           adjustToWidth
           animateOnDataChange
           hideDataPoints

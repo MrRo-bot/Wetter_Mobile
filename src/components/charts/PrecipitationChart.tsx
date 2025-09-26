@@ -32,7 +32,6 @@ const PrecipitationChart = ({
       <LineChart
         areaChart
         curved
-        isAnimated
         adjustToWidth
         animateOnDataChange
         hideDataPoints

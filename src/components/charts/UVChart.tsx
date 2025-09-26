@@ -50,7 +50,6 @@ const UVChart = () => {
       >
         <BarChart
           hideRules
-          isAnimated
           adjustToWidth
           roundedTop
           roundedBottom

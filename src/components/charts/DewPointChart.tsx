@@ -50,7 +50,6 @@ const DewPointChart = () => {
       >
         <BarChart
           hideRules
-          isAnimated
           adjustToWidth
           cappedBars
           data={dewPointData}

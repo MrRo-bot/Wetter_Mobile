@@ -52,7 +52,6 @@ const WindChart = () => {
         <LineChart
           areaChart
           curved
-          isAnimated
           hideDataPoints
           hideRules
           adjustToWidth
