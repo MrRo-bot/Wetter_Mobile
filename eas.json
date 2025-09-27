@@ -16,6 +16,9 @@
       "android": {
         "buildType": "apk",
         "distribution": "internal"
+      },
+      "env": {
+        "EXPO_PUBLIC_UNSPLASH_KEY": "XbwRzpC3jXfb90NFuzEvlRoOM0TDJn5LVlLPlmrgTuE"
       }
     }
   },
