@@ -1,4 +1,4 @@
-# Wetter Mobile weather ⛅
+# Wetter Mobile ⛅
 
 <p align="center">
  <img width="300" alt="Wetter Logo" src="https://github.com/MrRo-bot/Wetter_Mobile/blob/main/src/assets/icons/splash-icon-light.png?raw=true" />
@@ -36,7 +36,7 @@ Wetter (German for weather) is a weather/AQI forecast and app.
 
 ## ⛅ **Wetter Mobile** (React Native + Expo)
 
-I created this web app to showcase data fetching ability and land a job as a React/Web/Native developer. This is my second fully-fledged working web app using API with all the data required for a weather app.
+I created this app to showcase the ability of creating both Web apps and Native apps to land a job as a React Web/Native developer. This is my first fully-fledged working app which is a beautiful & simple-to-use weather app that provides the local weather and aqi forecasts.
 
 ## 🎉 Features
 
@@ -48,7 +48,7 @@ I created this web app to showcase data fetching ability and land a job as a Rea
 - **❄️ Notification**: Scheduled weather/aqi or daily notification settings,
 - **🌟 Reanimated**: Reanimated library for multiple animations,
 - **🌪️ Persistent State**: Async storage with zustand to persist multiple datasets,
-- **⚙️ Multiple settings**: For managing some features of the app,
+- **⚙️ Multiple settings**: For managing some features of the app i.e. notification, alerts and units,
 - **⚡ Beautiful UI**: Clean, colorful and modern interface design,
 - **☔ Completely Free & Ad-Free**: Enjoy the app without any cost or advertisements,
 
@@ -76,16 +76,11 @@ eas build --platform android --profile preview
 eas build --platform android --profile production
 ```
 
-## Download Links
-
-- **Android APK**: [Wetter_Mobile_v1.0.0.apk]()
-- **iOS**: [Maintainer Needed]()
-
 ## 💻 Resources
 
 ### 📄 API
 
-- `open-meteo weather API`: For getting current, daily(16 days) and hourly(48 hours) forecast,
+- `open-meteo weather API`: For getting current, daily(15 days), hourly(48 hours) and AQI(5 days) forecast,
 - `open-meteo Air quality API`: For getting AQI,
 - `Unsplash`: For fetching Images according to weather type,
 - `open-meteo Geocoding API and phone location`: For location data,
@@ -114,7 +109,6 @@ eas build --platform android --profile production
 
 ## 📱 Screenshots
 
-<h2>Desktop View</h2>
 <details>
   <summary>Expand</summary>
 
@@ -158,16 +152,16 @@ eas build --platform android --profile production
 | ----------------------------------------------- |
 | ![](src/assets/screenshots/saved_locations.png) |
 
-| <h2>Location search</h2>                        |
-| ----------------------------------------------- |
-| ![](src/assets/screenshots/locations_items.png) |
+| <h2>Location search</h2>                       |
+| ---------------------------------------------- |
+| ![](src/assets/screenshots/location_items.png) |
 
 </details>
-## Environment Configuration
+
+## 🔐 Environment Configuration
 
 This project requires a single environment variable to function correctly.
 
-- A template is provided in the [`.env.local`](https://github.com/BlackHatDevX/openspot-music-app/blob/main/openspot-mobile/.env.template) file.
 - The required **value** to complete your `.env` file is to go to _`unsplash`_ to get images and _`open-meteo`_ doesn't require api keys.
 
 ## 📄 License
@@ -179,5 +173,5 @@ This project is open-source and licensed under the MIT License. See the `LICENSE
 <p align="center">
   <strong>⭐ If you like this project, please give it a star! ⭐</strong>
   <br />
-  <em>Your support helps us continue developing amazing free music apps for everyone.</em>
+  <em>Your support will help me boost my portfolio.</em>
 </p>
