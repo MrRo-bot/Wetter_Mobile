@@ -28,7 +28,7 @@ const Wind = () => {
       -1,
       false
     );
-  }, [rotate, weather]);
+  }, [weather?.current?.wind_speed_10m]);
 
   const fanProps = useAnimatedStyle(() => ({
     transform: [{ rotate: `${rotate?.value}deg` }],
@@ -69,8 +69,8 @@ const Wind = () => {
         WIND
       </Text>
 
-      <View className="flex flex-row justify-between align-bottom items-end mt-16 min-h-[8rem]">
-        <View className="relative overflow-visible w-44 h-44">
+      <View className="flex flex-row justify-between align-bottom items-end mt-16 min-h-[8rem] z-0">
+        <View className="relative z-0 overflow-visible w-44 h-44">
           <Animated.Image
             style={[
               {
@@ -98,7 +98,7 @@ const Wind = () => {
           />
         </View>
 
-        <View className="mb-2">
+        <View className="z-50 mb-2">
           <Text
             accessibilityRole="text"
             accessibilityLabel={`${weather?.current?.wind_speed_10m ?? "..."} ${weather?.current_units?.wind_speed_10m === "kn" ? "knots" : (weather?.current_units?.wind_speed_10m ?? "...")}`}

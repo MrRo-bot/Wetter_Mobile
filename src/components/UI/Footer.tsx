@@ -14,7 +14,7 @@ const Footer = () => {
   const SOCIAL_LINKS = [
     {
       linkName: "GitHub",
-      appUrl: "github://profile/MrRo-bot",
+      appUrl: "https://github.com/MrRo-bot",
       webUrl: "https://github.com/MrRo-bot",
       Icon: Entypo,
       iconName: "github",

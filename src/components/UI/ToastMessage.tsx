@@ -65,7 +65,7 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
               experimentalBlurMethod="dimezisBlurView"
               intensity={theme === "dark" ? 20 : 50}
               tint={theme === "dark" ? "dark" : "light"}
-              className={`flex-row items-center justify-between gap-2 p-2 bg-clip-padding ${theme === "dark" ? "bg-light" : "bg-dark"}`}
+              className={`flex-row items-center justify-between gap-2 p-2 pr-4 bg-clip-padding ${theme === "dark" ? "bg-light" : "bg-dark"}`}
             >
               <View
                 className={`rounded-full shadow-sm p-1 items-center justify-center 

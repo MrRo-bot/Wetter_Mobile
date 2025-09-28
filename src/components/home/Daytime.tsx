@@ -69,10 +69,24 @@ const Daytime = () => {
               intensity={80}
               tint={theme === "dark" ? "dark" : "light"}
               style={{ backgroundColor: imageColor, borderColor: imageColor }}
-              className="absolute border-[1px] border-dotted flex-row items-center justify-center px-4 py-2 overflow-hidden rounded-tr-2xl rounded-br-2xl shadow-sm top-8 bg-clip-padding"
+              className="absolute border-[0.5px] border-dotted flex-row -left-1 items-center justify-center px-4 py-2 overflow-hidden rounded-tr-2xl rounded-br-2xl shadow-sm top-2 bg-clip-padding"
             >
-              <Text className="absolute left-2 bottom-2.5">🌄</Text>
-              <Text style={TEXT_SHADOW} className="ml-4 font-orbitron-semiBold">
+              <Text>🌄</Text>
+              <Text style={TEXT_SHADOW} className="ml-2 font-orbitron-semiBold">
+                SUNRISE
+              </Text>
+            </BlurView>
+            <BlurView
+              accessibilityRole="alert"
+              accessibilityLabel={``}
+              accessibilityLiveRegion="assertive"
+              experimentalBlurMethod="dimezisBlurView"
+              intensity={80}
+              tint={theme === "dark" ? "dark" : "light"}
+              style={{ backgroundColor: imageColor, borderColor: imageColor }}
+              className="absolute border-[0.5px] border-dotted flex-row items-center -left-1 justify-center px-4 py-2 overflow-hidden rounded-tr-2xl rounded-br-2xl shadow-sm top-14 bg-clip-padding"
+            >
+              <Text style={TEXT_SHADOW} className="font-orbitron-semiBold">
                 {`${
                   unixConv.timeStamp(
                     new Date(daily?.sunrise[0]).getTime() / 1000,
@@ -89,9 +103,24 @@ const Daytime = () => {
               intensity={20}
               tint={theme === "dark" ? "dark" : "light"}
               style={{ backgroundColor: imageColor }}
-              className="absolute border-[0.5px] border-dotted right-0 flex-row items-center justify-center px-4 py-2 overflow-hidden rounded-tl-2xl rounded-bl-2xl shadow-sm top-8 bg-clip-padding"
+              className="absolute border-[0.5px] border-dotted -right-1 flex-row items-center justify-center px-4 py-2 overflow-hidden rounded-tl-2xl rounded-bl-2xl shadow-sm top-2 bg-clip-padding"
             >
-              <Text style={TEXT_SHADOW} className="mr-4 font-orbitron-semiBold">
+              <Text style={TEXT_SHADOW} className="mr-2 font-orbitron-semiBold">
+                SUNSET
+              </Text>
+              <Text>🌇</Text>
+            </BlurView>
+            <BlurView
+              accessibilityRole="alert"
+              accessibilityLabel={``}
+              accessibilityLiveRegion="assertive"
+              experimentalBlurMethod="dimezisBlurView"
+              intensity={20}
+              tint={theme === "dark" ? "dark" : "light"}
+              style={{ backgroundColor: imageColor }}
+              className="absolute border-[0.5px] border-dotted -right-1 flex-row items-center justify-center px-4 py-2 overflow-hidden rounded-tl-2xl rounded-bl-2xl shadow-sm top-14 bg-clip-padding"
+            >
+              <Text style={TEXT_SHADOW} className="font-orbitron-semiBold">
                 {`${
                   unixConv.timeStamp(
                     new Date(daily?.sunset[0]).getTime() / 1000,
@@ -99,7 +128,6 @@ const Daytime = () => {
                   ).clockTime
                 }`}
               </Text>
-              <Text className="absolute right-2 bottom-2.5">🌇</Text>
             </BlurView>
           </>
         )}

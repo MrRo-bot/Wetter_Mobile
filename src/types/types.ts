@@ -337,7 +337,7 @@ export interface DailyWeatherObjectType {
   dateStamp: string;
   sunrise: string;
   sunset: string;
-  summary: string;
+  summary?: string;
   weatherMain: string;
   hourStamp: string;
   surfacePressure?: string;

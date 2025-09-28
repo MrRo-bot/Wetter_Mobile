@@ -2,7 +2,7 @@ import { useSettingsStore } from "@/src/store/settingsStore";
 import { weatherStore } from "@/src/store/weatherStore";
 import { Stack, usePathname } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { useColorScheme } from "react-native";
+import { Platform, useColorScheme } from "react-native";
 
 export default function HomeLayout() {
   let theme = useColorScheme();
@@ -54,6 +54,7 @@ export default function HomeLayout() {
     <>
       <Stack
         screenOptions={{
+          animation: Platform.OS ? "ios_from_right" : "slide_from_right",
           headerStyle: {
             backgroundColor: THEME_BACKGROUND,
           },

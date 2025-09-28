@@ -198,6 +198,7 @@ export default function Layout() {
       <StatusBar barStyle={THEME_STYLE} backgroundColor={THEME_BACKGROUND} />
       <Stack
         screenOptions={{
+          animation: Platform.OS ? "ios_from_right" : "slide_from_right",
           headerShown: false,
           contentStyle: { backgroundColor: THEME_BACKGROUND },
         }}

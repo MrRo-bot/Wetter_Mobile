@@ -73,18 +73,18 @@ const Brief = ({
   const windDirection = degConv(current?.wind_direction_10m);
   const windSpeed = `${daily?.wind_speed_10m_max[0]} ${daily_units?.wind_speed_10m_max === "kn" ? "knots" : daily_units?.wind_speed_10m_max}`;
   const gustDirection = degConv(current?.wind_gusts_10m);
-  const gustSpeed = `${daily?.wind_gusts_10m_max[0]} ${daily_units?.wind_gusts_10m_max === "kn" ? "knots" : daily_units?.wind_gusts_10m_max}`;
+  const gustSpeed = `${daily?.wind_gusts_10m_max[0] ?? "nil"} ${daily_units?.wind_gusts_10m_max === "kn" ? "knots" : daily_units?.wind_gusts_10m_max}`;
   const precipitationProbability = daily?.precipitation_probability_max[0];
   const precipitationSum = daily?.precipitation_sum[0];
   const precipitationText =
     precipitationProbability && precipitationProbability > 0
-      ? `, Chance of precipitation ${precipitationProbability}${daily_units?.precipitation_probability_max}`
+      ? `, Chance of precipitation ${precipitationProbability}${daily_units?.precipitation_probability_max},`
       : "";
   const precipitationAmount =
     precipitationSum > 0
       ? ` around ${precipitationSum.toFixed(2)} ${daily_units?.precipitation_sum}`
       : "";
-  const weatherSummary = `${isDay ? "Today" : "Tonight"} - ${weatherCode}, Wind ${windDirection?.cardinal} at ${windSpeed}, Gusts ${gustDirection?.cardinal} at ${gustSpeed}${precipitationText}${precipitationAmount}.`;
+  const weatherSummary = `${isDay ? "Today" : "Tonight"} - ${weatherCode}, Wind ${windDirection?.cardinal ?? "nil"} at ${windSpeed ?? "nil"}, Gusts ${gustDirection?.cardinal ?? "nil"} at ${gustSpeed}${precipitationText}${precipitationAmount}.`;
 
   useEffect(() => {
     NetInfo.fetch().then((state) => {

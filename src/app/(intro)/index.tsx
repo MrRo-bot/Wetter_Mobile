@@ -27,7 +27,9 @@ export default function Intro() {
         entering={BounceInUp.duration(500).delay(1000).easing(Easing.ease)}
         className="w-full"
       >
-        <IntroSvg theme={theme} />
+        <View className="w-[90vw] h-[90vw] mx-auto">
+          <IntroSvg theme={theme} />
+        </View>
       </Animated.View>
       <View className="w-full">
         <Animated.Text

@@ -66,22 +66,26 @@ const Days = () => {
       surfacePressure: `${pressureConverter[unitSettings?.pressure](daily?.surface_pressure_mean[index]).toFixed(2)} ${unitSettings?.pressure}`,
       shortwaveRadiation: `${valRound(daily?.shortwave_radiation_sum[index])} ${units?.shortwave_radiation_sum}`,
       uvIndex: `${valRound(daily?.uv_index_max[index])} ${units?.uv_index_max}`,
-      summary: `${weatherCodeConv(weatherCode)}. Wind ${degConv(
-        daily?.winddirection_10m_dominant[index]
-      ).cardinal?.toLowerCase()} at ${daily?.wind_speed_10m_max[index]} ${
+      summary: `${weatherCodeConv(weatherCode)}, Wind ${
+        degConv(
+          daily?.winddirection_10m_dominant[index]
+        ).cardinal?.toLowerCase() ?? "nil"
+      } at ${daily?.wind_speed_10m_max[index] ?? "nil"} ${
         units?.wind_speed_10m_max === "kn" ? "knots" : units?.wind_speed_10m_max
-      }. Gusts around ${daily?.wind_gusts_10m_max[index]} ${
+      }, Gusts around ${daily?.wind_gusts_10m_max[index] ?? "nil"} ${
         units?.wind_gusts_10m_max === "kn" ? "knots" : units?.wind_gusts_10m_max
-      }. ${
+      }, ${
         daily?.precipitation_probability_max[index] === null ||
         daily?.precipitation_probability_max[index] === 0
           ? ""
           : `Chance of precipitation ${daily?.precipitation_probability_max[index]}${units?.precipitation_probability_max}`
-      } around ${
+      }${
         daily?.precipitation_sum[index] > 0
-          ? daily?.precipitation_sum[index].toFixed(2) +
+          ? " around " +
+            daily?.precipitation_sum[index].toFixed(2) +
             " " +
-            units?.precipitation_sum
+            units?.precipitation_sum +
+            ""
           : ""
       }.`,
     };
@@ -137,7 +141,7 @@ const Days = () => {
               className={`mx-4 p-2 justify-start rounded-2xl gap-3 ${theme === "dark" ? "bg-redDark" : "bg-redLight/20"}`}
             >
               <View className="flex-row items-center justify-start gap-4">
-                <View className="w-2/12">
+                <View className="w-[20%]">
                   <View className="p-2 mx-auto rounded-2xl max-w-max max-h-max bg-dark/10">
                     <Image
                       accessibilityLabel={`Weather icon for ${item.weatherMain} at ${item.dateStamp}`}
@@ -150,12 +154,12 @@ const Days = () => {
                   </View>
                 </View>
 
-                <View className="justify-center w-10/12 gap-1">
+                <View className="justify-center w-[80%] gap-1">
                   <Text
                     accessibilityRole="text"
                     accessibilityLabel={`Time: ${item?.dateStamp ?? "unknown"}`}
                     style={TEXT_SHADOW_DARK_ONLY}
-                    className={`font-orbitron-medium tracking-tighter ${theme === "dark" ? "text-light" : "text-pink-600"}`}
+                    className={`font-orbitron-medium text-sm tracking-tighter ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                   >
                     {item?.dateStamp ?? "..."}
                   </Text>
@@ -188,7 +192,7 @@ const Days = () => {
               </View>
 
               <View className="flex-row items-start justify-start gap-4">
-                <View className="w-2/12">
+                <View className="w-[20%]">
                   <Text
                     accessibilityRole="text"
                     accessibilityLabel={`Precipitation: ${item?.precipitation ?? "unknown"}`}
@@ -207,7 +211,7 @@ const Days = () => {
                       accessibilityRole="text"
                       accessibilityLabel={`Sunrise: ${item?.sunrise ?? "unknown"}`}
                       style={TEXT_SHADOW_DARK_ONLY}
-                      className={`font-genos-semiBold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
+                      className={`font-genos-semiBold text-sm ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
                       {item?.sunrise ?? "..."}
                     </Text>
@@ -222,17 +226,17 @@ const Days = () => {
                       accessibilityRole="text"
                       accessibilityLabel={`Sunset: ${item?.sunset ?? "unknown"}`}
                       style={TEXT_SHADOW_DARK_ONLY}
-                      className={`font-genos-semiBold ${theme === "dark" ? "text-light" : "text-pink-600"}`}
+                      className={`font-genos-semiBold text-sm ${theme === "dark" ? "text-light" : "text-pink-600"}`}
                     >
                       {item?.sunset ?? "..."}
                     </Text>
                   </View>
                 </View>
-                <View className="w-10/12 max-w-72">
+                <View className="w-[80%] max-w-72">
                   <Text
                     accessibilityRole="text"
                     accessibilityLabel={`Summary: ${item?.summary ?? "unknown"}`}
-                    className={`text-left font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
+                    className={`text-left w-11/12 font-genos-medium ${theme === "dark" ? "text-light/90" : "text-slate-800/70"}`}
                   >
                     {item?.summary ?? "..."}
                   </Text>

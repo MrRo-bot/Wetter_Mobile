@@ -68,18 +68,6 @@ const Daily = () => {
         new Date(daily?.sunset[index]).getTime() / 1000,
         unitSettings.time
       ).clockTime,
-      summary: `${weatherCodeConv(weatherCode)}. Wind ${degConv(
-        daily?.winddirection_10m_dominant[index]
-      ).cardinal?.toLowerCase()} at ${`${daily?.wind_speed_10m_max[index]} ${units?.wind_speed_10m_max === "kn" ? "knots" : units?.wind_speed_10m_max}`}${
-        daily?.precipitation_probability_max[index] === null ||
-        daily?.precipitation_probability_max[index] === 0
-          ? ""
-          : `. Chance of precipitation ${daily?.precipitation_probability_max[index]}${units?.precipitation_probability_max}`
-      } around ${
-        daily?.precipitation_sum[index] > 0
-          ? `${daily?.precipitation_sum[index]} ${units?.precipitation_sum}`
-          : ""
-      }`,
       weatherMain: weatherCodeConv(weatherCode),
       hourStamp: unixConv.timeStamp(
         new Date(daily?.time[index]).getTime() / 1000,
