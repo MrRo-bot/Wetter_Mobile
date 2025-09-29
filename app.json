@@ -13,7 +13,7 @@
         "UIBackgroundModes": ["processing"]
       },
       "entitlements": {
-        "aps-environment": "development"
+        "aps-environment": "production"
       },
       "supportsTablet": true,
       "icon": {
