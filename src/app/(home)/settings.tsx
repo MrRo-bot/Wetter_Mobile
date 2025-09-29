@@ -31,12 +31,16 @@ const UpdateFreqComponent = ({
   return (
     <>
       <Text
-        className={`font-orbitron-bold text-lg ${theme === "dark" ? " text-light/80" : "text-dark/80"}`}
+        className={`font-orbitron-bold text-lg ${
+          theme === "dark" ? "text-light/80" : "text-dark/80"
+        }`}
       >
         Update Frequency
       </Text>
       <Text
-        className={`font-genos-regular text-xl leading-none mt-1 ${theme === "dark" ? " text-light/30" : "text-dark/30"}`}
+        className={`font-genos-regular text-xl leading-none mt-1 ${
+          theme === "dark" ? "text-light/30" : "text-dark/30"
+        }`}
       >
         {updateFreq}
       </Text>
@@ -57,119 +61,78 @@ const UpdateFreqComponent = ({
           experimentalBlurMethod="dimezisBlurView"
           intensity={20}
           tint={theme === "dark" ? "dark" : "light"}
-          className={`flex-row items-center justify-center gap-2 p-2 bg-clip-padding w-full h-full ${theme === "dark" ? "bg-light" : "bg-dark"}`}
+          className={`flex-row items-center justify-center gap-2 p-2 bg-clip-padding w-full h-full ${
+            theme === "dark" ? "bg-light" : "bg-dark"
+          }`}
         >
           <BlurView
             experimentalBlurMethod="dimezisBlurView"
             intensity={40}
             tint={theme === "dark" ? "dark" : "light"}
-            className={`items-start border-[1px] border-solid justify-center w-10/12 p-6 overflow-hidden rounded-2xl h-3/12 gap-y-6 ${theme === "dark" ? "border-light/30" : "border-dark/30"}`}
+            className={`items-start border-[1px] border-solid justify-center w-10/12 p-6 overflow-hidden rounded-2xl h-3/12 gap-y-6 ${
+              theme === "dark" ? "border-light/30" : "border-dark/30"
+            }`}
           >
             <Text
-              className={`text-left text-xl font-orbitron-bold ${theme === "dark" ? "text-light/80" : "text-dark/80"}`}
+              className={`text-left text-xl font-orbitron-bold ${
+                theme === "dark" ? "text-light/80" : "text-dark/80"
+              }`}
             >
               Update Frequency
             </Text>
             <View>
               <RadioButton.Group
-                onValueChange={() => setUpdateFreq}
+                onValueChange={(value) => {
+                  setUpdateFreq(value);
+                  setUpdateFreqModal(false);
+                }}
                 value={updateFreq}
               >
-                <Pressable
-                  accessibilityLabel="Set update frequency to 15 Minutes"
-                  accessibilityRole="radio"
-                  onPress={() => {
-                    setUpdateFreq("15 Minutes");
-                    setUpdateFreqModal(!updateFreqModal);
-                  }}
-                >
-                  <View className="flex-row items-center justify-start gap-2">
-                    <RadioButton color={RADIO_THEME} value="15 Minutes" />
-                    <Text
-                      className={`text-2xl leading-none font-genos-light ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
-                    >
-                      15 Minutes
-                    </Text>
-                  </View>
-                </Pressable>
-
-                <Pressable
-                  accessibilityLabel="Set update frequency to 30 Minutes"
-                  accessibilityRole="radio"
-                  onPress={() => {
-                    setUpdateFreq("30 Minutes");
-                    setUpdateFreqModal(!updateFreqModal);
-                  }}
-                >
-                  <View className="flex-row items-center justify-start gap-2">
-                    <RadioButton color={RADIO_THEME} value="30 Minutes" />
-                    <Text
-                      className={`text-2xl leading-none font-genos-light ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
-                    >
-                      30 Minutes
-                    </Text>
-                  </View>
-                </Pressable>
-                <Pressable
-                  accessibilityLabel="Set update frequency to 1 Hour"
-                  accessibilityRole="radio"
-                  onPress={() => {
-                    setUpdateFreq("1 Hour");
-                    setUpdateFreqModal(!updateFreqModal);
-                  }}
-                >
-                  <View className="flex-row items-center justify-start gap-2">
-                    <RadioButton color={RADIO_THEME} value="1 Hour" />
-                    <Text
-                      className={`text-2xl leading-none font-genos-light ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
-                    >
-                      1 Hour
-                    </Text>
-                  </View>
-                </Pressable>
-                <Pressable
-                  accessibilityLabel="Set update frequency to 2 Hours"
-                  accessibilityRole="radio"
-                  onPress={() => {
-                    setUpdateFreq("2 Hours");
-                    setUpdateFreqModal(!updateFreqModal);
-                  }}
-                >
-                  <View className="flex-row items-center justify-start gap-2">
-                    <RadioButton color={RADIO_THEME} value="2 Hours" />
-                    <Text
-                      className={`text-2xl leading-none font-genos-light ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
-                    >
-                      2 Hours
-                    </Text>
-                  </View>
-                </Pressable>
-                <Pressable
-                  accessibilityLabel="Set update frequency to 3 Hours"
-                  accessibilityRole="radio"
-                  onPress={() => {
-                    setUpdateFreq("3 Hours");
-                    setUpdateFreqModal(!updateFreqModal);
-                  }}
-                >
-                  <View className="flex-row items-center justify-start gap-2">
-                    <RadioButton color={RADIO_THEME} value="3 Hours" />
-                    <Text
-                      className={`text-2xl leading-none font-genos-light ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
-                    >
-                      3 Hours
-                    </Text>
-                  </View>
-                </Pressable>
+                {[
+                  "15 Minutes",
+                  "30 Minutes",
+                  "1 Hour",
+                  "2 Hours",
+                  "3 Hours",
+                ].map((freq) => (
+                  <Pressable
+                    key={freq}
+                    accessibilityLabel={`Set update frequency to ${freq}`}
+                    accessibilityRole="radio"
+                    android_ripple={{ color: `rgb(255,255,255,0.01)` }}
+                    onPress={() => {
+                      setUpdateFreq(freq);
+                      setUpdateFreqModal(false);
+                    }}
+                    className="my-1 w-[70vw]"
+                  >
+                    <View className="flex-row items-center gap-5">
+                      <RadioButton
+                        color={RADIO_THEME}
+                        value={freq}
+                        status={updateFreq === freq ? "checked" : "unchecked"}
+                      />
+                      <Text
+                        className={`text-3xl leading-none font-genos-light ${
+                          theme === "dark" ? "text-light/80" : "text-dark/70"
+                        }`}
+                      >
+                        {freq}
+                      </Text>
+                    </View>
+                  </Pressable>
+                ))}
               </RadioButton.Group>
             </View>
             <Pressable
               accessibilityRole="button"
               accessibilityLabel="Close update frequency modal"
-              className={`items-center justify-center ml-auto py-1.5 px-2 border-2 border-solid rounded-2xl w-max ${theme === "dark" ? "border-light/50 bg-sky-400" : "border-dark/50 bg-sky-900"}`}
-              onPress={() => {
-                setUpdateFreqModal(!updateFreqModal);
-              }}
+              className={`items-center justify-center ml-auto py-1.5 px-2 border-2 border-solid rounded-2xl w-max ${
+                theme === "dark"
+                  ? "border-light/50 bg-sky-400"
+                  : "border-dark/50 bg-sky-900"
+              }`}
+              onPress={() => setUpdateFreqModal(false)}
               android_ripple={{
                 color:
                   theme === "dark"
@@ -178,7 +141,9 @@ const UpdateFreqComponent = ({
               }}
             >
               <Text
-                className={`text-center font-orbitron-bold ${theme === "dark" ? "text-dark" : "text-light"}`}
+                className={`text-center font-orbitron-bold ${
+                  theme === "dark" ? "text-dark" : "text-light"
+                }`}
                 numberOfLines={1}
               >
                 Cancel

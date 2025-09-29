@@ -173,10 +173,23 @@ const About = () => {
             </Text>
           </View>
           <Pressable
+            style={{
+              shadowColor: theme === "dark" ? "#fff" : "#000",
+              shadowOffset: {
+                width: 0,
+                height: 0,
+              },
+              shadowOpacity: 0.5,
+              shadowRadius: 4,
+
+              elevation: 3,
+            }}
             accessibilityRole="button"
             accessibilityLabel="Location"
             accessibilityHint="Opens the settings for fixing location based issues"
             onPress={() => openLocationAccuracySettings()}
+            android_ripple={{ color: `rgb(255,255,255,0.01)` }}
+            className={`p-2 border-[0.5px] rounded-2xl border-dotted border-tealDark ${theme === "dark" ? "bg-dark" : "bg-light"}`}
           >
             <Text
               accessibilityRole="header"

@@ -84,16 +84,19 @@ const AirQualitySection = ({
                     key={aqiVal}
                     accessibilityLabel={`Set air quality index to greater than ${aqiVal}%`}
                     accessibilityRole="radio"
-                    className="my-1"
+                    android_ripple={{ color: `rgb(255,255,255,0.01)` }}
                     onPress={() => {
                       setAQI(aqiVal);
                       setAqiModal(!aqiModal);
                     }}
+                    className="my-1 w-[70vw]"
                   >
-                    <View className="flex-row items-center justify-start gap-2">
+                    <View className="flex-row items-center gap-5">
                       <RadioButton color={themeColor} value={aqiVal} />
                       <Text
-                        className={`text-2xl leading-none font-genos-light ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
+                        className={`text-3xl leading-none font-genos-light ${
+                          theme === "dark" ? "text-light/80" : "text-dark/70"
+                        }`}
                       >
                         {aqiVal === "0" ? "None" : "> " + aqiVal}
                       </Text>

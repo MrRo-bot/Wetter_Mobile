@@ -90,15 +90,17 @@ const ChanceOfPrecipitationSection = ({
                     key={cop}
                     accessibilityLabel={`Set chance of precipitation to greater than ${cop}%`}
                     accessibilityRole="radio"
+                    android_ripple={{ color: `rgb(255,255,255,0.01)` }}
                     onPress={() => {
                       setChanceOfPrecipitation(cop);
                       setChanceOfPrecModal(!chanceOfPrecModal);
                     }}
+                    className="my-1 w-[70vw]"
                   >
-                    <View className="flex-row items-center justify-start gap-2">
+                    <View className="flex-row items-center gap-5">
                       <RadioButton color={themeColor} value={cop} />
                       <Text
-                        className={`text-2xl leading-none font-genos-light ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
+                        className={`text-3xl leading-none font-genos-light ${theme === "dark" ? "text-light/80" : "text-dark/70"}`}
                       >{`> ${cop}%`}</Text>
                     </View>
                   </Pressable>
