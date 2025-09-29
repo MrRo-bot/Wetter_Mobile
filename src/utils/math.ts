@@ -160,8 +160,8 @@ export const aqiDetailColors = ({
               ? value >= 0 && value <= 35
               : value >= 0 && value <= 54:
       return {
-        textColor: "black",
-        bgColor: "green",
+        textColor: "#000000",
+        bgColor: "#168b17",
       };
     case title === "PM2.5"
       ? value > 12 && value <= 35.5
@@ -175,8 +175,8 @@ export const aqiDetailColors = ({
               ? value > 35 && value <= 75
               : value > 54 && value <= 100:
       return {
-        textColor: "black",
-        bgColor: "gold",
+        textColor: "#000000",
+        bgColor: "#ffd700",
       };
     case title === "PM2.5"
       ? value > 35.5 && value <= 55.5
@@ -190,8 +190,8 @@ export const aqiDetailColors = ({
               ? value > 75 && value <= 185
               : value > 100 && value <= 360:
       return {
-        textColor: "black",
-        bgColor: "orange",
+        textColor: "#000000",
+        bgColor: "#ffa500",
       };
     case title === "PM2.5"
       ? value > 55.5 && value <= 150.5
@@ -205,8 +205,8 @@ export const aqiDetailColors = ({
               ? value > 185 && value <= 305
               : value > 360 && value <= 650:
       return {
-        textColor: "white",
-        bgColor: "red",
+        textColor: "#ffffff",
+        bgColor: "#ff0000",
       };
     case title === "PM2.5"
       ? value > 150.5 && value <= 250.5
@@ -220,8 +220,8 @@ export const aqiDetailColors = ({
               ? value > 305 && value <= 605
               : value > 650 && value <= 1250:
       return {
-        textColor: "white",
-        bgColor: "darkred",
+        textColor: "#ffffff",
+        bgColor: "#8b0000",
       };
     case title === "PM2.5"
       ? value > 250.5
@@ -235,13 +235,13 @@ export const aqiDetailColors = ({
               ? value > 605
               : value > 1250:
       return {
-        textColor: "white",
-        bgColor: "purple",
+        textColor: "#ffffff",
+        bgColor: "#800080",
       };
     default:
       return {
-        textColor: "black",
-        bgColor: "grey",
+        textColor: "#000000",
+        bgColor: "#808080",
       };
   }
 };

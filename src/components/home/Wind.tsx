@@ -28,7 +28,7 @@ const Wind = () => {
       -1,
       false
     );
-  }, [weather?.current?.wind_speed_10m]);
+  }, [weather.current.wind_speed_10m]);
 
   const fanProps = useAnimatedStyle(() => ({
     transform: [{ rotate: `${rotate?.value}deg` }],

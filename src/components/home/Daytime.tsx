@@ -32,7 +32,6 @@ const Daytime = () => {
   const windowWidth = Dimensions.get("window").width;
 
   const TEXT_SHADOW = {
-    color: theme === "dark" ? "#999999" : "#222222",
     textShadowColor: imageColor,
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 8,
@@ -66,13 +65,19 @@ const Daytime = () => {
               accessibilityLabel={``}
               accessibilityLiveRegion="assertive"
               experimentalBlurMethod="dimezisBlurView"
-              intensity={80}
+              intensity={20}
               tint={theme === "dark" ? "dark" : "light"}
-              style={{ backgroundColor: imageColor, borderColor: imageColor }}
-              className="absolute border-[0.5px] border-dotted flex-row -left-1 items-center justify-center px-4 py-2 overflow-hidden rounded-tr-2xl rounded-br-2xl shadow-sm top-2 bg-clip-padding"
+              style={{
+                borderColor: imageColor,
+                backgroundColor: imageColor,
+              }}
+              className={`absolute border-[0.5px] border-solid flex-row -left-1 items-center justify-center px-4 py-2 overflow-hidden rounded-tr-2xl rounded-br-2xl shadow-sm top-3 bg-clip-padding`}
             >
               <Text>🌄</Text>
-              <Text style={TEXT_SHADOW} className="ml-2 font-orbitron-semiBold">
+              <Text
+                style={TEXT_SHADOW}
+                className={`ml-2 font-orbitron-semiBold ${theme === "dark" ? "text-light" : "text-dark"}`}
+              >
                 SUNRISE
               </Text>
             </BlurView>
@@ -81,12 +86,18 @@ const Daytime = () => {
               accessibilityLabel={``}
               accessibilityLiveRegion="assertive"
               experimentalBlurMethod="dimezisBlurView"
-              intensity={80}
+              intensity={20}
               tint={theme === "dark" ? "dark" : "light"}
-              style={{ backgroundColor: imageColor, borderColor: imageColor }}
-              className="absolute border-[0.5px] border-dotted flex-row items-center -left-1 justify-center px-4 py-2 overflow-hidden rounded-tr-2xl rounded-br-2xl shadow-sm top-14 bg-clip-padding"
+              style={{
+                borderColor: imageColor,
+                backgroundColor: imageColor,
+              }}
+              className={`absolute border-[0.5px] border-solid flex-row -left-1 items-center justify-center px-4 py-2 overflow-hidden rounded-tr-2xl rounded-br-2xl shadow-sm top-14 bg-clip-padding`}
             >
-              <Text style={TEXT_SHADOW} className="font-orbitron-semiBold">
+              <Text
+                style={TEXT_SHADOW}
+                className={`font-orbitron-semiBold ${theme === "dark" ? "text-light" : "text-dark"}`}
+              >
                 {`${
                   unixConv.timeStamp(
                     new Date(daily?.sunrise[0]).getTime() / 1000,
@@ -102,10 +113,16 @@ const Daytime = () => {
               experimentalBlurMethod="dimezisBlurView"
               intensity={20}
               tint={theme === "dark" ? "dark" : "light"}
-              style={{ backgroundColor: imageColor }}
-              className="absolute border-[0.5px] border-dotted -right-1 flex-row items-center justify-center px-4 py-2 overflow-hidden rounded-tl-2xl rounded-bl-2xl shadow-sm top-2 bg-clip-padding"
+              style={{
+                borderColor: imageColor,
+                backgroundColor: imageColor,
+              }}
+              className={`absolute border-[0.5px] border-solid flex-row -right-1 items-center justify-center px-4 py-2 overflow-hidden rounded-tl-2xl rounded-bl-2xl shadow-sm top-3 bg-clip-padding`}
             >
-              <Text style={TEXT_SHADOW} className="mr-2 font-orbitron-semiBold">
+              <Text
+                style={TEXT_SHADOW}
+                className={`mr-2 font-orbitron-semiBold ${theme === "dark" ? "text-light" : "text-dark"}`}
+              >
                 SUNSET
               </Text>
               <Text>🌇</Text>
@@ -117,10 +134,16 @@ const Daytime = () => {
               experimentalBlurMethod="dimezisBlurView"
               intensity={20}
               tint={theme === "dark" ? "dark" : "light"}
-              style={{ backgroundColor: imageColor }}
-              className="absolute border-[0.5px] border-dotted -right-1 flex-row items-center justify-center px-4 py-2 overflow-hidden rounded-tl-2xl rounded-bl-2xl shadow-sm top-14 bg-clip-padding"
+              style={{
+                borderColor: imageColor,
+                backgroundColor: imageColor,
+              }}
+              className={`absolute border-[0.5px] border-solid flex-row -right-1 items-center justify-center px-4 py-2 overflow-hidden rounded-tl-2xl rounded-bl-2xl shadow-sm top-14 bg-clip-padding`}
             >
-              <Text style={TEXT_SHADOW} className="font-orbitron-semiBold">
+              <Text
+                style={TEXT_SHADOW}
+                className={`font-orbitron-semiBold ${theme === "dark" ? "text-light" : "text-dark"}`}
+              >
                 {`${
                   unixConv.timeStamp(
                     new Date(daily?.sunset[0]).getTime() / 1000,

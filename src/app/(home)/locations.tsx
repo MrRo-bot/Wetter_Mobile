@@ -2,13 +2,17 @@ import components from "@/src/constants/components";
 import { locationStore } from "@/src/store/locationStore";
 import { LocationDataType } from "@/src/types/types";
 import { MaterialIcons } from "@expo/vector-icons";
+import { BlurView } from "expo-blur";
 import { useRouter } from "expo-router";
 import { FlatList, Pressable, Text, useColorScheme, View } from "react-native";
+import Animated, { ReduceMotion, SlideInUp } from "react-native-reanimated";
 
 const Locations = () => {
   const router = useRouter();
   let theme = useColorScheme();
   let { locations } = locationStore();
+
+  const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
   return (
     <View
@@ -21,37 +25,50 @@ const Locations = () => {
           SAVED LOCATIONS
         </Text>
         <View className="flex-row items-center justify-center gap-2">
-          <Pressable
+          <AnimatedPressable
             accessibilityLabel="Open settings"
             accessibilityHint="Navigates to the settings screen"
             accessible={true}
             android_ripple={{ color: `rgb(255,255,255,0.01)` }}
             accessibilityRole="button"
-            className={`shadow-2xl w-12 h-12 rounded-full items-center overflow-hidden justify-center ${theme === "dark" ? "bg-slate-400/10" : "bg-slate-100/80"}`}
+            entering={SlideInUp.duration(600).reduceMotion(ReduceMotion.System)}
+            className={`rounded-full shadow-2xl w-12 h-12 overflow-hidden border-2 border-solid ${theme === "dark" ? "border-light/20" : "border-dark/20"}`}
             onPress={() => router.navigate("/(home)/settings")}
           >
-            <MaterialIcons
-              color={theme === "dark" ? "white" : "black"}
-              name="settings"
-              size={24}
-            />
-          </Pressable>
-
-          <Pressable
-            accessibilityLabel="Open location search"
-            accessibilityHint="Navigates to the location search screen"
+            <BlurView
+              experimentalBlurMethod="dimezisBlurView"
+              intensity={20}
+              className={`items-center justify-center w-full h-full`}
+            >
+              <MaterialIcons
+                color={theme === "dark" ? "white" : "black"}
+                name="settings"
+                size={24}
+              />
+            </BlurView>
+          </AnimatedPressable>
+          <AnimatedPressable
+            accessibilityLabel="Open settings"
+            accessibilityHint="Navigates to the settings screen"
             accessible={true}
             android_ripple={{ color: `rgb(255,255,255,0.01)` }}
             accessibilityRole="button"
-            className={`shadow-2xl w-12 h-12 rounded-full items-center overflow-hidden justify-center ${theme === "dark" ? "bg-slate-400/10" : "bg-slate-100/80"}`}
+            entering={SlideInUp.duration(600).reduceMotion(ReduceMotion.System)}
+            className={`rounded-full shadow-2xl w-12 h-12 overflow-hidden border-2 border-solid ${theme === "dark" ? "border-light/20" : "border-dark/20"}`}
             onPress={() => router.navigate("/(home)/searchLocation")}
           >
-            <MaterialIcons
-              color={theme === "dark" ? "white" : "black"}
-              name="search"
-              size={24}
-            />
-          </Pressable>
+            <BlurView
+              experimentalBlurMethod="dimezisBlurView"
+              intensity={20}
+              className={`items-center justify-center w-full h-full`}
+            >
+              <MaterialIcons
+                color={theme === "dark" ? "white" : "black"}
+                name="search"
+                size={24}
+              />
+            </BlurView>
+          </AnimatedPressable>
         </View>
       </View>
       <FlatList

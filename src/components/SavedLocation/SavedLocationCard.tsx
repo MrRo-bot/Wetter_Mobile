@@ -161,13 +161,16 @@ const SavedLocationCard = ({
 
         {!unsplashLoading && (
           <>
-            <View
-              style={{ backgroundColor: imageColor }}
-              className={`absolute z-50 items-center justify-center p-0.5 overflow-hidden rounded-lg shadow-sm top-2 left-2`}
+            <BlurView
+              experimentalBlurMethod="dimezisBlurView"
+              intensity={20}
+              tint={theme === "dark" ? "dark" : "light"}
+              style={{ backgroundColor: imageColor + "50" }}
+              className={`absolute z-50 bg-clip-padding items-center justify-center p-0.5 overflow-hidden rounded-lg shadow-2xl top-2 left-2`}
             >
-              <View className="items-center justify-center p-1 border-2 border-solid rounded-lg w-max border-dark/50">
+              <View className="items-center justify-center p-1 rounded-lg w-max ">
                 <Text
-                  className="text-center text-light font-orbitron-bold"
+                  className="text-lg text-center text-light font-orbitron-bold"
                   numberOfLines={1}
                 >
                   {location?.geoAddress[0]?.city ??
@@ -177,21 +180,24 @@ const SavedLocationCard = ({
                     location?.geoAddress[0]?.subregion}
                 </Text>
               </View>
-            </View>
+            </BlurView>
 
-            <View
-              style={{ backgroundColor: imageColor }}
+            <BlurView
+              experimentalBlurMethod="dimezisBlurView"
+              intensity={20}
+              tint={theme === "dark" ? "dark" : "light"}
+              style={{ backgroundColor: imageColor + "20" }}
               className={`absolute z-50 items-center justify-center p-0.5 overflow-hidden rounded-lg shadow-sm top-14 left-2`}
             >
-              <View className="items-center justify-center p-1 border-2 border-solid rounded-lg w-max border-dark/50">
+              <View className="items-center justify-center p-1 rounded-lg w-max">
                 <Text
-                  className="text-sm text-center text-light font-orbitron-medium"
+                  className="text-center text-light font-orbitron-medium"
                   numberOfLines={1}
                 >
                   {location?.geoAddress[0]?.country}
                 </Text>
               </View>
-            </View>
+            </BlurView>
 
             {locationStoreObj.locations.length > 1 && (
               <>

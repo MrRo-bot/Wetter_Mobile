@@ -63,9 +63,10 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
           >
             <BlurView
               experimentalBlurMethod="dimezisBlurView"
-              intensity={theme === "dark" ? 20 : 50}
+              intensity={20}
               tint={theme === "dark" ? "dark" : "light"}
-              className={`flex-row items-center justify-between gap-2 p-2 pr-4 bg-clip-padding ${theme === "dark" ? "bg-light" : "bg-dark"}`}
+              className={`flex-row items-center justify-between gap-2 py-2 pl-2 pr-4 bg-clip-padding 
+                `}
             >
               <View
                 className={`rounded-full shadow-sm p-1 items-center justify-center 
@@ -85,18 +86,24 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
               <View>
                 {toast.text && (
                   <Text
-                    className={`font-orbitron-bold ${
-                      theme === "dark" ? "text-light" : "text-dark"
-                    }`}
+                    style={{
+                      textShadowColor: theme === "dark" ? "white" : "dark",
+                      textShadowOffset: { width: 0, height: 0 },
+                      textShadowRadius: 6,
+                    }}
+                    className={`font-orbitron-bold text-dark`}
                   >
                     {toast.text}
                   </Text>
                 )}
                 {toast.description && (
                   <Text
-                    className={`text-sm font-orbitron-semiBold tracking-wide ${
-                      theme === "dark" ? "text-light" : "text-dark"
-                    }`}
+                    style={{
+                      textShadowColor: theme === "dark" ? "white" : "dark",
+                      textShadowOffset: { width: 0, height: 0 },
+                      textShadowRadius: 6,
+                    }}
+                    className={`text-sm font-orbitron-semiBold tracking-wide text-dark`}
                   >
                     {toast.description}
                   </Text>

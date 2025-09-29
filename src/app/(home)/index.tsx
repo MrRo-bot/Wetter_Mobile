@@ -10,6 +10,7 @@ import { weatherStore } from "@/src/store/weatherStore";
 import { ToastRef } from "@/src/types/types";
 import { weatherCodeConv } from "@/src/utils/math";
 import { MaterialIcons } from "@expo/vector-icons";
+import { BlurView } from "expo-blur";
 import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
 import { useEffect, useRef } from "react";
@@ -174,15 +175,21 @@ export default function Home() {
               entering={SlideInDown.duration(600).reduceMotion(
                 ReduceMotion.System
               )}
-              className={`absolute bottom-16 right-10 rounded-full shadow-2xl w-16 h-16 items-center overflow-hidden justify-center border-2 border-solid ${theme === "dark" ? "bg-light/90 border-dark/20" : "bg-dark/75 border-light/40"}`}
+              className={`absolute bottom-16 right-10 rounded-full shadow-2xl w-16 h-16 items-center overflow-hidden justify-center border-2 border-solid ${theme === "dark" ? "border-light/20" : "border-dark/20"}`}
               style={animatedStyle}
               onPress={handlePress}
             >
-              <MaterialIcons
-                color={theme === "dark" ? "black" : "white"}
-                name="reorder"
-                size={28}
-              />
+              <BlurView
+                experimentalBlurMethod="dimezisBlurView"
+                intensity={20}
+                className={`items-center justify-center w-full h-full`}
+              >
+                <MaterialIcons
+                  color={theme === "dark" ? "white" : "black"}
+                  name="reorder"
+                  size={28}
+                />
+              </BlurView>
             </AnimatedPressable>
           )}
         </>

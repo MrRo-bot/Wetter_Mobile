@@ -104,19 +104,6 @@ const Brief = ({
     return () => unsubscribe();
   }, []);
 
-  const handleRefetch = () => {
-    if (isConnected) {
-      weatherRefetch();
-      setShowOffline(false);
-    } else {
-      toast.current?.show({
-        type: "error",
-        description: "Check your internet 🛜",
-        accessibilityLiveRegion: "assertive",
-      });
-    }
-  };
-
   useEffect(() => {
     queryStatus === "fetching" &&
       toast.current?.show({
@@ -180,6 +167,21 @@ const Brief = ({
     }, 200);
   };
 
+  const handleRefetch = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
+    if (isConnected) {
+      weatherRefetch();
+      setShowOffline(false);
+    } else {
+      toast.current?.show({
+        type: "error",
+        description: "Check your internet 🛜",
+        accessibilityLiveRegion: "assertive",
+      });
+    }
+  };
+
   return (
     <View className="gap-2 mx-3 mt-2">
       <View
@@ -228,10 +230,7 @@ const Brief = ({
                 <Pressable
                   accessibilityRole="button"
                   accessibilityLabel="Refresh weather data when internet is turned on"
-                  onPress={() => (
-                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium),
-                    handleRefetch()
-                  )}
+                  onPress={handleRefetch}
                 >
                   <Entypo name="cycle" size={20} color="white" />
                 </Pressable>
