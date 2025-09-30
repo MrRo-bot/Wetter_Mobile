@@ -91,7 +91,7 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
                       textShadowOffset: { width: 0, height: 0 },
                       textShadowRadius: 6,
                     }}
-                    className={`font-orbitron-bold text-dark`}
+                    className={`font-orbitron-bold ${theme === "dark" ? "text-dark" : "text-light"}`}
                   >
                     {toast.text}
                   </Text>
@@ -103,7 +103,7 @@ const ToastMessage = ({ ref }: { ref: Ref<ToastRef> }) => {
                       textShadowOffset: { width: 0, height: 0 },
                       textShadowRadius: 6,
                     }}
-                    className={`text-sm font-orbitron-semiBold tracking-wide text-dark`}
+                    className={`text-sm font-orbitron-semiBold tracking-wide ${theme === "dark" ? "text-dark" : "text-light"}`}
                   >
                     {toast.description}
                   </Text>
