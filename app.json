@@ -2,7 +2,7 @@
   "expo": {
     "name": "Wetter",
     "slug": "Wetter_Mobile",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./src/assets/icons/adaptive-icon.png",
     "scheme": "wettermobile",
