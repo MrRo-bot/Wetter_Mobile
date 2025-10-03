@@ -1,8 +1,9 @@
+import { QueryClient } from "@tanstack/react-query";
 import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
-import useAqiData from "../hooks/useAqiData";
-import useWeatherData from "../hooks/useWeatherData";
 import { locationStore } from "../store/locationStore";
+
+const queryClient = new QueryClient();
 
 export const BACKGROUND_REFRESH_TASK = "background-data-task";
 
@@ -17,12 +18,18 @@ TaskManager.defineTask(BACKGROUND_REFRESH_TASK, async () => {
       longitude: 0,
     };
 
-    const { refetch: weatherRefetch } = useWeatherData(currentLocObj);
+    await queryClient.refetchQueries({
+      queryKey: ["openMeteo_weather", currentLocObj],
+      type: "active",
+      exact: true,
+    });
 
-    const { refetch: aqiRefetch } = useAqiData(currentLocObj);
+    await queryClient.refetchQueries({
+      queryKey: ["openMeteo_AQI", currentLocObj],
+      type: "active",
+      exact: true,
+    });
 
-    weatherRefetch();
-    aqiRefetch();
     console.log("Background task completed successfully");
     return BackgroundTask.BackgroundTaskResult.Success;
   } catch (error) {
@@ -35,12 +42,7 @@ export const backgroundNotificationTask = async () => {
   const status = await BackgroundTask.getStatusAsync();
   if (status !== BackgroundTask.BackgroundTaskStatus.Restricted) {
     await BackgroundTask.registerTaskAsync(BACKGROUND_REFRESH_TASK, {
-      minimumInterval: 6 * 60 * 60,
-    });
-
-    // Schedule first run
-    await BackgroundTask.registerTaskAsync(BACKGROUND_REFRESH_TASK, {
-      minimumInterval: 30 * 60 * 1000,
+      minimumInterval: 30 * 60,
     });
 
     console.log("Background task registered");

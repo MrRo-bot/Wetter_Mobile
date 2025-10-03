@@ -25,7 +25,7 @@ import SavedLocationCard from "@/src/components/savedLocation/SavedLocationCard"
 
 import LocationSearchItem from "@/src/components/locationSearch/LocationSearchItem";
 
-// import NotificationSetup from "@/src/services/NotificationSetup";
+import NotificationSetup from "@/src/services/NotificationSetup";
 
 import AirQualitySection from "../components/Notification/AirQualitySection";
 import ChanceOfPrecipitationSection from "../components/Notification/ChanceOfPrecipitationSection";
@@ -61,7 +61,7 @@ export default {
   SavedLocationCard,
   LocationSearchItem,
 
-  // NotificationSetup,
+  NotificationSetup,
 
   AirQualitySection,
   ChanceOfPrecipitationSection,
