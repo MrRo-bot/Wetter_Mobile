@@ -163,20 +163,12 @@ const SavedLocationCard = ({
           <>
             <BlurView
               experimentalBlurMethod="dimezisBlurView"
-              intensity={10}
+              intensity={20}
               tint={theme === "dark" ? "dark" : "light"}
-              style={{
-                backgroundColor: imageColor + "90",
-                borderColor: imageColor + "20",
-              }}
+              style={{ backgroundColor: imageColor + "50" }}
               className={`absolute z-50 bg-clip-padding items-center justify-center p-0.5 overflow-hidden rounded-lg shadow-2xl top-2 left-2`}
             >
-              <View
-                style={{
-                  borderColor: imageColor,
-                }}
-                className="items-center justify-center p-1 w-max border-solid border-[1px] rounded-lg"
-              >
+              <View className="items-center justify-center p-1 rounded-lg w-max ">
                 <Text
                   className="text-lg text-center text-light font-orbitron-bold"
                   numberOfLines={1}
@@ -192,20 +184,12 @@ const SavedLocationCard = ({
 
             <BlurView
               experimentalBlurMethod="dimezisBlurView"
-              intensity={10}
+              intensity={20}
               tint={theme === "dark" ? "dark" : "light"}
-              style={{
-                backgroundColor: imageColor + "70",
-                borderColor: imageColor + "20",
-              }}
+              style={{ backgroundColor: imageColor + "20" }}
               className={`absolute z-50 items-center justify-center p-0.5 overflow-hidden rounded-lg shadow-sm top-14 left-2`}
             >
-              <View
-                style={{
-                  borderColor: imageColor,
-                }}
-                className="items-center justify-center p-1 w-max border-solid border-[1px] rounded-lg"
-              >
+              <View className="items-center justify-center p-1 rounded-lg w-max">
                 <Text
                   className="text-center text-light font-orbitron-medium"
                   numberOfLines={1}

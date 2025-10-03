@@ -175,18 +175,17 @@ export default function Home() {
               entering={SlideInDown.duration(600).reduceMotion(
                 ReduceMotion.System
               )}
-              className={`absolute bottom-16 right-10 rounded-full shadow-2xl w-16 h-16 items-center overflow-hidden justify-center border-2 border-solid ${theme === "dark" ? "border-light/50" : "border-dark/20"}`}
+              className={`absolute bottom-16 right-10 rounded-full shadow-2xl w-16 h-16 items-center overflow-hidden justify-center border-2 border-solid ${theme === "dark" ? "border-light/20" : "border-dark/20"}`}
               style={animatedStyle}
               onPress={handlePress}
             >
               <BlurView
                 experimentalBlurMethod="dimezisBlurView"
                 intensity={20}
-                tint={theme === "dark" ? "dark" : "default"}
                 className={`items-center justify-center w-full h-full`}
               >
                 <MaterialIcons
-                  color={theme === "dark" ? "yellow" : "black"}
+                  color={theme === "dark" ? "white" : "black"}
                   name="reorder"
                   size={28}
                 />
